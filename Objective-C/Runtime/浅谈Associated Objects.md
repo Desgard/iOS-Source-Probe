@@ -55,7 +55,7 @@ Associated Objects是Objective-C 2.0中Runtime的特性之一。最早开始使�
 
 这时我们已经发现`associatedObject`这个属性已经添加至`NSObject`的实例中了。并且我们可以通过category指定的getter和setter方法对这个属性进行存取操作。（注：这里使用`@dynamic`关键字是为了告知编译器：**在编译期不要自动创建实现属性所用的存取方法**。因为对于Associated Objects我们**必须手动添加**。当然，不写这个关键字，使用同名方法进行override也是可以达到相同效果的。但从编码规范和优化效率来讲，显示声明是最好的。）
 
-![](media/14698358467066/14698435703984.jpg)￼
+![](/image/Objective/Runtime/浅谈Associated Objects/img_1.jpg)￼
 
 
 ## AssociationPolicy
@@ -252,7 +252,7 @@ void _object_set_associative_reference(id object, void *key, id value, uintptr_t
 ```
 
 我们读过代码后发现是其储存结构是这样的一个逻辑：
-![新版思维导图](media/14698358467066/%E6%96%B0%E7%89%88%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE.png)￼
+![](/image/Objective/Runtime/浅谈Associated Objects/img_2.png)￼
 
 * 橙色的是`AssociationsManager`是顶级对象，维护了一个`spinlock_t`锁和一个`_map`的哈希表。这个哈希表中的键为`disguised_ptr_t`，也就是Class的指针，代表关联属性的拥有类。而`Value`是子哈希表。
 * 自哈希表是`ObjectAssociationMap`，键就是我们传入的`Key`，而值是`ObjcAssociation`。从而维护一个成员的所有属性。
@@ -261,11 +261,11 @@ void _object_set_associative_reference(id object, void *key, id value, uintptr_t
 
 这样会带来一个问题：**如果category中的一个关联对象与Class中的某个成员同名，虽然key值不一定相同，自身的Class不一定相同，policy也不一定相同，但是我这样做会直接覆盖之前的成员，造成无法访问，但是其内部所有信息及数据全部存在。**例如我们对`ViewController`做一个Category，来创建一个叫做view的成员，我们会发现在运行工程的时候，模拟器直接黑屏。
 
-![](media/14698358467066/14698575704500.jpg)￼
+![](/image/Objective/Runtime/浅谈Associated Objects/img_3.jpg)￼
 
 我们在viewDidLoad中下断点，甚至无法进入debug模式。因为view属性方法到，所以不会继续进行viewController的声明周期。
 
-![](media/14698358467066/14698577113167.jpg)￼
+![](/image/Objective/Runtime/浅谈Associated Objects/img_4.jpg)￼
 
 
 这一点很危险，所以我们要杜绝覆盖Class原来的属性，这会破坏Class原有的功能。（当然，我是十分不推荐在业务项目中使用Runtime的，因为这样的代码可读性和维护性太低。）
