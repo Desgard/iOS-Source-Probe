@@ -1,4 +1,4 @@
-![](logo.jpg)
+![](banner-logo.jpg)
 
 ## Content
 
