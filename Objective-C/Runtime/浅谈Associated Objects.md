@@ -1,5 +1,8 @@
 # 浅谈Associated Objects
 
+> 作者：冬瓜
+原文链接：[Guardia · 瓜地](https://desgard.com/2016/06/29/AssociatedObjectsIntroduction/)
+
 俗话说：“金无足赤，人无完人。”对于每一个Class也是这样，尽管我们说这个Class的代码规范、逻辑清晰合理等等，但是总会有它的短板，或者随着需求演进而无法订制实现功能。于是在Objective-C 2.0中引入了**category**这个特性，用以动态地为已有类添加新行为。面向对象的设计用来描述事物的组成往往是使用Class中的属性成员，这也就**局限了方法的广度**（在官方文档称之为**[An otherwise notable shortcoming for Objective-C](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html)**，译为：*Objc的一个显著缺陷*）。所以在Runtime中引入了**Associated Objects**来弥补这一缺陷。
 
 另外，请带着以下疑问来阅读此文：
@@ -55,14 +58,15 @@ Associated Objects是Objective-C 2.0中Runtime的特性之一。最早开始使�
 }
 ```
 
-这时我们已经发现`associatedObject`这个属性已经添加至`NSObject`的实例中了。并且我们可以通过category指定的getter和setter方法对这个属性进行存取操作。（注：这里使用`@dynamic`关键字是为了告知编译器：**在编译期不要自动创建实现属性所用的存取方法**。因为对于Associated Objects我们**必须手动添加**。当然，不写这个关键字，使用同名方法进行override也是可以达到相同效果的。但从编码规范和优化效率来讲，显示声明是最好的。）
+这时我们已经发现`associatedObject`这个属性已经添加至`NSObject`的实例中了。并且我们可以通过category指定的getter和setter方法对这个属性进行存取操作。（注：这里使用`@dynamic`关键字是为了告知编译器：**在编译期不要自动创建实现属性所用的存取方法**。因为对于Associated Objects我们**必须手动添加**。当然，不写这个关键字，使用同名方法进行override也是可以达到相同效果的。但从编码规范和优化效率来讲，显式声明是最好的。）
 
-![](/image/Objective/Runtime/浅谈Associated Objects/img_1.jpg)￼
+
+![1.jpg](http://upload-images.jianshu.io/upload_images/208988-10a9d08b532258d3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 ## AssociationPolicy
 
-通过上面的例子，我们注意到了`OBJC_ASSOCIATION_RETAIN_NONATOMIC`这个参数，他的枚举类型各个成员的含义如下：
+通过上面的例子，我们注意到了`OBJC_ASSOCIATION_RETAIN_NONATOMIC`这个参数，它的枚举类型各个元素的含义如下：
 
 Behavior | @property Equivalent | Description
 --------- | ------------- | --------
@@ -71,7 +75,7 @@ OBJC_ASSOCIATION_RETAIN_NONATOMIC | @property (nonatomic, strong) | 指定一个
 OBJC_ASSOCIATION_COPY_NONATOMIC | @property (nonatomic, copy) | 指定一个关联对象的copy引用，不能被原子化使用。
 OBJC_ASSOCIATION_RETAIN | @property (atomic, strong) | 指定一个关联对象的强引用，能被原子化使用。
 OBJC_ASSOCIATION_COPY | @property (atomic, copy) | 指定一个关联对象的copy引用，能被原子化使用。
-OBJC_ASSOCIATION_GETTER_AUTORELEASE | | 自动释放类型 |
+OBJC_ASSOCIATION_GETTER_AUTORELEASE | | 自动释放类型 
 
 OBJC_ASSOCIATION_ASSIGN类型的关联对象和`weak`有一定差别，而更加接近于`unsafe_unretained`，即当目标对象遭到摧毁时，属性值不会自动清空。（翻译自[Associated Objects](http://nshipster.com/associated-objects/)）
 
@@ -254,20 +258,27 @@ void _object_set_associative_reference(id object, void *key, id value, uintptr_t
 ```
 
 我们读过代码后发现是其储存结构是这样的一个逻辑：
-![](/image/Objective/Runtime/浅谈Associated Objects/img_2.png)￼
+
+
+![2.png](http://upload-images.jianshu.io/upload_images/208988-67f51f426f98ce53.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 * 橙色的是`AssociationsManager`是顶级对象，维护了一个`spinlock_t`锁和一个`_map`的哈希表。这个哈希表中的键为`disguised_ptr_t`，也就是Class的指针，代表关联属性的拥有类。而`Value`是子哈希表。
-* 自哈希表是`ObjectAssociationMap`，键就是我们传入的`Key`，而值是`ObjcAssociation`。从而维护一个成员的所有属性。
+* 子哈希表是`ObjectAssociationMap`，键就是我们传入的`Key`，而值是`ObjcAssociation`。从而维护一个成员的所有属性。
 
 在每次执行setter方法的时候，我们会逐层遍历Key，逐层判断。并且当持有Class有了关联属性的时候，在执行成员的Getter方法时，会优先查找Category中的关联成员。
 
 这样会带来一个问题：**如果category中的一个关联对象与Class中的某个成员同名，虽然key值不一定相同，自身的Class不一定相同，policy也不一定相同，但是我这样做会直接覆盖之前的成员，造成无法访问，但是其内部所有信息及数据全部存在。**例如我们对`ViewController`做一个Category，来创建一个叫做view的成员，我们会发现在运行工程的时候，模拟器直接黑屏。
 
-![](/image/Objective/Runtime/浅谈Associated Objects/img_3.jpg)￼
 
-我们在viewDidLoad中下断点，甚至无法进入debug模式。因为view属性方法到，所以不会继续进行viewController的声明周期。
+![3.jpg](http://upload-images.jianshu.io/upload_images/208988-97d8f5bde8f5de41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-![](/image/Objective/Runtime/浅谈Associated Objects/img_4.jpg)￼
+
+我们在viewDidLoad中下断点，甚至无法进入debug模式。因为view属性已经被覆盖，所以不会继续进行viewController的生命周期。
+
+
+![4.jpg](http://upload-images.jianshu.io/upload_images/208988-12aa766163679316.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 
 这一点很危险，所以我们要杜绝覆盖Class原来的属性，这会破坏Class原有的功能。（当然，我是十分不推荐在业务项目中使用Runtime的，因为这样的代码可读性和维护性太低。）
@@ -333,10 +344,10 @@ void _object_remove_assocations(id object) {
 
 ## Thinking About Hash Table
 
-不光是本文关于Class属性的存储方式，还是Apple中其他的Souce Code（例如引用计数管理），我们能感受到Apple对Hash Table这种数据结构情有独钟（例如本文中的map数据结构）。在大量的实践中可以说明，Hash Table对于优化效率的提升，这是毋庸置疑的。
+不光是本文讲述的关于Class关联对象的存储方式，还是Apple中其他的Souce Code（例如引用计数管理），我们能感受到Apple对Hash Table（本文中的map数据结构）这种数据结构情有独钟。在大量的实践中可以说明，Hash Table对于优化效率的提升，这是毋庸置疑的。
 
 细究使用这种数据结构的原因，唯一的Key可对应指定的Value。我们从计算机存储的角度考虑，因为每个内存地址是唯一的，也就可以假象成Key，通过唯一的Key来读写数据，这是效率最高的方式。
 
 ## The End
 
-通过阅读此文，相比已经知道那三个问题的答案。笔者原本想对**UITableView-FDTemplateLayoutCell源码分析**来撰写一篇文，但是发现里面存储cell的Key值使用到了Associated Objects该技术，所以对其进行了学习探究。后面，我会分析一下**UITableView-FDTemplateLayoutCell**的源码，这些将收录在我的这个Github仓库中。
+通过阅读此文，想必你已经知道那三个问题的答案。笔者原本想对**UITableView-FDTemplateLayoutCell**进行源码分析来撰写一篇文，但是发现里面存储cell的Key值使用到了Associated Objects该技术，所以对此进行了学习探究。后面，我会分析一下**UITableView-FDTemplateLayoutCell**的源码，这些将收录在我的这个[Github仓库中](https://github.com/Desgard/iOS-Source-Probe)。
