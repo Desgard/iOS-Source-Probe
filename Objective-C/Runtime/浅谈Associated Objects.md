@@ -1,3 +1,5 @@
+# 浅谈Associated Objects
+
 俗话说：“金无足赤，人无完人。”对于每一个Class也是这样，尽管我们说这个Class的代码规范、逻辑清晰合理等等，但是总会有它的短板，或者随着需求演进而无法订制实现功能。于是在Objective-C 2.0中引入了**category**这个特性，用以动态地为已有类添加新行为。面向对象的设计用来描述事物的组成往往是使用Class中的属性成员，这也就**局限了方法的广度**（在官方文档称之为**[An otherwise notable shortcoming for Objective-C](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html)**，译为：*Objc的一个显著缺陷*）。所以在Runtime中引入了**Associated Objects**来弥补这一缺陷。
 
 另外，请带着以下疑问来阅读此文：
