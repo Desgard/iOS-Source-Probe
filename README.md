@@ -8,6 +8,8 @@
 
 本仓库的源码分享暂时以*Objective-C*、*Swift*、*C++*、*C*、*Python*为主，这些是笔者日常接触的语言。如果想与笔者交流，可以关注新浪微博 [@冬瓜争做全栈瓜](http://weibo.com/3633493894/profile?topnav=1&wvr=6)
 
+另外，也可以访问作者个人blog来阅读：[http://desgard.com](https://desgard.com/)
+
 ## Content
 
 Language | Framework | Article
