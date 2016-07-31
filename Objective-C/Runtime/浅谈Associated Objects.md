@@ -1,5 +1,3 @@
-# 浅谈Associated Objects
-
 > 作者：冬瓜
 原文链接：[Guardia · 瓜地](https://desgard.com/2016/06/29/AssociatedObjectsIntroduction/)
 
@@ -22,7 +20,7 @@ Associated Objects是Objective-C 2.0中Runtime的特性之一。最早开始使�
 > void objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)
 
 
-* `object`：传入关联对象的所属对象，也就是你要往哪个category中增加成员，一般来说传入self。
+* `object`：传入关联对象的所属对象，也就是增加成员的实例对象，一般来说传入self。
 * `key`：一个唯一标记。在官方文档中推荐使用`static char`，当然更推荐是指针。为了便捷，一般使用`selector`，这样在后面getter中，我们就可以利用`_cmd`来方便的取出`selector`。
 * `value`：传入关联对象。
 * `policy`：`objc_AssociationPolicy`是一个ObjC枚举类型，也代表关联策略。
@@ -263,8 +261,8 @@ void _object_set_associative_reference(id object, void *key, id value, uintptr_t
 ![2.png](http://upload-images.jianshu.io/upload_images/208988-67f51f426f98ce53.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
-* 橙色的是`AssociationsManager`是顶级对象，维护了一个`spinlock_t`锁和一个`_map`的哈希表。这个哈希表中的键为`disguised_ptr_t`，也就是Class的指针，代表关联属性的拥有类。而`Value`是子哈希表。
-* 子哈希表是`ObjectAssociationMap`，键就是我们传入的`Key`，而值是`ObjcAssociation`。从而维护一个成员的所有属性。
+* 橙色的是`AssociationsManager`是顶级结构体，维护了一个`spinlock_t`锁和一个`_map`的哈希表。这个哈希表中的键为`disguised_ptr_t`，在得到这个指针的时候，源码中执行了`DISGUISE`方法，这个方法的功能是获得指向**self**地址的指针，即为指向**对象地址**的指针。通过地址这个唯一标识，可以找到对应的value，即一个子哈希表。（@饶志臻 勘误）
+* 子哈希表是`ObjectAssociationMap`，键就是我们传入的`Key`，而值是`ObjcAssociation`，即这个成员对象。从而维护一个成员的所有属性。
 
 在每次执行setter方法的时候，我们会逐层遍历Key，逐层判断。并且当持有Class有了关联属性的时候，在执行成员的Getter方法时，会优先查找Category中的关联成员。
 
