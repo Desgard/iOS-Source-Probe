@@ -38,7 +38,6 @@
     if (self) {
         UIStoryboard* main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         self = [main instantiateViewControllerWithIdentifier:@"LXNotePopUpViewController"];
-        
         self.presentAnimation = [LXPresentAnimation new];
         self.dismissAnimation = [LXDismissAnimation new];
         self.noteText = @"Hello World";
@@ -54,18 +53,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
     self.notePopUpView.layer.cornerRadius = 10;
     self.notePopUpView.layer.masksToBounds = YES;
     self.noteTextView.delegate = self;
     self.noteTextView.text = self.noteText;
+    
     [self textViewDidChange:self.noteTextView];
 }
 
-
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.noteTextView becomeFirstResponder];
+}
 
 - (IBAction)toSaveNote:(id)sender {
     if (self.saveHandler) {
-        self.saveHandler(self.noteTextView.text, self.noteText.length, self);
+        self.saveHandler(self, self.noteTextView.text);
     }
     [self toDismissPopUpView:nil];
 }
@@ -113,5 +119,34 @@
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
     return self.dismissAnimation;
 }
+
+#pragma mark - Notification Handlers
+- (void)keyboardWillShow:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    
+    double duration = [userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    CGRect keyboardF = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    CGFloat dis = self.view.frame.origin.y + self.view.frame.size.height - keyboardF.origin.y;
+    if (dis > -10) {
+        CGFloat animationDis = dis + 10;
+        
+        NSLog(@"%lf", animationDis);
+        [UIView animateWithDuration:duration animations:^{
+            self.view.center = CGPointMake(self.view.center.x, self.view.center.y - animationDis);
+        } completion:nil];
+    }
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    double duration = [userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    [UIView animateWithDuration:duration animations:^{
+//        self.view.transform = CGAffineTransformIdentity;
+        self.view.center = CGPointMake([UIScreen mainScreen].bounds.size.width / 2, [UIScreen mainScreen].bounds.size.height / 2);
+    } completion:nil];
+}
+
+
 
 @end

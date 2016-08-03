@@ -37,9 +37,9 @@
     vc.delegate = self;
     
 //    vc.noteText = @"Glow, GLOW, glow! ";
-    [vc setSaveHandler:^(NSString *words, NSUInteger cnt, LXNotePopUpViewController *vc) {
+    [vc setSaveHandler:^(LXNotePopUpViewController *vc, NSString *words) {
         NSLog(@"%@", words);
-        NSLog(@"%lu", cnt);
+        
     }];
     
     [self presentViewController:vc animated:YES completion:nil];

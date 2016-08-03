@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+
 @class LXNotePopUpViewController;
 
-typedef void(^LXNotePopUpSaveHandler)(NSString *noteText, NSUInteger wordsCount, LXNotePopUpViewController *Self);
+typedef void(^LXNotePopUpSaveHandler)(LXNotePopUpViewController *Self, NSString *noteText);
 
 @protocol ModalViewControllerDelegate <NSObject>
 

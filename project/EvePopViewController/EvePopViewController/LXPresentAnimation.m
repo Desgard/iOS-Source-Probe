@@ -9,6 +9,12 @@
 #import "LXPresentAnimation.h"
 #import "LXNotePopUpViewController.h"
 
+@interface LXPresentAnimation ()
+
+@property (weak, nonatomic) UIViewController *presentedViewController;
+
+@end
+
 @implementation LXPresentAnimation
 
 
@@ -29,8 +35,6 @@
     toViewController.view.transform = t;
     [transitionContext containerView].backgroundColor = [UIColor clearColor];
     [[transitionContext containerView] addSubview:toViewController.view];
-    
-    NSLog(@"%p", [transitionContext containerView]);
     
     [UIView animateWithDuration:0.45
                           delay:0

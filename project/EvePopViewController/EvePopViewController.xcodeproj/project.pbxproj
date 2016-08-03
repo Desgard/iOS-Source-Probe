@@ -18,6 +18,8 @@
 		D5F232EA1D4F01C9007E366B /* EvePopViewControllerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F232E91D4F01C9007E366B /* EvePopViewControllerUITests.m */; };
 		D5F232FA1D4F0B40007E366B /* LXNotePopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F232F91D4F0B40007E366B /* LXNotePopUpViewController.m */; };
 		D5F232FD1D4F13BB007E366B /* LXPresentAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F232FC1D4F13BB007E366B /* LXPresentAnimation.m */; };
+		D5F3F8031D520EEC005366A1 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5F3F8021D520EEC005366A1 /* Reveal.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		D5F3F8051D52104E005366A1 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D5F3F8041D52104E005366A1 /* libz.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 		D5F232F91D4F0B40007E366B /* LXNotePopUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXNotePopUpViewController.m; sourceTree = "<group>"; };
 		D5F232FB1D4F13BB007E366B /* LXPresentAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXPresentAnimation.h; sourceTree = "<group>"; };
 		D5F232FC1D4F13BB007E366B /* LXPresentAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXPresentAnimation.m; sourceTree = "<group>"; };
+		D5F3F8021D520EEC005366A1 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
+		D5F3F8041D52104E005366A1 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +71,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5F3F8051D52104E005366A1 /* libz.tbd in Frameworks */,
+				D5F3F8031D520EEC005366A1 /* Reveal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +96,8 @@
 		D5F232B81D4F01C9007E366B = {
 			isa = PBXGroup;
 			children = (
+				D5F3F8041D52104E005366A1 /* libz.tbd */,
+				D5F3F8021D520EEC005366A1 /* Reveal.framework */,
 				D5F232C31D4F01C9007E366B /* EvePopViewController */,
 				D5F232DD1D4F01C9007E366B /* EvePopViewControllerTests */,
 				D5F232E81D4F01C9007E366B /* EvePopViewControllerUITests */,
@@ -441,8 +449,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = EvePopViewController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				"OTHER_LDFLAGS[sdk=iphonesimulator*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = Glow.harry.EvePopViewController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -452,6 +465,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = EvePopViewController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Glow.harry.EvePopViewController;

@@ -22,8 +22,6 @@
     containerView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
     UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     fromVC.view.center = CGPointMake(screenWidth / 2.f, screenHeight / 2.f);
-
-    NSLog(@"%p", [transitionContext containerView]);
     
     NSTimeInterval duration = [self transitionDuration:transitionContext];
     [UIView animateWithDuration:duration animations:^{
