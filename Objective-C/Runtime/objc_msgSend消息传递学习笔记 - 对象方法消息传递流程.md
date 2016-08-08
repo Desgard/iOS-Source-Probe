@@ -1,5 +1,5 @@
 > 作者：冬瓜
-原文链接：[Guardia · 瓜地](https://desgard.com/2016/08/07/objc_msgSend1/)
+> 原文链接：[Guardia · 瓜地](https://desgard.com/2016/08/07/objc_msgSend1/)
 
 在*Effective Objective-C 2.0 - 52 Specific Ways to Improve Your iOS and OS X Programs*一书中，*tip 11*主要讲述了Objective-C中的消息传递机制。这也是Objective-C在C的基础上，做的最基础也是最重要的封装。
 
@@ -176,7 +176,7 @@ LCacheMiss:
 
 之后我们随着调用栈往上看，在接受到消息入口的命令后，Runtime要开始进行查找方法的操作，源码如下：
 
-```
+```c
 IMP lookUpImpOrForward(Class cls, SEL sel, id inst, 
                        bool initialize, bool cache, bool resolver) {
     Class curClass;
