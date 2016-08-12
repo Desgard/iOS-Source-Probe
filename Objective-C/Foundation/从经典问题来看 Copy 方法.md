@@ -2,6 +2,8 @@
 
 > 原文链接：[Guardia · 瓜地](https://desgard.com/2016/08/11/copy/)
 
+---
+
 在初学 iOS 的时候，可能会被灌输这么一个常识，**切记 NSString 的 property 的修饰变量要写作 copy ，而不是 strong**，那么这是为什么？
 
 > 经典面试题：为什么 NSString 类型成员变量的修饰属性用 copy 而不是 strong (或 retain ) ？
