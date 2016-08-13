@@ -2,7 +2,7 @@
 
 > 原文链接：[Guardia · 瓜地](https://desgard.com/2016/08/11/copy/)
 
----
+> 本文中所用的 Test 可以从[这里](https://github.com/Desgard/iOS-Source-Probe/tree/master/project/TestCopy)获取。
 
 在初学 iOS 的时候，可能会被灌输这么一个常识，**切记 NSString 的 property 的修饰变量要写作 copy ，而不是 strong**，那么这是为什么？
 
@@ -115,7 +115,7 @@
 2016-08-12 06:15:45.170 TestCopy[65230:20515110] 0xa00000000534f693
 ```
 
-发现当令 NSString 对象指针指向一个 NSMutableString 的时候，则会对一个对象进行**深复制**。这也就是我们一直所说的在一个 Class 的成员是 NSString 类型的时候，修饰属性应该使用 copy ，其实就是在使用 mutable 对象进行赋值的时候，防止 mutable 对象的改变从而影响成员变量。从 MRC 的角度来看待修饰属性，若一个属性的关键字为 retain （可等同于 strong ），则在进行指针的指向修改时，如上面的`self.one.name = str`，其实是执行了`self.one.name = [str retain]`，而 copy 类型的属性则会执行`self.one.name = [str copy]`。
+发现当令 NSString 对象指针指向一个 NSMutableString 类型变量通过 copy 方法返回的对象，则会对其进行**深复制**。这也就是我们一直所说的在一个 Class 的成员是 NSString 类型的时候，修饰属性应该使用 copy ，其实就是在使用 mutable 对象进行赋值的时候，防止 mutable 对象的改变从而影响成员变量。从 MRC 的角度来看待修饰属性，若一个属性的关键字为 retain （可等同于 strong ），则在进行指针的指向修改时，如上面的`self.one.name = str`，其实是执行了`self.one.name = [str retain]`，而 copy 类型的属性则会执行`self.one.name = [str copy]`。
 
 而在 Test 2 中，我们的实验是将一个 NSString 对象指向另外一个 NSString 对象，那么如果前者是 copy 的成员，还会进行**深复制**吗？进行下面的 Test 5，我们令 c_name 的修饰变量为 copy。
 
@@ -253,6 +253,10 @@
 我的猜想是，某次苹果所用的 Foundation 框架升级，使得 NSObject 开始遵循 NSCopying 方法，但是没有去实现（这就好比 c++ 中的 virtual 虚函数）。这里有待考证，如果有朋友知道，欢迎补充这一部分知识，请大家多多指教。
 
 ---
+多谢4楼 @[hpppp](http://www.jianshu.com/users/bfa2516c1fa2) 的解释：
+
+> [hpppp](http://www.jianshu.com/users/bfa2516c1fa2): 显式写明遵循该协议只是说运行时如果调用conformToProtocol的话，返回会是true，否则返回false，等可能还有一些其它的运行时信息，就像c#／java的反射一样。 而这里没有显式声明，但你依然实现了该协议中的方法，这时候运行时调用copy时，会转成调用copyWithZone，此时该方法存在，那么调用就不会抛出异常。
+
+---
 
 > 以上是个人在学习 Foundation 框架的一些源码分析和猜想，如果想了解更多的 *iOS Source Probe* 系列文章，可以访问 github 仓库 [iOS-Source-Probe](https://github.com/Desgard/iOS-Source-Probe)。
-
