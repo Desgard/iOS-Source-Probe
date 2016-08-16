@@ -1,5 +1,7 @@
 ![](banner-logo.jpg) 
 
+(图片设计：**[冬瓜](https://www.behance.net/gallery/41562273/Gua-iOS-Source-Prode)**）
+
 ## Description
 
 为什么要做这个仓库的原因，是为了促进自己阅读代码，从而巩固自身基础。从非科班出身、acm的错误洗礼下，本人需要认识更多的底层知识，从而纠正自己对*Computer Science*的观念。我将自己理解和阅读的一些源码、文档的笔记与博文与大家分享，接受希望大家的指正。倘若你有兴趣和我一起来阅读源码并分享阅读笔记，可以发起`pull request`。
