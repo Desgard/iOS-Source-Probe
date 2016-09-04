@@ -1,6 +1,6 @@
 > 作者：冬瓜
 
-> 原文链接：[Guardia · 瓜地](https://desgard.com/2016/08/11/copy/)
+> 原文链接：[Guardia · 瓜地](https://desgard.com/block2/)
 
 
 # 浅谈 block（2） - 截获变量方式
