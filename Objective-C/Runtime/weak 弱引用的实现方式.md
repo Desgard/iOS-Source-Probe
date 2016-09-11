@@ -1,6 +1,6 @@
 > 作者：冬瓜
 
-> 原文链接：[Guardia · 瓜地](https://desgard.com/2016/08/11/copy/)
+> 原文链接：[Guardia · 瓜地](https://desgard.com/weak)
 
 
 # weak 弱引用的实现方式
@@ -29,7 +29,7 @@ int main(int argc, const char * argv[]) {
 NSObject objc_initWeak(p, 对象指针);
 ```
 
-其中的类对象，就是代码中的 `[[NSObject alloc] init]` ，而 p 是我们传入的一个弱引用指针。而对于 `objc_initWeak()` 方法的实现，在 runtime 中的源码如下：
+其中的对象指针，就是代码中的 `[[NSObject alloc] init]` ，而 p 是我们传入的一个弱引用指针。而对于 `objc_initWeak()` 方法的实现，在 runtime 中的源码如下：
 
 ```c
 id objc_initWeak(id *location, id newObj) {
