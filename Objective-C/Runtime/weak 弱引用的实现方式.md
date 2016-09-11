@@ -26,7 +26,7 @@ int main(int argc, const char * argv[]) {
 单步运行，发现会跳入 `NSObject.mm` 中的 `objc_initWeak()` 这个方法。在进行编译过程前，clang 其实对 __weak 做了转换，将声明方式做出了如下调整。
 
 ```c
-NSObject objc_initWeak(p, 对象指针);
+NSObject objc_initWeak(&p, 对象指针);
 ```
 
 其中的对象指针，就是代码中的 `[[NSObject alloc] init]` ，而 p 是我们传入的一个弱引用指针。而对于 `objc_initWeak()` 方法的实现，在 runtime 中的源码如下：
