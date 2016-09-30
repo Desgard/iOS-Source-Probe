@@ -2,7 +2,7 @@
 
 > 原文链接：[Guardia · 瓜地](http://www.desgard.com/isa/)
 
-# 用 isa 承载对象的类信息
+# 用 isa 承载对象的类信息
 
 *Effective Objective-C 2.0 - 52 Specific Ways to Improve Your iOS and OS X Programs* 一书中，*tip 14* 中提到了，*运行时检查对象类型* 的 **自省** (Introspection) 特性。那么先来说说 **自省** 和 **反射** 的定义是什么。
 
