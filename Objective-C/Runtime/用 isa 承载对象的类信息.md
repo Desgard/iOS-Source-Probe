@@ -127,7 +127,7 @@ struct objc_class : objc_object {
 
 其实，开发中所使用的类和实例，都会拥有一个记录自身信息的 isa 指针，只是因为 runtime 从 objc_object 继承出的，所以不会显式看到。
 
-![isa](http://7xwh85.com1.z0.glb.clouddn.com/objc_object_structure.png)
+![](http://7xwh85.com1.z0.glb.clouddn.com/objc_object_structure.png)
 
 
 需要知道的是，class_data_bits_t 中存有 Class 的对应方法，具体如何存储，会在后续的文中记录。
