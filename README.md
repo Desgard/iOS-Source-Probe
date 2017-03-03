@@ -30,6 +30,13 @@ Objective-C | SDWebImage |`v3.8.1` | [SDWebImage Source Probe: WebCache](https:/
 
 可以发起issue或者pull request进行勘误。
 
+## Copyright
+
+以下文章版权属于**《iOS 成长之路》**所有。
+
+* [load 方法全程跟踪](https://github.com/Desgard/iOS-Source-Probe/blob/master/Objective-C/Runtime/load%20%E6%96%B9%E6%B3%95%E5%85%A8%E7%A8%8B%E8%B7%9F%E8%B8%AA.md)
+* [CFArray 的历史渊源及实现原理](https://github.com/Desgard/iOS-Source-Probe/blob/master/Objective-C/Foundation/CFArray%20%E7%9A%84%E5%8E%86%E5%8F%B2%E6%B8%8A%E6%BA%90%E5%8F%8A%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86.md)
+
 ## The MIT License (MIT)
 
 Copyright (c) 2016 Desgard_Duan
