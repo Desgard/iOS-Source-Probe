@@ -259,6 +259,7 @@ Swift 源码分析是笔者一直想开的新坑。本文仅仅介绍了 Optiona
 ## 参考文献
 
 [Apple Swift Source Code](https://github.com/apple/swift/blob/master/stdlib/public/core/Optional.swift)
+
 [Swift 烧脑体操（一） - Optional 的嵌套](http://blog.devtang.com/2016/02/27/swift-gym-1-nested-optional/)
 
 
