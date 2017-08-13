@@ -1,4 +1,4 @@
-# Shadowsocks Probe I - Sock5 与 EventLoop 事件分发
+# Shadowsocks Probe I - Socks5 与 EventLoop 事件分发
 
 ## #define 爱国 科学
 
