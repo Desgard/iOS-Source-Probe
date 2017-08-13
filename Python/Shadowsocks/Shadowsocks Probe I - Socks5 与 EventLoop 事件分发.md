@@ -59,6 +59,7 @@ Proxy 在收到客户端请求后，检查是否有认证方式，并返回一�
 * `0x05 0xff`：客户端的任意一种认证方式 Proxy 都不支持。
 
 ![handshake-time](media/15024138759233/handshake-time.png)
+
 在握手之后，Client 会向 Proxy 发送请求，格式如下：
 
 ```bash
@@ -98,6 +99,7 @@ Proxy 在收到客户端请求后，检查是否有认证方式，并返回一�
 在万事具备之后，Socks5 协议就完成了自身的主要实名，在握手和建立连接之后，Socks5 的 Proxy 服务器就只做简单的消息转发。我们以通过 Shadowsocks 代理来访问 `apple.com:80` 为例，整个过程如下图所示：
 
 ![visit-apple.com.re](media/15024138759233/visit-apple.com.re.png)
+
 而信息的传输过程可能是这样的：
 
 ```bash
@@ -360,6 +362,7 @@ def handle_event(self, sock, fd, event):
 Reactor 的结构主要由**资源**，**同步事件解多路器**，**分发器**和**请求处理器**组成，并且该系统在原则上是存于单线程系统中。注明项目 **Netty** 就是基于该设计模式。通过 Reactor 的方式，将用户线程轮训 I/O 操作状态的工作统一交给了 `handler_event` 事件循环来进行处理。用户线程注册事件后处理器可以继续执行其他的工作，这就是单线程异步的体现，而 Reactor 线程负责调用内核的 select 函数检测 socket 状态，当 socket 被激活时，通知响应的 Client 线程执行对应的 `handler`。这里给出一张 I/O 多路复用的模型示意图：
 
 ![IO-muti-road](media/15024138759233/IO-muti-road.png)
+
 是不是中间的 Event Loop 感觉似曾相识呢？是的，我们的 `EventLoop` 与其的工作十分类似。在这里，我们完全不需要关注 I/O 的问题，因为这些都已经被封装好了。我们只需要知道，其 Event 传递以及击中对应的 Handler 就已经足够了。下面是 Shadowsocks 中 `EventLoop` 将 Event 发送至指定 Handler 的大体流程：
 
 ![eventloop-flo](media/15024138759233/eventloop-flow.png)
