@@ -363,7 +363,6 @@ Reactor 的结构主要由**资源**，**同步事件解多路器**，**分发�
 是不是中间的 Event Loop 感觉似曾相识呢？是的，我们的 `EventLoop` 与其的工作十分类似。在这里，我们完全不需要关注 I/O 的问题，因为这些都已经被封装好了。我们只需要知道，其 Event 传递以及击中对应的 Handler 就已经足够了。下面是 Shadowsocks 中 `EventLoop` 将 Event 发送至指定 Handler 的大体流程：
 
 ![eventloop-flo](media/15024138759233/eventloop-flow.png)
-我想，此时已经对 Shadowsocks 的事件处理有了一个最初步的认识。
 
 ## 待续
 
