@@ -1,3 +1,7 @@
+> 作者：冬瓜
+
+> 原文链接：[Guardia · 瓜地](http://www.desgard.com/Shadowsocks-1/)
+
 # Shadowsocks Probe I - Socks5 与 EventLoop 事件分发
 
 ## #define 爱国 科学
