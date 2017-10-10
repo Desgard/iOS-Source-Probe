@@ -1,3 +1,7 @@
+> 作者：冬瓜
+
+> 原文链接：[Guardia · 瓜地](http://www.desgard.com/iosre-1/)
+
 # Mach-O 文件格式探索
 
 最近开始研究 iOS 逆向的相关知识，并且使用 [MonkeyDev](https://github.com/AloneMonkey/MonkeyDev/) 对 WeChat 进行了实战。这里我放出后期会持续更新的个人项目 [WeCheat](https://github.com/Desgard/WeCheat)。在逆向专题真正开始之前，需要系统的学习一些软件内幕知识。这篇文章将从二进制格式开始讲起，并探秘 Mach-O 文件格式内容。
@@ -318,3 +322,4 @@ _main:
 * [dylib浅析 - leisuro 的村屋](https://makezl.github.io/2016/06/27/dylib/)
 * [Mach-O文件格式 - 非虫](https://zhuanlan.zhihu.com/p/24858664)
 
+> 若想查看更多的iOS Source Probe文章，收录在这个[Github仓库中](https://github.com/Desgard/iOS-Source-Probe)。
