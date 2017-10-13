@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/Desgard/iOS-Source-Probe#readme",
   "dependencies": {
-    "gitbook": "^3.2.3",
     "gitbook-cli": "^2.3.2"
   }
 }

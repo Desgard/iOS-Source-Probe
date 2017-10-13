@@ -1,0 +1,12 @@
+{	
+	"language": "cn",
+	"plugins": [
+		"splitter",
+		"github"
+	],
+	"pluginsConfig": {
+		"github": {
+			"url": "https://github.com/Desgard"
+		}
+	}
+}
