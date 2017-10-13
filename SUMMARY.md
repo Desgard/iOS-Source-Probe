@@ -9,7 +9,7 @@
   - [weak 弱引用的实现方式](Objective-C/Runtime/weak 弱引用的实现方式.md)
   - [load 方法全程跟踪](Objective-C/Runtime/load 方法全程跟踪.md)
   - [浅谈 block - clang 改写后的 block 结构](Objective-C/Runtime/浅谈 block（1） - clang 改写后的 block 结构.md)
-  - [浅谈 block（2） - 截获变量方式](Objective-C/Runtime/浅谈 block（2） - 截获变量方式.md)
+  - [浅谈 block - 截获变量方式](Objective-C/Runtime/浅谈 block（2） - 截获变量方式.md)
 * cctools/include/mach-o 895
   - [Mach-O 文件格式探索](C/mach-o/Mach-O 文件格式探索.md)
 * Foundation

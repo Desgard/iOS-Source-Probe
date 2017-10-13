@@ -1,3 +1,4 @@
+#!/bin/bash
 
 gitbook install >/dev/null
 echo 'Gitbook 插件更新成功'
