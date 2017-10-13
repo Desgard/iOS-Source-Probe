@@ -3,9 +3,9 @@
 (图片设计：**[冬瓜](https://www.behance.net/gallery/41562273/Gua-iOS-Source-Prode)**）
 ## Link
 
-介绍页：[iOS-Source-Probe](http://www.desgard.com/iOS-Source-Probe/)
+Gitbook：[iOS-Source-Probe](http://www.desgard.com/iOS-Source-Probe/)
 
-知乎专栏：[iOS 源码探求](https://zhuanlan.zhihu.com/iOS-Source-Probe)
+个人博客：[Guardia · 瓜地](http://desgard.com)
 
 ## Description
 
@@ -44,16 +44,8 @@ Python | Shadowsocks | `v2.9.1` | [Shadowsocks Probe I - Socks5 与 EventLoop �
 
 ## The MIT License (MIT)
 
-Copyright (c) 2016 Desgard_Duan
+iOS-Source-Probe 以 MIT 开源协议发布，转载引用请注明出处。
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+![MIT License](https://upload.wikimedia.org/wikipedia/commons/f/f8/License_icon-mit-88x31-2.svg)
 
 
