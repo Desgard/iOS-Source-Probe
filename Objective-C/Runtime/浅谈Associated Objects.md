@@ -2,6 +2,8 @@
 
 > 原文链接：[Guardia · 瓜地](http://www.desgard.com/2016/07/30/AssociatedObjectsIntroduction/)
 
+# 浅谈Associated Objects
+
 俗话说：“金无足赤，人无完人。”对于每一个Class也是这样，尽管我们说这个Class的代码规范、逻辑清晰合理等等，但是总会有它的短板，或者随着需求演进而无法订制实现功能。于是在Objective-C 2.0中引入了**category**这个特性，用以动态地为已有类添加新行为。面向对象的设计用来描述事物的组成往往是使用Class中的属性成员，这也就**局限了方法的广度**（在官方文档称之为**[An otherwise notable shortcoming for Objective-C](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html)**，译为：*Objc的一个显著缺陷*）。所以在Runtime中引入了**Associated Objects**来弥补这一缺陷。
 
 另外，请带着以下疑问来阅读此文：
@@ -350,3 +352,5 @@ void _object_remove_assocations(id object) {
 ## The End
 
 通过阅读此文，想必你已经知道那三个问题的答案。笔者原本想对**UITableView-FDTemplateLayoutCell**进行源码分析来撰写一篇文，但是发现里面存储cell的Key值使用到了Associated Objects该技术，所以对此进行了学习探究。后面，我会分析一下**UITableView-FDTemplateLayoutCell**的源码，这些将收录在我的这个[Github仓库中](https://github.com/Desgard/iOS-Source-Probe)。
+
+

@@ -2,7 +2,8 @@
 	"language": "cn",
 	"plugins": [
 		"splitter",
-		"github"
+		"github",
+		"multipart"
 	],
 	"pluginsConfig": {
 		"github": {

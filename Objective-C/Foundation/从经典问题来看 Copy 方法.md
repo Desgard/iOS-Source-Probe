@@ -2,6 +2,8 @@
 
 > 原文链接：[Guardia · 瓜地](https://desgard.com/2016/08/11/copy/)
 
+# 从经典问题来看 Copy 方法
+
 > 本文中所用的 Test 可以从[这里](https://github.com/Desgard/iOS-Source-Probe/tree/master/project/TestCopy)获取。
 
 在初学 iOS 的时候，可能会被灌输这么一个常识，**切记 NSString 的 property 的修饰变量要写作 copy ，而不是 strong**，那么这是为什么？
@@ -260,3 +262,5 @@
 ---
 
 > 以上是个人在学习 Foundation 框架的一些源码分析和猜想，如果想了解更多的 *iOS Source Probe* 系列文章，可以访问 github 仓库 [iOS-Source-Probe](https://github.com/Desgard/iOS-Source-Probe)。
+
+

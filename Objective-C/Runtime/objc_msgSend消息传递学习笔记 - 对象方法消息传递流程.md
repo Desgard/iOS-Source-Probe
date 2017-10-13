@@ -2,6 +2,8 @@
 
 > 原文链接：[Guardia · 瓜地](https://desgard.com/2016/08/07/objc_msgSend1/)
 
+# 对象方法消息传递流程
+
 在*Effective Objective-C 2.0 - 52 Specific Ways to Improve Your iOS and OS X Programs*一书中，*tip 11*主要讲述了Objective-C中的消息传递机制。这也是Objective-C在C的基础上，做的最基础也是最重要的封装。
 
 ## Static Binding And Dynamic Binding

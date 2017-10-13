@@ -3,7 +3,7 @@
 > 原文链接：[Guardia · 瓜地](http://www.desgard.com/block2/)
 
 
-# 浅谈 block（2） - 截获变量方式
+# 浅谈 block - 截获变量方式
 
 本文会通过 clang 的 `-rewrite-objc` 选项来分析 block 的 C 转换源代码。其分析方式在该系列上一篇有详细介绍。请先阅读 *[浅谈 block（1） - clang 改写后的 block 结构](https://desgard.com/block1/)* 。
 

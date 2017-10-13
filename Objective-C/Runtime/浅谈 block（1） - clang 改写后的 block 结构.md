@@ -3,6 +3,8 @@
 > 原文链接：[Guardia · 瓜地](https://desgard.com/2016/08/11/copy/)
 
 
+# 浅谈 block - clang 改写后的 block 结构
+
 这几天为了巩固知识，从 iOS 的各个知识点开始学习，希望自己对每一个知识理解的更加深入的了解。这次来分享一下 block 的学习笔记。
 
 ## block 简介
@@ -294,3 +296,4 @@ inside:  0x10d48e080
 [clang官方文档：block 扩展语法](http://clang.llvm.org/docs/BlockLanguageSpec.html)
 
 > 若想查看更多的iOS Source Probe文章，收录在这个[Github仓库中](https://github.com/Desgard/iOS-Source-Probe)。
+
