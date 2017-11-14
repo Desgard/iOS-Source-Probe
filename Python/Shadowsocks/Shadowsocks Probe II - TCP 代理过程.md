@@ -1,10 +1,10 @@
 > 作者：冬瓜
 
-> 原文链接：[Guardia · 瓜地](http://www.desgard.com/Shadowsocks-1/)
+> 原文链接：[Guardia · 瓜地](http://www.desgard.com/Shadowsocks-2/)
 
 # Shadowsocks Probe II - TCP 代理过程
 
->（续 [Shadowsocks Probe I - Socks5 与 EventLoop 事件分发]()）
+>（续 [Shadowsocks Probe I - Socks5 与 EventLoop 事件分发](https://github.com/Desgard/iOS-Source-Probe/blob/master/Python/Shadowsocks/Shadowsocks%20Probe%20I%20-%20Socks5%20%E4%B8%8E%20EventLoop%20%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91.md)）
 
 ## TCPRelay 及 Socket 监听事件
 
