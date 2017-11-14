@@ -3,9 +3,13 @@
 (图片设计：**[冬瓜](https://www.behance.net/gallery/41562273/Gua-iOS-Source-Prode)**）
 ## Link
 
-Gitbook：[iOS-Source-Probe](http://www.desgard.com/iOS-Source-Probe/)
+Gitbook：[iOS 源码探求](https://www.gitbook.com/book/desgard/source-probe/details)
 
 个人博客：[Guardia · 瓜地](http://desgard.com)
+
+小专栏：[iOS 源码探求](https://xiaozhuanlan.com/ios-source-probe)
+
+> 其中**小专栏**需要付费，其他均为免费。当然如果觉得其中收录文章有价值，欢迎到小专栏付费阅读。**如果需要下载成 pdf、mobi 或 epub 可以到 Gitbook 上免费下载。**
 
 ## Description
 
