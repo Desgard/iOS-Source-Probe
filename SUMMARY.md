@@ -39,5 +39,6 @@
   * [Swift Probe - Optional](Swift/Swift Probe - Optional.md)
 
 ## Part 7 - Shadowsocks 源码分析
-* Shadowsocks v4.0
+* Shadowsocks v2.9.1
   * [Shadowsocks Probe I - Socks5 与 EventLoop 事件分发](Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.md)
+  * [Shadowsocks Probe II - TCP 代理过程](Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.md)
