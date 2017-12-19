@@ -13,9 +13,11 @@
   * [浅谈 block - clang 改写后的 block 结构](Objective-C/Runtime/浅谈 block（1） - clang 改写后的 block 结构.md)
   * [浅谈 block - 截获变量方式](Objective-C/Runtime/浅谈 block（2） - 截获变量方式.md)
 
-## Part 2 - macOS & iOS 系统源码分析 
+## Part 2 - macOS & iOS 系统源码及相关开源库 
 * cctools/include/mach-o 895
   * [Mach-O 文件格式探索](C/mach-o/Mach-O 文件格式探索.md)
+* Fishhook
+  * [巧用符号表 - 探求 fishhook 原理（一）](C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.md)
 
 ## Part 3 - Foundation 框架源码分析
 * Foundation
@@ -42,3 +44,5 @@
 * Shadowsocks v2.9.1
   * [Shadowsocks Probe I - Socks5 与 EventLoop 事件分发](Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.md)
   * [Shadowsocks Probe II - TCP 代理过程](Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.md)
+
+
