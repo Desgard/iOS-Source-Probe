@@ -3,7 +3,8 @@
 	"plugins": [
 		"splitter",
 		"github",
-		"multipart"
+		"multipart",
+		"mathjax"
 	],
 	"pluginsConfig": {
 		"github": {
