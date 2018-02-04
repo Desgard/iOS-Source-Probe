@@ -18,6 +18,7 @@
   * [Mach-O 文件格式探索](C/mach-o/Mach-O 文件格式探索.md)
 * Fishhook
   * [巧用符号表 - 探求 fishhook 原理（一）](C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.md)
+  * [验证试验 - 探求 fishhook 原理（二）](C/fishhook/验证试验 - 探求 fishhook 原理（二）.md)
 
 ## Part 3 - Foundation 框架源码分析
 * Foundation
