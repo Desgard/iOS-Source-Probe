@@ -254,8 +254,8 @@ def __init__(self, config, dns_resolver, is_local, stat_callback=None):
        except socket.error:
            logging.error('warning: fast open is not available')
            self._config['fast_open'] = False
-   # 监听 1024 端口
-   server_socket.listen(1024)
+   # 允许连接数 @vegaoqiang 勘误
+   server_socket.listen(1024)
    self._server_socket = server_socket
    self._stat_callback = stat_callback
 ```
