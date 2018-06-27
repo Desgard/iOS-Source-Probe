@@ -44,11 +44,9 @@ class Simplex(object):
 
 
 if __name__ == '__main__':
-    t = Simplex([-1, -14, -6])
-    t.add_constraint([1, 1, 1], 4)
-    t.add_constraint([1, 0, 0], 2)
-    t.add_constraint([0, 0, 1], 3)
-    t.add_constraint([0, 3, 1], 6)
+    t = Simplex([1, 2])
+    t.add_constraint([1, 1], 2)
+    t.add_constraint([1, 1], 1)
     print(t.solve)
     print(t.mat)
 
