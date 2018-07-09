@@ -1,0 +1,1082 @@
+
+<!DOCTYPE HTML>
+<html lang="cn" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>weak 弱引用的实现方式 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-multipart/multipart.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="load 方法全程跟踪.html" />
+    
+    
+    <link rel="prev" href="用 isa 承载对象的类信息.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 1 - iOS Runtime 源码解析</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" >
+            
+                <span>
+            
+                    
+                    objc/runtime.h 708
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="浅谈Associated Objects.html">
+            
+                <a href="浅谈Associated Objects.html">
+            
+                    
+                    浅谈Associated Objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                <a href="objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                    
+                    对象方法消息传递流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.3" data-path="objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                <a href="objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                    
+                    消息转发过程分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.4" data-path="用 isa 承载对象的类信息.html">
+            
+                <a href="用 isa 承载对象的类信息.html">
+            
+                    
+                    用 isa 承载对象的类信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.1.5" data-path="weak 弱引用的实现方式.html">
+            
+                <a href="weak 弱引用的实现方式.html">
+            
+                    
+                    weak 弱引用的实现方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.6" data-path="load 方法全程跟踪.html">
+            
+                <a href="load 方法全程跟踪.html">
+            
+                    
+                    load 方法全程跟踪
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.7" data-path="浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                <a href="浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                    
+                    浅谈 block - clang 改写后的 block 结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.8" data-path="浅谈 block（2） - 截获变量方式.html">
+            
+                <a href="浅谈 block（2） - 截获变量方式.html">
+            
+                    
+                    浅谈 block - 截获变量方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 2 - macOS & iOS 系统源码及相关开源库</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <span>
+            
+                    
+                    cctools/include/mach-o 895
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                <a href="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                    
+                    Mach-O 文件格式探索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" >
+            
+                <span>
+            
+                    
+                    Fishhook
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                <a href="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                    
+                    巧用符号表 - 探求 fishhook 原理（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                <a href="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                    
+                    验证试验 - 探求 fishhook 原理（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 3 - Foundation 框架源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" >
+            
+                <span>
+            
+                    
+                    Foundation
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="../Foundation/从经典问题来看 Copy 方法.html">
+            
+                <a href="../Foundation/从经典问题来看 Copy 方法.html">
+            
+                    
+                    从经典问题来看 Copy 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="../Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                <a href="../Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                    
+                    CFArray 的历史渊源及实现原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="../Foundation/Run Loop 记录与源码注释.html">
+            
+                <a href="../Foundation/Run Loop 记录与源码注释.html">
+            
+                    
+                    Run Loop 记录与源码注释(作者Kylin)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 4 - UIKit 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" >
+            
+                <span>
+            
+                    
+                    UIKit
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.1.1" data-path="../Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                <a href="../Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                    
+                    复用的精妙 - UITableView 复用技术原理分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.1.2" data-path="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                <a href="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                    
+                    AutoLayout 中的线性规划 - Simplex 算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 5 - SDWebImage 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" >
+            
+                <span>
+            
+                    
+                    SDWebImage v3.8.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1.1" data-path="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                    
+                    SDWebImage Source Probe: WebCache
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.2" data-path="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                    
+                    SDWebImage Source Probe: Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.3" data-path="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                    
+                    SDWebImage Source Probe: Downloader
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.4" data-path="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                    
+                    SDWebImage Source Probe: Operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 6 - Swift 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" >
+            
+                <span>
+            
+                    
+                    Swift v4.0
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.1.1" data-path="../../Swift/Swift Probe - Optional.html">
+            
+                <a href="../../Swift/Swift Probe - Optional.html">
+            
+                    
+                    Swift Probe - Optional
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 7 - Shadowsocks 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" >
+            
+                <span>
+            
+                    
+                    Shadowsocks v2.9.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="8.1.1" data-path="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                    
+                    Shadowsocks Probe I - Socks5 与 EventLoop 事件分发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.1.2" data-path="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                    
+                    Shadowsocks Probe II - TCP 代理过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >weak 弱引用的实现方式</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>&#x4F5C;&#x8005;&#xFF1A;&#x51AC;&#x74DC;</p>
+<p>&#x539F;&#x6587;&#x94FE;&#x63A5;&#xFF1A;<a href="https://desgard.com/weak" target="_blank">Guardia &#xB7; &#x74DC;&#x5730;</a></p>
+</blockquote>
+<h1 id="weak-&#x5F31;&#x5F15;&#x7528;&#x7684;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;">weak &#x5F31;&#x5F15;&#x7528;&#x7684;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;</h1>
+<p>&#x5BF9;&#x4E8E; runtime &#x7684;&#x5206;&#x6790;&#x8FD8;&#x6709;&#x5F88;&#x957F;&#x7684;&#x8DEF;&#xFF0C;&#x6700;&#x8FD1;&#x5728;&#x5199; block &#x7CFB;&#x5217;&#x7684;&#x540C;&#x65F6;&#xFF0C;&#x4E5F;&#x56DE;&#x987E;&#x4E00;&#x4E0B;&#x4E4B;&#x524D;&#x758F;&#x6F0F;&#x7684;&#x7EC6;&#x8282;&#x77E5;&#x8BC6;&#x3002;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x662F;&#x5173;&#x4E8E; weak &#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x4EE5;&#x53CA;&#x5176;&#x751F;&#x547D;&#x5468;&#x671F;&#x7684;&#x5B66;&#x4E60;&#x7B14;&#x8BB0;&#x3002;</p>
+<h2 id="runtime-&#x5BF9;-weak-&#x5F31;&#x5F15;&#x7528;&#x5904;&#x7406;&#x65B9;&#x5F0F;">runtime &#x5BF9; __weak &#x5F31;&#x5F15;&#x7528;&#x5904;&#x7406;&#x65B9;&#x5F0F;</h2>
+<p>&#x5207;&#x5165;&#x4E3B;&#x9898;&#xFF0C;&#x8FD9;&#x91CC;&#x7B14;&#x8005;&#x4F7F;&#x7528;&#x7684; runtime &#x7248;&#x672C;&#x4E3A; <a href="http://opensource.apple.com/tarballs/objc4/" target="_blank">objc4-680.tar.gz</a>&#x3002;
+&#x6211;&#x5728;&#x5165;&#x53E3;&#x6587;&#x4EF6; main.m &#x4E2D;&#x52A0;&#x5165;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> * argv[])</span> </span>{
+    @autoreleasepool {
+        <span class="hljs-comment">// insert code here...</span>
+        NSObject *p = [[NSObject alloc] init];
+        __weak NSObject *p1 = p;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x5355;&#x6B65;&#x8FD0;&#x884C;&#xFF0C;&#x53D1;&#x73B0;&#x4F1A;&#x8DF3;&#x5165; <code>NSObject.mm</code> &#x4E2D;&#x7684; <code>objc_initWeak()</code> &#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x3002;&#x5728;&#x8FDB;&#x884C;&#x7F16;&#x8BD1;&#x8FC7;&#x7A0B;&#x524D;&#xFF0C;clang &#x5176;&#x5B9E;&#x5BF9; __weak &#x505A;&#x4E86;&#x8F6C;&#x6362;&#xFF0C;&#x5C06;&#x58F0;&#x660E;&#x65B9;&#x5F0F;&#x505A;&#x51FA;&#x4E86;&#x5982;&#x4E0B;&#x8C03;&#x6574;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-function">NSObject <span class="hljs-title">objc_initWeak</span><span class="hljs-params">(&amp;p, &#x5BF9;&#x8C61;&#x6307;&#x9488;)</span></span>;
+</code></pre>
+<p>&#x5176;&#x4E2D;&#x7684;&#x5BF9;&#x8C61;&#x6307;&#x9488;&#xFF0C;&#x5C31;&#x662F;&#x4EE3;&#x7801;&#x4E2D;&#x7684; <code>[[NSObject alloc] init]</code> &#xFF0C;&#x800C; p &#x662F;&#x6211;&#x4EEC;&#x4F20;&#x5165;&#x7684;&#x4E00;&#x4E2A;&#x5F31;&#x5F15;&#x7528;&#x6307;&#x9488;&#x3002;&#x800C;&#x5BF9;&#x4E8E; <code>objc_initWeak()</code> &#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x5728; runtime &#x4E2D;&#x7684;&#x6E90;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-function">id <span class="hljs-title">objc_initWeak</span><span class="hljs-params">(id *location, id newObj)</span> </span>{
+    <span class="hljs-comment">// &#x67E5;&#x770B;&#x5BF9;&#x8C61;&#x5B9E;&#x4F8B;&#x662F;&#x5426;&#x6709;&#x6548;</span>
+    <span class="hljs-comment">// &#x65E0;&#x6548;&#x5BF9;&#x8C61;&#x76F4;&#x63A5;&#x5BFC;&#x81F4;&#x6307;&#x9488;&#x91CA;&#x653E;</span>
+    <span class="hljs-keyword">if</span> (!newObj) {
+        *location = nil;
+        <span class="hljs-keyword">return</span> nil;
+    }
+
+    <span class="hljs-comment">// &#x8FD9;&#x91CC;&#x4F20;&#x9012;&#x4E86;&#x4E09;&#x4E2A; bool &#x6570;&#x503C;</span>
+    <span class="hljs-comment">// &#x4F7F;&#x7528; template &#x8FDB;&#x884C;&#x5E38;&#x91CF;&#x53C2;&#x6570;&#x4F20;&#x9012;&#x662F;&#x4E3A;&#x4E86;&#x4F18;&#x5316;&#x6027;&#x80FD;</span>
+    <span class="hljs-keyword">return</span> storeWeak&lt;<span class="hljs-literal">false</span><span class="hljs-comment">/*old*/</span>, <span class="hljs-literal">true</span><span class="hljs-comment">/*new*/</span>, <span class="hljs-literal">true</span><span class="hljs-comment">/*crash*/</span>&gt;
+        (location, (objc_object*)newObj);
+}
+</code></pre>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x4EC5;&#x4EC5;&#x662F;&#x4E00;&#x4E2A;&#x6DF1;&#x5C42;&#x51FD;&#x6570;&#x7684;&#x8C03;&#x7528;&#x5165;&#x53E3;&#xFF0C;&#x800C;&#x4E00;&#x822C;&#x7684;&#x5165;&#x53E3;&#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x90FD;&#x4F1A;&#x505A;&#x4E00;&#x4E9B;&#x7B80;&#x5355;&#x7684;&#x5224;&#x65AD;&#xFF08;&#x4F8B;&#x5982; objc_msgSend &#x4E2D;&#x7684;&#x7F13;&#x5B58;&#x5224;&#x65AD;&#xFF09;&#xFF0C;&#x8FD9;&#x91CC;&#x5224;&#x65AD;&#x4E86;&#x5176;&#x6307;&#x9488;&#x6307;&#x5411;&#x7684;&#x7C7B;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x6709;&#x6548;&#xFF0C;&#x65E0;&#x6548;&#x76F4;&#x63A5;&#x91CA;&#x653E;&#xFF0C;&#x4E0D;&#x518D;&#x5F80;&#x6DF1;&#x5C42;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x5F53;&#x4FEE;&#x6539;&#x5F31;&#x5F15;&#x7528;&#x7684;&#x53D8;&#x91CF;&#x65F6;&#xFF0C;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x975E;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x3002;&#x6240;&#x4EE5;&#x5207;&#x8BB0;&#x9009;&#x62E9;&#x7ADE;&#x4E89;&#x5E26;&#x6765;&#x7684;&#x4E00;&#x4E9B;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#x7EE7;&#x7EED;&#x9605;&#x8BFB; <code>objc_storeWeak()</code> &#x7684;&#x5B9E;&#x73B0;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// HaveOld:     true - &#x53D8;&#x91CF;&#x6709;&#x503C;</span>
+<span class="hljs-comment">//             false - &#x9700;&#x8981;&#x88AB;&#x53CA;&#x65F6;&#x6E05;&#x7406;&#xFF0C;&#x5F53;&#x524D;&#x503C;&#x53EF;&#x80FD;&#x4E3A; nil</span>
+<span class="hljs-comment">// HaveNew:     true - &#x9700;&#x8981;&#x88AB;&#x5206;&#x914D;&#x7684;&#x65B0;&#x503C;&#xFF0C;&#x5F53;&#x524D;&#x503C;&#x53EF;&#x80FD;&#x4E3A; nil</span>
+<span class="hljs-comment">//             false - &#x4E0D;&#x9700;&#x8981;&#x5206;&#x914D;&#x65B0;&#x503C;</span>
+<span class="hljs-comment">// CrashIfDeallocating: true - &#x8BF4;&#x660E; newObj &#x5DF2;&#x7ECF;&#x91CA;&#x653E;&#x6216;&#x8005; newObj &#x4E0D;&#x652F;&#x6301;&#x5F31;&#x5F15;&#x7528;&#xFF0C;&#x8BE5;&#x8FC7;&#x7A0B;&#x9700;&#x8981;&#x6682;&#x505C;</span>
+<span class="hljs-comment">//             false - &#x7528; nil &#x66FF;&#x4EE3;&#x5B58;&#x50A8;</span>
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">bool</span> HaveOld, <span class="hljs-keyword">bool</span> HaveNew, <span class="hljs-keyword">bool</span> CrashIfDeallocating&gt;
+<span class="hljs-function"><span class="hljs-keyword">static</span> id <span class="hljs-title">storeWeak</span><span class="hljs-params">(id *location, objc_object *newObj)</span> </span>{
+    <span class="hljs-comment">// &#x8BE5;&#x8FC7;&#x7A0B;&#x7528;&#x6765;&#x66F4;&#x65B0;&#x5F31;&#x5F15;&#x7528;&#x6307;&#x9488;&#x7684;&#x6307;&#x5411;</span>
+
+    <span class="hljs-comment">// &#x521D;&#x59CB;&#x5316; previouslyInitializedClass &#x6307;&#x9488;</span>
+    Class previouslyInitializedClass = nil;
+    id oldObj;
+
+    <span class="hljs-comment">// &#x58F0;&#x660E;&#x4E24;&#x4E2A; SideTable</span>
+    <span class="hljs-comment">// &#x2460; &#x65B0;&#x65E7;&#x6563;&#x5217;&#x521B;&#x5EFA;</span>
+    SideTable *oldTable;
+    SideTable *newTable;
+
+    <span class="hljs-comment">// &#x83B7;&#x5F97;&#x65B0;&#x503C;&#x548C;&#x65E7;&#x503C;&#x7684;&#x9501;&#x5B58;&#x4F4D;&#x7F6E;&#xFF08;&#x7528;&#x5730;&#x5740;&#x4F5C;&#x4E3A;&#x552F;&#x4E00;&#x6807;&#x793A;&#xFF09;</span>
+    <span class="hljs-comment">// &#x901A;&#x8FC7;&#x5730;&#x5740;&#x6765;&#x5EFA;&#x7ACB;&#x7D22;&#x5F15;&#x6807;&#x5FD7;&#xFF0C;&#x9632;&#x6B62;&#x6876;&#x91CD;&#x590D;</span>
+    <span class="hljs-comment">// &#x4E0B;&#x9762;&#x6307;&#x5411;&#x7684;&#x64CD;&#x4F5C;&#x4F1A;&#x6539;&#x53D8;&#x65E7;&#x503C;</span>
+  retry:
+    <span class="hljs-keyword">if</span> (HaveOld) {
+        <span class="hljs-comment">// &#x66F4;&#x6539;&#x6307;&#x9488;&#xFF0C;&#x83B7;&#x5F97;&#x4EE5; oldObj &#x4E3A;&#x7D22;&#x5F15;&#x6240;&#x5B58;&#x50A8;&#x7684;&#x503C;&#x5730;&#x5740;</span>
+        oldObj = *location;
+        oldTable = &amp;SideTables()[oldObj];
+    } <span class="hljs-keyword">else</span> {
+        oldTable = nil;
+    }
+    <span class="hljs-keyword">if</span> (HaveNew) {
+        <span class="hljs-comment">// &#x66F4;&#x6539;&#x65B0;&#x503C;&#x6307;&#x9488;&#xFF0C;&#x83B7;&#x5F97;&#x4EE5; newObj &#x4E3A;&#x7D22;&#x5F15;&#x6240;&#x5B58;&#x50A8;&#x7684;&#x503C;&#x5730;&#x5740;</span>
+        newTable = &amp;SideTables()[newObj];
+    } <span class="hljs-keyword">else</span> {
+        newTable = nil;
+    }
+
+    <span class="hljs-comment">// &#x52A0;&#x9501;&#x64CD;&#x4F5C;&#xFF0C;&#x9632;&#x6B62;&#x591A;&#x7EBF;&#x7A0B;&#x4E2D;&#x7ADE;&#x4E89;&#x51B2;&#x7A81;</span>
+    SideTable::lockTwo&lt;HaveOld, HaveNew&gt;(oldTable, newTable);
+
+    <span class="hljs-comment">// &#x907F;&#x514D;&#x7EBF;&#x7A0B;&#x51B2;&#x7A81;&#x91CD;&#x5904;&#x7406;</span>
+    <span class="hljs-comment">// location &#x5E94;&#x8BE5;&#x4E0E; oldObj &#x4FDD;&#x6301;&#x4E00;&#x81F4;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x540C;&#xFF0C;&#x8BF4;&#x660E;&#x5F53;&#x524D;&#x7684; location &#x5DF2;&#x7ECF;&#x5904;&#x7406;&#x8FC7; oldObj &#x53EF;&#x662F;&#x53C8;&#x88AB;&#x5176;&#x4ED6;&#x7EBF;&#x7A0B;&#x6240;&#x4FEE;&#x6539;</span>
+    <span class="hljs-keyword">if</span> (HaveOld  &amp;&amp;  *location != oldObj) {
+        SideTable::unlockTwo&lt;HaveOld, HaveNew&gt;(oldTable, newTable);
+        <span class="hljs-keyword">goto</span> retry;
+    }
+
+    <span class="hljs-comment">// &#x9632;&#x6B62;&#x5F31;&#x5F15;&#x7528;&#x95F4;&#x6B7B;&#x9501;</span>
+    <span class="hljs-comment">// &#x5E76;&#x4E14;&#x901A;&#x8FC7; +initialize &#x521D;&#x59CB;&#x5316;&#x6784;&#x9020;&#x5668;&#x4FDD;&#x8BC1;&#x6240;&#x6709;&#x5F31;&#x5F15;&#x7528;&#x7684; isa &#x975E;&#x7A7A;&#x6307;&#x5411;</span>
+    <span class="hljs-keyword">if</span> (HaveNew  &amp;&amp;  newObj) {
+        <span class="hljs-comment">// &#x83B7;&#x5F97;&#x65B0;&#x5BF9;&#x8C61;&#x7684; isa &#x6307;&#x9488;</span>
+        Class cls = newObj-&gt;getIsa();
+
+        <span class="hljs-comment">// &#x5224;&#x65AD; isa &#x975E;&#x7A7A;&#x4E14;&#x5DF2;&#x7ECF;&#x521D;&#x59CB;&#x5316;</span>
+        <span class="hljs-keyword">if</span> (cls != previouslyInitializedClass  &amp;&amp;  
+            !((objc_class *)cls)-&gt;isInitialized()) {
+            <span class="hljs-comment">// &#x89E3;&#x9501;</span>
+            SideTable::unlockTwo&lt;HaveOld, HaveNew&gt;(oldTable, newTable);
+            <span class="hljs-comment">// &#x5BF9;&#x5176; isa &#x6307;&#x9488;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;</span>
+            _class_initialize(_class_getNonMetaClass(cls, (id)newObj));
+
+            <span class="hljs-comment">// &#x5982;&#x679C;&#x8BE5;&#x7C7B;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x6267;&#x884C; +initialize &#x65B9;&#x6CD5;&#x662F;&#x6700;&#x7406;&#x60F3;&#x60C5;&#x51B5;</span>
+            <span class="hljs-comment">// &#x5982;&#x679C;&#x8BE5;&#x7C7B; +initialize &#x5728;&#x7EBF;&#x7A0B;&#x4E2D; </span>
+            <span class="hljs-comment">// &#x4F8B;&#x5982; +initialize &#x6B63;&#x5728;&#x8C03;&#x7528; storeWeak &#x65B9;&#x6CD5;</span>
+            <span class="hljs-comment">// &#x9700;&#x8981;&#x624B;&#x52A8;&#x5BF9;&#x5176;&#x589E;&#x52A0;&#x4FDD;&#x62A4;&#x7B56;&#x7565;&#xFF0C;&#x5E76;&#x8BBE;&#x7F6E; previouslyInitializedClass &#x6307;&#x9488;&#x8FDB;&#x884C;&#x6807;&#x8BB0;</span>
+            previouslyInitializedClass = cls;
+
+            <span class="hljs-comment">// &#x91CD;&#x65B0;&#x5C1D;&#x8BD5;</span>
+            <span class="hljs-keyword">goto</span> retry;
+        }
+    }
+
+    <span class="hljs-comment">// &#x2461; &#x6E05;&#x9664;&#x65E7;&#x503C;</span>
+    <span class="hljs-keyword">if</span> (HaveOld) {
+        weak_unregister_no_lock(&amp;oldTable-&gt;weak_table, oldObj, location);
+    }
+
+    <span class="hljs-comment">// &#x2462; &#x5206;&#x914D;&#x65B0;&#x503C;</span>
+    <span class="hljs-keyword">if</span> (HaveNew) {
+        newObj = (objc_object *)weak_register_no_lock(&amp;newTable-&gt;weak_table, 
+                                                      (id)newObj, location, 
+                                                      CrashIfDeallocating);
+        <span class="hljs-comment">// &#x5982;&#x679C;&#x5F31;&#x5F15;&#x7528;&#x88AB;&#x91CA;&#x653E; weak_register_no_lock &#x65B9;&#x6CD5;&#x8FD4;&#x56DE; nil </span>
+
+        <span class="hljs-comment">// &#x5728;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x8868;&#x4E2D;&#x8BBE;&#x7F6E;&#x82E5;&#x5F15;&#x7528;&#x6807;&#x8BB0;&#x4F4D;</span>
+        <span class="hljs-keyword">if</span> (newObj  &amp;&amp;  !newObj-&gt;isTaggedPointer()) {
+            <span class="hljs-comment">// &#x5F31;&#x5F15;&#x7528;&#x4F4D;&#x521D;&#x59CB;&#x5316;&#x64CD;&#x4F5C;</span>
+            <span class="hljs-comment">// &#x5F15;&#x7528;&#x8BA1;&#x6570;&#x90A3;&#x5F20;&#x6563;&#x5217;&#x8868;&#x7684;weak&#x5F15;&#x7528;&#x5BF9;&#x8C61;&#x7684;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x4E2D;&#x6807;&#x8BC6;&#x4E3A;weak&#x5F15;&#x7528;</span>
+            newObj-&gt;setWeaklyReferenced_nolock();
+        }
+
+        <span class="hljs-comment">// &#x4E4B;&#x524D;&#x4E0D;&#x8981;&#x8BBE;&#x7F6E; location &#x5BF9;&#x8C61;&#xFF0C;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x66F4;&#x6539;&#x6307;&#x9488;&#x6307;&#x5411;</span>
+        *location = (id)newObj;
+    }
+    <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// &#x6CA1;&#x6709;&#x65B0;&#x503C;&#xFF0C;&#x5219;&#x65E0;&#x9700;&#x66F4;&#x6539;</span>
+    }
+
+    SideTable::unlockTwo&lt;HaveOld, HaveNew&gt;(oldTable, newTable);
+
+    <span class="hljs-keyword">return</span> (id)newObj;
+}
+</code></pre>
+<p>&#x5176;&#x4E2D;&#x6807;&#x6CE8;&#x7684;&#x4E00;&#x4E9B;&#x8981;&#x70B9;&#xFF0C;&#x5F00;&#x59CB;&#x9010;&#x4E00;&#x4ECB;&#x7ECD;&#xFF1A;</p>
+<h2 id="&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x548C;&#x5F31;&#x5F15;&#x7528;&#x4F9D;&#x8D56;&#x8868;-sidetable">&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x548C;&#x5F31;&#x5F15;&#x7528;&#x4F9D;&#x8D56;&#x8868; SideTable</h2>
+<p><code>SideTable</code> &#x8FD9;&#x4E2A;&#x7ED3;&#x6784;&#x4F53;&#xFF0C;&#x6211;&#x7ED9;&#x4ED6;&#x8D77;&#x540D;<strong>&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x548C;&#x5F31;&#x5F15;&#x7528;&#x4F9D;&#x8D56;&#x8868;</strong>&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x7BA1;&#x7406;&#x5BF9;&#x8C61;&#x7684;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x548C; <code>weak</code> &#x8868;&#x3002;&#x5728; <code>NSObject.mm</code> &#x4E2D;&#x58F0;&#x660E;&#x5176;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> SideTable {
+    <span class="hljs-comment">// &#x4FDD;&#x8BC1;&#x539F;&#x5B50;&#x64CD;&#x4F5C;&#x7684;&#x81EA;&#x65CB;&#x9501;</span>
+    <span class="hljs-keyword">spinlock_t</span> slock;
+    <span class="hljs-comment">// &#x5F15;&#x7528;&#x8BA1;&#x6570;&#x7684; hash &#x8868;</span>
+    RefcountMap refcnts;
+    <span class="hljs-comment">// weak &#x5F15;&#x7528;&#x5168;&#x5C40; hash &#x8868;</span>
+    <span class="hljs-keyword">weak_table_t</span> weak_table;
+}
+</code></pre>
+<p>&#x5728;&#x4E4B;&#x524D;&#x7684; runtime &#x7248;&#x672C;&#x4E2D;&#xFF0C;&#x6709;&#x4E00;&#x4E2A;&#x8F83;&#x4E3A;&#x91CD;&#x8981;&#x7684;&#x6210;&#x5458;&#x65B9;&#x6CD5;&#xFF0C;&#x7528;&#x6765;&#x6839;&#x636E;&#x5BF9;&#x8C61;&#x7684;&#x5730;&#x5740;&#x5728;&#x7F13;&#x5B58;&#x4E2D;&#x53D6;&#x51FA;&#x5BF9;&#x5E94;&#x7684; <code>SideTable</code> &#x5B9E;&#x4F8B;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> SideTable *<span class="hljs-title">tableForPointer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *p)</span></span>;
+</code></pre>
+<p>&#x800C;&#x5728;&#x4E0A;&#x9762; <code>objc_storeWeak</code> &#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x53D6;&#x51FA;&#x5B9E;&#x4F8B;&#x7684;&#x65B9;&#x6CD5;&#x53D8;&#x6210;&#x4E86; <code>&amp;SideTables()[xxxObj];</code> &#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x3002;&#x67E5;&#x770B;&#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x53D1;&#x73B0;&#x4E86;&#x5982;&#x4E0B;&#x51FD;&#x6570;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">static</span> StripedMap&lt;SideTable&gt;&amp; SideTables() {
+    <span class="hljs-keyword">return</span> *<span class="hljs-keyword">reinterpret_cast</span>&lt;StripedMap&lt;SideTable&gt;*&gt;(SideTableBuf);
+}
+</code></pre>
+<p>&#x5728;&#x53D6;&#x51FA;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#x4E2D;&#xFF0C;&#x4F7F;&#x7528;&#x4E86; C++ &#x6807;&#x51C6;&#x8F6C;&#x6362;&#x8FD0;&#x7B97;&#x7B26; <strong>reinterpret_cast</strong> &#xFF0C;&#x5176;&#x8868;&#x8FBE;&#x65B9;&#x5F0F;&#x4E3A;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">reinterpret_cast</span> &lt;new_type&gt; (expression)
+</code></pre>
+<p>&#x7528;&#x6765;&#x5904;&#x7406;&#x65E0;&#x5173;&#x7C7B;&#x578B;&#x4E4B;&#x95F4;&#x7684;&#x8F6C;&#x6362;&#x3002;&#x8BE5;&#x5173;&#x952E;&#x5B57;&#x4F1A;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;&#x65B0;&#x503C;&#xFF0C;&#x5E76;<strong>&#x4FDD;&#x8BC1;&#x4E0E;&#x539F;&#x53C2;&#x6570;&#xFF08;expression&#xFF09;&#x62E5;&#x6709;&#x5B8C;&#x5168;&#x76F8;&#x540C;&#x7684;&#x6BD4;&#x7279;&#x4F4D;</strong>&#x3002;</p>
+<p>&#x800C; <code>StripedMap</code> &#x662F;&#x4E00;&#x4E2A;&#x6A21;&#x677F;&#x7C7B;&#xFF08;Template Class&#xFF09;&#xFF0C;&#x901A;&#x8FC7;&#x4F20;&#x5165;&#x7C7B;&#xFF08;&#x7ED3;&#x6784;&#x4F53;&#xFF09;&#x53C2;&#x6570;&#xFF0C;&#x4F1A;&#x52A8;&#x6001;&#x4FEE;&#x6539;&#x5728;&#x8BE5;&#x7C7B;&#x4E2D;&#x7684;&#x4E00;&#x4E2A; <code>array</code> &#x6210;&#x5458;&#x5B58;&#x50A8;&#x7684;&#x5143;&#x7D20;&#x7C7B;&#x578B;&#xFF0C;&#x5E76;&#x4E14;&#x5176;&#x4E2D;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x9488;&#x5BF9;&#x4E8E;&#x5730;&#x5740;&#x7684; hash &#x7B97;&#x6CD5;&#xFF0C;&#x7528;&#x4F5C;&#x5B58;&#x50A8; key&#x3002;&#x53EF;&#x4EE5;&#x8BF4;&#xFF0C; <code>StripedMap</code> &#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x5957;&#x62E5;&#x6709;&#x5C06;&#x5730;&#x5740;&#x4F5C;&#x4E3A; key &#x7684; hash table &#x89E3;&#x51B3;&#x65B9;&#x6848;&#xFF0C;&#x800C;&#x8BE5;&#x65B9;&#x6848;&#x91C7;&#x7528;&#x4E86;&#x6A21;&#x677F;&#x7C7B;&#xFF0C;&#x662F;&#x62E5;&#x6709;&#x6CDB;&#x578B;&#x6027;&#x7684;&#x3002;</p>
+<p>&#x4ECB;&#x7ECD;&#x4E86;&#x4E0E;&#x5BF9;&#x8C61;&#x76F8;&#x5173;&#x8054;&#x7684; SideTable &#x68C0;&#x7D22;&#x65B9;&#x5F0F;&#xFF0C;&#x518D;&#x6765;&#x770B; SideTable &#x7684;&#x6210;&#x5458;&#x548C;&#x4F5C;&#x7528;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E; slock &#x548C; refcnts &#x4E24;&#x4E2A;&#x6210;&#x5458;&#x4E0D;&#x7528;&#x591A;&#x8BF4;&#xFF0C;&#x7B2C;&#x4E00;&#x4E2A;&#x662F;&#x4E3A;&#x4E86;&#x9632;&#x6B62;&#x7ADE;&#x4E89;&#x9009;&#x62E9;&#x7684;&#x81EA;&#x65CB;&#x9501;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x662F;&#x534F;&#x52A9;&#x5BF9;&#x8C61;&#x7684; isa &#x6307;&#x9488;&#x7684; <code>extra_rc</code> &#x5171;&#x540C;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x7684;&#x53D8;&#x91CF;&#xFF08;&#x5BF9;&#x4E8E;&#x5BF9;&#x8C61;&#x7ED3;&#x679C;&#xFF0C;&#x5728;&#x4ECA;&#x540E;&#x7684;&#x6587;&#x4E2D;&#x63D0;&#x5230;&#xFF09;&#x3002;&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x770B; <code>weak</code> &#x5168;&#x5C40; hash &#x8868;&#x7684;&#x7ED3;&#x6784;&#x4E0E;&#x4F5C;&#x7528;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> <span class="hljs-keyword">weak_table_t</span> {
+    <span class="hljs-comment">// &#x4FDD;&#x5B58;&#x4E86;&#x6240;&#x6709;&#x6307;&#x5411;&#x6307;&#x5B9A;&#x5BF9;&#x8C61;&#x7684; weak &#x6307;&#x9488;</span>
+    <span class="hljs-keyword">weak_entry_t</span> *weak_entries;
+    <span class="hljs-comment">// &#x5B58;&#x50A8;&#x7A7A;&#x95F4;</span>
+    <span class="hljs-keyword">size_t</span>    num_entries;
+    <span class="hljs-comment">// &#x53C2;&#x4E0E;&#x5224;&#x65AD;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x8F85;&#x52A9;&#x91CF;</span>
+    <span class="hljs-keyword">uintptr_t</span> mask;
+    <span class="hljs-comment">// hash key &#x6700;&#x5927;&#x504F;&#x79FB;&#x503C;</span>
+    <span class="hljs-keyword">uintptr_t</span> max_hash_displacement;
+};
+</code></pre>
+<p>&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x5168;&#x5C40;&#x5F31;&#x5F15;&#x7528;&#x8868;&#x3002;&#x4F7F;&#x7528;&#x4E0D;&#x5B9A;&#x7C7B;&#x578B;&#x5BF9;&#x8C61;&#x7684;&#x5730;&#x5740;&#x4F5C;&#x4E3A; key &#xFF0C;&#x7528; weak_entry_t &#x7C7B;&#x578B;&#x7ED3;&#x6784;&#x4F53;&#x5BF9;&#x8C61;&#x4F5C;&#x4E3A; value &#x3002;&#x5176;&#x4E2D;&#x7684; weak_entries &#x6210;&#x5458;&#xFF0C;&#x4ECE;&#x5B57;&#x9762;&#x610F;&#x601D;&#x4E0A;&#x770B;&#xFF0C;&#x5373;&#x4E3A;&#x5F31;&#x5F15;&#x7528;&#x8868;&#x5165;&#x53E3;&#x3002;&#x5176;&#x5B9E;&#x73B0;&#x4E5F;&#x662F;&#x8FD9;&#x6837;&#x7684;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">typedef</span> objc_object ** <span class="hljs-keyword">weak_referrer_t</span>;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-keyword">weak_entry_t</span> {
+    DisguisedPtr&lt;objc_object&gt; referent;
+    <span class="hljs-keyword">union</span> {
+        <span class="hljs-keyword">struct</span> {
+            <span class="hljs-keyword">weak_referrer_t</span> *referrers;
+            <span class="hljs-keyword">uintptr_t</span>        out_of_line : <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">uintptr_t</span>        num_refs : PTR_MINUS_1;
+            <span class="hljs-keyword">uintptr_t</span>        mask;
+            <span class="hljs-keyword">uintptr_t</span>        max_hash_displacement;
+        };
+        <span class="hljs-keyword">struct</span> {
+            <span class="hljs-comment">// out_of_line=0 is LSB of one of these (don&apos;t care which)</span>
+            <span class="hljs-keyword">weak_referrer_t</span>  inline_referrers[WEAK_INLINE_COUNT];
+        };
+ }
+</code></pre>
+<p>&#x5728; weak_entry_t &#x7684;&#x7ED3;&#x6784;&#x4E2D;&#xFF0C;<code>DisguisedPtr&lt;objc_object&gt; referent</code> &#x662F;&#x5BF9;&#x6CDB;&#x578B;&#x5BF9;&#x8C61;&#x7684;&#x6307;&#x9488;&#x505A;&#x4E86;&#x4E00;&#x4E2A;&#x5C01;&#x88C5;&#xFF0C;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x6CDB;&#x578B;&#x7C7B;&#x6765;&#x89E3;&#x51B3;&#x5185;&#x5B58;&#x6CC4;&#x6F0F;&#x7684;&#x95EE;&#x9898;&#x3002;&#x4ECE;&#x6CE8;&#x91CA;&#x4E2D;&#x5199; <code>out_of_line</code> &#x6210;&#x5458;&#x4E3A;&#x6700;&#x4F4E;&#x6709;&#x6548;&#x4F4D;&#xFF0C;&#x5F53;&#x5176;&#x4E3A;0&#x7684;&#x65F6;&#x5019;&#xFF0C; <code>weak_referrer_t</code> &#x6210;&#x5458;&#x5C06;&#x6269;&#x5C55;&#x4E3A;&#x591A;&#x884C;&#x9759;&#x6001; hash table&#x3002;&#x5176;&#x5B9E;&#x5176;&#x4E2D;&#x7684; <code>weak_referrer_t</code> &#x662F;&#x4E8C;&#x7EF4; <code>objc_object</code> &#x7684;&#x522B;&#x540D;&#xFF0C;&#x901A;&#x8FC7;&#x4E00;&#x4E2A;&#x4E8C;&#x7EF4;&#x6307;&#x9488;&#x5730;&#x5740;&#x504F;&#x79FB;&#xFF0C;&#x7528;&#x4E0B;&#x6807;&#x4F5C;&#x4E3A; hash &#x7684; key&#xFF0C;&#x505A;&#x6210;&#x4E86;&#x4E00;&#x4E2A;&#x5F31;&#x5F15;&#x7528;&#x6563;&#x5217;&#x3002;</p>
+<p>&#x90A3;&#x4E48;&#x5728;&#x6709;&#x6548;&#x4F4D;&#x672A;&#x751F;&#x6548;&#x7684;&#x65F6;&#x5019;&#xFF0C;<code>out_of_line</code> &#x3001; <code>num_refs</code>&#x3001; <code>mask</code> &#x3001; <code>max_hash_displacement</code> &#x6709;&#x4EC0;&#x4E48;&#x4F5C;&#x7528;&#xFF1F;&#x4EE5;&#x4E0B;&#x662F;&#x7B14;&#x8005;&#x81EA;&#x8EAB;&#x7684;&#x731C;&#x6D4B;&#xFF1A;</p>
+<ul>
+<li><strong>out_of_line</strong>&#xFF1A;&#x6700;&#x4F4E;&#x6709;&#x6548;&#x4F4D;&#xFF0C;&#x4E5F;&#x662F;&#x6807;&#x5FD7;&#x4F4D;&#x3002;&#x5F53;&#x6807;&#x5FD7;&#x4F4D; 0 &#x65F6;&#xFF0C;&#x589E;&#x52A0;&#x5F15;&#x7528;&#x8868;&#x6307;&#x9488;&#x7EAC;&#x5EA6;&#x3002;</li>
+<li><strong>num_refs</strong>&#xFF1A;&#x5F15;&#x7528;&#x6570;&#x503C;&#x3002;&#x8FD9;&#x91CC;&#x8BB0;&#x5F55;&#x5F31;&#x5F15;&#x7528;&#x8868;&#x4E2D;&#x5F15;&#x7528;&#x6709;&#x6548;&#x6570;&#x5B57;&#xFF0C;&#x56E0;&#x4E3A;&#x5F31;&#x5F15;&#x7528;&#x8868;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x9759;&#x6001; hash &#x7ED3;&#x6784;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x53D8;&#x91CF;&#x6765;&#x8BB0;&#x5F55;&#x6570;&#x76EE;&#x3002;</li>
+<li><strong>mask</strong>&#xFF1A;&#x8BA1;&#x6570;&#x8F85;&#x52A9;&#x91CF;&#x3002;</li>
+<li><strong>max_hash_displacement</strong>&#xFF1A;hash &#x5143;&#x7D20;&#x4E0A;&#x9650;&#x9600;&#x503C;&#x3002;</li>
+</ul>
+<p>&#x5176;&#x5B9E; out_of_line &#x7684;&#x503C;&#x901A;&#x5E38;&#x60C5;&#x51B5;&#x4E0B;&#x662F;&#x7B49;&#x4E8E;&#x96F6;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x5F31;&#x5F15;&#x7528;&#x8868;&#x603B;&#x662F;&#x4E00;&#x4E2A; objc_objective &#x6307;&#x9488;&#x4E8C;&#x7EF4;&#x6570;&#x7EC4;&#x3002;&#x4E00;&#x7EF4; objc_objective &#x6307;&#x9488;&#x53EF;&#x6784;&#x6210;&#x4E00;&#x5F20;&#x5F31;&#x5F15;&#x7528;&#x6563;&#x5217;&#x8868;&#xFF0C;&#x901A;&#x8FC7;&#x7B2C;&#x4E09;&#x7EAC;&#x5EA6;&#x5B9E;&#x73B0;&#x4E86;&#x591A;&#x5F20;&#x6563;&#x5217;&#x8868;&#xFF0C;&#x5E76;&#x4E14;&#x8868;&#x6570;&#x91CF;&#x4E3A; WEAK_INLINE_COUNT &#x3002;</p>
+<p>&#x603B;&#x7ED3;&#x4E00;&#x4E0B; <code>StripedMap&lt;SideTable&gt;[]</code> &#xFF1A; <code>StripedMap</code> &#x662F;&#x4E00;&#x4E2A;&#x6A21;&#x677F;&#x7C7B;&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x7C7B;&#x4E2D;&#x6709;&#x4E00;&#x4E2A; array &#x6210;&#x5458;&#xFF0C;&#x7528;&#x6765;&#x5B58;&#x50A8; PaddedT &#x5BF9;&#x8C61;&#xFF0C;&#x5E76;&#x4E14;&#x5176;&#x4E2D;&#x5BF9;&#x4E8E; <code>[]</code> &#x7B26;&#x7684;&#x91CD;&#x8F7D;&#x5B9A;&#x4E49;&#x4E2D;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x8FD9;&#x4E2A; PaddedT &#x7684; value &#x6210;&#x5458;&#xFF0C;&#x8FD9;&#x4E2A; value &#x5C31;&#x662F;&#x6211;&#x4EEC;&#x4F20;&#x5165;&#x7684; T &#x6CDB;&#x578B;&#x6210;&#x5458;&#xFF0C;&#x4E5F;&#x5C31;&#x662F; SideTable &#x5BF9;&#x8C61;&#x3002;&#x5728; array &#x7684;&#x4E0B;&#x6807;&#x4E2D;&#xFF0C;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x4E86; indexForPointer &#x65B9;&#x6CD5;&#x901A;&#x8FC7;&#x4F4D;&#x8FD0;&#x7B97;&#x8BA1;&#x7B97;&#x4E0B;&#x6807;&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;&#x9759;&#x6001;&#x7684; Hash Table&#x3002;&#x800C;&#x5728; weak_table &#x4E2D;&#xFF0C;&#x5176;&#x6210;&#x5458; weak_entry &#x4F1A;&#x5C06;&#x4F20;&#x5165;&#x5BF9;&#x8C61;&#x7684;&#x5730;&#x5740;&#x52A0;&#x4EE5;&#x5C01;&#x88C5;&#x8D77;&#x6765;&#xFF0C;&#x5E76;&#x4E14;&#x5176;&#x4E2D;&#x4E5F;&#x6709;&#x8BBF;&#x95EE;&#x5168;&#x5C40;&#x5F31;&#x5F15;&#x7528;&#x8868;&#x7684;&#x5165;&#x53E3;&#x3002;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/sidetable.png" alt=""></p>
+<h2 id="&#x65E7;&#x5BF9;&#x8C61;&#x89E3;&#x9664;&#x6CE8;&#x518C;&#x64CD;&#x4F5C;-weakunregisternolock">&#x65E7;&#x5BF9;&#x8C61;&#x89E3;&#x9664;&#x6CE8;&#x518C;&#x64CD;&#x4F5C; weak_unregister_no_lock</h2>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> WEAK_INLINE_COUNT 4</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">weak_unregister_no_lock</span><span class="hljs-params">(weak_table_t *weak_table, id referent_id, 
+                        id *referrer_id)</span> </span>{
+    <span class="hljs-comment">// &#x5728;&#x5165;&#x53E3;&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x4F20;&#x5165;&#x4E86; weak_table &#x5F31;&#x5F15;&#x7528;&#x8868;&#xFF0C;referent_id &#x65E7;&#x5BF9;&#x8C61;&#x4EE5;&#x53CA; referent_id &#x65E7;&#x5BF9;&#x8C61;&#x5BF9;&#x5E94;&#x7684;&#x5730;&#x5740;</span>
+    <span class="hljs-comment">// &#x7528;&#x6307;&#x9488;&#x53BB;&#x8BBF;&#x95EE; oldObj &#x548C; *location  </span>
+    objc_object *referent = (objc_object *)referent_id;
+    objc_object **referrer = (objc_object **)referrer_id;
+
+    <span class="hljs-keyword">weak_entry_t</span> *entry;
+    <span class="hljs-comment">// &#x5982;&#x679C;&#x5176;&#x5BF9;&#x8C61;&#x4E3A; nil&#xFF0C;&#x65E0;&#x9700;&#x53D6;&#x6D88;&#x6CE8;&#x518C;</span>
+    <span class="hljs-keyword">if</span> (!referent) <span class="hljs-keyword">return</span>;
+    <span class="hljs-comment">// weak_entry_for_referent &#x6839;&#x636E;&#x9996;&#x5BF9;&#x8C61;&#x67E5;&#x627E; weak_entry</span>
+    <span class="hljs-keyword">if</span> ((entry = weak_entry_for_referent(weak_table, referent))) {
+        <span class="hljs-comment">// &#x901A;&#x8FC7;&#x5730;&#x5740;&#x6765;&#x89E3;&#x9664;&#x5F15;&#x7528;&#x5173;&#x8054;    </span>
+        remove_referrer(entry, referrer);
+        <span class="hljs-keyword">bool</span> empty = <span class="hljs-literal">true</span>;
+        <span class="hljs-comment">// &#x68C0;&#x6D4B; out_of_line &#x4F4D;&#x7684;&#x60C5;&#x51B5;</span>
+        <span class="hljs-comment">// &#x68C0;&#x6D4B; num_refs &#x4F4D;&#x7684;&#x60C5;&#x51B5;</span>
+        <span class="hljs-keyword">if</span> (entry-&gt;out_of_line  &amp;&amp;  entry-&gt;num_refs != <span class="hljs-number">0</span>) {
+            empty = <span class="hljs-literal">false</span>;
+        }
+        <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// &#x5C06;&#x5F15;&#x7528;&#x8868;&#x4E2D;&#x8BB0;&#x5F55;&#x4E3A;&#x7A7A;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; WEAK_INLINE_COUNT; i++) {
+                <span class="hljs-keyword">if</span> (entry-&gt;inline_referrers[i]) {
+                    empty = <span class="hljs-literal">false</span>; 
+                    <span class="hljs-keyword">break</span>;
+                }
+            }
+        }
+    <span class="hljs-comment">// &#x4ECE;&#x5F31;&#x5F15;&#x7528;&#x7684; zone &#x8868;&#x4E2D;&#x5220;&#x9664;</span>
+        <span class="hljs-keyword">if</span> (empty) {
+            weak_entry_remove(weak_table, entry);
+        }
+    }
+
+    <span class="hljs-comment">// &#x8FD9;&#x91CC;&#x4E0D;&#x4F1A;&#x8BBE;&#x7F6E; *referrer = nil&#xFF0C;&#x56E0;&#x4E3A; objc_storeWeak() &#x51FD;&#x6570;&#x4F1A;&#x9700;&#x8981;&#x8BE5;&#x6307;&#x9488;</span>
+}
+</code></pre>
+<p>&#x8BE5;&#x65B9;&#x6CD5;&#x4E3B;&#x8981;&#x4F5C;&#x7528;&#x662F;&#x5C06;&#x65E7;&#x5BF9;&#x8C61;&#x5728; weak_table &#x4E2D;&#x63A5;&#x89E6; weak &#x6307;&#x9488;&#x7684;&#x5BF9;&#x5E94;&#x7ED1;&#x5B9A;&#x3002;&#x6839;&#x636E;&#x51FD;&#x6570;&#x540D;&#xFF0C;&#x79F0;&#x4E4B;&#x4E3A;&#x89E3;&#x9664;&#x6CE8;&#x518C;&#x64CD;&#x4F5C;&#x3002;&#x4ECE;&#x6E90;&#x7801;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x5176;&#x529F;&#x80FD;&#x5C31;&#x662F;&#x4ECE; weak_table &#x4E2D;&#x63A5;&#x89E6; weak &#x6307;&#x9488;&#x7684;&#x7ED1;&#x5B9A;&#x3002;&#x800C;&#x5176;&#x4E2D;&#x7684;&#x904D;&#x5386;&#x67E5;&#x8BE2;&#xFF0C;&#x5C31;&#x662F;&#x9488;&#x5BF9;&#x4E8E; weak_entry &#x4E2D;&#x7684;&#x591A;&#x5F20;&#x5F31;&#x5F15;&#x7528;&#x6563;&#x5217;&#x8868;&#x3002;</p>
+<h2 id="&#x65B0;&#x5BF9;&#x8C61;&#x6DFB;&#x52A0;&#x6CE8;&#x518C;&#x64CD;&#x4F5C;-weakregisternolock">&#x65B0;&#x5BF9;&#x8C61;&#x6DFB;&#x52A0;&#x6CE8;&#x518C;&#x64CD;&#x4F5C; weak_register_no_lock</h2>
+<pre><code class="lang-c"><span class="hljs-function">id <span class="hljs-title">weak_register_no_lock</span><span class="hljs-params">(weak_table_t *weak_table, id referent_id,
+                      id *referrer_id, <span class="hljs-keyword">bool</span> crashIfDeallocating)</span> </span>{
+    <span class="hljs-comment">// &#x5728;&#x5165;&#x53E3;&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x4F20;&#x5165;&#x4E86; weak_table &#x5F31;&#x5F15;&#x7528;&#x8868;&#xFF0C;referent_id &#x65E7;&#x5BF9;&#x8C61;&#x4EE5;&#x53CA; referent_id &#x65E7;&#x5BF9;&#x8C61;&#x5BF9;&#x5E94;&#x7684;&#x5730;&#x5740;</span>
+    <span class="hljs-comment">// &#x7528;&#x6307;&#x9488;&#x53BB;&#x8BBF;&#x95EE; oldObj &#x548C; *location</span>
+    objc_object *referent = (objc_object *)referent_id;
+    objc_object **referrer = (objc_object **)referrer_id;
+
+    <span class="hljs-comment">// &#x68C0;&#x6D4B;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x751F;&#x6548;&#x3001;&#x4EE5;&#x53CA;&#x662F;&#x5426;&#x4F7F;&#x7528;&#x4E86; tagged pointer &#x6280;&#x672F;</span>
+    <span class="hljs-keyword">if</span> (!referent  ||  referent-&gt;isTaggedPointer()) <span class="hljs-keyword">return</span> referent_id;
+
+    <span class="hljs-comment">// &#x4FDD;&#x8BC1;&#x5F15;&#x7528;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x6709;&#x6548;</span>
+    <span class="hljs-comment">// hasCustomRR &#x65B9;&#x6CD5;&#x68C0;&#x67E5;&#x7C7B;&#xFF08;&#x5305;&#x62EC;&#x5176;&#x7236;&#x7C7B;&#xFF09;&#x4E2D;&#x662F;&#x5426;&#x542B;&#x6709;&#x9ED8;&#x8BA4;&#x7684;&#x65B9;&#x6CD5;</span>
+    <span class="hljs-keyword">bool</span> deallocating;
+    <span class="hljs-keyword">if</span> (!referent-&gt;ISA()-&gt;hasCustomRR()) {
+        <span class="hljs-comment">// &#x68C0;&#x67E5; dealloc &#x72B6;&#x6001;</span>
+        deallocating = referent-&gt;rootIsDeallocating();
+    }
+    <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// &#x4F1A;&#x8FD4;&#x56DE; referent &#x7684; SEL_allowsWeakReference &#x65B9;&#x6CD5;&#x7684;&#x5730;&#x5740;</span>
+        BOOL (*allowsWeakReference)(objc_object *, SEL) = 
+            (BOOL(*)(objc_object *, SEL))
+            object_getMethodImplementation((id)referent, 
+                                           SEL_allowsWeakReference);
+        <span class="hljs-keyword">if</span> ((IMP)allowsWeakReference == _objc_msgForward) {
+            <span class="hljs-keyword">return</span> nil;
+        }
+        deallocating =
+            ! (*allowsWeakReference)(referent, SEL_allowsWeakReference);
+    }
+    <span class="hljs-comment">// &#x7531;&#x4E8E; dealloc &#x5BFC;&#x81F4; crash &#xFF0C;&#x5E76;&#x8F93;&#x51FA;&#x65E5;&#x5FD7;</span>
+    <span class="hljs-keyword">if</span> (deallocating) {
+        <span class="hljs-keyword">if</span> (crashIfDeallocating) {
+            _objc_fatal(<span class="hljs-string">&quot;Cannot form weak reference to instance (%p) of &quot;</span>
+                        <span class="hljs-string">&quot;class %s. It is possible that this object was &quot;</span>
+                        <span class="hljs-string">&quot;over-released, or is in the process of deallocation.&quot;</span>,
+                        (<span class="hljs-keyword">void</span>*)referent, object_getClassName((id)referent));
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> nil;
+        }
+    }
+
+    <span class="hljs-comment">// &#x8BB0;&#x5F55;&#x5E76;&#x5B58;&#x50A8;&#x5BF9;&#x5E94;&#x5F15;&#x7528;&#x8868; weak_entry</span>
+    <span class="hljs-keyword">weak_entry_t</span> *entry;
+    <span class="hljs-comment">// &#x5BF9;&#x4E8E;&#x7ED9;&#x5B9A;&#x7684;&#x5F31;&#x5F15;&#x7528;&#x67E5;&#x8BE2; weak_table</span>
+    <span class="hljs-keyword">if</span> ((entry = weak_entry_for_referent(weak_table, referent))) {
+        <span class="hljs-comment">// &#x589E;&#x52A0;&#x5F31;&#x5F15;&#x7528;&#x8868;&#x4E8E;&#x9644;&#x52A0;&#x5BF9;&#x8C61;&#x4E0A;</span>
+        append_referrer(entry, referrer);
+    } 
+    <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// &#x81EA;&#x884C;&#x521B;&#x5EFA;&#x5F31;&#x5F15;&#x7528;&#x8868;</span>
+        <span class="hljs-keyword">weak_entry_t</span> new_entry;
+        new_entry.referent = referent;
+        new_entry.out_of_line = <span class="hljs-number">0</span>;
+        new_entry.inline_referrers[<span class="hljs-number">0</span>] = referrer;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">1</span>; i &lt; WEAK_INLINE_COUNT; i++) {
+            new_entry.inline_referrers[i] = nil;
+        }
+        <span class="hljs-comment">// &#x5982;&#x679C;&#x7ED9;&#x5B9A;&#x7684;&#x5F31;&#x5F15;&#x7528;&#x8868;&#x6EE1;&#x5BB9;&#xFF0C;&#x8FDB;&#x884C;&#x81EA;&#x589E;&#x957F;</span>
+        weak_grow_maybe(weak_table);
+        <span class="hljs-comment">// &#x5411;&#x5BF9;&#x8C61;&#x6DFB;&#x52A0;&#x5F31;&#x5F15;&#x7528;&#x8868;&#x5173;&#x8054;&#xFF0C;&#x4E0D;&#x8FDB;&#x884C;&#x68C0;&#x67E5;&#x76F4;&#x63A5;&#x4FEE;&#x6539;&#x6307;&#x9488;&#x6307;&#x5411;</span>
+        weak_entry_insert(weak_table, &amp;new_entry);
+    }
+
+    <span class="hljs-comment">// &#x8FD9;&#x91CC;&#x4E0D;&#x4F1A;&#x8BBE;&#x7F6E; *referrer = nil&#xFF0C;&#x56E0;&#x4E3A; objc_storeWeak() &#x51FD;&#x6570;&#x4F1A;&#x9700;&#x8981;&#x8BE5;&#x6307;&#x9488;</span>
+    <span class="hljs-keyword">return</span> referent_id;
+}
+</code></pre>
+<p>&#x8FD9;&#x4E00;&#x6B65;&#x4E0E;&#x4E0A;&#x4E00;&#x6B65;&#x76F8;&#x53CD;&#xFF0C;&#x901A;&#x8FC7; weak_register_no_lock &#x51FD;&#x6570;&#x628A;&#x5FC3;&#x7684;&#x5BF9;&#x8C61;&#x8FDB;&#x884C;&#x6CE8;&#x518C;&#x64CD;&#x4F5C;&#xFF0C;&#x5B8C;&#x6210;&#x4E0E;&#x5BF9;&#x5E94;&#x7684;&#x5F31;&#x5F15;&#x7528;&#x8868;&#x8FDB;&#x884C;&#x7ED1;&#x5B9A;&#x64CD;&#x4F5C;&#x3002;</p>
+<h2 id="&#x521D;&#x59CB;&#x5316;&#x5F31;&#x5F15;&#x7528;&#x5BF9;&#x8C61;&#x6D41;&#x7A0B;&#x4E00;&#x89C8;">&#x521D;&#x59CB;&#x5316;&#x5F31;&#x5F15;&#x7528;&#x5BF9;&#x8C61;&#x6D41;&#x7A0B;&#x4E00;&#x89C8;</h2>
+<p>&#x5F31;&#x5F15;&#x7528;&#x7684;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x4ECE;&#x4E0A;&#x6587;&#x7684;&#x5206;&#x6790;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x4E3B;&#x8981;&#x7684;&#x64CD;&#x4F5C;&#x90E8;&#x5206;&#x5C31;&#x5728;&#x5F31;&#x5F15;&#x7528;&#x8868;&#x7684;&#x53D6;&#x952E;&#x3001;&#x67E5;&#x8BE2;&#x6563;&#x5217;&#x3001;&#x521B;&#x5EFA;&#x5F31;&#x5F15;&#x7528;&#x8868;&#x7B49;&#x64CD;&#x4F5C;&#xFF0C;&#x53EF;&#x4EE5;&#x603B;&#x7ED3;&#x51FA;&#x5982;&#x4E0B;&#x7684;&#x6D41;&#x7A0B;&#x56FE;&#xFF1A;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/weaktable-2.png" alt="weaktable-2"></p>
+<p>&#x8FD9;&#x4E2A;&#x56FE;&#x4E2D;&#x7701;&#x7565;&#x4E86;&#x5F88;&#x591A;&#x60C5;&#x51B5;&#x7684;&#x5224;&#x65AD;&#xFF0C;&#x4F46;&#x662F;&#x5F53;&#x58F0;&#x660E;&#x4E00;&#x4E2A; <code>__weak</code> &#x4F1A;&#x8C03;&#x7528;&#x4E0A;&#x56FE;&#x4E2D;&#x7684;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x3002;&#x5F53;&#x7136;&#xFF0C; <code>storeWeak</code> &#x65B9;&#x6CD5;&#x4E0D;&#x4EC5;&#x4EC5;&#x7528;&#x5728; <code>__weak</code> &#x7684;&#x58F0;&#x660E;&#x4E2D;&#xFF0C;&#x5728; class &#x5185;&#x90E8;&#x7684;&#x64CD;&#x4F5C;&#x4E2D;&#x4E5F;&#x4F1A;&#x5E38;&#x5E38;&#x901A;&#x8FC7;&#x8BE5;&#x65B9;&#x6CD5;&#x6765;&#x5BF9; weak &#x5BF9;&#x8C61;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x4EE5;&#x4E0A;&#x5C31;&#x662F;&#x5BF9;&#x4E8E; weak &#x5F31;&#x5F15;&#x7528;&#x5BF9;&#x8C61;&#x7684;&#x521D;&#x59CB;&#x5316;&#x65F6; runtime &#x5185;&#x90E8;&#x7684;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#xFF0C;&#x60F3;&#x5FC5;&#x9605;&#x8BFB;&#x540E;&#x4F1A;&#x5BF9;&#x5176;&#x7ED3;&#x6784;&#x6709;&#x66F4;&#x6DF1;&#x7684;&#x7406;&#x89E3;&#x3002;</p>
+<blockquote>
+<p>&#x82E5;&#x60F3;&#x67E5;&#x770B;&#x66F4;&#x591A;&#x7684;iOS Source Probe&#x6587;&#x7AE0;&#xFF0C;&#x6536;&#x5F55;&#x5728;&#x8FD9;&#x4E2A;<a href="https://github.com/Desgard/iOS-Source-Probe" target="_blank">Github&#x4ED3;&#x5E93;&#x4E2D;</a>&#x3002;</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="用 isa 承载对象的类信息.html" class="navigation navigation-prev " aria-label="Previous page: 用 isa 承载对象的类信息">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="load 方法全程跟踪.html" class="navigation navigation-next " aria-label="Next page: load 方法全程跟踪">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"weak 弱引用的实现方式","level":"2.1.5","depth":2,"next":{"title":"load 方法全程跟踪","level":"2.1.6","depth":2,"path":"Objective-C/Runtime/load 方法全程跟踪.md","ref":"Objective-C/Runtime/load 方法全程跟踪.md","articles":[]},"previous":{"title":"用 isa 承载对象的类信息","level":"2.1.4","depth":2,"path":"Objective-C/Runtime/用 isa 承载对象的类信息.md","ref":"Objective-C/Runtime/用 isa 承载对象的类信息.md","articles":[]},"dir":"ltr"},"config":{"plugins":["splitter","github","multipart","mathjax"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/Desgard"},"splitter":{},"search":{},"multipart":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"cn","gitbook":"*"},"file":{"path":"Objective-C/Runtime/weak 弱引用的实现方式.md","mtime":"2018-07-09T00:41:04.815Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-09T00:56:45.312Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

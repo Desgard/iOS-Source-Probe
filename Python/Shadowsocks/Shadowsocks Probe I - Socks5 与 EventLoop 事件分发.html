@@ -1,0 +1,1072 @@
+
+<!DOCTYPE HTML>
+<html lang="cn" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Shadowsocks Probe I - Socks5 与 EventLoop 事件分发 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-multipart/multipart.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Shadowsocks Probe II - TCP 代理过程.html" />
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 1 - iOS Runtime 源码解析</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" >
+            
+                <span>
+            
+                    
+                    objc/runtime.h 708
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="../../Objective-C/Runtime/浅谈Associated Objects.html">
+            
+                <a href="../../Objective-C/Runtime/浅谈Associated Objects.html">
+            
+                    
+                    浅谈Associated Objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="../../Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                <a href="../../Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                    
+                    对象方法消息传递流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.3" data-path="../../Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                <a href="../../Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                    
+                    消息转发过程分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.4" data-path="../../Objective-C/Runtime/用 isa 承载对象的类信息.html">
+            
+                <a href="../../Objective-C/Runtime/用 isa 承载对象的类信息.html">
+            
+                    
+                    用 isa 承载对象的类信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.5" data-path="../../Objective-C/Runtime/weak 弱引用的实现方式.html">
+            
+                <a href="../../Objective-C/Runtime/weak 弱引用的实现方式.html">
+            
+                    
+                    weak 弱引用的实现方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.6" data-path="../../Objective-C/Runtime/load 方法全程跟踪.html">
+            
+                <a href="../../Objective-C/Runtime/load 方法全程跟踪.html">
+            
+                    
+                    load 方法全程跟踪
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.7" data-path="../../Objective-C/Runtime/浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                <a href="../../Objective-C/Runtime/浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                    
+                    浅谈 block - clang 改写后的 block 结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.8" data-path="../../Objective-C/Runtime/浅谈 block（2） - 截获变量方式.html">
+            
+                <a href="../../Objective-C/Runtime/浅谈 block（2） - 截获变量方式.html">
+            
+                    
+                    浅谈 block - 截获变量方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 2 - macOS & iOS 系统源码及相关开源库</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <span>
+            
+                    
+                    cctools/include/mach-o 895
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                <a href="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                    
+                    Mach-O 文件格式探索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" >
+            
+                <span>
+            
+                    
+                    Fishhook
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                <a href="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                    
+                    巧用符号表 - 探求 fishhook 原理（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                <a href="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                    
+                    验证试验 - 探求 fishhook 原理（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 3 - Foundation 框架源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" >
+            
+                <span>
+            
+                    
+                    Foundation
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="../../Objective-C/Foundation/从经典问题来看 Copy 方法.html">
+            
+                <a href="../../Objective-C/Foundation/从经典问题来看 Copy 方法.html">
+            
+                    
+                    从经典问题来看 Copy 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="../../Objective-C/Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                <a href="../../Objective-C/Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                    
+                    CFArray 的历史渊源及实现原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="../../Objective-C/Foundation/Run Loop 记录与源码注释.html">
+            
+                <a href="../../Objective-C/Foundation/Run Loop 记录与源码注释.html">
+            
+                    
+                    Run Loop 记录与源码注释(作者Kylin)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 4 - UIKit 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" >
+            
+                <span>
+            
+                    
+                    UIKit
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.1.1" data-path="../../Objective-C/Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                <a href="../../Objective-C/Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                    
+                    复用的精妙 - UITableView 复用技术原理分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.1.2" data-path="../../Objective-C/UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                <a href="../../Objective-C/UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                    
+                    AutoLayout 中的线性规划 - Simplex 算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 5 - SDWebImage 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" >
+            
+                <span>
+            
+                    
+                    SDWebImage v3.8.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1.1" data-path="../../Objective-C/SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                <a href="../../Objective-C/SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                    
+                    SDWebImage Source Probe: WebCache
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.2" data-path="../../Objective-C/SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                <a href="../../Objective-C/SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                    
+                    SDWebImage Source Probe: Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.3" data-path="../../Objective-C/SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                <a href="../../Objective-C/SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                    
+                    SDWebImage Source Probe: Downloader
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.4" data-path="../../Objective-C/SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                <a href="../../Objective-C/SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                    
+                    SDWebImage Source Probe: Operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 6 - Swift 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" >
+            
+                <span>
+            
+                    
+                    Swift v4.0
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.1.1" data-path="../../Swift/Swift Probe - Optional.html">
+            
+                <a href="../../Swift/Swift Probe - Optional.html">
+            
+                    
+                    Swift Probe - Optional
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 7 - Shadowsocks 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" >
+            
+                <span>
+            
+                    
+                    Shadowsocks v2.9.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="8.1.1" data-path="Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                <a href="Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                    
+                    Shadowsocks Probe I - Socks5 与 EventLoop 事件分发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.1.2" data-path="Shadowsocks Probe II - TCP 代理过程.html">
+            
+                <a href="Shadowsocks Probe II - TCP 代理过程.html">
+            
+                    
+                    Shadowsocks Probe II - TCP 代理过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Shadowsocks Probe I - Socks5 与 EventLoop 事件分发</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>&#x4F5C;&#x8005;&#xFF1A;&#x51AC;&#x74DC;</p>
+<p>&#x539F;&#x6587;&#x94FE;&#x63A5;&#xFF1A;<a href="http://www.desgard.com/Shadowsocks-1/" target="_blank">Guardia &#xB7; &#x74DC;&#x5730;</a></p>
+</blockquote>
+<h1 id="shadowsocks-probe-i---socks5-&#x4E0E;-eventloop-&#x4E8B;&#x4EF6;&#x5206;&#x53D1;">Shadowsocks Probe I - Socks5 &#x4E0E; EventLoop &#x4E8B;&#x4EF6;&#x5206;&#x53D1;</h1>
+<h2 id="define-&#x7231;&#x56FD;-&#x79D1;&#x5B66;">#define &#x7231;&#x56FD; &#x79D1;&#x5B66;</h2>
+<p>&#x6700;&#x8FD1; Apple Store &#x5728;&#x5927;&#x9646;&#x4E0B;&#x67B6;&#x4E86;&#x6240;&#x6709; VPN &#x5E94;&#x7528;&#x3002;&#x7136;&#x800C;&#x65E5;&#x5E38;&#x7684;&#x7231;&#x56FD;&#x4E0A;&#x7F51;&#x5DF2;&#x7ECF;&#x6210;&#x4E3A;&#x4E86;&#x521A;&#x9700;&#x3002;&#x8FD9;&#x4E5F;&#x5C31;&#x662F;&#x4FC3;&#x4F7F;&#x6211;&#x9605;&#x8BFB; Shadowsocks &#x6E90;&#x7801;&#x7684;&#x539F;&#x56E0;&#x3002;&#x5E0C;&#x671B;&#x540E;&#x671F;&#x53EF;&#x4EE5;&#x81EA;&#x884C;&#x7F16;&#x5199;&#x79FB;&#x52A8;&#x8BBE;&#x5907;&#x7684; Client &#x7AEF;&#x800C;&#x52AA;&#x529B;&#x3002;</p>
+<h2 id="shadowsocks-&#x7684;&#x539F;&#x7406;&#x521D;&#x63A2;">Shadowsocks &#x7684;&#x539F;&#x7406;&#x521D;&#x63A2;</h2>
+<p>&#x5173;&#x4E8E; Shadowsocks &#x7684;&#x539F;&#x7406;&#xFF0C;&#x6709;&#x4E00;&#x5F20;&#x7ECF;&#x5178;&#x7684;&#x56FE;&#x793A;&#x89E3;&#x91CA;&#x7684;&#x5341;&#x5206;&#x6E05;&#x6670;&#xFF1A;</p>
+<p><img src="media/15024138759233/whats-shadowsocks-041.png" alt="whats-shadowsocks-041"></p>
+<p>&#xFF08;&#x8BE5;&#x56FE;&#x5F15;&#x7528;&#x81EA; <a href="http://vc2tea.com/whats-shadowsocks/" target="_blank">vc2tea &#xB7; &#x5199;&#x7ED9;&#x975E;&#x4E13;&#x4E1A;&#x4EBA;&#x58EB;&#x770B;&#x7684; Shadowsocks &#x7B80;&#x4ECB;</a>&#xFF09;</p>
+<p>Shadowsocks &#x662F;&#x5C06;&#x539F;&#x5148;&#x7684; ssh &#x521B;&#x5EFA;&#x7684; Sock5 &#x534F;&#x8BAE;&#x5206;&#x6210;&#x4E86; Server &#x7AEF;&#x548C; Client &#x7AEF;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x79CD;&#x7C7B; <strong>ssh tunnel</strong> &#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;</p>
+<p>&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x51FA;&#x7684; Socks5 &#x534F;&#x8BAE;&#x4E0E; SS Local &#x8FDB;&#x884C;&#x901A;&#x4FE1;&#x4EE5;&#x540E;&#xFF0C;&#x7531;&#x4E8E; SS Local &#x662F;&#x5F53;&#x524D;&#x4F7F;&#x7528;&#x7AEF;&#x6216;&#x662F;&#x4E00;&#x4E2A;&#x8DEF;&#x7531;&#x5668;&#x8D8A;&#x8FC7; GFW&#xFF0C;&#x4E0E; SS Server &#x8FDB;&#x884C;&#x901A;&#x4FE1;&#xFF0C;&#x907F;&#x514D;&#x4E86; GFW &#x7684;&#x5206;&#x6790;&#x5E72;&#x6270;&#x95EE;&#x9898;&#x3002;&#x5E76;&#x4E14;&#x5728; SS Local &#x548C; SS Server &#x4E24;&#x7AEF;&#x53EF;&#x901A;&#x8FC7;&#x5404;&#x79CD;&#x5404;&#x6837;&#x7684;&#x52A0;&#x5BC6;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x901A;&#x4FE1;&#xFF0C;&#x5E76;&#x4E14;&#x7ECF;&#x8FC7; GFW &#x7684;&#x7F51;&#x7EDC;&#x5305;&#x5C31;&#x662F;&#x5F88;&#x666E;&#x901A;&#x7684; TCP &#x5305;&#xFF0C;&#x6CA1;&#x6709;&#x7279;&#x5F81;&#x7801;&#xFF0C;GFW &#x4E5F;&#x65E0;&#x6CD5;&#x5BF9;&#x5176;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x89E3;&#x5BC6;&#x3002;SS Server &#x5BF9;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x89E3;&#x5BC6;&#xFF0C;&#x8FD8;&#x539F;&#x8BF7;&#x6C42;&#x5E76;&#x89E6;&#x53D1;&#xFF0C;&#x5728;&#x4EE5;&#x76F8;&#x540C;&#x7684;&#x901A;&#x4FE1;&#x65B9;&#x5F0F;&#x56DE;&#x4F20; SS Local&#x3002;</p>
+<p>&#x4E00;&#x53E5;&#x8BDD;&#x603B;&#x7ED3;&#x5C31;&#x662F; Shadowsocks &#x53EF;&#x4EE5;&#x52A0;&#x5BC6;&#x6570;&#x636E;&#x5305;&#x5E76;&#x4F2A;&#x88C5;&#x6210;&#x5E38;&#x89C4;&#x7684; TCP &#x5305;&#xFF0C;&#x4ECE;&#x800C;&#x8FBE;&#x5230;&#x6570;&#x636E;&#x4EA4;&#x4E92;&#x3002;</p>
+<h2 id="socks5-&#x534F;&#x8BAE;">Socks5 &#x534F;&#x8BAE;</h2>
+<p><a href="https://loggerhead.me/posts/shadowsocks-yuan-ma-fen-xi-xie-yi-yu-jie-gou.html" target="_blank">Shadowsocks &#x6E90;&#x7801;&#x5206;&#x6790;&#x2014;&#x2014;&#x534F;&#x8BAE;&#x4E0E;&#x7ED3;&#x6784;</a> &#x8FD9;&#x7BC7;&#x6587;&#x4E2D;&#x8BB2;&#x8FF0;&#x4E86; Socks5 &#x534F;&#x8BAE;&#x7684;&#x4E09;&#x4E2A;&#x8FC7;&#x7A0B;&#xFF1A;<strong>&#x63E1;&#x624B;&#x9636;&#x6BB5;</strong>&#x3001;<strong>&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;</strong>&#x3001;<strong>&#x4F20;&#x8F93;&#x9636;&#x6BB5;</strong>&#x3002;&#x518D;&#x5177;&#x4F53;&#x4E00;&#x4E9B;&#x53EF;&#x5C06;&#x5176;&#x6269;&#x5C55;&#x6210;&#x8FD9;&#x4E48;&#x4E00;&#x4E2A;&#x5DE5;&#x4F5C;&#x6D41;&#xFF1A;</p>
+<ol>
+<li>Client &#x5411; Proxy &#x53D1;&#x51FA;&#x8BF7;&#x6C42;&#x4FE1;&#x606F;&#xFF0C;&#x7528;&#x4EE5;&#x5199;&#x4E0A;&#x4F20;&#x8F93;&#x65B9;&#x5F0F;&#xFF1B;</li>
+<li>Proxy &#x505A;&#x51FA;&#x5E94;&#x7B54;&#xFF1B;</li>
+<li>Client &#x63A5;&#x5230;&#x5E94;&#x7B54;&#x540E;&#x5411; Proxy &#x53D1;&#x9001; <em>Destination Server</em> &#xFF08;&#x5F88;&#x591A;&#x4E66;&#x4E2D;&#x79F0;&#x4E4B;&#x4E3A;<strong>&#x76EE;&#x7684;&#x4E3B;&#x673A;</strong>&#xFF09;&#x7684; IP &#x548C; Port&#xFF1B;</li>
+<li>Proxy &#x6765;&#x8BC4;&#x4F30; <em>Destination Server</em> &#x7684;&#x4E3B;&#x673A;&#x5730;&#x5740;&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;&#x81EA;&#x8EAB;&#x7684; IP &#x548C; Port&#xFF0C;&#x6B64;&#x65F6; C/P &#x7684;&#x94FE;&#x63A5;&#x5EFA;&#x7ACB;&#xFF1B;</li>
+<li>Proxy &#x548C; Dst Server &#x94FE;&#x63A5;&#xFF1B;</li>
+<li>Proxy &#x5C06; Client &#x53D1;&#x51FA;&#x7684;&#x4FE1;&#x606F;&#x4F20;&#x81F3; Server&#xFF0C;&#x5C06; Server &#x54CD;&#x5E94;&#x7684;&#x4FE1;&#x606F;&#x8F6C;&#x53D1;&#x7ED9; Client&#xFF0C;&#x5B8C;&#x6210;&#x6574;&#x4E2A;&#x4EE3;&#x7406;&#x8FC7;&#x7A0B;&#x3002;</li>
+</ol>
+<p>&#x5728; Client &#x8FDE;&#x63A5; Proxy &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x901A;&#x8FC7;&#x7B2C;&#x4E00;&#x4E2A;&#x62A5;&#x6587;&#x4FE1;&#x606F;&#x6765;<strong>&#x534F;&#x5546;&#x8BA4;&#x8BC1;</strong>&#xFF0C;&#x6BD4;&#x5982;&#x5176;&#x4E2D;&#x7684;&#x4FE1;&#x606F;&#x5305;&#x62EC;&#xFF1A;&#x662F;&#x5426;&#x4F7F;&#x7528;&#x7528;&#x6237;&#x540D;/&#x5BC6;&#x7801;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x8BA4;&#x8BC1;&#x7B49;&#x7B49;&#x3002;&#x4EE5;&#x4E0B;&#x662F;&#x683C;&#x5F0F;&#x4FE1;&#x606F;&#xFF0C;&#x6570;&#x5B57;&#x8868;&#x793A;&#x5BF9;&#x5E94;&#x5B57;&#x6BB5;&#x5360;&#x7528;&#x7684; Byte &#x503C;&#xFF1A;</p>
+<pre><code class="lang-bash">+----+----------+----------+
+|VER | NMETHODS | METHODS  |
++----+----------+----------+
+| 1  |    1     |  1~255   |
++----+----------+----------+
+</code></pre>
+<ul>
+<li><code>VER</code>&#xFF1A;&#x662F;&#x5F53;&#x524D;&#x534F;&#x8BAE;&#x7684;&#x7248;&#x672C;&#x53F7;&#xFF0C;&#x8FD9;&#x91CC;&#x662F; <code>5</code>&#xFF1B;</li>
+<li><code>NMETHODS</code>&#xFF1A;&#x662F; <code>METHODS</code> &#x5B57;&#x6BB5;&#x5360;&#x7528;&#x7684; Byte &#x6570;&#xFF1B;</li>
+<li><code>METHOD</code>&#xFF1A;&#x6BCF;&#x4E00;&#x4E2A;&#x5B57;&#x8282;&#x8868;&#x793A;&#x4E00;&#x79CD;&#x8BA4;&#x8BC1;&#x65B9;&#x5F0F;&#xFF0C;&#x8868;&#x793A;&#x5BA2;&#x6237;&#x7AEF;&#x652F;&#x6301;&#x7684;&#x5168;&#x90E8;&#x8BA4;&#x8BC1;&#x65B9;&#x5F0F;&#x3002;</li>
+</ul>
+<p>Proxy &#x5728;&#x6536;&#x5230;&#x5BA2;&#x6237;&#x7AEF;&#x8BF7;&#x6C42;&#x540E;&#xFF0C;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x6709;&#x8BA4;&#x8BC1;&#x65B9;&#x5F0F;&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;&#x4E00;&#x4E0B;&#x683C;&#x5F0F;&#x7684;&#x6D88;&#x606F;&#xFF1A;</p>
+<pre><code class="lang-bash">+----+--------+
+|VER | METHOD |
++----+--------+
+| 1  |   1    |
++----+--------+
+</code></pre>
+<p>&#x5BF9;&#x4E8E; Shadowsocks &#x800C;&#x8A00;&#xFF0C;&#x53EA;&#x6709;&#x4E24;&#x79CD;&#x53EF;&#x80FD;&#xFF1A;</p>
+<ul>
+<li><code>0x05 0x00</code>&#xFF1A;&#x544A;&#x8BC9; Client &#x91C7;&#x7528;&#x65E0;&#x8BA4;&#x8BC1;&#x65B9;&#x5F0F;&#x6765;&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;&#xFF1B;</li>
+<li><code>0x05 0xff</code>&#xFF1A;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x4EFB;&#x610F;&#x4E00;&#x79CD;&#x8BA4;&#x8BC1;&#x65B9;&#x5F0F; Proxy &#x90FD;&#x4E0D;&#x652F;&#x6301;&#x3002;</li>
+</ul>
+<p><img src="media/15024138759233/handshake-time.png" alt="handshake-time"></p>
+<p>&#x5728;&#x63E1;&#x624B;&#x4E4B;&#x540E;&#xFF0C;Client &#x4F1A;&#x5411; Proxy &#x53D1;&#x9001;&#x8BF7;&#x6C42;&#xFF0C;&#x683C;&#x5F0F;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-bash">+----+-----+-------+------+----------+----------+
+|VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |
++----+-----+-------+------+----------+----------+
+| 1  |  1  |   1   |  1   | Variable |    2     |
++----+-----+-------+------+----------+----------+
+</code></pre>
+<ul>
+<li><code>CMD</code>&#xFF1A;&#x4E00;&#x4E9B;&#x914D;&#x7F6E;&#x6807;&#x8BC6;&#xFF0C;Shadowsocks &#x53EA;&#x7528;&#x5230;&#x4E86;&#x4EE5;&#x4E0B;&#x4E24;&#x79CD;&#xFF1A;<ul>
+<li><code>0x01</code>&#xFF1A;&#x5EFA;&#x7ACB; TCP &#x8FDE;&#x63A5;&#xFF1B;</li>
+<li><code>0x03</code>&#xFF1A;&#x5173;&#x8054; UDP &#x8BF7;&#x6C42;&#xFF1B;</li>
+</ul>
+</li>
+<li><code>RSV</code>&#xFF1A;&#x4FDD;&#x7559;&#x5B57;&#x6BB5;&#xFF0C;&#x503C;&#x4E3A; <code>0x00</code>&#xFF1B;</li>
+<li><code>ATYP</code>&#xFF1A;<code>address type</code> &#x7684;&#x7F29;&#x5199;&#xFF0C;&#x53D6;&#x503C;&#x4E3A;&#xFF1A;<ul>
+<li><code>0x01</code>&#xFF1A;IPv4&#xFF1B;</li>
+<li><code>0x03</code>&#xFF1A;&#x57DF;&#x540D;&#xFF1B;</li>
+<li><code>0x04</code>&#xFF1A;IPv6</li>
+</ul>
+</li>
+<li><code>DST.ADDR</code>&#xFF1A;<code>destination address</code> &#x7684;&#x7F29;&#x5199;&#xFF0C;&#x53D6;&#x503C;&#x4F1A;&#x968F;&#x7740; <code>ATYP</code> &#x53D8;&#x5316;&#xFF1A;<ul>
+<li><code>ATYP == 0x01</code>&#xFF1A;4 &#x4E2A;&#x5B57;&#x8282;&#x7684; IPv4 &#x5730;&#x5740;&#xFF1B;</li>
+<li><code>ATYP == 0x03</code>&#xFF1A;1 &#x4E2A;&#x5B57;&#x8282;&#x8868;&#x793A;&#x57DF;&#x540D;&#x957F;&#x5EA6;&#xFF0C;&#x7D27;&#x968F;&#x5176;&#x540E;&#x7684;&#x662F;&#x5BF9;&#x5E94;&#x7684;&#x57DF;&#x540D;&#xFF1B;</li>
+<li><code>ATYP == 0x04</code>&#xFF1A;16 &#x4E2A;&#x5B57;&#x8282;&#x7684; IPv6 &#x5730;&#x5740;&#xFF1B;</li>
+</ul>
+</li>
+<li><code>DST.PORT</code> &#x5B57;&#x6BB5;&#xFF1A;&#x76EE;&#x7684;&#x670D;&#x52A1;&#x5668;&#x7AEF;&#x53E3;&#x53F7;&#x3002;</li>
+</ul>
+<p>&#x5728;&#x6536;&#x5230;&#x8BF7;&#x6C42;&#x540E;&#xFF0C;Proxy &#x4E5F;&#x4F1A;&#x5BF9;&#x5E94;&#x7684;&#x8FD4;&#x56DE;&#x5982;&#x4E0B;&#x683C;&#x5F0F;&#x7684;&#x6D88;&#x606F;&#xFF1A;</p>
+<pre><code class="lang-bash">+----+-----+-------+------+----------+----------+
+|VER | REP |  RSV  | ATYP | BND.ADDR | BND.PORT |
++----+-----+-------+------+----------+----------+
+| 1  |  1  |   1   |  1   | Variable |    2     |
++----+-----+-------+------+----------+----------+
+</code></pre>
+<p><code>REP</code> &#x5B57;&#x6BB5;&#x662F;&#x7528;&#x6765;&#x544A;&#x77E5; Client &#x8BF7;&#x6C42;&#x7684;&#x5904;&#x7406;&#x60C5;&#x51B5;&#xFF0C;&#x6B63;&#x5E38;&#x60C5;&#x51B5;&#x4E0B; Shadowsocks &#x4F1A;&#x5C06;&#x5176;&#x586B;&#x5145;&#x4E3A; <code>0x00</code>&#xFF0C;&#x5426;&#x5219;&#x76F4;&#x63A5;&#x65AD;&#x5F00;&#x8FDE;&#x63A5;&#x3002;&#x5176;&#x4ED6;&#x7684;&#x5B57;&#x6BB5;&#x542B;&#x4E49;&#x5747;&#x540C;&#x53D1;&#x9001;&#x5305;&#x7684;&#x5B57;&#x6BB5;&#x542B;&#x4E49;&#x76F8;&#x540C;&#x3002;</p>
+<p>&#x5728;&#x4E07;&#x4E8B;&#x5177;&#x5907;&#x4E4B;&#x540E;&#xFF0C;Socks5 &#x534F;&#x8BAE;&#x5C31;&#x5B8C;&#x6210;&#x4E86;&#x81EA;&#x8EAB;&#x7684;&#x4E3B;&#x8981;&#x5B9E;&#x540D;&#xFF0C;&#x5728;&#x63E1;&#x624B;&#x548C;&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;&#x4E4B;&#x540E;&#xFF0C;Socks5 &#x7684; Proxy &#x670D;&#x52A1;&#x5668;&#x5C31;&#x53EA;&#x505A;&#x7B80;&#x5355;&#x7684;&#x6D88;&#x606F;&#x8F6C;&#x53D1;&#x3002;&#x6211;&#x4EEC;&#x4EE5;&#x901A;&#x8FC7; Shadowsocks &#x4EE3;&#x7406;&#x6765;&#x8BBF;&#x95EE; <code>apple.com:80</code> &#x4E3A;&#x4F8B;&#xFF0C;&#x6574;&#x4E2A;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="media/15024138759233/visit-apple.com.re.png" alt="visit-apple.com.re"></p>
+<p>&#x800C;&#x4FE1;&#x606F;&#x7684;&#x4F20;&#x8F93;&#x8FC7;&#x7A0B;&#x53EF;&#x80FD;&#x662F;&#x8FD9;&#x6837;&#x7684;&#xFF1A;</p>
+<pre><code class="lang-bash"><span class="hljs-comment"># &#x63E1;&#x624B;&#x9636;&#x6BB5;</span>
+<span class="hljs-comment"># &#x65E0;&#x9A8C;&#x8BC1;&#x6700;&#x7B80;&#x5355;&#x7684;&#x63E1;&#x624B;</span>
+client -&gt; ss: 0x05 0x01 0x00 
+ss -&gt; client: 0x05 0x00
+<span class="hljs-comment"># &#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;</span>
+<span class="hljs-comment"># b&apos;apple.com&apos; &#x8868;&#x793A; &apos;apple.com&apos; &#x7684; ASCII &#x7801;</span>
+client -&gt; ss: 0x05 0x01 0x00 0x03 0x0a b<span class="hljs-string">&apos;apple.com&apos;</span>  0x00 0x50
+ss -&gt; client: 0x05 0x00 0x00 0x01 0x00 0x00 0x00 0x00 0x10 0x10
+<span class="hljs-comment"># &#x4F20;&#x8F93;&#x9636;&#x6BB5;</span>
+client -&gt; ss -&gt; remote
+remote -&gt; ss -&gt; client
+...
+</code></pre>
+<h2 id="shadowsocks-&#x6A21;&#x5757;&#x5212;&#x5206;">Shadowsocks &#x6A21;&#x5757;&#x5212;&#x5206;</h2>
+<p>&#x5728;&#x771F;&#x6B63;&#x6DF1;&#x5165;&#x5230;&#x6E90;&#x7801;&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x770B;&#x770B;&#x5404;&#x4E2A;&#x6A21;&#x5757;&#x7684;&#x4E3B;&#x8981;&#x529F;&#x80FD;&#x5212;&#x5206;&#xFF1A;</p>
+<pre><code class="lang-bash">.(shadowsocks)
+&#x251C;&#x2500;&#x2500; __init__.py
+&#x251C;&#x2500;&#x2500; asyncdns.py <span class="hljs-comment"># &#x5B9E;&#x73B0;&#x4E86;&#x7B80;&#x5355;&#x7684;&#x5F02;&#x6B65; DNS &#x67E5;&#x8BE2;</span>
+&#x251C;&#x2500;&#x2500; common.py <span class="hljs-comment"># &#x63D0;&#x4F9B;&#x4E00;&#x4E9B;&#x5DE5;&#x5177;&#x51FD;&#x6570;&#xFF0C;&#x91CD;&#x8981;&#x7684;&#x662F;&#x89E3;&#x6790; Socks5 &#x8BF7;&#x6C42;</span>
+&#x251C;&#x2500;&#x2500; crypto <span class="hljs-comment"># &#x5C01;&#x88C5;&#x52A0;&#x5BC6;&#x5E93;&#x7684;&#x8C03;&#x7528;</span>
+&#x2502;   &#x251C;&#x2500;&#x2500; __init__.py
+&#x2502;   &#x251C;&#x2500;&#x2500; openssl.py
+&#x2502;   &#x251C;&#x2500;&#x2500; rc4_md5.py
+&#x2502;   &#x251C;&#x2500;&#x2500; sodium.py
+&#x2502;   &#x251C;&#x2500;&#x2500; table.py
+&#x2502;   &#x2514;&#x2500;&#x2500; util.py
+&#x251C;&#x2500;&#x2500; daemon.py <span class="hljs-comment"># &#x7528;&#x4E8E;&#x5B9E;&#x73B0;&#x5B88;&#x62A4;&#x8FDB;&#x7A0B;(daemon)</span>
+&#x251C;&#x2500;&#x2500; encrypt.py <span class="hljs-comment"># &#x63D0;&#x4F9B;&#x7EDF;&#x4E00;&#x7684;&#x52A0;&#x5BC6;&#x548C;&#x89E3;&#x5BC6;&#x63A5;&#x53E3;</span>
+&#x251C;&#x2500;&#x2500; eventloop.py <span class="hljs-comment"># &#x5C01;&#x88C5;&#x4E86; IO &#x5E38;&#x7528;&#x65B9;&#x6CD5; epoll, kqueue &#x548C; select &#xFF0C;&#x63D0;&#x4F9B;&#x7EDF;&#x4E00;&#x63A5;&#x53E3;</span>
+&#x251C;&#x2500;&#x2500; local.py <span class="hljs-comment"># shadowsocks &#x5BA2;&#x6237;&#x7AEF;&#x5165;&#x53E3; - sslocal &#x547D;&#x4EE4;</span>
+&#x251C;&#x2500;&#x2500; lru_cache.py <span class="hljs-comment"># LRU Cache&#xFF0C;&#x8BF4;&#x767D;&#x4E86;&#x5C31;&#x662F;&#x9650;&#x65F6;&#x7F13;&#x5B58;&#xFF0C;&#x8FC7;&#x91CF;&#x5220;&#x9664;&#x7684;&#x4E00;&#x79CD;&#x673A;&#x5236;</span>
+&#x251C;&#x2500;&#x2500; manager.py <span class="hljs-comment"># &#x603B;&#x63A7;&#x5165;&#x53E3;&#xFF0C;&#x7528;&#x4E8E;&#x7EC4;&#x7EC7;&#x7EC4;&#x4EF6;&#x903B;&#x8F91;</span>
+&#x251C;&#x2500;&#x2500; server.py <span class="hljs-comment"># shadowsocks &#x670D;&#x52A1;&#x7AEF; - ssserver &#x547D;&#x4EE4;</span>
+&#x251C;&#x2500;&#x2500; shell.py <span class="hljs-comment"># shell &#x547D;&#x4EE4;&#x5C01;&#x88C5;&#x5305;</span>
+&#x251C;&#x2500;&#x2500; tcprelay.py <span class="hljs-comment"># &#x6838;&#x5FC3;&#x90E8;&#x5206;&#xFF0C;&#x5B9E;&#x73B0;&#x6574;&#x4E2A; Socks5 &#x534F;&#x8BAE;&#xFF0C;&#x8D1F;&#x8D23; TCP &#x4EE3;&#x7406;&#x90E8;&#x5206;</span>
+&#x2514;&#x2500;&#x2500; udprelay.py <span class="hljs-comment"># &#x8D1F;&#x8D23; UDP &#x4EE3;&#x7406;&#x5B9E;&#x73B0;</span>
+</code></pre>
+<p>Shadowsocks &#x5229;&#x7528; Socks5 &#x534F;&#x8BAE;&#x6765;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x4F20;&#x8F93;&#xFF0C;&#x800C;&#x589E;&#x52A0;&#x7684;&#x4E00;&#x4E2A;&#x8FC7;&#x7A0B;&#x5C31;&#x662F;&#x5BF9; TCP &#x5305;&#x7684;&#x6570;&#x636E;&#x52A0;&#x5BC6;&#x3002;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x79F0;&#x4E4B;&#x4E3A;&#x80FD;&#x7231;&#x56FD;&#x4E0A;&#x7F51;&#x7684; Socks5 &#x4EE3;&#x7406;&#xFF1A;</p>
+<p><img src="media/15024138759233/patriotic-networ-2.png" alt="patriotic-networ-2"></p>
+<p>&#x5728;&#x52A0;&#x5BC6;&#x89E3;&#x5BC6;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x6570;&#x636E;&#x7ECF;&#x8FC7; <em>sslocal</em> &#x52A0;&#x5BC6;&#x540E;&#x8F6C;&#x53D1;&#x7ED9; <em>ssserver</em>&#xFF0C;&#x8FD9;&#x662F;&#x8FC7;&#x7A0B;&#x4E2D;&#x6700;&#x91CD;&#x8981;&#x7684;&#x73AF;&#x8282;&#x3002;&#x7136;&#x540E;&#x6211;&#x4EEC;&#x5F00;&#x59CB;&#x5BF9;&#x7EC6;&#x8282;&#x8FDB;&#x884C;&#x5256;&#x6790;&#x3002;</p>
+<h2 id="serverpy-&#x4E00;&#x4E2A;&#x901A;&#x5F80;&#x7231;&#x56FD;&#x7684;&#x5927;&#x95E8;">server.py &#x4E00;&#x4E2A;&#x901A;&#x5F80;&#x7231;&#x56FD;&#x7684;&#x5927;&#x95E8;</h2>
+<p>&#x6211;&#x4EEC;&#x4ECE; <code>server.py</code> &#x8FD9;&#x4E2A;&#x5165;&#x53E3;&#x51FD;&#x6570;&#x5F00;&#x59CB;&#x770B;&#x8D77;&#xFF0C;&#x8FD9;&#x6837;&#x4E5F;&#x4FBF;&#x4E8E;&#x628A;&#x63E1;&#x6574;&#x4F53;&#x4EE3;&#x7801;&#x7684;&#x6D41;&#x7A0B;&#x3002;</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-comment"># &#x914D;&#x7F6E;&#x4EE3;&#x7801;</span>
+    <span class="hljs-comment"># &#x68C0;&#x6D4B; python &#x7248;&#x672C;</span>
+    shell.check_python()
+
+    <span class="hljs-comment"># &#x4ECE;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x83B7;&#x5F97;&#x914D;&#x7F6E;&#x53C2;&#x6570;</span>
+    config = shell.get_config(<span class="hljs-keyword">False</span>)
+
+    <span class="hljs-comment"># &#x6839;&#x636E;&#x914D;&#x7F6E;&#x51B3;&#x5B9A;&#x8981;&#x4E0D;&#x8981;&#x4EE5; daemon &#x7684;&#x65B9;&#x5F0F;&#x8FD0;&#x884C;</span>
+    daemon.daemon_exec(config)
+
+    <span class="hljs-comment"># &#x7AEF;&#x53E3;&#x52A0;&#x5BC6;&#x6A21;&#x5F0F;&#x8F93;&#x51FA; log</span>
+    ...
+    tcp_servers = []
+    udp_servers = []
+
+    <span class="hljs-comment"># dns &#x670D;&#x52A1;&#x5668;&#x914D;&#x7F6E;</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-string">&apos;dns_server&apos;</span> <span class="hljs-keyword">in</span> config:  <span class="hljs-comment"># allow override settings in resolv.conf</span>
+        dns_resolver = asyncdns.DNSResolver(config[<span class="hljs-string">&apos;dns_server&apos;</span>],
+                                            config[<span class="hljs-string">&apos;prefer_ipv6&apos;</span>])
+    <span class="hljs-keyword">else</span>:
+        dns_resolver = asyncdns.DNSResolver(prefer_ipv6=config[<span class="hljs-string">&apos;prefer_ipv6&apos;</span>])
+
+    <span class="hljs-comment"># &#x5C06; port password &#x5B58;&#x5165;&#x7F13;&#x5B58;,&#x4ECE;&#x914D;&#x7F6E;&#x5B57;&#x5178;&#x4E2D;&#x5220;&#x9664;</span>
+    port_password = config[<span class="hljs-string">&apos;port_password&apos;</span>]
+    <span class="hljs-keyword">del</span> config[<span class="hljs-string">&apos;port_password&apos;</span>]
+    <span class="hljs-comment"># &#x4ECE;&#x914D;&#x7F6E;&#x4E2D;&#x8BFB;&#x5165;&#x6BCF;&#x4E00;&#x7EC4;&#x914D;&#x7F6E;&#x4FE1;&#x606F;</span>
+    <span class="hljs-keyword">for</span> port, password <span class="hljs-keyword">in</span> port_password.items():
+
+        a_config = config.copy()
+        a_config[<span class="hljs-string">&apos;server_port&apos;</span>] = int(port)
+        a_config[<span class="hljs-string">&apos;password&apos;</span>] = password
+        logging.info(<span class="hljs-string">&quot;starting server at %s:%d&quot;</span> %
+                     (a_config[<span class="hljs-string">&apos;server&apos;</span>], int(port)))
+        <span class="hljs-comment"># &#x5728;&#x505A;&#x5B8C;&#x5907;&#x4EFD;&#x81F3;&#x5185;&#x5B58;&#x540E;&#x5B9E;&#x4F8B;&#x5316;&#x4E00;&#x4E2A; tcprelay.TCPRelay &#x5E76;&#x653E;&#x5165;&#x6307;&#x5B9A;&#x5BB9;&#x5668;&#x4E2D;</span>
+        tcp_servers.append(tcprelay.TCPRelay(a_config, dns_resolver, <span class="hljs-keyword">False</span>))
+        udp_servers.append(udprelay.UDPRelay(a_config, dns_resolver, <span class="hljs-keyword">False</span>))
+     run_server()  
+
+     <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">run_server</span><span class="hljs-params">()</span>:</span>
+        <span class="hljs-keyword">try</span>:
+            <span class="hljs-comment"># &#x521B;&#x5EFA; EventLoop</span>
+            loop = eventloop.EventLoop()
+            dns_resolver.add_to_loop(loop)
+
+            <span class="hljs-comment"># &#x89C2;&#x5BDF;&#x8005;&#x6A21;&#x5F0F;</span>
+            <span class="hljs-comment"># epoll/kqueue/select &#x89C2;&#x5BDF;&#x8005; socket &#x7684;&#x72B6;&#x6001;</span>
+            <span class="hljs-comment"># &#x5F53; socket &#x72B6;&#x6001;&#x6CD5;&#x4F24;&#x53D8;&#x5316;&#x65F6;,&#x8C03;&#x7528;&#x6D88;&#x606F;&#x5904;&#x7406;&#x51FD;&#x6570;</span>
+            <span class="hljs-comment"># &#x5C06;&#x5DF2;&#x7ECF;&#x6253;&#x5F00;&#x7684; socket &#x6CE8;&#x518C;&#x5230; Eventloop &#x7528;&#x6765;&#x76D1;&#x542C;&#x54CD;&#x5E94;&#x7684;&#x65F6;&#x95F4;</span>
+            list(map(<span class="hljs-keyword">lambda</span> s: s.add_to_loop(loop), tcp_servers + udp_servers))
+
+            daemon.set_user(config.get(<span class="hljs-string">&apos;user&apos;</span>, <span class="hljs-keyword">None</span>))
+            <span class="hljs-comment"># &#x542F;&#x52A8; &#x5FAA;&#x73AF;,&#x7B49;&#x5F85; shadowsocks &#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x8FDE;&#x63A5;</span>
+            loop.run()
+        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+            shell.print_exception(e)
+            sys.exit(<span class="hljs-number">1</span>)
+</code></pre>
+<p>&#x5728; <code>TCPRelay</code> &#x521D;&#x59CB;&#x5316;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x6839;&#x636E;&#x914D;&#x7F6E;&#x9879;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A; Socket &#x5E76;&#x7ED1;&#x5B9A;&#x81F3;&#x6307;&#x5B9A;&#x7AEF;&#x53E3;&#x8FDB;&#x884C;&#x76D1;&#x542C;&#x3002;&#x4E0B;&#x9762;&#x5217;&#x4E3E;&#x6838;&#x5FC3;&#x4EE3;&#x7801;&#xFF1A;</p>
+<pre><code class="lang-python"><span class="hljs-comment"># tcprelay.py</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, config, dns_resolver, is_local, stat_callback=None)</span>:</span>
+    <span class="hljs-comment"># &#x5224;&#x65AD;&#x662F; SS Local &#x8FD8;&#x662F; SS Server&#xFF0C;&#x6B64;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x4E24;&#x7AEF;&#x590D;&#x7528;&#xFF0C;&#x4EC5;&#x4EC5;&#x662F;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x7684; key &#x4E0D;&#x540C;</span>
+   <span class="hljs-keyword">if</span> is_local:
+       listen_addr = config[<span class="hljs-string">&apos;local_address&apos;</span>]
+       listen_port = config[<span class="hljs-string">&apos;local_port&apos;</span>]
+   <span class="hljs-keyword">else</span>:
+       listen_addr = config[<span class="hljs-string">&apos;server&apos;</span>]
+       listen_port = config[<span class="hljs-string">&apos;server_port&apos;</span>]
+   self._listen_port = listen_port
+
+   addrs = socket.getaddrinfo(listen_addr, listen_port, <span class="hljs-number">0</span>,
+                              socket.SOCK_STREAM, socket.SOL_TCP)
+   <span class="hljs-keyword">if</span> len(addrs) == <span class="hljs-number">0</span>:
+       <span class="hljs-keyword">raise</span> Exception(<span class="hljs-string">&quot;can&apos;t get addrinfo for %s:%d&quot;</span> %
+                       (listen_addr, listen_port))
+   af, socktype, proto, canonname, sa = addrs[<span class="hljs-number">0</span>]
+   <span class="hljs-comment"># &#x521B;&#x5EFA; Socket</span>
+   server_socket = socket.socket(af, socktype, proto)
+   server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, <span class="hljs-number">1</span>)
+   <span class="hljs-comment"># &#x7ED1;&#x5B9A;&#x76D1;&#x542C;&#x7AEF;&#x53E3;</span>
+   server_socket.bind(sa)
+   server_socket.setblocking(<span class="hljs-keyword">False</span>)
+   <span class="hljs-keyword">if</span> config[<span class="hljs-string">&apos;fast_open&apos;</span>]:
+       <span class="hljs-keyword">try</span>:
+               <span class="hljs-comment"># &#x8BBE;&#x7F6E; Socket &#x76F8;&#x5173;&#x9009;&#x9879;&#xFF0C;&#x8FD9;&#x91CC;&#x53EA;&#x6709; TCP&#xFF0C;&#x540E;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x662F;&#x9009;&#x9879;&#x503C;&#x7684;&#x7F13;&#x51B2;&#x4EE5;&#x53CA;&#x5176;&#x6700;&#x5927;&#x957F;&#x5EA6;</span>
+           server_socket.setsockopt(socket.SOL_TCP, <span class="hljs-number">23</span>, <span class="hljs-number">5</span>)
+       <span class="hljs-keyword">except</span> socket.error:
+           logging.error(<span class="hljs-string">&apos;warning: fast open is not available&apos;</span>)
+           self._config[<span class="hljs-string">&apos;fast_open&apos;</span>] = <span class="hljs-keyword">False</span>
+   <span class="hljs-comment"># &#x5141;&#x8BB8;&#x8FDE;&#x63A5;&#x6570; @vegaoqiang &#x52D8;&#x8BEF;</span>
+   server_socket.listen(<span class="hljs-number">1024</span>)
+   self._server_socket = server_socket
+   self._stat_callback = stat_callback
+</code></pre>
+<p><code>TCPRelay</code> &#x4E2D;&#x7684; <code>_server_socket</code> &#x8868;&#x793A;&#x7684;&#x662F;&#x6240;&#x76D1;&#x542C;&#x7AEF;&#x53E3;&#x7684; Socket&#x3002;&#x518D;&#x7136;&#x540E;&#x5F53; <code>TCPRelay</code> &#x7684; <code>handle_event</code> &#x903B;&#x8F91;&#x4FBF;&#x5206;&#x6210;&#x4E86;&#x4E24;&#x4E2A;&#x90E8;&#x5206;&#xFF0C;&#x5982;&#x679C;&#x662F; <code>_server_socket</code>&#xFF0C;&#x90A3;&#x4E48;&#x5BA2;&#x6237;&#x7AEF;&#x8BF7;&#x6C42;&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;&#xFF0C;<code>_server_socket</code> &#x8D1F;&#x8D23;&#x63A5;&#x53D7;&#x4E4B;&#x540E;&#x521B;&#x5EFA;&#x7684;&#x65B0;&#x7684; <code>TCPRelayHandler</code>&#xFF1B;&#x5982;&#x679C;&#x4E0D;&#x662F;&#xFF0C;&#x5219;&#x8BF4;&#x660E;&#x5BA2;&#x6237;&#x7AEF;&#x8FDE;&#x63A5;&#x7684;&#x662F;&#x8BFB;&#x5199;&#x4E8B;&#x4EF6;&#xFF0C;&#x76F4;&#x63A5;&#x5206;&#x53D1;&#x5230;&#x5BF9;&#x5E94;&#x7684; <code>TCPRelayHandler</code> &#x8C03;&#x7528; <code>handle_event</code> &#x6765;&#x5904;&#x7406;&#x3002;&#x8FD9;&#x4E00;&#x90E8;&#x5206;&#x7684;&#x8BE6;&#x7EC6;&#x4EE3;&#x7801;&#x5728;&#x540E;&#x9762;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x3002;</p>
+<h2 id="&#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x9636;&#x6BB5;">&#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x9636;&#x6BB5;</h2>
+<p>Shadowsocks &#x5C01;&#x88C5;&#x4E86;&#x4E09;&#x79CD;&#x5E38;&#x89C1;&#x7684; IO &#x590D;&#x7528;&#x65B9;&#x6CD5;&#xFF1A;<code>epoll</code>&#x3001;<code>kqueue</code> &#x548C; <code>select</code>&#xFF0C;&#x5E76;&#x901A;&#x8FC7; <code>eventloop.py</code> &#x63D0;&#x4F9B;&#x7EDF;&#x4E00;&#x7684;&#x63A5;&#x53E3;&#x3002;&#x4E4B;&#x6240;&#x4EE5;&#x8981;&#x7528; OI &#x590D;&#x7528;&#xFF0C;&#x56E0;&#x4E3A;&#x80FD;&#x63D0;&#x4F9B;&#x66F4;&#x597D;&#x7684;&#x6027;&#x80FD;&#x548C;&#x66F4;&#x5C11;&#x7684;&#x5185;&#x5B58;&#x5F00;&#x9500;&#x3002;&#x591A;&#x7EBF;&#x7A0B;&#x65B9;&#x5F0F;&#x5728; PC &#x4E0A;&#x8868;&#x73B0;&#x826F;&#x597D;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x8DEF;&#x7531;&#x5668;&#x4E0A;&#x5C31;&#x8868;&#x73B0;&#x4E0D;&#x4F73;&#x4E86;&#x3002;</p>
+<h3 id="eventlooppy">eventloop.py</h3>
+<p><code>eventloop.py</code> &#x4E3B;&#x8981;&#x903B;&#x8F91;&#x90FD;&#x5728; <code>run</code> &#x65B9;&#x6CD5;&#x4E2D;&#x3002;EventLoop &#x662F; Shadowsocks &#x7684;&#x7F51;&#x7EDC;&#x901A;&#x4FE1;&#x6838;&#x5FC3;&#x6A21;&#x5757;&#xFF0C;&#x5B83;&#x5C01;&#x88C5;&#x4E86; <code>epoll</code>&#x3001;<code>kqueue</code>&#x3001;<code>select</code> &#x4E09;&#x8005;&#xFF0C;&#x800C;&#x4E14;&#x4E3A;&#x540E;&#x4E24;&#x8005;&#x5B9E;&#x73B0;&#x4E86;&#x7C7B;&#x4F3C; <code>epoll</code> &#x63A5;&#x53E3;&#xFF0C;&#x4E14;&#x6267;&#x884C;&#x4F18;&#x5148;&#x7EA7;&#x4E3A; <code>epoll</code> &gt; <code>kqueue</code> &gt; <code>select</code>&#x3002;</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">run</span><span class="hljs-params">(self)</span>:</span>
+   events = []
+   <span class="hljs-keyword">while</span> <span class="hljs-keyword">not</span> self._stopping:
+       asap = <span class="hljs-keyword">False</span>
+       <span class="hljs-comment"># &#x83B7;&#x53D6;&#x4E8B;&#x4EF6;</span>
+       <span class="hljs-keyword">try</span>:
+           <span class="hljs-comment"># &#x7B49;&#x5F85;&#x4E8B;&#x4EF6;&#x89E6;&#x53D1;,&#x8FD4;&#x56DE;&#x89E6;&#x53D1;&#x4E8B;&#x4EF6;</span>
+           events = self.poll(TIMEOUT_PRECISION)
+       <span class="hljs-keyword">except</span> (OSError, IOError) <span class="hljs-keyword">as</span> e:
+           <span class="hljs-keyword">if</span> errno_from_exception(e) <span class="hljs-keyword">in</span> (errno.EPIPE, errno.EINTR):
+               <span class="hljs-comment"># EPIPE: &#x5F53;&#x5BA2;&#x6237;&#x5173;&#x95ED;&#x8FDE;&#x63A5;&#x65F6;&#x89E6;&#x53D1;</span>
+               <span class="hljs-comment"># EINTR: &#x6536;&#x5230;&#x4FE1;&#x53F7;&#x65F6;&#x89E6;&#x53D1;</span>
+               <span class="hljs-comment"># &#x5C3D;&#x53EF;&#x80FD;&#x89E6;&#x53D1;</span>
+               asap = <span class="hljs-keyword">True</span>
+               logging.debug(<span class="hljs-string">&apos;poll:%s&apos;</span>, e)
+           <span class="hljs-keyword">else</span>:
+               logging.error(<span class="hljs-string">&apos;poll:%s&apos;</span>, e)
+               traceback.print_exc()
+               <span class="hljs-keyword">continue</span>
+       <span class="hljs-comment"># &#x627E;&#x5230;&#x4E8B;&#x4EF6;&#x5BF9;&#x5E94;&#x7684; handler,&#x5C06;&#x4E8B;&#x4EF6;&#x4EA4;&#x7531;&#x5B83;&#x5904;&#x7406;</span>
+       <span class="hljs-keyword">for</span> sock, fd, event <span class="hljs-keyword">in</span> events:
+           <span class="hljs-comment"># &#x901A;&#x8FC7; fd &#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684; handler</span>
+           <span class="hljs-comment"># &#x4E00;&#x4E2A; handler &#x53EF;&#x80FD;&#x5BF9;&#x5E94;&#x591A;&#x4E2A; fd (reactor &#x6A21;&#x5F0F;)</span>
+           <span class="hljs-comment"># &#x540C;&#x6B65;&#x7684;&#x5C06;&#x8BF7;&#x6C42;&#x8F93;&#x5165;&#x591A;&#x8DEF;&#x590D;&#x7528;&#x5230; Request Handler</span>
+           handler = self._fdmap.get(fd, <span class="hljs-keyword">None</span>)
+           <span class="hljs-keyword">if</span> handler <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">None</span>:
+               handler = handler[<span class="hljs-number">1</span>]
+               <span class="hljs-keyword">try</span>:
+                   <span class="hljs-comment"># handler &#x6709;&#x4E09;&#x79CD;&#x53EF;&#x80FD;</span>
+                   <span class="hljs-comment"># TCPRelay, UDPRelay, DNSResolver</span>
+                   handler.handle_event(sock, fd, event)
+               <span class="hljs-keyword">except</span> (OSError, IOError) <span class="hljs-keyword">as</span> e:
+                   shell.print_exception(e)
+       <span class="hljs-comment"># &#x8BA1;&#x65F6;&#x5668;,10s &#x95F4;&#x9694;&#x8C03;&#x7528;&#x6CE8;&#x518C;&#x7684; handler_periodic &#x51FD;&#x6570;</span>
+       now = time.time()
+       <span class="hljs-keyword">if</span> asap <span class="hljs-keyword">or</span> now - self._last_time &gt;= TIMEOUT_PRECISION:
+           <span class="hljs-keyword">for</span> callback <span class="hljs-keyword">in</span> self._periodic_callbacks:
+               callback()
+           self._last_time = now
+</code></pre>
+<p><code>run</code> &#x65B9;&#x6CD5;&#x662F;&#x4E00;&#x4E2A;&#x5178;&#x578B;&#x7684; Event Loop &#x65B9;&#x6CD5;&#xFF0C;&#x901A;&#x8FC7; <code>poll</code> &#x6765;&#x963B;&#x585E;&#xFF0C;&#x7B49;&#x5F85;&#x4E8B;&#x4EF6;&#x7E41;&#x76DB;&#xFF0C;&#x7136;&#x540E;&#x7528;&#x4E8B;&#x4EF6;&#x5BF9;&#x5E94;&#x7684;&#x6587;&#x4EF6;&#x63CF;&#x8FF0; <code>fd</code> &#x547D;&#x4E2D; <code>handler</code>&#xFF0C;&#x8C03;&#x7528; <code>handler.handle_event(sock, fd, event)</code> &#x6765;&#x8BB2;&#x4E8B;&#x4EF6;&#x4EA4;&#x7531; <code>handler</code> &#x5904;&#x7406;&#xFF0C;&#x540C;&#x65F6;&#x95F4;&#x9694; <code>TIMEOUT_PRECISION</code> &#x79D2;&#x8C03;&#x7528; <code>TCPRelay</code>&#x3001;<code>UDPRelay</code>&#x3001;<code>DNSResolver</code> &#x7684; <code>handler_periodic</code> &#x51FD;&#x6570;&#x5904;&#x7406;&#x8D85;&#x65F6;&#x60C5;&#x51B5;&#x6216;&#x662F;&#x6E05;&#x7406;&#x7F13;&#x5B58;&#x3002;</p>
+<p>&#x770B;&#x5230;&#x8FD9;&#x91CC;&#xFF0C;&#x4F60;&#x80AF;&#x5B9A;&#x5BF9; <code>TCPRelay</code> &#x5BF9;&#x4E8E;&#x4E8B;&#x4EF6;&#x5C01;&#x88C5;&#x4EA7;&#x751F;&#x4E86;&#x5174;&#x8DA3;&#xFF0C;&#x6211;&#x4EEC;&#x91CD;&#x65B0;&#x56DE;&#x5230; <code>tcprelay.py</code> &#x6587;&#x4EF6;&#xFF0C;&#x6765;&#x67E5;&#x770B;&#x4E00;&#x4E0B; <code>handle_event</code> &#x65B9;&#x6CD5;&#x3002;</p>
+<h3 id="tcprelaypy">tcprelay.py</h3>
+<p>&#x4E4B;&#x524D;&#x63D0;&#x5230;&#x8FC7;&#xFF0C;&#x4E00;&#x4E2A; <code>TCPRelay</code> &#x4F1A;&#x5BF9;&#x5E94;&#x76D1;&#x542C;&#x6307;&#x5B9A;&#x7684; Socket&#xFF0C;&#x5E76;&#x8981;&#x5206;&#x53D1;&#x5230;&#x6307;&#x5B9A;&#x7684; <code>TCPRelayHandler</code>&#xFF0C;<code>eventloop.py</code> &#x7684; <code>run</code> &#x65B9;&#x6CD5;&#x4E2D;&#x4E5F;&#x80FD;&#x770B;&#x5230; <code>handler.handle_event(sock, fd, event)</code> &#x7684;&#x8C03;&#x7528;&#x3002;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x662F;&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x7684;&#x5462;&#xFF1F;</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">handle_event</span><span class="hljs-params">(self, sock, fd, event)</span>:</span>
+   <span class="hljs-comment"># &#x5904;&#x7406; Event &#x5E76;&#x53D1;&#x9001;&#x5230;&#x5BF9;&#x5E94;&#x7684; handler</span>
+   <span class="hljs-keyword">if</span> sock:
+       logging.log(shell.VERBOSE_LEVEL, <span class="hljs-string">&apos;fd %d %s&apos;</span>, fd,
+                   eventloop.EVENT_NAMES.get(event, event))
+   <span class="hljs-comment"># &#x5982;&#x679C;&#x662F; TCPRelay &#x7684; socket </span>
+   <span class="hljs-comment"># &#x8FD9;&#x65F6;&#x5019;&#x8BF4;&#x660E;&#x6709; TCP &#x8FDE;&#x63A5;,&#x521B;&#x5EFA; TCPRelayHandler &#x5E76;&#x5C01;&#x88C5;</span>
+   <span class="hljs-keyword">if</span> sock == self._server_socket:
+       <span class="hljs-keyword">if</span> event &amp; eventloop.POLL_ERR:
+           <span class="hljs-keyword">raise</span> Exception(<span class="hljs-string">&apos;server_socket error&apos;</span>)
+       <span class="hljs-keyword">try</span>:
+           logging.debug(<span class="hljs-string">&apos;accept&apos;</span>)
+           <span class="hljs-comment"># &#x63A5;&#x53D7;&#x8FDE;&#x63A5;</span>
+           conn = self._server_socket.accept()
+           <span class="hljs-comment"># &#x5B8C;&#x6210; handler &#x5C01;&#x88C5;</span>
+           TCPRelayHandler(self, self._fd_to_handlers,
+                           self._eventloop, conn[<span class="hljs-number">0</span>], self._config,
+                           self._dns_resolver, self._is_local)
+       <span class="hljs-keyword">except</span> (OSError, IOError) <span class="hljs-keyword">as</span> e:
+           error_no = eventloop.errno_from_exception(e)
+           <span class="hljs-keyword">if</span> error_no <span class="hljs-keyword">in</span> (errno.EAGAIN, errno.EINPROGRESS,
+                           errno.EWOULDBLOCK):
+               <span class="hljs-keyword">return</span>
+           <span class="hljs-keyword">else</span>:
+               shell.print_exception(e)
+               <span class="hljs-keyword">if</span> self._config[<span class="hljs-string">&apos;verbose&apos;</span>]:
+                   traceback.print_exc()
+   <span class="hljs-keyword">else</span>:
+       <span class="hljs-keyword">if</span> sock:
+           <span class="hljs-comment"># &#x627E;&#x5230; fd &#x5BF9;&#x5E94;&#x7684; TCPRelayHandler</span>
+           handler = self._fd_to_handlers.get(fd, <span class="hljs-keyword">None</span>)
+           <span class="hljs-keyword">if</span> handler:
+               <span class="hljs-comment"># &#x542F;&#x7528; handler &#x6765;&#x5904;&#x7406;&#x8BFB;&#x5199;&#x4E8B;&#x4EF6;</span>
+               handler.handle_event(sock, event)
+       <span class="hljs-keyword">else</span>:
+           logging.warn(<span class="hljs-string">&apos;poll removed fd&apos;</span>)
+</code></pre>
+<p>&#x8BFB;&#x5199;&#x4E8B;&#x4EF6;&#x7531; <code>EventLoop</code> &#x534F;&#x8C03;&#x540E;&#x5206;&#x53D1;&#x7ED9; <code>TCPRelay</code>&#xFF0C;&#x518D;&#x7ECF; <code>TCPRelay</code> &#x5C06;&#x4E8B;&#x4EF6;&#x4E0B;&#x53D1;&#x7ED9;&#x5BF9;&#x5E94;&#x7684; <code>TCPRelayHandler</code> &#x5904;&#x7406;&#x3002;&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;&#x201C;&#x5BF9;&#x5E94;&#x201D;&#x8BE5;&#x5982;&#x4F55;&#x533A;&#x522B;&#xFF1F;&#x8FD9;&#x662F;&#x90FD;&#x662F; <em>fd(File Descriptor)</em> &#x7684;&#x529F;&#x52B3;&#x3002;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26; - fd &#x662F;&#x5185;&#x6838;&#x4E3A;&#x4E86;&#x9AD8;&#x6548;&#x7BA1;&#x7406;&#x5DF2;&#x88AB;&#x6253;&#x5F00;&#x7684;&#x6587;&#x4EF6;&#x6240;&#x521B;&#x5EFA;&#x7684;&#x7D22;&#x5F15;&#xFF0C;&#x901A;&#x5E38;&#x7528;&#x4E00;&#x4E2A;&#x975E;&#x8D1F;&#x6B63;&#x6570;&#x6570;&#x6765;&#x533A;&#x5206;&#xFF0C;&#x7528;&#x4E8E;&#x667A;&#x4EE3;&#x88AB;&#x6253;&#x5F00;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x6240;&#x6709;&#x6267;&#x884C;&#x7684; I/O &#x64CD;&#x4F5C;&#x7684;&#x7CFB;&#x7EDF;&#x90FD;&#x4F1A;&#x901A;&#x8FC7;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x3002;</p>
+<p>&#x6269;&#x5C55;&#x6765;&#x8BF4;&#xFF0C;&#x6BCF;&#x4E2A; Event &#x53EF;&#x4EE5;&#x5F53;&#x505A;&#x4E00;&#x4E2A;&#x670D;&#x52A1;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#x7684;&#x65F6;&#x95F4;&#x3002;&#x4F7F;&#x7528; epoll&#x3001;select &#x7B49;&#x7B49;&#x65B9;&#x6CD5;&#x4EE5;&#x53CA;&#x5411;&#x6307;&#x5B9A;&#x7684; <code>handler</code> &#x6295;&#x9012;&#x610F;&#x5728;&#x5B9E;&#x73B0;<strong>&#x89E3;&#x591A;&#x8DEF;&#x5206;&#x914D;&#x7B56;&#x7565;&#xFF0C;&#x5E76;&#x540C;&#x6B65;&#x6D3E;&#x53D1;&#x8BF7;&#x6C42;&#x53CA;&#x76F8;&#x5173;&#x8BF7;&#x6C42;&#x6765;&#x5904;&#x7406;</strong>&#xFF0C;&#x8FD9;&#x662F; <em>Reactor Pattern</em> (&#x53CD;&#x5E94;&#x5668;&#x6A21;&#x5F0F;)&#x7684;&#x5B8C;&#x7F8E;&#x5B9E;&#x73B0;&#x3002;&#x8BF4;&#x5230;&#x8FD9;&#x91CC;&#x4E0D;&#x5F97;&#x8BF4;&#x4E0B; Reactor Pattern&#x3002;</p>
+<p>Reactor &#x7684;&#x7ED3;&#x6784;&#x4E3B;&#x8981;&#x7531;<strong>&#x8D44;&#x6E90;</strong>&#xFF0C;<strong>&#x540C;&#x6B65;&#x4E8B;&#x4EF6;&#x89E3;&#x591A;&#x8DEF;&#x5668;</strong>&#xFF0C;<strong>&#x5206;&#x53D1;&#x5668;</strong>&#x548C;<strong>&#x8BF7;&#x6C42;&#x5904;&#x7406;&#x5668;</strong>&#x7EC4;&#x6210;&#xFF0C;&#x5E76;&#x4E14;&#x8BE5;&#x7CFB;&#x7EDF;&#x5728;&#x539F;&#x5219;&#x4E0A;&#x662F;&#x5B58;&#x4E8E;&#x5355;&#x7EBF;&#x7A0B;&#x7CFB;&#x7EDF;&#x4E2D;&#x3002;&#x6CE8;&#x660E;&#x9879;&#x76EE; <strong>Netty</strong> &#x5C31;&#x662F;&#x57FA;&#x4E8E;&#x8BE5;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#x3002;&#x901A;&#x8FC7; Reactor &#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x5C06;&#x7528;&#x6237;&#x7EBF;&#x7A0B;&#x8F6E;&#x8BAD; I/O &#x64CD;&#x4F5C;&#x72B6;&#x6001;&#x7684;&#x5DE5;&#x4F5C;&#x7EDF;&#x4E00;&#x4EA4;&#x7ED9;&#x4E86; <code>handler_event</code> &#x4E8B;&#x4EF6;&#x5FAA;&#x73AF;&#x6765;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x3002;&#x7528;&#x6237;&#x7EBF;&#x7A0B;&#x6CE8;&#x518C;&#x4E8B;&#x4EF6;&#x540E;&#x5904;&#x7406;&#x5668;&#x53EF;&#x4EE5;&#x7EE7;&#x7EED;&#x6267;&#x884C;&#x5176;&#x4ED6;&#x7684;&#x5DE5;&#x4F5C;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x5355;&#x7EBF;&#x7A0B;&#x5F02;&#x6B65;&#x7684;&#x4F53;&#x73B0;&#xFF0C;&#x800C; Reactor &#x7EBF;&#x7A0B;&#x8D1F;&#x8D23;&#x8C03;&#x7528;&#x5185;&#x6838;&#x7684; select &#x51FD;&#x6570;&#x68C0;&#x6D4B; socket &#x72B6;&#x6001;&#xFF0C;&#x5F53; socket &#x88AB;&#x6FC0;&#x6D3B;&#x65F6;&#xFF0C;&#x901A;&#x77E5;&#x54CD;&#x5E94;&#x7684; Client &#x7EBF;&#x7A0B;&#x6267;&#x884C;&#x5BF9;&#x5E94;&#x7684; <code>handler</code>&#x3002;&#x8FD9;&#x91CC;&#x7ED9;&#x51FA;&#x4E00;&#x5F20; I/O &#x591A;&#x8DEF;&#x590D;&#x7528;&#x7684;&#x6A21;&#x578B;&#x793A;&#x610F;&#x56FE;&#xFF1A;</p>
+<p><img src="media/15024138759233/IO-muti-road.png" alt="IO-muti-road"></p>
+<p>&#x662F;&#x4E0D;&#x662F;&#x4E2D;&#x95F4;&#x7684; Event Loop &#x611F;&#x89C9;&#x4F3C;&#x66FE;&#x76F8;&#x8BC6;&#x5462;&#xFF1F;&#x662F;&#x7684;&#xFF0C;&#x6211;&#x4EEC;&#x7684; <code>EventLoop</code> &#x4E0E;&#x5176;&#x7684;&#x5DE5;&#x4F5C;&#x5341;&#x5206;&#x7C7B;&#x4F3C;&#x3002;&#x5728;&#x8FD9;&#x91CC;&#xFF0C;&#x6211;&#x4EEC;&#x5B8C;&#x5168;&#x4E0D;&#x9700;&#x8981;&#x5173;&#x6CE8; I/O &#x7684;&#x95EE;&#x9898;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x4E9B;&#x90FD;&#x5DF2;&#x7ECF;&#x88AB;&#x5C01;&#x88C5;&#x597D;&#x4E86;&#x3002;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x77E5;&#x9053;&#xFF0C;&#x5176; Event &#x4F20;&#x9012;&#x4EE5;&#x53CA;&#x51FB;&#x4E2D;&#x5BF9;&#x5E94;&#x7684; Handler &#x5C31;&#x5DF2;&#x7ECF;&#x8DB3;&#x591F;&#x4E86;&#x3002;&#x4E0B;&#x9762;&#x662F; Shadowsocks &#x4E2D; <code>EventLoop</code> &#x5C06; Event &#x53D1;&#x9001;&#x81F3;&#x6307;&#x5B9A; Handler &#x7684;&#x5927;&#x4F53;&#x6D41;&#x7A0B;&#xFF1A;</p>
+<p><img src="media/15024138759233/eventloop-flow.png" alt="eventloop-flo"></p>
+<h2 id="&#x5F85;&#x7EED;">&#x5F85;&#x7EED;</h2>
+<p>&#x5728;&#x7B14;&#x8005;&#x9605;&#x8BFB; Shadowsocks &#x6E90;&#x7801;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4E5F;&#x5DE9;&#x56FA;&#x4E86;&#x4E4B;&#x524D;&#x8BA1;&#x7B97;&#x673A;&#x7F51;&#x7EDC;&#x548C; Linux kernel I/O Operation &#x6709;&#x4E86;&#x66F4;&#x8FDB;&#x4E00;&#x6B65;&#x7684;&#x7406;&#x89E3;&#x548C;&#x8BA4;&#x8BC6;&#x3002;</p>
+<p>&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x5C06;&#x5BF9; Shadowsocks &#x4E2D;&#x5BF9;&#x4E8E; Event &#x5904;&#x7406;&#x8FDB;&#x4E00;&#x6B65;&#x4E86;&#x89E3;&#xFF0C;&#x5E76;&#x9605;&#x8BFB; TCP Proxy &#x7684;&#x76F8;&#x5173;&#x6E90;&#x7801;&#x3002;</p>
+<h2 id="&#x5EF6;&#x4F38;&#x53CA;&#x53C2;&#x8003;">&#x5EF6;&#x4F38;&#x53CA;&#x53C2;&#x8003;</h2>
+<ul>
+<li><a href="https://loggerhead.me/posts/shadowsocks-yuan-ma-fen-xi-xie-yi-yu-jie-gou.html" target="_blank">Shadowsocks &#x6E90;&#x7801;&#x5206;&#x6790;&#x2014;&#x2014;&#x534F;&#x8BAE;&#x4E0E;&#x7ED3;&#x6784;</a></li>
+<li><a href="http://huiliu.github.io/2016/03/19/shadowsocks.html" target="_blank">shadowsocks&#x6E90;&#x7801;&#x5206;&#x6790;&#xFF1A;ssserver</a></li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+                <a href="Shadowsocks Probe II - TCP 代理过程.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Shadowsocks Probe II - TCP 代理过程">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Shadowsocks Probe I - Socks5 与 EventLoop 事件分发","level":"8.1.1","depth":2,"next":{"title":"Shadowsocks Probe II - TCP 代理过程","level":"8.1.2","depth":2,"path":"Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.md","ref":"Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.md","articles":[]},"previous":{"title":"Shadowsocks v2.9.1","level":"8.1","depth":1,"ref":"","articles":[{"title":"Shadowsocks Probe I - Socks5 与 EventLoop 事件分发","level":"8.1.1","depth":2,"path":"Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.md","ref":"Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.md","articles":[]},{"title":"Shadowsocks Probe II - TCP 代理过程","level":"8.1.2","depth":2,"path":"Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.md","ref":"Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["splitter","github","multipart","mathjax"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/Desgard"},"splitter":{},"search":{},"multipart":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"cn","gitbook":"*"},"file":{"path":"Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.md","mtime":"2018-07-09T00:41:04.827Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-09T00:56:45.312Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

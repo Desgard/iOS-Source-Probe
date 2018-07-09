@@ -1,0 +1,1223 @@
+
+<!DOCTYPE HTML>
+<html lang="cn" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>用 isa 承载对象的类信息 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-multipart/multipart.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="weak 弱引用的实现方式.html" />
+    
+    
+    <link rel="prev" href="objc_msgSend消息传递学习笔记 - 消息转发.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 1 - iOS Runtime 源码解析</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" >
+            
+                <span>
+            
+                    
+                    objc/runtime.h 708
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="浅谈Associated Objects.html">
+            
+                <a href="浅谈Associated Objects.html">
+            
+                    
+                    浅谈Associated Objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                <a href="objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                    
+                    对象方法消息传递流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.3" data-path="objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                <a href="objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                    
+                    消息转发过程分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.1.4" data-path="用 isa 承载对象的类信息.html">
+            
+                <a href="用 isa 承载对象的类信息.html">
+            
+                    
+                    用 isa 承载对象的类信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.5" data-path="weak 弱引用的实现方式.html">
+            
+                <a href="weak 弱引用的实现方式.html">
+            
+                    
+                    weak 弱引用的实现方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.6" data-path="load 方法全程跟踪.html">
+            
+                <a href="load 方法全程跟踪.html">
+            
+                    
+                    load 方法全程跟踪
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.7" data-path="浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                <a href="浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                    
+                    浅谈 block - clang 改写后的 block 结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.8" data-path="浅谈 block（2） - 截获变量方式.html">
+            
+                <a href="浅谈 block（2） - 截获变量方式.html">
+            
+                    
+                    浅谈 block - 截获变量方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 2 - macOS & iOS 系统源码及相关开源库</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <span>
+            
+                    
+                    cctools/include/mach-o 895
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                <a href="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                    
+                    Mach-O 文件格式探索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" >
+            
+                <span>
+            
+                    
+                    Fishhook
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                <a href="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                    
+                    巧用符号表 - 探求 fishhook 原理（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                <a href="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                    
+                    验证试验 - 探求 fishhook 原理（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 3 - Foundation 框架源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" >
+            
+                <span>
+            
+                    
+                    Foundation
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="../Foundation/从经典问题来看 Copy 方法.html">
+            
+                <a href="../Foundation/从经典问题来看 Copy 方法.html">
+            
+                    
+                    从经典问题来看 Copy 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="../Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                <a href="../Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                    
+                    CFArray 的历史渊源及实现原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="../Foundation/Run Loop 记录与源码注释.html">
+            
+                <a href="../Foundation/Run Loop 记录与源码注释.html">
+            
+                    
+                    Run Loop 记录与源码注释(作者Kylin)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 4 - UIKit 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" >
+            
+                <span>
+            
+                    
+                    UIKit
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.1.1" data-path="../Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                <a href="../Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                    
+                    复用的精妙 - UITableView 复用技术原理分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.1.2" data-path="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                <a href="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                    
+                    AutoLayout 中的线性规划 - Simplex 算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 5 - SDWebImage 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" >
+            
+                <span>
+            
+                    
+                    SDWebImage v3.8.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1.1" data-path="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                    
+                    SDWebImage Source Probe: WebCache
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.2" data-path="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                    
+                    SDWebImage Source Probe: Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.3" data-path="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                    
+                    SDWebImage Source Probe: Downloader
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.4" data-path="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                    
+                    SDWebImage Source Probe: Operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 6 - Swift 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" >
+            
+                <span>
+            
+                    
+                    Swift v4.0
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.1.1" data-path="../../Swift/Swift Probe - Optional.html">
+            
+                <a href="../../Swift/Swift Probe - Optional.html">
+            
+                    
+                    Swift Probe - Optional
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 7 - Shadowsocks 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" >
+            
+                <span>
+            
+                    
+                    Shadowsocks v2.9.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="8.1.1" data-path="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                    
+                    Shadowsocks Probe I - Socks5 与 EventLoop 事件分发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.1.2" data-path="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                    
+                    Shadowsocks Probe II - TCP 代理过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >用 isa 承载对象的类信息</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>&#x4F5C;&#x8005;&#xFF1A;&#x51AC;&#x74DC;</p>
+<p>&#x539F;&#x6587;&#x94FE;&#x63A5;&#xFF1A;<a href="http://www.desgard.com/isa/" target="_blank">Guardia &#xB7; &#x74DC;&#x5730;</a></p>
+</blockquote>
+<h1 id="&#x7528;-isa-&#x627F;&#x8F7D;&#x5BF9;&#x8C61;&#x7684;&#x7C7B;&#x4FE1;&#x606F;">&#x7528; isa &#x627F;&#x8F7D;&#x5BF9;&#x8C61;&#x7684;&#x7C7B;&#x4FE1;&#x606F;</h1>
+<p><em>Effective Objective-C 2.0 - 52 Specific Ways to Improve Your iOS and OS X Programs</em> &#x4E00;&#x4E66;&#x4E2D;&#xFF0C;<em>tip 14</em> &#x4E2D;&#x63D0;&#x5230;&#x4E86;&#xFF0C;<em>&#x8FD0;&#x884C;&#x65F6;&#x68C0;&#x67E5;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;</em> &#x7684; <strong>&#x81EA;&#x7701;</strong> (Introspection) &#x7279;&#x6027;&#x3002;&#x90A3;&#x4E48;&#x5148;&#x6765;&#x8BF4;&#x8BF4; <strong>&#x81EA;&#x7701;</strong> &#x548C; <strong>&#x53CD;&#x5C04;</strong> &#x7684;&#x5B9A;&#x4E49;&#x662F;&#x4EC0;&#x4E48;&#x3002;</p>
+<h2 id="&#x81EA;&#x7701;&#x4E0E;&#x53CD;&#x5C04;&#x7684;&#x7B80;&#x5355;&#x8BA4;&#x8BC6;">&#x81EA;&#x7701;&#x4E0E;&#x53CD;&#x5C04;&#x7684;&#x7B80;&#x5355;&#x8BA4;&#x8BC6;</h2>
+<p>&#x7B2C;&#x4E00;&#x6B21;&#x542C;&#x8BF4;&#x8FD9;&#x4E24;&#x4E2A;&#x6982;&#x5FF5;&#xFF0C;&#x662F;&#x5728; <em>Thinking in Java (4th Edition)</em> &#x4E2D;&#x7684;&#xFF0C;&#x800C;&#x6DF1;&#x5165;&#x5B66;&#x4E60;&#x4ED6;&#x4EEC;&#x5219;&#x662F;&#x5728; Python &#x8BED;&#x8A00;&#x7684;&#x5B66;&#x4E60;&#x4E2D;&#xFF0C;&#x4EE5;&#x4E0B;&#x6211;&#x7528; Python &#x6765;&#x4E3E;&#x4F8B;&#x8BF4;&#x660E;&#x3002;</p>
+<blockquote>
+<p>wikipedia: In computer science, reflection is the ability of a computer program to examine and modify its own structure and behavior (specifically the values, meta-data, properties and functions) at runtime.</p>
+</blockquote>
+<p>&#x53CD;&#x5C04;(Reflection) &#x662F;&#x6307;&#x8BA1;&#x7B97;&#x673A;&#x7A0B;&#x5E8F;&#x53EF;&#x4EE5;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x52A8;&#x6001;&#x76D1;&#x6D4B;&#x5E76;&#x4FEE;&#x6539;&#x5B83;&#x81EA;&#x5DF1;&#x7684;&#x7ED3;&#x6784;&#x548C;&#x884C;&#x4E3A;&#xFF0C;&#x6BD4;&#x5982;&#x503C;&#x3001;&#x5143;&#x6570;&#x636E;&#x3001;&#x5C5E;&#x6027;&#x548C;&#x51FD;&#x6570;&#x7B49;&#x7684;&#x80FD;&#x529B;&#x3002;&#x901A;&#x8FC7;&#x53CD;&#x5C04;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x52A8;&#x6001;&#x76D1;&#x6D4B;&#x3001;&#x751F;&#x6210;&#x3001;&#x4FEE;&#x6539;&#x81EA;&#x5DF1;&#x5B9E;&#x9645;&#x6267;&#x884C;&#x7684;&#x7B49;&#x6548;&#x4EE3;&#x7801;&#x3002;</p>
+<pre><code class="lang-python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloClass</span><span class="hljs-params">(object)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, method)</span>:</span>
+        self.method = method
+        print(<span class="hljs-string">&apos;You are calling me from &apos;</span> + self.method)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">say_hello</span><span class="hljs-params">(self)</span>:</span>
+        print(<span class="hljs-string">&quot;Hello -- From: &quot;</span> + self.method)
+        print()
+
+<span class="hljs-comment"># Normal</span>
+obj = HelloClass(<span class="hljs-string">&apos;Normal&apos;</span>)
+obj.say_hello()
+
+<span class="hljs-comment"># Reflection</span>
+class_name = <span class="hljs-string">&quot;HelloClass&quot;</span>
+method = <span class="hljs-string">&quot;say_hello&quot;</span>
+obj = globals()[class_name](<span class="hljs-string">&apos;Reflection&apos;</span>)
+getattr(obj, method)()
+</code></pre>
+<pre><code>You are calling me from Normal
+Hello -- From: Normal
+()
+You are calling me from Reflection
+Hello -- From: Reflection
+()
+</code></pre><p>&#x4E24;&#x79CD;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x8FBE;&#x5230;&#x540C;&#x6837;&#x7684;&#x6548;&#x679C;&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x7B2C;&#x4E00;&#x79CD;&#x65B9;&#x6CD5;&#x662F;&#x6211;&#x4EEC;&#x6240;&#x8BF4;&#x7684;&#x5E38;&#x89C4;&#x65B9;&#x6CD5;&#xFF0C;&#x521B;&#x5EFA; HelloClass &#x8FD9;&#x4E2A; class &#x7684;&#x4E00;&#x4E2A;&#x5B9E;&#x4F8B;&#xFF0C;&#x7136;&#x540E;&#x8C03;&#x7528;&#x5176;&#x4E2D;&#x7684;&#x65B9;&#x6CD5;&#x3002;&#x7B2C;&#x4E8C;&#x79CD;&#x6211;&#x4EEC;&#x7528;&#x5230;&#x4E86;&#x53CD;&#x5C04;&#x673A;&#x5236;&#xFF0C;&#x901A;&#x8FC7; <code>globals()</code> &#x8FD9;&#x4E2A;&#x5B57;&#x5178;&#x4E2D;&#x6765;&#x67E5;&#x627E; <code>HelloClass</code> &#x8FD9;&#x4E2A;&#x7C7B;&#xFF0C;&#x5E76;&#x52A0;&#x4EE5;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x5B9E;&#x4F8B;&#x5316;&#x4E8E; <code>obj</code>&#xFF0C;&#x4E4B;&#x540E;&#x901A;&#x8FC7; <code>getattr</code> &#x51FD;&#x6570;&#x83B7;&#x5F97; <code>say_hello</code> &#x65B9;&#x6CD5;&#xFF0C;&#x4F20;&#x53C2;&#x8C03;&#x7528;&#x3002;</p>
+<p>&#x53CD;&#x5C04;&#x7684;&#x597D;&#x5904;&#x5728;&#x4E8E;&#xFF0C;<code>class_name</code> &#x548C; <code>method</code> &#x53D8;&#x91CF;&#x7684;&#x503C;&#x53EF;&#x4EE5;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x83B7;&#x53D6;&#x6216;&#x8005;&#x4FEE;&#x6539;&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x52A8;&#x6001;&#x5730;&#x6539;&#x53D8;&#x7A0B;&#x5E8F;&#x7684;&#x884C;&#x4E3A;&#x3002;</p>
+<blockquote>
+<p>wikipedia: In computing, type introspection is the ability of a program to examine the type or properties of an object at runtime.</p>
+</blockquote>
+<p>&#x81EA;&#x7701;(Introspection) &#x662F;&#x7A0B;&#x5E8F;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x68C0;&#x6D4B;&#x81EA;&#x5DF1;&#x7684;&#x67D0;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x7C7B;&#x578B;&#x6216;&#x8005;&#x5C5E;&#x6027;&#x3001;&#x65B9;&#x6CD5;&#x7684;&#x80FD;&#x529B;&#x3002;&#x4F8B;&#x5982;&#x5728; Python &#x4E2D;&#x7684; <code>dir</code> &#x65B9;&#x6CD5;&#x3002;</p>
+<pre><code class="lang-python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloClass</span><span class="hljs-params">(object)</span>:</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, method)</span>:</span>
+        self.method = method
+        print(<span class="hljs-string">&apos;You are calling me from &apos;</span> + self.method)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">say_hello</span><span class="hljs-params">(self)</span>:</span>
+        print(<span class="hljs-string">&quot;Hello -- From: &quot;</span> + self.method)
+        print()
+
+obj = HelloClass(<span class="hljs-string">&apos;Normal&apos;</span>)
+obj_msg = dir(obj)
+
+<span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> obj_msg:
+    <span class="hljs-keyword">print</span> (x)
+</code></pre>
+<pre><code class="lang-python">__class__
+__delattr__
+__dict__
+__doc__
+__format__
+__getattribute__
+__hash__
+__init__
+__module__
+__new__
+__reduce__
+__reduce_ex__
+__repr__
+__setattr__
+__sizeof__
+__str__
+__subclasshook__
+__weakref__
+method
+say_hello
+</code></pre>
+<p>&#x901A;&#x8FC7; <code>dir()</code> &#x51FD;&#x6570;&#x4ECE;&#x800C;&#x505A;&#x5230;&#x81EA;&#x7701;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x8FD4;&#x56DE;&#x67D0;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x6240;&#x6709;&#x5C5E;&#x6027;&#x3001;&#x65B9;&#x6CD5;&#x7B49;&#x5217;&#x8868;&#x3002;</p>
+<p>&#x901A;&#x8FC7;&#x4E0A;&#x8FF0;&#x7B80;&#x5355;&#x63CF;&#x8FF0;&#xFF0C;&#x6211;&#x4EEC;&#x5927;&#x6982;&#x77E5;&#x9053;&#x4E86;&#x53CD;&#x5C04;&#x5176;&#x5B9E;&#x662F;&#x5305;&#x542B;&#x7740;&#x81EA;&#x7701;&#x80FD;&#x529B;&#x7684;&#xFF0C;&#x4E0D;&#x4EC5;&#x53EF;&#x4EE5;&#x83B7;&#x53D6;&#x5230;&#x5BF9;&#x8C61;&#x7684;&#x5404;&#x79CD;&#x5C5E;&#x6027;&#x4FE1;&#x606F;&#xFF0C;&#x800C;&#x4E14;&#x8FD8;&#x53EF;&#x4EE5;&#x52A8;&#x6001;&#x4FEE;&#x6539;&#x81EA;&#x8EAB;&#x7684;&#x7ED3;&#x6784;&#x548C;&#x884C;&#x4E3A;&#x3002;</p>
+<h2 id="objcclass-&#x7ED3;&#x6784;">objc_class &#x7ED3;&#x6784;</h2>
+<p>&#x5728; ObjC &#x4E2D;&#xFF0C;&#x4E5F;&#x652F;&#x6301;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x68C0;&#x67E5;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x8FD9;&#x4E00;&#x64CD;&#x4F5C;&#xFF0C;&#x5E76;&#x4E14;&#x8FD9;&#x4E2A;&#x7279;&#x6027;&#x662F;&#x5185;&#x7F6E;&#x4E8E; Foundation &#x6846;&#x67B6;&#x7684; NSObject &#x534F;&#x8BAE;&#x4E2D;&#x7684;&#x3002;&#x51E1;&#x662F;&#x516C;&#x5171;&#x57FA;&#x7C7B;(Common Root Class)&#xFF0C;&#x5373; NSObject &#x6216; NSProxy &#xFF0C;&#x7EE7;&#x627F;&#x800C;&#x6765;&#x7684;&#x5BF9;&#x8C61;&#x90FD;&#x8981;&#x9075;&#x5FAA;&#x6B64;&#x534F;&#x8BAE;&#x3002;</p>
+<p>&#x867D;&#x7136; ObjC &#x652F;&#x6301;&#x81EA;&#x7701;&#x8FD9;&#x4E00;&#x7279;&#x6027;&#xFF0C;&#x5C31;&#x4E00;&#x5B9A;&#x4F1A;&#x5BF9; Class &#x4FE1;&#x606F;&#x505A;&#x5B58;&#x50A8;&#x3002;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x4FBF;&#x8981;&#x5F15;&#x51FA; isa &#x6307;&#x9488;&#x3002;&#x5018;&#x82E5;&#x5BF9; ObjC &#x6709;&#x4E00;&#x5B9A;&#x7684;&#x5B66;&#x4E60;&#x57FA;&#x7840;&#xFF0C;&#x90FD;&#x4F1A;&#x77E5;&#x9053; <strong>Objective-C &#x5BF9;&#x8C61;&#x90FD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; clang &#x8FDB;&#x884C; c &#x7684;&#x8BED;&#x6CD5;&#x683C;&#x5F0F;&#x8F6C;&#x6362;&#xFF0C;&#x4ECE;&#x800C;&#x4EE5; struct &#x6765;&#x63CF;&#x8FF0;</strong>&#x3002;&#x6240;&#x6709;&#x7684;&#x5BF9;&#x8C61;&#x4E2D;&#x90FD;&#x6709;&#x4E00;&#x4E2A; <code>isa</code> &#x6307;&#x9488;&#xFF0C;&#x5176;&#x542B;&#x4E49;&#x662F;&#xFF1A; it <strong>is a</strong> object! &#x800C;&#x5728;&#x6700;&#x65B0;&#x7684; runtime &#x5E93;&#x4E2D;&#xFF0C;&#x5176; isa &#x6307;&#x9488;&#x7684;&#x7ED3;&#x6784;&#x5DF2;&#x7ECF;&#x53D1;&#x751F;&#x4E86;&#x53D8;&#x5316;&#x3002;</p>
+<p>&#x4EE5;&#x4E0B;&#x4EE3;&#x7801;&#x5747;&#x53C2;&#x8003; runtime &#x7248;&#x672C;&#x4E3A; <a href="http://opensource.apple.com/tarballs/objc4/" target="_blank">objc4-680.tar.gz</a>&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> objc_object {
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">isa_t</span> isa;
+}
+</code></pre>
+<p>&#x4F1A;&#x53D1;&#x73B0;&#x5728; objc_object &#x8FD9;&#x4E2A;&#x57FA;&#x7C7B;&#x4E2D;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x6210;&#x5458;&#xFF0C;&#x5373; isa_t &#x8054;&#x5408;&#x4F53;(union) &#x7C7B;&#x578B;&#x7684; isa &#x6210;&#x5458;&#x3002;&#x800C;&#x5BF9;&#x4E8E;&#x7C7B;&#x5BF9;&#x8C61;&#x7684;&#x5B9A;&#x4E49;&#xFF0C;&#x53EF;&#x4EE5;&#x4ECE; objc_class &#x67E5;&#x770B;&#x5176;&#x7ED3;&#x6784;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> objc_class : objc_object {
+    <span class="hljs-comment">// Class ISA;</span>
+    Class superclass;     <span class="hljs-comment">// &#x7236;&#x7C7B;&#x5F15;&#x7528;</span>
+    <span class="hljs-keyword">cache_t</span> cache;        <span class="hljs-comment">// &#x7528;&#x6765;&#x7F13;&#x5B58;&#x6307;&#x9488;&#x548C;&#x865A;&#x51FD;&#x6570;&#x8868;</span>
+    <span class="hljs-keyword">class_data_bits_t</span> bits; <span class="hljs-comment">// class_rw_t &#x6307;&#x9488;&#x52A0;&#x4E0A; rr/alloc &#x6807;&#x5FD7;</span>
+}
+</code></pre>
+<blockquote>
+<p>runtime &#x7684;&#x5F00;&#x6E90;&#x4F5C;&#x8005;&#x6015;&#x5B66;&#x4E60;&#x8005;&#x4E0D;&#x77E5;&#x9053; isa &#x5DF2;&#x7ECF;&#x4ECE; objc_object &#x7EE7;&#x627F;&#x5B58;&#x5728;&#xFF0C;&#x7528;&#x6CE8;&#x91CA;&#x52A0;&#x4EE5;&#x63D0;&#x793A;&#x3002;</p>
+</blockquote>
+<p>&#x5176;&#x5B9E;&#xFF0C;&#x5F00;&#x53D1;&#x4E2D;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x7C7B;&#x548C;&#x5B9E;&#x4F8B;&#xFF0C;&#x90FD;&#x4F1A;&#x62E5;&#x6709;&#x4E00;&#x4E2A;&#x8BB0;&#x5F55;&#x81EA;&#x8EAB;&#x4FE1;&#x606F;&#x7684; isa &#x6307;&#x9488;&#xFF0C;&#x53EA;&#x662F;&#x56E0;&#x4E3A; runtime &#x4ECE; objc_object &#x7EE7;&#x627F;&#x51FA;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x4F1A;&#x663E;&#x5F0F;&#x770B;&#x5230;&#x3002;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/objc_object_structure.png" alt=""></p>
+<p>&#x9700;&#x8981;&#x77E5;&#x9053;&#x7684;&#x662F;&#xFF0C;class_data_bits_t &#x4E2D;&#x5B58;&#x6709; Class &#x7684;&#x5BF9;&#x5E94;&#x65B9;&#x6CD5;&#xFF0C;&#x5177;&#x4F53;&#x5982;&#x4F55;&#x5B58;&#x50A8;&#xFF0C;&#x4F1A;&#x5728;&#x540E;&#x7EED;&#x7684;&#x6587;&#x4E2D;&#x8BB0;&#x5F55;&#x3002;</p>
+<h2 id="isa-&#x4F18;&#x5316;&#x4E0B;&#x7684;&#x4FE1;&#x606F;&#x8BB0;&#x5F55;">isa &#x4F18;&#x5316;&#x4E0B;&#x7684;&#x4FE1;&#x606F;&#x8BB0;&#x5F55;</h2>
+<p>isa &#x662F;&#x4E00;&#x4E2A;&#x8054;&#x5408;&#x4F53;&#x7C7B;&#x578B;&#xFF0C;&#x5176;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">union</span> <span class="hljs-keyword">isa_t</span> {
+    <span class="hljs-keyword">isa_t</span>() { }
+    <span class="hljs-keyword">isa_t</span>(<span class="hljs-keyword">uintptr_t</span> value) : bits(value) { }
+
+    Class cls;
+    <span class="hljs-keyword">uintptr_t</span> bits;
+    <span class="hljs-keyword">struct</span> {
+        <span class="hljs-keyword">uintptr_t</span> indexed           : <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">uintptr_t</span> has_assoc         : <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">uintptr_t</span> has_cxx_dtor      : <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">uintptr_t</span> shiftcls          : <span class="hljs-number">33</span>; 
+        <span class="hljs-keyword">uintptr_t</span> magic             : <span class="hljs-number">6</span>;
+        <span class="hljs-keyword">uintptr_t</span> weakly_referenced : <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">uintptr_t</span> deallocating      : <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">uintptr_t</span> has_sidetable_rc  : <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">uintptr_t</span> extra_rc          : <span class="hljs-number">19</span>;
+    };
+};
+</code></pre>
+<blockquote>
+<p>&#x8BE5;&#x5B9A;&#x4E49;&#x662F;&#x5728; <code>__arm64__</code> &#x73AF;&#x5883;&#x4E0B;&#x7684; isa<em>t &#x8054;&#x5408;&#x4F53;&#x7ED3;&#x6784;&#x3002;&#x56E0;&#x4E3A; iOS &#x5E94;&#x7528;&#x4E3A; `<em>_arm64</em></em>` &#x67B6;&#x6784;&#x73AF;&#x5883;&#x3002;</p>
+</blockquote>
+<p><strong>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5728; isa_t &#x8054;&#x5408;&#x4F53;&#x4E2D;&#x4E0D;&#x4EC5;&#x4EC5;&#x8868;&#x660E;&#x4E86;&#x6307;&#x5411;&#x5BF9;&#x8C61;&#x7684;&#x5730;&#x5740;&#x4FE1;&#x606F;&#xFF0C;&#x800C;&#x4E14;&#x8FD9;&#x4E2A; 64 &#x4F4D;&#x6570;&#x636E;&#x8FD8;&#x8BB0;&#x5F55;&#x4E86;&#x5176; bits &#x60C5;&#x51B5;&#x4EE5;&#x53CA;&#x8BE5;&#x5B9E;&#x4F8B;&#x6BCF;&#x4E00;&#x4F4D;&#x4FDD;&#x5B58;&#x7684;&#x5BF9;&#x8C61;&#x4FE1;&#x606F;</strong>&#x3002;&#x6765;&#x9A8C;&#x8BC1;&#x4E00;&#x4E0B;&#xFF08;&#x8BB0;&#x4F4F;&#x8981;&#x4F7F;&#x7528;&#x771F;&#x673A;&#x8C03;&#x8BD5;&#xFF0C; real device &#x548C; simulator &#x7684;&#x67B6;&#x6784;&#x73AF;&#x5883;&#x662F;&#x6709;&#x4E00;&#x5B9A;&#x533A;&#x522B;&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-c">- (<span class="hljs-keyword">void</span>)viewDidLoad {
+    NSObject *object = [NSObject <span class="hljs-keyword">new</span>];
+    <span class="hljs-comment">// &#x5728; ARC &#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x901A;&#x8FC7; __bridge &#x8F6C;&#x6362; id &#x7C7B;&#x578B;&#x4E3A; (void *) &#x7C7B;&#x578B;</span>
+    NSLog(@<span class="hljs-string">&quot;isa: %p &quot;</span>, *(<span class="hljs-keyword">void</span> **)(__bridge <span class="hljs-keyword">void</span> *)object);
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> *someKey = &amp;someKey;
+    objc_setAssociatedObject(object, someKey, @<span class="hljs-string">&quot;Desgard_Duan&quot;</span>, OBJC_ASSOCIATION_RETAIN);
+    NSLog(@<span class="hljs-string">&quot;isa: %p &quot;</span>, *(<span class="hljs-keyword">void</span> **)(__bridge <span class="hljs-keyword">void</span> *)object);
+}
+</code></pre>
+<p>&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x4E3A;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-number">2016</span><span class="hljs-number">-09</span><span class="hljs-number">-25</span> <span class="hljs-number">23</span>:<span class="hljs-number">01</span>:<span class="hljs-number">44.257</span> isa: <span class="hljs-number">0x1a1ae5a3ea1</span> 
+<span class="hljs-number">2016</span><span class="hljs-number">-09</span><span class="hljs-number">-25</span> <span class="hljs-number">23</span>:<span class="hljs-number">01</span>:<span class="hljs-number">44.257</span> isa: <span class="hljs-number">0x1a1ae5a3ea3</span>
+</code></pre>
+<p>&#x9996;&#x5148;&#x5148;&#x6765;&#x770B;&#x4E00;&#x4E0B;&#x8FD9; 64 &#x4E2A;&#x4E8C;&#x8FDB;&#x5236;&#x4F4D;&#x6BCF;&#x4E00;&#x4F4D;&#x7684;&#x542B;&#x4E49;&#xFF1A;</p>
+<table>
+<thead>
+<tr>
+<th>&#x533A;&#x57DF;&#x540D;</th>
+<th>&#x4EE3;&#x8868;&#x4FE1;&#x606F;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>indexed</td>
+<td>0 &#x8868;&#x793A;&#x666E;&#x901A;&#x7684; <code>isa</code> &#x6307;&#x9488;&#xFF0C;1 &#x8868;&#x793A;&#x4F7F;&#x7528;&#x4F18;&#x5316;&#xFF0C;&#x5B58;&#x50A8;&#x5F15;&#x7528;&#x8BA1;&#x6570;</td>
+</tr>
+<tr>
+<td>has_assoc</td>
+<td>&#x8868;&#x793A;&#x8BE5;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x5305;&#x542B; <code>associated object</code>&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#xFF0C;&#x5219;&#x6790;&#x6784;&#x65F6;&#x4F1A;&#x66F4;&#x5FEB;</td>
+</tr>
+<tr>
+<td>has_cxx_dtor</td>
+<td>&#x8868;&#x793A;&#x8BE5;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x6709; C++ &#x6216; ARC &#x7684;&#x6790;&#x6784;&#x51FD;&#x6570;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#xFF0C;&#x5219;&#x6790;&#x6784;&#x65F6;&#x66F4;&#x5FEB;</td>
+</tr>
+<tr>
+<td>shiftcls</td>
+<td>&#x7C7B;&#x7684;&#x6307;&#x9488;</td>
+</tr>
+<tr>
+<td>magic</td>
+<td>&#x56FA;&#x5B9A;&#x503C;&#xFF0C;&#x7528;&#x4E8E;&#x5728;&#x8C03;&#x8BD5;&#x65F6;&#x5206;&#x8FA8;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x672A;&#x5B8C;&#x6210;&#x521D;&#x59CB;&#x5316;</td>
+</tr>
+<tr>
+<td>weakly_referenced</td>
+<td>&#x8868;&#x793A;&#x8BE5;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x6709;&#x8FC7; weak &#x5BF9;&#x8C61;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#xFF0C;&#x5219;&#x6790;&#x6784;&#x65F6;&#x66F4;&#x5FEB;</td>
+</tr>
+<tr>
+<td>deallocating</td>
+<td>&#x8868;&#x793A;&#x8BE5;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x6B63;&#x5728;&#x6790;&#x6784;</td>
+</tr>
+<tr>
+<td>has_sidetable_rc</td>
+<td>&#x8868;&#x793A;&#x8BE5;&#x5BF9;&#x8C61;&#x7684;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x503C;&#x662F;&#x5426;&#x8FC7;&#x5927;&#x65E0;&#x6CD5;&#x5B58;&#x50A8;&#x5728; isa &#x6307;&#x9488;</td>
+</tr>
+<tr>
+<td>extra_rc</td>
+<td>&#x5B58;&#x50A8;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x503C;&#x51CF;&#x4E00;&#x540E;&#x7684;&#x7ED3;&#x679C;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x5C06; 16 &#x8FDB;&#x5236;&#x7684; <code>0x1a1ae5a3ea3</code> &#x8F6C;&#x6362;&#x6210;&#x4E8C;&#x8FDB;&#x5236;&#x3002;&#x53D1;&#x73B0;&#x5728; <code>has_assoc</code> &#x548C; <code>index</code> &#x4E24;&#x4E2A;&#x4F4D;&#x90FD;&#x662F; 1 &#x3002;&#x6839;&#x636E;&#x4EE3;&#x7801;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x6211;&#x4EEC;&#x624B;&#x52A8;&#x4E3A;&#x5176;&#x8BBE;&#x7F6E;&#x4E86; <code>associated object</code>&#xFF0C;&#x6240;&#x4EE5;&#x4EE5;&#x4E0A;&#x7684;&#x542B;&#x4E49;&#x8868;&#x662F;&#x6B63;&#x786E;&#x7684;&#x3002;&#x8FD9;&#x91CC;&#x8BE6;&#x7EC6;&#x7684;&#x518D;&#x8BF4;&#x4E00;&#x4E0B; <code>indexed</code> &#x7684;&#x542B;&#x4E49;&#x3002;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/isa-bits.png" alt="isa-bits"></p>
+<h2 id="isa-&#x521D;&#x59CB;&#x5316;&#x884C;&#x4E3A;&#xFF0C;indexed-&#x4EE5;&#x53CA;-magic-&#x6BB5;&#x7684;&#x9ED8;&#x8BA4;&#x503C;">isa &#x521D;&#x59CB;&#x5316;&#x884C;&#x4E3A;&#xFF0C;indexed &#x4EE5;&#x53CA; magic &#x6BB5;&#x7684;&#x9ED8;&#x8BA4;&#x503C;</h2>
+<p><code>isa</code> &#x6307;&#x9488;&#x4F1A;&#x901A;&#x8FC7; <code>initIsa</code> &#x6765;&#x521D;&#x59CB;&#x5316;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ISA_MASK        0x0000000ffffffff8ULL</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ISA_MAGIC_MASK  0x000003f000000001ULL</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ISA_MAGIC_VALUE 0x000001a000000001ULL</span>
+
+
+<span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span>  
+objc_object::initInstanceIsa(Class cls, <span class="hljs-keyword">bool</span> hasCxxDtor)  
+{
+    <span class="hljs-comment">// initIsa &#x5165;&#x53E3;&#x51FD;&#x6570;</span>
+    <span class="hljs-comment">// &#x4F20;&#x5165; Class &#x5BF9;&#x8C61;&#xFF0C;&#x662F;&#x5426;&#x4E3A; isa &#x4F18;&#x5316;&#x91CF;&#xFF0C;</span>
+    initIsa(cls, <span class="hljs-literal">true</span>, hasCxxDtor);
+}
+
+<span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span>  
+objc_object::initIsa(Class cls, <span class="hljs-keyword">bool</span> indexed, <span class="hljs-keyword">bool</span> hasCxxDtor)  
+{ 
+    <span class="hljs-keyword">if</span> (!indexed) {
+        <span class="hljs-comment">// &#x5982;&#x679C;&#x6CA1;&#x6709;&#x4F7F;&#x7528; isa &#x4F18;&#x5316;&#xFF0C;&#x5176;&#x5185;&#x90E8;&#x53EA;&#x8BB0;&#x5F55;&#x5730;&#x5740;&#x4FE1;&#x606F;</span>
+        isa.cls = cls;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// ISA_MAGIC_VALUE &#x4E3A; bits&#xFF08;isa &#x4FE1;&#x606F;&#xFF09;&#x8D4B;&#x521D;&#x503C;</span>
+        <span class="hljs-comment">// &#x6CE8;&#x610F;&#x5728; arm64 &#x4E0B; mask &#x90E8;&#x5206;&#x56FA;&#x5B9A;&#x4E3A; 0x1a</span>
+        isa.bits = ISA_MAGIC_VALUE;
+        <span class="hljs-comment">// &#x662F;&#x5426;&#x62E5;&#x6709; C++ &#x4E2D;&#x7684;&#x6790;&#x6784;&#x51FD;&#x6570;</span>
+        isa.has_cxx_dtor = hasCxxDtor;
+        <span class="hljs-comment">// &#x7531;&#x4E8E;&#x4F7F;&#x7528;&#x4E86; isa &#x4F18;&#x5316;&#xFF0C;&#x6240;&#x4EE5;&#x7B2C;&#x4E09;&#x4F4D;&#x62E5;&#x6709;&#x5176;&#x4ED6;&#x4FE1;&#x606F;</span>
+        <span class="hljs-comment">// &#x9700;&#x8981;&#x5C06; cls &#x521D;&#x59CB;&#x6570;&#x636E;&#x5DE6;&#x79FB;&#xFF0C;&#x4FDD;&#x5B58;&#x5728; shiftcls &#x5BF9;&#x5E94;&#x4F4D;&#x7F6E;</span>
+        isa.shiftcls = (<span class="hljs-keyword">uintptr_t</span>)cls &gt;&gt; <span class="hljs-number">3</span>;
+    }
+}
+</code></pre>
+<p>&#x5728;&#x4EE5;&#x4E0A;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5728;&#x4E00;&#x4E2A; <code>isa_t</code> &#x7ED3;&#x6784;&#x4E2D;&#xFF0C;magic &#x6BB5;&#x662F;&#x4E00;&#x4E2A;&#x56FA;&#x5B9A;&#x503C;&#xFF0C;&#x5728; arm64 &#x67B6;&#x6784;&#x4E0B;&#x5176;&#x503C;&#x4E3A; <code>0x1a</code>&#xFF0C;&#x800C;&#x5728; x86 &#x4E0B;&#x5219;&#x4E3A; <code>0x1d</code>&#xFF0C;&#x7B14;&#x8005;&#x731C;&#x6D4B;&#x8FD9;&#x4E00;&#x4F4D;&#x4E5F;&#x6709;&#x5224;&#x65AD;&#x67B6;&#x6784;&#x7C7B;&#x578B;&#x4E4B;&#x610F;&#x3002;&#x800C;&#x89C2;&#x5BDF; isa &#x521D;&#x59CB;&#x5316;&#x7684;&#x8C03;&#x7528;&#x6808;&#xFF0C;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#x662F; <code>callAlloc</code> &#x51FD;&#x6570;&#x8FDB;&#x884C;&#x8C03;&#x7528;&#x3002;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x7684;&#x89E3;&#x8BFB;&#xFF0C;&#x5C06;&#x653E;&#x5728;&#x4EE5;&#x540E;&#x7684;&#x6587;&#x4E2D;&#x3002;</p>
+<h2 id="isa-&#x83B7;&#x53D6;&#x975E;-tagged-pointer-&#x5BF9;&#x8C61;">ISA() &#x83B7;&#x53D6;&#x975E; Tagged Pointer &#x5BF9;&#x8C61;</h2>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ISA_MASK        0x0000000ffffffff8ULL</span>
+
+<span class="hljs-comment">// &#x7B80;&#x5355; isa &#x521D;&#x59CB;&#x5316;&#x65B9;&#x5F0F;</span>
+<span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> 
+objc_object::initIsa(Class cls)
+{
+    initIsa(cls, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>);
+}
+
+<span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> 
+objc_object::initClassIsa(Class cls)
+{
+    <span class="hljs-comment">// non-pointer isa &#x60C5;&#x51B5;</span>
+    <span class="hljs-keyword">if</span> (DisableIndexedIsa) {
+        initIsa(cls, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>);
+    } <span class="hljs-keyword">else</span> {
+        initIsa(cls, <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>);
+    }
+}
+
+<span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span>
+objc_object::initProtocolIsa(Class cls)
+{
+    <span class="hljs-keyword">return</span> initClassIsa(cls);
+}
+
+<span class="hljs-keyword">inline</span> Class 
+objc_object::ISA() 
+{
+    assert(!isTaggedPointer()); 
+    <span class="hljs-comment">// &#x4E0E;&#x6709;&#x6548;&#x4F4D;&#x5168; 1 &#x7801;&#x8FDB;&#x884C;&#x4E0E;&#x8FD0;&#x7B97;&#x6765;&#x8FC7;&#x6EE4;&#x975E;&#x6709;&#x6548;&#x4F4D;</span>
+    <span class="hljs-keyword">return</span> (Class)(isa.bits &amp; ISA_MASK);
+}
+</code></pre>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/ISA--.png" alt="ISA--"></p>
+<p>&#x4ECE;&#x4E2D;&#x53D1;&#x73B0;&#xFF0C;&#x5176;&#x6709;&#x6548;&#x533A;&#x57DF;&#x4E5F;&#x5C31;&#x662F; isa_t &#x4E2D;&#x7684; <code>shiftcls</code> &#x533A;&#x57DF;&#x3002;&#x800C;&#x4E14;&#x8FD9;&#x79CD;&#x63A9;&#x7801;&#x65B9;&#x5F0F;&#xFF0C;&#x4E5F;&#x662F;&#x4ECE; isa_t &#x4E2D;&#x67E5;&#x8BE2;&#x4FE1;&#x606F;&#x7684;&#x4E3B;&#x8981;&#x65B9;&#x5F0F;&#xFF0C;&#x518D;&#x5F88;&#x591A;&#x65B9;&#x6CD5;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x89C1;&#x7C7B;&#x4F3C;&#x7684;&#x505A;&#x6CD5;&#x3002;</p>
+<h2 id="isa-&#x7684;&#x4E3B;&#x5730;&#x5740;&#x68C0;&#x7D22;">isa &#x7684;&#x4E3B;&#x5730;&#x5740;&#x68C0;&#x7D22;</h2>
+<p>&#x65E0;&#x8BBA;&#x5728;&#x65B0;&#x65E7;&#x7248;&#x672C;&#x7684; Objective-C &#x4E2D;&#xFF0C;&#x90FD;&#x4F1A;&#x6709; isa &#x6307;&#x9488;&#x6765;&#x8BB0;&#x5F55;&#x7C7B;&#x7684;&#x4FE1;&#x606F;&#x3002;&#x800C;&#x5728;&#x73B0;&#x5728;&#x7684; runtime &#x5E93;&#x4E2D;&#xFF0C;&#x7531;&#x4E8E; 64 &#x4F4D;&#x7684;&#x4F18;&#x52BF;&#xFF0C;&#x4F7F;&#x7528;&#x8054;&#x5408;&#x4F53;&#x53C8;&#x589E;&#x52A0;&#x4E86;&#x7C7B;&#x4FE1;&#x606F;&#x8BB0;&#x5F55;&#x7684;&#x8865;&#x5145;&#x3002;&#x800C;&#x5BF9;&#x4E8E; isa &#x7684;&#x4E3B;&#x8981;&#x90E8;&#x5206;&#xFF0C;&#x5176;&#x8BB0;&#x5F55;&#x7684;&#x4E3B;&#x8981;&#x4FE1;&#x606F;&#x662F;&#x4EC0;&#x4E48;&#x5462;&#xFF1F;</p>
+<p>&#x5728;&#x4E4B;&#x524D;&#x7684;&#x4E00;&#x4E9B;&#x6587;&#x7AE0;&#x4E2D;&#xFF0C;&#x7B14;&#x8005;&#x901A;&#x8FC7;&#x4E86; ObjC &#x7684;&#x6D88;&#x606F;&#x8F6C;&#x53D1;&#x673A;&#x5236;&#x7A0D;&#x5FAE;&#x63D0;&#x53CA;&#x4E86;&#x4E00;&#x4E9B;&#x5173;&#x4E8E; isa &#x7684;&#x77E5;&#x8BC6;&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0; <em><a href="http://www.cocoawithlove.com/2010/01/what-is-meta-class-in-objective-c.html" target="_blank">objc_msgSend&#x6D88;&#x606F;&#x4F20;&#x9012;&#x5B66;&#x4E60;&#x7B14;&#x8BB0; - &#x5BF9;&#x8C61;&#x65B9;&#x6CD5;&#x6D88;&#x606F;&#x4F20;&#x9012;&#x6D41;&#x7A0B;</a></em> &#x3002; &#x5728;&#x6D88;&#x606F;&#x4F20;&#x9012;&#x7684;&#x4E3B;&#x8981;&#x6D41;&#x7A0B;&#x4E2D;&#xFF0C;&#x6700;&#x91CD;&#x8981;&#x7684;&#x4E00;&#x4E2A;&#x73AF;&#x8282;&#x5C31;&#x662F;<em>&#x5FEB;&#x901F;&#x67E5;&#x8BE2; isa &#x64CD;&#x4F5C; GetIsaFast</em> &#xFF0C;&#x5176;&#x4E2D;&#x8981;&#x7EE7;&#x7EED;&#x7684;&#x641C;&#x5BFB;&#x6240;&#x5C5E; Class &#x7684;&#x65B9;&#x6CD5;&#x5217;&#x8868;&#xFF08;&#x6240;&#x6709;&#x6210;&#x5458;&#x65B9;&#x6CD5;&#x6240;&#x5BF9;&#x5E94;&#x7684; Hash Table&#xFF09;&#x3002;&#x53EF;&#x89C1; isa &#x8BB0;&#x5F55;&#x7684;&#x5730;&#x5740;&#x4FE1;&#x606F;&#x548C;&#x5F53;&#x524D;&#x5B9E;&#x4F8B;&#x7684; Class &#x6709;&#x76F4;&#x63A5;&#x5173;&#x7CFB;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x901A;&#x8FC7;&#x5B9E;&#x9A8C;&#x6765;&#x9A8C;&#x8BC1;&#x6211;&#x4EEC;&#x7684;&#x731C;&#x6D4B;&#xFF1A;</p>
+<pre><code class="lang-c">- (<span class="hljs-keyword">void</span>)viewDidLoad {
+    NSObject *object = [NSObject <span class="hljs-keyword">new</span>];
+    NSLog(@<span class="hljs-string">&quot;isa: %p &quot;</span>, *(<span class="hljs-keyword">void</span> **)(__bridge <span class="hljs-keyword">void</span> *)object);
+
+    NSObject *object_2 = [NSObject <span class="hljs-keyword">new</span>];
+    NSLog(@<span class="hljs-string">&quot;isa: %p &quot;</span>, *(<span class="hljs-keyword">void</span> **)(__bridge <span class="hljs-keyword">void</span> *)object_2);
+}
+</code></pre>
+<p>&#x5728;&#x771F;&#x673A;&#x4E0A;&#x8FD0;&#x884C;&#x8BE5;&#x4EE3;&#x7801;&#x7247;&#x6BB5;&#xFF0C;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#x5176;&#x8F93;&#x51FA;&#x7684;&#x7ED3;&#x679C;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-number">2016</span><span class="hljs-number">-09</span><span class="hljs-number">-30</span> <span class="hljs-number">10</span>:<span class="hljs-number">34</span>:<span class="hljs-number">15.577813</span> isa: <span class="hljs-number">0x1a1a96cbea1</span>
+<span class="hljs-number">2016</span><span class="hljs-number">-09</span><span class="hljs-number">-30</span> <span class="hljs-number">10</span>:<span class="hljs-number">34</span>:<span class="hljs-number">15.577897</span> isa: <span class="hljs-number">0x1a1a96cbea1</span>
+</code></pre>
+<p>&#x5728;&#x8F93;&#x51FA; isa &#x7684;&#x6307;&#x9488;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#x5176;&#x8BB0;&#x5F55;&#x7684;&#x503C;&#x5B8C;&#x5168;&#x76F8;&#x7B49;&#x3002;&#x5E76;&#x4E14;&#x518D;&#x901A;&#x8FC7;&#x5BF9;&#x5176; isa &#x6307;&#x5411;&#x5730;&#x5740;&#x7684; Class Name &#x8F93;&#x51FA;&#xFF0C;&#x53EF;&#x77E5;&#x5176; isa &#x6307;&#x9488;&#x662F;&#x6307;&#x5411;&#x6240;&#x5C5E; Class &#x5BF9;&#x8C61;&#x5730;&#x5740;&#x3002;&#x8FD9;&#x53EA;&#x662F;&#x5BF9;&#x4E8E;&#x5BF9;&#x8C61;&#x5B9E;&#x4F8B;&#x7684; isa &#x6307;&#x9488;&#x800C;&#x8A00;&#x3002;</p>
+<p>&#x81F3;&#x6B64;&#x6211;&#x4EEC;&#x53EF;&#x80FD;&#x4F1A;&#x4EA7;&#x751F;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x7591;&#x95EE;&#xFF1A;</p>
+<blockquote>
+<p>&#x65E2;&#x7136; Objective-C &#x5C06;&#x6240;&#x6709;&#x7684;&#x4E8B;&#x7269;&#x5BF9;&#x8C61;&#x5316;&#xFF0C;&#x90A3;&#x4E48;&#x5176;&#x6240;&#x5C5E; Class &#x4E5F;&#x4F1A;&#x62E5;&#x6709; isa &#x6307;&#x9488;&#xFF0C;&#x90A3;&#x4E48;&#x6240;&#x5C5E; Class &#x7684; isa &#x662F;&#x5982;&#x4F55;&#x89C4;&#x5B9A;&#x6307;&#x5411;&#x95EE;&#x9898;&#x7684;&#xFF1F;</p>
+</blockquote>
+<p>&#x4E0B;&#x9762;&#x5F15;&#x51FA; <em>&#x5143;&#x7C7B; meta-class</em> &#x7684;&#x6982;&#x5FF5;&#x3002;</p>
+<h2 id="class-&#x7684;-isa-&#x6307;&#x5411;&#xFF1A;meta-class">Class &#x7684; isa &#x6307;&#x5411;&#xFF1A;meta-class</h2>
+<p>&#x5728; Objective-C &#x4E2D;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A; Class &#x90FD;&#x4F1A;&#x62E5;&#x6709;&#x4E00;&#x4E2A;&#x4E0E;&#x4E4B;&#x76F8;&#x5173;&#x8054;&#x7684;   meta-class &#x3002;&#x4F46;&#x662F;&#x5728;&#x4E1A;&#x52A1;&#x5F00;&#x53D1;&#x4E2D;&#xFF0C;&#x53EF;&#x80FD;&#x6C38;&#x8FDC;&#x4E0D;&#x4F1A;&#x63A5;&#x89E6;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x4E2A; Class &#x662F;&#x7528;&#x6765;&#x8BB0;&#x5F55;&#x4E00;&#x4E9B;&#x7C7B;&#x4FE1;&#x606F;&#xFF0C;&#x800C;&#x4E0D;&#x4F1A;&#x76F4;&#x63A5;&#x5C06;&#x5176;&#x6210;&#x5458;&#x7684;&#x5C5E;&#x6027;&#x63A5;&#x53E3;&#x66B4;&#x9732;&#x51FA;&#x6765;&#x3002;&#x4E0B;&#x9762;&#x6765;&#x9010;&#x4E00;&#x63A2;&#x7A76;&#x4E00;&#x756A;&#xFF08;&#x4EE5;&#x4E0B;&#x4F8B;&#x5B50;&#x53C2;&#x8003;&#x6587;&#x7AE0; <em><a href="http://www.cocoawithlove.com/2010/01/what-is-meta-class-in-objective-c.html" target="_blank">What is a meta-class in Objective-C?</a></em> &#xFF09;&#xFF1A;</p>
+<pre><code class="lang-c">- (<span class="hljs-keyword">void</span>)viewDidLoad {
+    [super viewDidLoad];
+
+    Class newClass = objc_allocateClassPair([NSError <span class="hljs-keyword">class</span>], <span class="hljs-string">&quot;RuntimeErrorSubclass&quot;</span>, <span class="hljs-number">0</span>);
+    class_addMethod(newClass, @selector(report), (IMP)ReportFunction, <span class="hljs-string">&quot;v@:&quot;</span>);
+    objc_registerClassPair(newClass);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ReportFunction</span><span class="hljs-params">(id self, SEL _cmd)</span> </span>{
+    NSLog(@<span class="hljs-string">&quot;This object is %p.&quot;</span>,self);
+    NSLog(@<span class="hljs-string">&quot;Class is %@, and super is %@.&quot;</span>,[self <span class="hljs-keyword">class</span>],[self superclass]);
+    Class currentClass = [self <span class="hljs-keyword">class</span>];
+    <span class="hljs-keyword">for</span>( <span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; <span class="hljs-number">5</span>; ++i ) {
+        NSLog(@<span class="hljs-string">&quot;Following the isa pointer %d times gives %p&quot;</span>, i, currentClass);
+    }
+    NSLog(@<span class="hljs-string">&quot;NSObject&apos;s class is %p&quot;</span>, [NSObject <span class="hljs-keyword">class</span>]);
+    NSLog(@<span class="hljs-string">&quot;NSObject&apos;s meta class is %p&quot;</span>,object_getClass([NSObject <span class="hljs-keyword">class</span>]));
+}
+</code></pre>
+<p>&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x6240;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#x662F;&#x5728; runtime &#x65F6;&#x671F;&#x521B;&#x5EFA; <code>NSError</code> &#x7684;&#x4E00;&#x4E2A;&#x5B50;&#x7C7B; <code>RuntimeErrorSubclass</code> &#x3002;<code>objc_allocateClassPair</code> &#x65B9;&#x6CD5;&#x4F1A;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684; Class &#xFF0C;&#x7136;&#x540E;&#x53D6;&#x51FA; Class &#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x4F7F;&#x7528; <code>class_addMethod</code> &#x65B9;&#x6CD5;&#xFF0C;&#x4E3A;&#x8BE5; Class &#x6DFB;&#x52A0;&#x65B9;&#x6CD5;&#xFF0C;&#x9700;&#x8981;&#x5F00;&#x53D1;&#x8005;&#x4F20;&#x5165;&#x6DFB;&#x52A0;&#x65B9;&#x6CD5;&#x7684; Class &#x3001;&#x65B9;&#x6CD5;&#x540D;&#x3001;&#x5B9E;&#x73B0;&#x51FD;&#x6570;&#x3001;&#x4EE5;&#x53CA;&#x5B9A;&#x4E49;&#x8BE5;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x503C;&#x7C7B;&#x578B;&#x548C;&#x53C2;&#x6570;&#x7C7B;&#x578B;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x3002;&#x6700;&#x540E;&#x8C03;&#x7528; <code>objc_registerClassPair</code> &#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x6CE8;&#x518C;&#x5373;&#x53EF;&#x3002;</p>
+<blockquote>
+<p>&#x8981;&#x70B9;&#xFF1A;&#x5728;&#x8C03;&#x7528; <code>objc_allocateClassPair</code> &#x65B9;&#x6CD5;&#x589E;&#x52A0;&#x65B0;&#x7684; Class &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53EF;&#x4EE5;&#x8C03;&#x7528; <code>class_addIvar</code> &#x589E;&#x52A0;&#x6210;&#x5458;&#x5C5E;&#x6027;&#x548C; <code>objc_registerClassPair</code> &#x589E;&#x52A0;&#x6210;&#x5458;&#x65B9;&#x6CD5;&#x3002;</p>
+</blockquote>
+<pre><code class="lang-c"><span class="hljs-function">Class <span class="hljs-title">objc_allocateClassPair</span><span class="hljs-params">(Class superclass, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name, 
+                             size_t extraBytes)</span>
+</span>{
+    Class cls, meta;
+
+    <span class="hljs-keyword">rwlock_writer_t</span> lock(runtimeLock);
+
+    <span class="hljs-comment">// &#x5982;&#x679C; Class &#x540D;&#x91CD;&#x590D;&#x5219;&#x521B;&#x5EFA;&#x5931;&#x8D25;</span>
+    <span class="hljs-comment">// &#x5982;&#x679C;&#x7236;&#x7C7B;&#x6CA1;&#x6709;&#x901A;&#x8FC7;&#x8BA4;&#x8BC1;&#x5219;&#x521B;&#x5EFA;&#x5931;&#x8D25;</span>
+    <span class="hljs-keyword">if</span> (getClass(name)  ||  !verifySuperclass(superclass, <span class="hljs-literal">true</span><span class="hljs-comment">/*rootOK*/</span>)) {
+        <span class="hljs-keyword">return</span> nil;
+    }
+
+    <span class="hljs-comment">// &#x4E3A; cls &#x548C; meta &#x5206;&#x914D;&#x7A7A;&#x95F4;</span>
+    cls  = alloc_class_for_subclass(superclass, extraBytes);
+    meta = alloc_class_for_subclass(superclass, extraBytes);
+
+    <span class="hljs-comment">// &#x5BF9; cls &#x548C; meta &#x505A;&#x6307;&#x5411;&#x5224;&#x5B9A;</span>
+    objc_initializeClassPair_internal(superclass, name, cls, meta);
+
+    <span class="hljs-keyword">return</span> cls;
+}
+</code></pre>
+<p>&#x5728; <code>objc_allocateClassPair</code> &#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x8BF4;&#x662F; <code>objc_initializeClassPair_internal</code> &#x7684;&#x65B9;&#x6CD5;&#x5165;&#x53E3;&#xFF0C;&#x5176;&#x4E3B;&#x8981;&#x7684;&#x529F;&#x80FD;&#x662F; <strong>&#x6839;&#x636E; superclass &#x7684;&#x4FE1;&#x606F;&#x548C; Class &#x4E2D;&#x7684;&#x4E00;&#x4E9B;&#x6807;&#x8BB0;&#x6210;&#x5458;&#x6765;&#x786E;&#x5B9A; cls &#x548C; meta &#x6307;&#x9488;&#x7684;&#x6307;&#x5411;&#xFF0C;&#x5E76;&#x8C03;&#x7528; <code>addSubclass</code> &#x65B9;&#x6CD5;&#x5C06;&#x5176;&#x52A0;&#x5165;&#x5230; superclass &#x4E2D;</strong>&#x3002;</p>
+<p>&#x901A;&#x8FC7; <code>objc_i nitializeClassPair_internal</code> &#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x8C03;&#x7528; <code>meta -&gt; initClassIsa();</code> &#x6765;&#x521D;&#x59CB;&#x5316; isa &#x6307;&#x9488;&#x3002;&#x4E0B;&#x9762;&#x901A;&#x8FC7; <code>objc_initializeClassPair_internal</code> &#x6765;&#x770B;&#x770B; isa &#x6307;&#x9488;&#x548C; meta &#x7684;&#x521D;&#x59CB;&#x5316;&#x65B9;&#x5F0F;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// objc_initializeClassPair_internal &#x65B9;&#x6CD5;</span>
+<span class="hljs-comment">// superclass: &#x7236;&#x7C7B;&#x6307;&#x9488;</span>
+<span class="hljs-comment">// name: &#x7C7B;&#x540D;</span>
+<span class="hljs-comment">// cls: &#x4E3B;&#x7C7B;&#x7D22;&#x5F15;</span>
+<span class="hljs-comment">// meta: metaclass &#x7D22;&#x5F15;</span>
+
+<span class="hljs-comment">// &#x89E3;&#x9501;&#x64CD;&#x4F5C;&#xFF0C;&#x5199;&#x64CD;&#x4F5C;&#x8981;&#x6C42;</span>
+runtimeLock.assertWriting();
+
+<span class="hljs-comment">// &#x53EA;&#x8BFB;&#x7ED3;&#x6784; read only</span>
+<span class="hljs-comment">// &#x5206;&#x522B;&#x58F0;&#x660E; cls &#x548C; meta &#x4E24;&#x4E2A;</span>
+<span class="hljs-keyword">class_ro_t</span> *cls_ro_w, *meta_ro_w;
+
+<span class="hljs-comment">// &#x7F13;&#x5B58;&#x521D;&#x59CB;&#x5316;&#x64CD;&#x4F5C;</span>
+cls-&gt;cache.initializeToEmpty();
+meta-&gt;cache.initializeToEmpty();
+
+<span class="hljs-comment">// &#x6570;&#x636E;&#x8BBE;&#x7F6E;&#x64CD;&#x4F5C;</span>
+<span class="hljs-comment">// data() -&gt; ro &#x6210;&#x5458;&#xFF0C;&#x4E0E;&#x65B9;&#x6CD5;&#x5217;&#x8868;&#xFF0C;&#x5C5E;&#x6027;&#xFF0C;&#x534F;&#x8BAE;&#x76F8;&#x5173;</span>
+cls-&gt;setData((<span class="hljs-keyword">class_rw_t</span> *)<span class="hljs-built_in">calloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">class_rw_t</span>), <span class="hljs-number">1</span>));
+meta-&gt;setData((<span class="hljs-keyword">class_rw_t</span> *)<span class="hljs-built_in">calloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">class_rw_t</span>), <span class="hljs-number">1</span>));
+cls_ro_w   = (<span class="hljs-keyword">class_ro_t</span> *)<span class="hljs-built_in">calloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">class_ro_t</span>), <span class="hljs-number">1</span>);
+meta_ro_w  = (<span class="hljs-keyword">class_ro_t</span> *)<span class="hljs-built_in">calloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">class_ro_t</span>), <span class="hljs-number">1</span>);
+cls-&gt;data()-&gt;ro = cls_ro_w;
+meta-&gt;data()-&gt;ro = meta_ro_w;
+
+<span class="hljs-comment">// &#x8FDB;&#x884C; allocate &#x5206;&#x914D;&#xFF0C;&#x4F46;&#x6CA1;&#x6709;&#x6CE8;&#x518C;</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> RW_CONSTRUCTING       (1&lt;&lt;26)</span>
+<span class="hljs-comment">// ro &#x6210;&#x5458;&#x5DF2;&#x7ECF; copy &#x5230; heap &#x7A7A;&#x95F4;&#x4E0A;&#x5B58;&#x50A8;</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> RW_COPIED_RO          (1&lt;&lt;27)</span>
+<span class="hljs-comment">// data &#x6210;&#x5458;&#x4E3A;&#x53EF;&#x8BFB;&#x5199;&#x6743;&#x9650;</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> RW_REALIZED           (1&lt;&lt;31)</span>
+<span class="hljs-comment">// &#x8868;&#x793A;&#x8BE5;&#x7C7B;&#x5DF2;&#x7ECF;&#x8BB0;&#x5F55;&#xFF0C;&#x4F46;&#x5C1A;&#x672A;&#x5B9E;&#x73B0;</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> RW_REALIZING          (1&lt;&lt;19)</span>
+
+<span class="hljs-comment">// &#x8FDB;&#x6B65;&#x4FE1;&#x606F;&#x6570;&#x636E;&#x64CD;&#x4F5C;</span>
+cls-&gt;data()-&gt;flags = RW_CONSTRUCTING | RW_COPIED_RO | RW_REALIZED | RW_REALIZING;
+meta-&gt;data()-&gt;flags = RW_CONSTRUCTING | RW_COPIED_RO | RW_REALIZED | RW_REALIZING;
+cls-&gt;data()-&gt;version = <span class="hljs-number">0</span>;
+meta-&gt;data()-&gt;version = <span class="hljs-number">7</span>;
+
+<span class="hljs-comment">// &#x8868;&#x793A;&#x4E3A; metaclass &#x7C7B;&#x578B;</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> RO_META               (1&lt;&lt;0)</span>
+
+<span class="hljs-comment">// cls &#x7684; flags &#x5C5E;&#x6027;&#x4E0D;&#x8FDB;&#x884C;&#x6807;&#x8BB0;</span>
+cls_ro_w-&gt;flags = <span class="hljs-number">0</span>;
+<span class="hljs-comment">// meta_ro_w &#x7684; flags &#x5C5E;&#x6027;&#x8FDB;&#x884C; metaclass &#x7C7B;&#x578B;&#x6807;&#x8BB0;</span>
+meta_ro_w-&gt;flags = RO_META;
+<span class="hljs-keyword">if</span> (!superclass) {
+    <span class="hljs-comment">// &#x5982;&#x679C;&#x6CA1;&#x6709;&#x7236;&#x7C7B;&#x7684;&#x8BDD;&#xFF0C;&#x5219;&#x5F53;&#x524D;&#x7C7B;&#x4E5F;&#x4E3A; metaclass</span>
+   cls_ro_w-&gt;flags |= RO_ROOT;
+   meta_ro_w-&gt;flags |= RO_ROOT;
+}
+<span class="hljs-keyword">if</span> (superclass) {
+    <span class="hljs-comment">// &#x6709;&#x65E0;&#x7236;&#x7C7B;&#x60C5;&#x51B5;&#xFF0C;&#x4F20;&#x9012; instanceStart</span>
+   cls_ro_w-&gt;instanceStart = superclass-&gt;unalignedInstanceSize();
+   meta_ro_w-&gt;instanceStart = superclass-&gt;ISA()-&gt;unalignedInstanceSize();
+   cls-&gt;setInstanceSize(cls_ro_w-&gt;instanceStart);
+   meta-&gt;setInstanceSize(meta_ro_w-&gt;instanceStart);
+} <span class="hljs-keyword">else</span> {
+   cls_ro_w-&gt;instanceStart = <span class="hljs-number">0</span>;
+   meta_ro_w-&gt;instanceStart = (<span class="hljs-keyword">uint32_t</span>)<span class="hljs-keyword">sizeof</span>(objc_class);
+   cls-&gt;setInstanceSize((<span class="hljs-keyword">uint32_t</span>)<span class="hljs-keyword">sizeof</span>(id));
+   meta-&gt;setInstanceSize(meta_ro_w-&gt;instanceStart);
+}
+
+<span class="hljs-comment">// &#x8BB0;&#x5F55; Class &#x540D;</span>
+cls_ro_w-&gt;name = strdup(name);
+meta_ro_w-&gt;name = strdup(name);
+
+<span class="hljs-comment">// &#x5C5E;&#x6027;&#x4FEE;&#x9970;&#x7B26;&#x5E03;&#x5C40;</span>
+<span class="hljs-comment">// ivarLayout strong&#x5F15;&#x7528;&#x8868;</span>
+cls_ro_w-&gt;ivarLayout = &amp;UnsetLayout;
+<span class="hljs-comment">// weakIvarLayout weak&#x5F15;&#x7528;&#x8868;</span>
+cls_ro_w-&gt;weakIvarLayout = &amp;UnsetLayout;
+
+<span class="hljs-comment">// &#x901A;&#x8FC7;&#x83B7;&#x53D6;&#x5230;&#x7684; cls &#x6307;&#x9488;&#xFF0C;&#x8C03;&#x7528; isa &#x521D;&#x59CB;&#x5316;&#x547D;&#x4EE4;</span>
+cls-&gt;initClassIsa(meta);
+<span class="hljs-keyword">if</span> (superclass) {
+    <span class="hljs-comment">// &#x5982;&#x679C;&#x62E5;&#x6709;&#x7236;&#x7C7B;&#xFF0C;&#x66F4;&#x65B0; meta &#x7684; isa &#x6307;&#x5411;</span>
+   meta-&gt;initClassIsa(superclass-&gt;ISA()-&gt;ISA());
+   <span class="hljs-comment">// &#x66F4;&#x65B0; cls &#x7236;&#x7C7B;&#x4FE1;&#x606F;</span>
+   cls-&gt;superclass = superclass;
+   <span class="hljs-comment">// meta &#x7684;&#x7236;&#x7C7B;&#x6307;&#x5411;&#x7236;&#x7C7B;&#x7684; isa</span>
+   meta-&gt;superclass = superclass-&gt;ISA();
+   <span class="hljs-comment">// &#x5411;&#x7236;&#x7C7B;&#x4E2D;&#x589E;&#x52A0;&#x8BE5;&#x7C7B;&#x4FE1;&#x606F;</span>
+   addSubclass(superclass, cls);
+   <span class="hljs-comment">// &#x5411;&#x7236;&#x7C7B;&#x7684; isa &#x4E2D;&#x8BB0;&#x5F55;&#x8BE5;&#x4FE1;&#x606F;</span>
+   addSubclass(superclass-&gt;ISA(), meta);
+} <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// &#x4E3A; meta &#x521D;&#x59CB;&#x5316; isa &#x4FE1;&#x606F;</span>
+   meta-&gt;initClassIsa(meta);
+   <span class="hljs-comment">// &#x7531;&#x4E8E;&#x8BE5;&#x7C7B;&#x4E3A; rootclass&#xFF0C;&#x65E0;&#x7236;&#x7C7B;&#x4FE1;&#x606F;</span>
+   <span class="hljs-comment">// &#x8BA9;&#x5176;&#x7236;&#x7C7B;&#x6307;&#x5411; Nil</span>
+   cls-&gt;superclass = Nil;
+   <span class="hljs-comment">// &#x4EE4; meta &#x7684;&#x7236;&#x7C7B;&#x6307;&#x5411; cls</span>
+   meta-&gt;superclass = cls;
+   <span class="hljs-comment">// &#x5411; cls &#x4E2D;&#x589E;&#x52A0; meta &#x6307;&#x9488;&#x4FE1;&#x606F;</span>
+   addSubclass(cls, meta);
+}
+</code></pre>
+<p>&#x5728;&#x8BED;&#x6CD5;&#x4E0A;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x8FD9;&#x51E0;&#x4E2A;&#x5730;&#x65B9;&#xFF1A;</p>
+<ul>
+<li>ivarLayout &#x548C; weakIvarLayout&#xFF1A;&#x5206;&#x522B;&#x8BB0;&#x5F55;&#x4E86;&#x54EA;&#x4E9B; ivar &#x662F; strong &#x6216;&#x662F; weak&#xFF0C;&#x90FD;&#x672A;&#x8BB0;&#x5F55;&#x5219;&#x4E3A; __unsafe_unretained &#x7684;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x3002;</li>
+<li><code>strdup(const char *s)</code>&#xFF1A;&#x53EF;&#x4EE5;&#x590D;&#x5236;&#x5B57;&#x7B26;&#x4E32;&#x3002;&#x5148;&#x56DE;&#x8C03;&#x7528; malloc() &#x914D;&#x7F6E;&#x4E0E;&#x53C2;&#x6570; s &#x5B57;&#x7B26;&#x4E32;&#x7684;&#x5185;&#x5BB9;&#x590D;&#x5236;&#x5230;&#x8BE5;&#x5185;&#x5B58;&#x5730;&#x5740;&#xFF0C;&#x7136;&#x540E;&#x628A;&#x8BE5;&#x5730;&#x5740;&#x8FD4;&#x56DE;&#x3002;&#x8FD4;&#x56DE;&#x503C;&#x662F;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x6307;&#x9488;&#xFF0C;&#x8BE5;&#x6307;&#x9488;&#x6307;&#x5411;&#x590D;&#x5236;&#x540E;&#x7684;&#x65B0;&#x5B57;&#x7B26;&#x4E32;&#x5730;&#x5740;&#x3002;&#x82E5;&#x8FD4;&#x56DE; NULL &#x8868;&#x793A;&#x5185;&#x5B58;&#x4E0D;&#x8DB3;&#x3002;</li>
+</ul>
+<p>&#x5728;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x4F1A;&#x53D1;&#x73B0;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#x3002;&#x5F53;&#x521B;&#x5EFA;&#x7684; Class &#x6CA1;&#x6709;&#x7236;&#x7C7B;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5176; meta &#x662F;&#x6307;&#x5411; cls &#x81EA;&#x8EAB;&#x7684;&#xFF0C;&#x800C; meta &#x539F;&#x672C;&#x5C31;&#x662F; cls &#x7684;&#x5B50;&#x7C7B;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x8FD9;&#x91CC;&#xFF0C;&#x4F7F;&#x5F97;&#x4E00;&#x4E2A;&#x57FA;&#x7C7B;&#x5BF9;&#x8C61;&#x7684; isa &#x6307;&#x9488;&#x5F62;&#x6210;&#x81EA;&#x73AF;&#x6307;&#x5411;&#x81EA;&#x8EAB;&#x3002;&#x4E0B;&#x56FE;&#x7528; <code>NSObject</code> &#x4E3E;&#x4F8B;&#xFF08;&#x5176;&#x6307;&#x9488;&#x4E0B;&#x65B9;&#x6709;&#x6E90;&#x7801;&#x6807;&#x6CE8;&#xFF09;&#xFF1A;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/isa_obj_x.png" alt="isa_obj_x"></p>
+<p>&#x800C;&#x5F53;&#x521B;&#x5EFA; Class &#x62E5;&#x6709;&#x7236;&#x7C7B;&#x7684;&#x65F6;&#x5019;&#xFF0C;isa &#x548C; superclass &#x90FD;&#x8981;&#x6307;&#x5411;&#x7236;&#x7C7B;&#xFF0C;&#x800C;&#x5BF9;&#x5E94;&#x7684; meta &#x901A;&#x8FC7;&#x4E24;&#x6B21;&#x7684; isa &#x67E5;&#x8BE2;&#x627E;&#x5230;&#x6839;&#x7C7B; meta &#xFF0C;&#x66F4;&#x65B0;&#x6307;&#x5411;&#x3002;&#x7528; <code>NSError</code> &#x6765;&#x4E3E;&#x4F8B;&#xFF1A;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/isa_metaclass.png" alt="isa_obj_x2"></p>
+<p>&#x5176;&#x4E2D;&#x8981;&#x4E4B;&#x4E00; meta &#x7684; isa &#x64CD;&#x4F5C; <code>meta-&gt;initClassIsa(superclass-&gt;ISA()-&gt;ISA());</code> &#xFF0C;&#x8FD9;&#x4E0D;&#x662F;&#x5355;&#x7EAF;&#x7684;&#x6307;&#x5411;&#x7236;&#x7C7B; meta &#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x800C;&#x662F;&#x6307;&#x5411;&#x6839;&#x7C7B;&#x7684; meta &#x3002;</p>
+<p><em>Talk is cheap!</em> &#xFF0C;&#x7528;&#x4EE3;&#x7801;&#x6765;&#x5B9E;&#x9A8C;&#x4E00;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c">- (<span class="hljs-keyword">void</span>)viewDidLoad {
+    [super viewDidLoad];
+    DGObject *desgard = [[DGObject alloc] init];
+
+    Class cls = object_getClass(desgard);
+    NSLog(@<span class="hljs-string">&quot;%s\n&quot;</span>, class_getName(cls)); <span class="hljs-comment">// DGObject</span>
+    NSLog(@<span class="hljs-string">&quot;%d\n&quot;</span>, class_isMetaClass(cls)); <span class="hljs-comment">// 0</span>
+
+    Class meta = object_getClass(cls);
+    NSLog(@<span class="hljs-string">&quot;%s\n&quot;</span>, class_getName(meta)); <span class="hljs-comment">// DGObject</span>
+    NSLog(@<span class="hljs-string">&quot;%d\n&quot;</span>, class_isMetaClass(cls)); <span class="hljs-comment">// 0</span>
+
+    Class meta_meta = object_getClass(meta);
+    NSLog(@<span class="hljs-string">&quot;%s\n&quot;</span>, class_getName(meta_meta)); <span class="hljs-comment">// NSObject</span>
+    NSLog(@<span class="hljs-string">&quot;%d\n&quot;</span>, class_isMetaClass(meta_meta)); <span class="hljs-comment">// 1</span>
+}
+</code></pre>
+<p>&#x901A;&#x8FC7;&#x4EE5;&#x4E0A;&#x5206;&#x6790;&#xFF0C;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x4E86; metaclass &#x662F;&#x4E00;&#x4E2A; Class &#xFF0C;&#x800C;&#x8FD9;&#x4E2A; Class &#x662F;&#x4F5C;&#x4E3A;&#x57FA;&#x7840; Class &#x7684;&#x6240;&#x5C5E;&#x7C7B;&#xFF0C;&#x7528;&#x4E8E;&#x6784;&#x5EFA;<strong>&#x7EE7;&#x627F;&#x7F51;&#x56FE;</strong>&#xFF0C;&#x4F7F;&#x5F97; runtime &#x8BBF;&#x95EE;&#x76F8;&#x5173;&#x8054;&#x7684; Class &#x66F4;&#x52A0;&#x7684;&#x5FEB;&#x6377;&#x65B9;&#x4FBF;&#x3002;&#x5728; <em><a href="">What is a meta-class in Objective-C?</a></em> &#x4E00;&#x6587;&#x4E2D;&#xFF0C;&#x4F5C;&#x8005;&#x5C06;&#x5176;&#x79F0;&#x4F5C; <strong>NSObject&#x7EE7;&#x627F;&#x4F53;&#x7CFB;(NSObject hierarchy)</strong> &#xFF0C;&#x5176;&#x6839;&#x7C7B;&#x6240;&#x6709;&#x7684; Class &#x548C;&#x76F8;&#x5173; metaclass &#x90FD;&#x662F;&#x8054;&#x901A;&#x7684;&#xFF0C;&#x5E76;&#x4E14;&#x5728;&#x6839;&#x7C7B; NSObject &#x4E2D;&#x7684;&#x6210;&#x5458;&#x65B9;&#x6CD5;&#xFF0C;&#x5BF9;&#x5176;&#x4F53;&#x7CFB;&#x4E2D;&#x7684;&#x6240;&#x6709; Class &#x548C;&#x5BF9;&#x5E94; metaclass &#x4E5F;&#x662F;&#x64CD;&#x4F5C;&#x6709;&#x6548;&#x7684;&#x3002;</p>
+<p>metaclass &#x7684;&#x5B58;&#x5728;&#xFF0C;&#x5C06;&#x5BF9;&#x8C61;&#x5316;&#x7684;&#x5B9E;&#x4F8B;&#x3001;&#x7C7B;&#x7EC4;&#x7EC7;&#x6210;&#x4E86;&#x4E00;&#x4E2A;&#x8FDE;&#x901A;&#x56FE;&#xFF0C;&#x8FDB;&#x4E00;&#x6B65;&#x7075;&#x6D3B;&#x4E86; ObjC &#x7684;&#x52A8;&#x6001;&#x7279;&#x6027;&#x3002;</p>
+<p>&#x81F3;&#x6B64;&#xFF0C;&#x6211;&#x4EEC;&#x901A;&#x8FC7;&#x6E90;&#x7801;&#xFF0C;&#x7CFB;&#x7EDF;&#x4E86;&#x89E3;&#x4E86; isa &#x6307;&#x9488;&#x5BF9;&#x4E8E;&#x5BF9;&#x8C61;&#x7684;&#x4FE1;&#x606F;&#x8BB0;&#x5F55;&#xFF0C;&#x4EE5;&#x53CA; metaclass &#x7684;&#x7ED3;&#x6784;&#x548C;&#x4F5C;&#x7528;&#x3002;&#x540E;&#x7EED;&#x535A;&#x6587;&#x5C06;&#x4F1A;&#x63A2;&#x7A76; <code>retain</code> &#x548C; <code>release</code> &#x65B9;&#x6CD5;&#xFF0C;&#x656C;&#x8BF7;&#x671F;&#x5F85;&#x3002;</p>
+<blockquote>
+<p>&#x82E5;&#x60F3;&#x67E5;&#x770B;&#x66F4;&#x591A;&#x7684;iOS Source Probe&#x6587;&#x7AE0;&#xFF0C;&#x6536;&#x5F55;&#x5728;&#x8FD9;&#x4E2A;<a href="https://github.com/Desgard/iOS-Source-Probe" target="_blank">Github&#x4ED3;&#x5E93;&#x4E2D;</a>&#x3002;</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="objc_msgSend消息传递学习笔记 - 消息转发.html" class="navigation navigation-prev " aria-label="Previous page: 消息转发过程分析">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="weak 弱引用的实现方式.html" class="navigation navigation-next " aria-label="Next page: weak 弱引用的实现方式">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"用 isa 承载对象的类信息","level":"2.1.4","depth":2,"next":{"title":"weak 弱引用的实现方式","level":"2.1.5","depth":2,"path":"Objective-C/Runtime/weak 弱引用的实现方式.md","ref":"Objective-C/Runtime/weak 弱引用的实现方式.md","articles":[]},"previous":{"title":"消息转发过程分析","level":"2.1.3","depth":2,"path":"Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 消息转发.md","ref":"Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 消息转发.md","articles":[]},"dir":"ltr"},"config":{"plugins":["splitter","github","multipart","mathjax"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/Desgard"},"splitter":{},"search":{},"multipart":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"cn","gitbook":"*"},"file":{"path":"Objective-C/Runtime/用 isa 承载对象的类信息.md","mtime":"2018-07-09T00:41:04.822Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-09T00:56:45.312Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

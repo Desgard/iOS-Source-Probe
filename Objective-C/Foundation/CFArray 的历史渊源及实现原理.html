@@ -1,0 +1,987 @@
+
+<!DOCTYPE HTML>
+<html lang="cn" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>CFArray 的历史渊源及实现原理 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-multipart/multipart.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Run Loop 记录与源码注释.html" />
+    
+    
+    <link rel="prev" href="从经典问题来看 Copy 方法.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 1 - iOS Runtime 源码解析</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" >
+            
+                <span>
+            
+                    
+                    objc/runtime.h 708
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="../Runtime/浅谈Associated Objects.html">
+            
+                <a href="../Runtime/浅谈Associated Objects.html">
+            
+                    
+                    浅谈Associated Objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="../Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                <a href="../Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                    
+                    对象方法消息传递流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.3" data-path="../Runtime/objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                <a href="../Runtime/objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                    
+                    消息转发过程分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.4" data-path="../Runtime/用 isa 承载对象的类信息.html">
+            
+                <a href="../Runtime/用 isa 承载对象的类信息.html">
+            
+                    
+                    用 isa 承载对象的类信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.5" data-path="../Runtime/weak 弱引用的实现方式.html">
+            
+                <a href="../Runtime/weak 弱引用的实现方式.html">
+            
+                    
+                    weak 弱引用的实现方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.6" data-path="../Runtime/load 方法全程跟踪.html">
+            
+                <a href="../Runtime/load 方法全程跟踪.html">
+            
+                    
+                    load 方法全程跟踪
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.7" data-path="../Runtime/浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                <a href="../Runtime/浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                    
+                    浅谈 block - clang 改写后的 block 结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.8" data-path="../Runtime/浅谈 block（2） - 截获变量方式.html">
+            
+                <a href="../Runtime/浅谈 block（2） - 截获变量方式.html">
+            
+                    
+                    浅谈 block - 截获变量方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 2 - macOS & iOS 系统源码及相关开源库</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <span>
+            
+                    
+                    cctools/include/mach-o 895
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                <a href="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                    
+                    Mach-O 文件格式探索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" >
+            
+                <span>
+            
+                    
+                    Fishhook
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                <a href="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                    
+                    巧用符号表 - 探求 fishhook 原理（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                <a href="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                    
+                    验证试验 - 探求 fishhook 原理（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 3 - Foundation 框架源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" >
+            
+                <span>
+            
+                    
+                    Foundation
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="从经典问题来看 Copy 方法.html">
+            
+                <a href="从经典问题来看 Copy 方法.html">
+            
+                    
+                    从经典问题来看 Copy 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="4.1.2" data-path="CFArray 的历史渊源及实现原理.html">
+            
+                <a href="CFArray 的历史渊源及实现原理.html">
+            
+                    
+                    CFArray 的历史渊源及实现原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="Run Loop 记录与源码注释.html">
+            
+                <a href="Run Loop 记录与源码注释.html">
+            
+                    
+                    Run Loop 记录与源码注释(作者Kylin)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 4 - UIKit 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" >
+            
+                <span>
+            
+                    
+                    UIKit
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.1.1" data-path="复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                <a href="复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                    
+                    复用的精妙 - UITableView 复用技术原理分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.1.2" data-path="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                <a href="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                    
+                    AutoLayout 中的线性规划 - Simplex 算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 5 - SDWebImage 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" >
+            
+                <span>
+            
+                    
+                    SDWebImage v3.8.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1.1" data-path="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                    
+                    SDWebImage Source Probe: WebCache
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.2" data-path="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                    
+                    SDWebImage Source Probe: Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.3" data-path="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                    
+                    SDWebImage Source Probe: Downloader
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.4" data-path="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                    
+                    SDWebImage Source Probe: Operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 6 - Swift 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" >
+            
+                <span>
+            
+                    
+                    Swift v4.0
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.1.1" data-path="../../Swift/Swift Probe - Optional.html">
+            
+                <a href="../../Swift/Swift Probe - Optional.html">
+            
+                    
+                    Swift Probe - Optional
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 7 - Shadowsocks 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" >
+            
+                <span>
+            
+                    
+                    Shadowsocks v2.9.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="8.1.1" data-path="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                    
+                    Shadowsocks Probe I - Socks5 与 EventLoop 事件分发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.1.2" data-path="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                    
+                    Shadowsocks Probe II - TCP 代理过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >CFArray 的历史渊源及实现原理</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>&#x4F5C;&#x8005;&#xFF1A;&#x51AC;&#x74DC;</p>
+<p>&#x539F;&#x6587;&#x94FE;&#x63A5;&#xFF1A;<a href="http://www.desgard.com/CFArray/" target="_blank">Guardia &#xB7; &#x74DC;&#x5730;</a></p>
+</blockquote>
+<h1 id="cfarray-&#x7684;&#x5386;&#x53F2;&#x6E0A;&#x6E90;&#x53CA;&#x5B9E;&#x73B0;&#x539F;&#x7406;">CFArray &#x7684;&#x5386;&#x53F2;&#x6E0A;&#x6E90;&#x53CA;&#x5B9E;&#x73B0;&#x539F;&#x7406;</h1>
+<p>&#x5728; iOS &#x5F00;&#x53D1;&#x4E2D;&#xFF0C;<code>NSArray</code> &#x662F;&#x4E00;&#x4E2A;&#x5F88;&#x91CD;&#x8981;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x3002;&#x5C24;&#x5176; TableView &#x4E2D;&#x7684;&#x6570;&#x636E;&#x7F13;&#x5B58;&#x4E0E;&#x66F4;&#x65B0;&#xFF0C; <code>NSArray</code> &#x6765;&#x7F13;&#x5B58;&#x6570;&#x636E;&#x4EE5;&#x53CA;&#x5BF9;&#x4E8E;&#x663E;&#x793A;&#x6570;&#x636E;&#x7684;&#x4FEE;&#x6539;&#x64CD;&#x4F5C;&#x3002;&#x800C;&#x5728; Core Foundation &#x4E2D; <code>CFArray</code> &#x4E0E; <code>NSArray</code> &#x76F8;&#x4E92;&#x5BF9;&#x5E94;&#xFF0C;&#x8FD9;&#x5F15;&#x8D77;&#x4E86;&#x7B14;&#x8005;&#x5BF9; Core Foundation &#x548C; Foundation &#x5E93;&#x4E2D;&#x7684;&#x539F;&#x751F;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x5B9E;&#x73B0;&#x4EA7;&#x751F;&#x5174;&#x8DA3;&#xFF0C;&#x6240;&#x4EE5;&#x6765;&#x7814;&#x7A76;&#x4E00;&#x4E0B;&#x3002;</p>
+<h2 id="cfarray-&#x5386;&#x53F2;&#x6E0A;&#x6E90;">CFArray &#x5386;&#x53F2;&#x6E0A;&#x6E90;</h2>
+<p><code>NSArray</code> &#x548C; <code>CFArray</code> &#x662F; <strong>Toll-Free Bridged</strong> &#x7684;&#xFF0C;&#x5728; <a href="http://opensource.apple.com/" target="_blank">opensource.apple.com</a> &#x4E2D;&#xFF0C; <code>CFArray</code> &#x662F;&#x5F00;&#x6E90;&#x7684;&#x3002;&#x8FD9;&#x66F4;&#x6709;&#x52A9;&#x4E8E;&#x6211;&#x4EEC;&#x7684;&#x5B66;&#x4E60;&#x4E0E;&#x7814;&#x7A76;&#x3002;&#x5728; <a href="http://blog.ibireme.com/2014/02/17/cfarray/" target="_blank">Garan no Dou</a> &#x5927;&#x795E;&#x4E4B;&#x524D;&#x5728;&#x505A;&#x4E2A;&#x4EBA;&#x5DE5;&#x5177;&#x5E93;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x66FE;&#x7ECF;&#x7814;&#x7A76;&#x8FC7; <code>CFArray</code> &#x7684;&#x5386;&#x53F2;&#x6E0A;&#x6E90;&#x548C;&#x5B9E;&#x73B0;&#x624B;&#x6BB5;&#xFF0C;&#x5728;&#x9605;&#x8BFB;&#x6B64;&#x6587;&#x4E4B;&#x524D;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x4E00;&#x4E0B;&#x524D;&#x8F88;&#x7684;&#x4F18;&#x79C0;&#x535A;&#x6587;&#x3002;</p>
+<p><em><a href="http://ridiculousfish.com/blog/posts/array.html" target="_blank">Array</a></em> &#x8FD9;&#x7BC7; 2005 &#x5E74;&#x7684;&#x65E9;&#x671F;&#x6587;&#x732E;&#x4E2D;&#xFF0C;&#x6700;&#x65E9;&#x4ECB;&#x7ECD;&#x8FC7; <code>CFArray</code> &#xFF0C;&#x5E76;&#x4E14;&#x6D4B;&#x8BD5;&#x8FC7;&#x5176;&#x6027;&#x80FD;&#x6C34;&#x5E73;&#x3002;&#x5B83;&#x5C06; <code>CFArray</code> &#x548C; STL &#x4E2D;&#x7684; <code>Vector</code> &#x5BB9;&#x5668;&#x8FDB;&#x884C;&#x4E86;&#x6027;&#x80FD;&#x5BF9;&#x6BD4;&#xFF0C;&#x7531;&#x4E8E;&#x540E;&#x8005;&#x7684;&#x5B9E;&#x73B0;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x6210;&#x662F;&#x5BF9; C &#x4E2D;&#x7684;&#x6570;&#x7EC4;&#x5C01;&#x88C5;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x6027;&#x80FD;&#x56FE;&#x4E0A;&#x5927;&#x591A;&#x6570;&#x64CD;&#x4F5C;&#x90FD;&#x662F;&#x7EBF;&#x6027;&#x7684;&#x3002;&#x800C;&#x5728; <code>CFArray</code> &#x7684;&#x56FE;&#x4E2D;&#xFF0C;&#x4F1A;&#x53D1;&#x73B0;&#x5F88;&#x591A;&#x4E0D;&#x4E00;&#x6837;&#x7684;&#x5730;&#x65B9;&#x3002;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/vector_results.jpg" alt="vector_results"></p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/cfarray_results.jpg" alt="cfarray_results"></p>
+<p>&#x4E0A;&#x56FE;&#x5206;&#x6790;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C; <code>CFArray</code> &#x5728;&#x5934;&#x63D2;&#x3001;&#x5C3E;&#x63D2;&#x63D2;&#x5165;&#x65F6;&#x5019;&#x7684;&#x6548;&#x7387;&#x8FD1;&#x4E4E;&#x5E38;&#x6570;&#xFF0C;&#x800C;&#x5BF9;&#x4E8E;&#x4E2D;&#x95F4;&#x5143;&#x7D20;&#x7684;&#x64CD;&#x4F5C;&#x4F1A;&#x4ECE;&#x5C0F;&#x6570;&#x636E;&#x7684;&#x7EBF;&#x6027;&#x6548;&#x7387;&#x5728;&#x4E00;&#x4E2A;&#x9600;&#x503C;&#x4E0A;&#x7A81;&#x7136;&#x8F6C;&#x53D8;&#x6210;&#x7EBF;&#x6027;&#x6548;&#x7387;&#xFF0C;&#x800C;&#x8FD9;&#x4E2A;&#x8DC3;&#x53D8;&#x7070;&#x4E0D;&#x7531;&#x5F97;&#x60F3;&#x8D77;&#x5728; Java 8 &#x5F53;&#x4E2D;&#x7684; <code>HashMap</code> &#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x8F6C;&#x53D8;&#x65B9;&#x5F0F;&#x3002;</p>
+<p>&#x5728; ObjC &#x7684;&#x521D;&#x671F;&#xFF0C;<code>CFArray</code> &#x662F;&#x4F7F;&#x7528; <em>deque &#x53CC;&#x7AEF;&#x961F;&#x5217;</em> &#x5B9E;&#x73B0;&#xFF0C;&#x6240;&#x4EE5;&#x4F1A;&#x5448;&#x73B0;&#x51FA;&#x5934;&#x5C3E;&#x64CD;&#x4F5C;&#x9AD8;&#x6548;&#xFF0C;&#x800C;&#x4E2D;&#x95F4;&#x64CD;&#x4F5C;&#x6210;&#x7EBF;&#x6027;&#x7684;&#x7279;&#x70B9;&#x3002;&#x5728;&#x5BB9;&#x91CF;&#x8D85;&#x8FC7; 300000 &#x5DE6;&#x53F3;&#x65F6;&#xFF08;&#x5B9E;&#x9645;&#x5E94;&#x8BE5;&#x662F; 262140 = 2^18 &#xFF09;&#xFF0C;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x53D1;&#x751F;&#x9661;&#x53D8;&#x3002;&#x5728;&#x6E90;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x9600;&#x503C;&#x88AB;&#x5B8F;&#x5B9A;&#x4E49;&#x4E3A; <code>__CF_MAX_BUCKETS_PER_DEQUE</code> &#xFF0C;&#x5177;&#x4F53;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x89C1; <em><a href="http://opensource.apple.com/source/CF/CF-550/CFArray.c" target="_blank">CF-550-CFArray.c</a></em> &#xFF08;2011 &#x5E74;&#x7248;&#x672C;&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">if</span> (__CF_MAX_BUCKETS_PER_DEQUE &lt;= futureCnt) {
+    <span class="hljs-comment">// &#x521B;&#x5EFA; CFStorage &#x5F15;&#x7528;</span>
+    CFStorageRef store
+    <span class="hljs-comment">// &#x8F6C;&#x6362; CFArray &#x4E3A; Storage</span>
+    __CFArrayConvertDequeToStore(<span class="hljs-built_in">array</span>);
+    store = (CFStorageRef)<span class="hljs-built_in">array</span>-&gt;_store;
+}
+</code></pre>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x5F53;&#x6570;&#x636E;&#x8D85;&#x51FA;&#x9600;&#x503C; <code>__CF_MAX_BUCKETS_PER_DEQUE</code> &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F1A;&#x5C06;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4ECE; <code>CFArray</code> &#x8F6C;&#x6362;&#x6210; <code>CFStorage</code> &#x3002; <code>CFStorage</code> &#x662F;&#x4E00;&#x4E2A;&#x5E73;&#x8861;&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x7ED3;&#x6784;&#xFF0C;&#x4E3A;&#x4E86;&#x7EF4;&#x62A4;&#x6570;&#x7EC4;&#x7684;&#x987A;&#x5E8F;&#x8BBF;&#x95EE;&#xFF0C;&#x5C06; Node &#x7684;&#x6743;&#x503C;&#x4F7F;&#x7528;&#x4E0B;&#x6807;&#x5B8C;&#x6210;&#x63D2;&#x5165;&#x548C;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;&#x3002;&#x5177;&#x4F53;&#x7684;&#x4F53;&#x73B0;&#x53EF;&#x4EE5;&#x770B; <code>CFStorageInsertValues</code> &#x64CD;&#x4F5C;&#x3002;&#x5177;&#x4F53;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x67E5;&#x770B; <a href="http://opensource.apple.com/source/CF/CF-368.18/Collections.subproj/CFStorage.c" target="_blank">CF-368.18-CFStorage.c</a> &#x3002;</p>
+<p>&#x5728; 2011 &#x5E74;&#x4EE5;&#x540E;&#x7684; <a href="http://opensource.apple.com/source/CF/CF-635.15/CFArray.c" target="_blank">CF-635.15-CFArray.c</a> &#x7248;&#x672C;&#x4E2D;&#xFF0C; <code>CFArray</code> &#x53D6;&#x6D88;&#x4E86;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x8F6C;&#x6362;&#x8FD9;&#x4E00;&#x529F;&#x80FD;&#x3002;&#x6216;&#x8BB8;&#x662F;&#x4E3A;&#x4E86;&#x9632;&#x6B62;&#x5927;&#x6570;&#x636E;&#x65F6;&#x5019;&#x4E8C;&#x53C9;&#x6811;&#x5EFA;&#x6811;&#x7684;&#x65F6;&#x95F4;&#x6296;&#x52A8;&#x95EE;&#x9898;&#x4ECE;&#x800C;&#x53D6;&#x6D88;&#x4E86;&#x8FD9;&#x4E00;&#x7279;&#x6027;&#x3002;&#x76F4;&#x63A5;&#x6765;&#x770B;&#x4E0B;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x7684;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> __CFArrayDeque {
+    <span class="hljs-keyword">uintptr_t</span> _leftIdx; <span class="hljs-comment">// &#x81EA;&#x5DE6;&#x5F00;&#x59CB;&#x4E0B;&#x6807;&#x4F4D;&#x7F6E;</span>
+    <span class="hljs-keyword">uintptr_t</span> _capacity; <span class="hljs-comment">// &#x5F53;&#x524D;&#x5BB9;&#x91CF;</span>
+};
+
+<span class="hljs-keyword">struct</span> __CFArray {
+    CFRuntimeBase _base;
+    CFIndex _count; <span class="hljs-comment">// &#x5143;&#x7D20;&#x4E2A;&#x6570;</span>
+    CFIndex _mutations; <span class="hljs-comment">// &#x5143;&#x7D20;&#x6296;&#x52A8;&#x91CF;</span>
+    <span class="hljs-keyword">int32_t</span> _mutInProgress;
+    __strong <span class="hljs-keyword">void</span> *_store;
+};
+</code></pre>
+<p>&#x4ECE;&#x547D;&#x540D;&#x4E0A;&#x53EF;&#x4EE5;&#x770B;&#x51FA; <code>CFArray</code> &#x7531;&#x5355;&#x4E00;&#x7684;&#x53CC;&#x7AEF;&#x961F;&#x5217;&#x8FDB;&#x884C;&#x5B9E;&#x73B0;&#xFF0C;&#x800C;&#x4E14;&#x8BB0;&#x5F55;&#x4E86;&#x4E00;&#x4E9B;&#x5BB9;&#x5668;&#x4FE1;&#x606F;&#x3002;</p>
+<h2 id="c-&#x6570;&#x7EC4;&#x7684;&#x4E00;&#x4E9B;&#x95EE;&#x9898;">C &#x6570;&#x7EC4;&#x7684;&#x4E00;&#x4E9B;&#x95EE;&#x9898;</h2>
+<p>C &#x8BED;&#x8A00;&#x4E2D;&#x7684;&#x6570;&#x7EC4;&#xFF0C;&#x4F1A;&#x5F00;&#x8F9F;&#x4E00;&#x6BB5;&#x8FDE;&#x7EED;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x6765;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x7684;&#x8BFB;&#x5199;&#x3001;&#x5B58;&#x50A8;&#x64CD;&#x4F5C;&#x3002;&#x53E6;&#x5916;&#x8BF4;&#x4E00;&#x53E5;&#xFF0C;<strong>&#x6570;&#x7EC4;&#x548C;&#x6307;&#x9488;&#x5E76;&#x4E0D;&#x76F8;&#x540C;</strong>&#x3002;&#x6709;&#x4E00;&#x79CD;&#x88AB;&#x5F88;&#x591A;&#x6559;&#x6750;&#x4E66;&#x7C4D;&#x4E0A;&#x6EE5;&#x7528;&#x7684;&#x8BF4;&#x6CD5;&#xFF1A;&#x4E00;&#x5757;&#x88AB; malloc &#x8FC7;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x7B49;&#x4E8E;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;&#x3002;&#x8FD9;&#x662F;&#x9519;&#x8BEF;&#x7684;&#x3002;&#x6700;&#x7B80;&#x5355;&#x7684;&#x89E3;&#x91CA;&#xFF0C;&#x6307;&#x9488;&#x9700;&#x8981;&#x7533;&#x8BF7;&#x4E00;&#x4E2A;&#x6307;&#x9488;&#x533A;&#x57DF;&#x6765;&#x5B58;&#x50A8;&#xFF08;&#x6307;&#x5411;&#xFF09;&#x4E00;&#x5757;&#x7A7A;&#x95F4;&#x7684;&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;&#xFF0C;&#x800C;&#x6570;&#x7EC4;&#xFF08;&#x7684;&#x5934;&#x90E8;&#xFF09;&#x662F;&#x5BF9;&#x4E00;&#x5757;&#x7A7A;&#x95F4;&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;&#x7684;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x3002;&#x53E6;&#x5916;&#x60F3;&#x4E86;&#x89E3;&#x66F4;&#x591A;&#x53EF;&#x4EE5;&#x770B; <em><a href="http://eli.thegreenplace.net/2009/10/21/are-pointers-and-arrays-equivalent-in-c/" target="_blank">Are pointers and arrays equivalent in C?</a></em> &#x8FD9;&#x7BC7;&#x535A;&#x6587;&#x3002;</p>
+<p>C &#x4E2D;&#x7684;&#x6570;&#x7EC4;&#x6700;&#x663E;&#x8457;&#x7684;&#x7F3A;&#x70B9;&#x5C31;&#x662F;&#xFF0C;&#x5728;&#x4E0B;&#x6807; 0 &#x5904;&#x63D2;&#x5165;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x79FB;&#x52A8;&#x6240;&#x6709;&#x7684;&#x5143;&#x7D20;&#xFF08;&#x5373; <code>memmove()</code> &#x51FD;&#x6570;&#x7684;&#x539F;&#x7406;&#xFF09;&#x3002;&#x7C7B;&#x4F3C;&#x7684;&#xFF0C;&#x5F53;&#x5220;&#x9664;&#x7B2C;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x3001;&#x5728;&#x7B2C;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x524D;&#x63D2;&#x5165;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x4E5F;&#x4F1A;&#x9020;&#x6210; <strong>O(n)&#x590D;&#x6742;&#x5EA6;&#x7684;&#x64CD;&#x4F5C;</strong> &#x3002;&#x7136;&#x800C;&#x6570;&#x7EC4;&#x662F;&#x5E38;&#x8BFB;&#x5199;&#x7684;&#x5BB9;&#x5668;&#xFF0C;&#x6240;&#x4EE5; O(n) &#x7684;&#x64CD;&#x4F5C;&#x4F1A;&#x9020;&#x6210;&#x5F88;&#x4E25;&#x91CD;&#x7684;&#x65F6;&#x95F4;&#x5F00;&#x9500;&#x3002;</p>
+<h2 id="&#x5F53;&#x524D;&#x7248;&#x672C;&#x4E2D;-cfarray-&#x7684;&#x90E8;&#x5206;&#x5B9E;&#x73B0;&#x7EC6;&#x8282;">&#x5F53;&#x524D;&#x7248;&#x672C;&#x4E2D; CFArray &#x7684;&#x90E8;&#x5206;&#x5B9E;&#x73B0;&#x7EC6;&#x8282;</h2>
+<p>&#x5728; <a href="https://opensource.apple.com/source/CF/CF-855.17/CFArray.h.auto.html" target="_blank">CF-855.17</a> &#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5F53;&#x524D;&#x7248;&#x672C;&#x7684; <code>CFArray</code> &#x7684;&#x5B9E;&#x73B0;&#x3002;&#x6587;&#x6863;&#x4E2D;&#x5BF9; <code>CFArray</code> &#x6709;&#x5982;&#x4E0B;&#x7684;&#x63CF;&#x8FF0;&#xFF1A;</p>
+<p><code>CFArray</code> &#x5B9E;&#x73B0;&#x4E86;&#x4E00;&#x4E2A;&#x53EF;&#x88AB;&#x6307;&#x9488;&#x987A;&#x5E8F;&#x8BBF;&#x95EE;&#x7684;&#x7D27;&#x51D1;&#x5BB9;&#x5668;&#x3002;&#x5176;&#x503C;&#x53EF;&#x901A;&#x8FC7;&#x6574;&#x6570;&#x952E;&#xFF08;&#x7D22;&#x5F15;&#x4E0B;&#x6807;&#xFF09;&#x8FDB;&#x884C;&#x8BBF;&#x95EE;&#xFF0C;&#x8303;&#x56F4;&#x4ECE; 0 &#x81F3; N-1&#xFF0C;&#x5176;&#x4E2D; N &#x662F;&#x6570;&#x7EC4;&#x4E2D;&#x503C;&#x7684;&#x6570;&#x91CF;&#x3002;&#x79F0;&#x5176;<strong>&#x7D27;&#x51D1; (compact)</strong> &#x7684;&#x539F;&#x56E0;&#x662F;&#x8BE5;&#x5BB9;&#x5668;&#x8FDB;&#x884C;&#x5220;&#x9664;&#x6216;&#x63D2;&#x5165;&#x67D0;&#x4E2A;&#x503C;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4E0D;&#x4F1A;&#x518D;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x4E2D;&#x7559;&#x4E0B;&#x95F4;&#x9699;&#xFF0C;&#x8BBF;&#x95EE;&#x987A;&#x5E8F;&#x4ECD;&#x65E7;&#x6309;&#x7167;&#x539F;&#x6709;&#x952E;&#x503C;&#x6570;&#x503C;&#x5927;&#x5C0F;&#x6392;&#x5217;&#xFF0C;&#x4F7F;&#x5F97;&#x6709;&#x6548;&#x68C0;&#x7D22;&#x96C6;&#x5408;&#x8303;&#x56F4;&#x603B;&#x662F;&#x5728;&#x6574;&#x6570;&#x8303;&#x56F4; [0, N-1] &#x4E4B;&#x4E2D;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x7279;&#x5B9A;&#x503C;&#x7684;&#x4E0B;&#x6807;&#x53EF;&#x80FD;&#x4F1A;&#x968F;&#x7740;&#x5176;&#x4ED6;&#x5143;&#x7D20;&#x63D2;&#x5165;&#x81F3;&#x6570;&#x7EC4;&#x6216;&#x88AB;&#x5220;&#x9664;&#x65F6;&#x800C;&#x6539;&#x53D8;&#x3002;</p>
+<p>&#x6570;&#x7EC4;&#x6709;&#x4E24;&#x79CD;&#x7C7B;&#x578B;&#xFF1A;<strong>&#x4E0D;&#x53EF;&#x53D8;(immutable)</strong> &#x7C7B;&#x578B;&#x5728;&#x521B;&#x5EFA;&#x6570;&#x7EC4;&#x4E4B;&#x540E;&#xFF0C;&#x4E0D;&#x80FD;&#x5411;&#x5176;&#x6DFB;&#x52A0;&#x6216;&#x5220;&#x9664;&#x5143;&#x7D20;&#xFF0C;&#x800C; <strong>&#x53EF;&#x53D8;(mutable)</strong> &#x7C7B;&#x578B;&#x53EF;&#x4EE5;&#x6DFB;&#x52A0;&#x6216;&#x4ECE;&#x4E2D;&#x5220;&#x9664;&#x5143;&#x7D20;&#x3002;&#x53EF;&#x53D8;&#x6570;&#x7EC4;&#x7684;&#x5143;&#x7D20;&#x6570;&#x91CF;&#x65E0;&#x9650;&#x5236;&#xFF08;&#x6216;&#x8005;&#x79F0;&#x53EA;&#x53D7; <code>CFArray</code> &#x5916;&#x90E8;&#x7684;&#x7EA6;&#x675F;&#x9650;&#x5236;&#xFF0C;&#x4F8B;&#x5982;&#x53EF;&#x7528;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x5927;&#x5C0F;&#xFF09;&#x3002;&#x4E0E;&#x6240;&#x6709;&#x7684; CoreFoundation &#x96C6;&#x5408;&#x7C7B;&#x578B;&#x540C;&#x7406;&#xFF0C;&#x6570;&#x7EC4;&#x5C06;&#x4FDD;&#x6301;&#x4E0E;&#x5143;&#x7D20;&#x5BF9;&#x8C61;&#x7684;&#x5F3A;&#x5F15;&#x7528;&#x5173;&#x7CFB;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x8FDB;&#x4E00;&#x6B65;&#x5F04;&#x6E05; <code>CFArray</code> &#x7684;&#x7EC6;&#x8282;&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x5206;&#x6790;&#x4E00;&#x4E0B; <code>CFArray</code> &#x7684;&#x51E0;&#x4E2A;&#x64CD;&#x4F5C;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// &#x901A;&#x8FC7;&#x4E0B;&#x6807;&#x67E5;&#x8BE2;&#x5143;&#x7D20;&#x503C;</span>
+<span class="hljs-function"><span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *<span class="hljs-title">CFArrayGetValueAtIndex</span><span class="hljs-params">(CFArrayRef <span class="hljs-built_in">array</span>, CFIndex idx)</span> </span>{
+    <span class="hljs-comment">// &#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x5C1A;&#x672A;&#x5F00;&#x6E90;</span>
+    <span class="hljs-comment">// &#x901A;&#x8FC7;&#x7ED9;&#x5B9A;&#x7684; CFTypeID &#x6765;&#x9A8C;&#x8BC1;&#x6307;&#x5B9A;&#x5143;&#x7D20;&#x662F;&#x5426;&#x5339;&#x914D; Core Foundation &#x6865;&#x63A5;&#x7C7B;</span>
+    CF_OBJC_FUNCDISPATCHV(__kCFArrayTypeID, <span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *, (NSArray *)<span class="hljs-built_in">array</span>, objectAtIndex:idx);
+    <span class="hljs-comment">// &#x5C1A;&#x672A;&#x5F00;&#x6E90;</span>
+    <span class="hljs-comment">// &#x901A;&#x8FC7;&#x7ED9;&#x5B9A;&#x7684; CFTypeID &#x6765;&#x9A8C;&#x8BC1; Core Foundation &#x7C7B;&#x578B;&#x5408;&#x6CD5;&#x6027;</span>
+    __CFGenericValidateType(<span class="hljs-built_in">array</span>, __kCFArrayTypeID);
+    CFAssert2(<span class="hljs-number">0</span> &lt;= idx &amp;&amp; idx &lt; __CFArrayGetCount(<span class="hljs-built_in">array</span>), __kCFLogAssertion, <span class="hljs-string">&quot;%s(): index (%d) out of bounds&quot;</span>, __PRETTY_FUNCTION__, idx);
+    CHECK_FOR_MUTATION(<span class="hljs-built_in">array</span>);
+    <span class="hljs-comment">// &#x4ECE;&#x5185;&#x5B58;&#x4F4D;&#x7F6E;&#x53D6;&#x51FA;&#x5143;&#x7D20;</span>
+    <span class="hljs-keyword">return</span> __CFArrayGetBucketAtIndex(<span class="hljs-built_in">array</span>, idx)-&gt;_item;
+}
+
+<span class="hljs-comment">// &#x8FD4;&#x56DE;&#x67E5;&#x8BE2;&#x5143;&#x7D20;&#x7684;&#x5730;&#x5740;</span>
+CF_INLINE <span class="hljs-keyword">struct</span> __CFArrayBucket *__CFArrayGetBucketAtIndex(CFArrayRef <span class="hljs-built_in">array</span>, CFIndex idx) {
+    <span class="hljs-keyword">switch</span> (__CFArrayGetType(<span class="hljs-built_in">array</span>)) {
+    <span class="hljs-comment">// &#x53EA;&#x5141;&#x8BB8;&#x4E24;&#x79CD;&#x6570;&#x7EC4;&#x7C7B;&#x578B;</span>
+    <span class="hljs-comment">// &#x4E0D;&#x53EF;&#x53D8;&#x5BF9;&#x5E94;&#x666E;&#x901A;&#x7EBF;&#x6027;&#x7ED3;&#x6784;&#xFF0C;&#x53EF;&#x53D8;&#x5BF9;&#x5E94;&#x53CC;&#x7AEF;&#x961F;&#x5217;</span>
+    <span class="hljs-keyword">case</span> __kCFArrayImmutable:
+    <span class="hljs-keyword">case</span> __kCFArrayDeque:
+    <span class="hljs-comment">// &#x53D6;&#x5730;&#x5740;&#x518D;&#x52A0;&#x4E0A;&#x7D22;&#x5F15;&#x504F;&#x79FB;&#x91CF;&#xFF0C;&#x8FD4;&#x56DE;&#x5143;&#x7D20;&#x5730;&#x5740;</span>
+    <span class="hljs-keyword">return</span> __CFArrayGetBucketsPtr(<span class="hljs-built_in">array</span>) + idx;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;
+}
+</code></pre>
+<p>&#x901A;&#x8FC7;&#x7D22;&#x5F15;&#x4E0B;&#x6807;&#x67E5;&#x8BE2;&#x64CD;&#x4F5C;&#x4E2D;&#xFF0C;<code>CFArray</code> &#x4ECD;&#x7136;&#x7EE7;&#x627F;&#x4E86;&#x4F20;&#x7EDF;&#x6570;&#x7EC4;&#x7684;&#x8FDE;&#x7EED;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#x7684;&#x6027;&#x8D28;&#xFF0C;&#x6240;&#x4EE5;&#x5176;&#x65F6;&#x95F4;&#x4ECD;&#x7136;&#x53EF;&#x4FDD;&#x6301;&#x5728; O(1) &#x590D;&#x6742;&#x5EA6;&#xFF0C;&#x5341;&#x5206;&#x9AD8;&#x6548;&#x3002;</p>
+<pre><code class="lang-c">void CFArrayInsertValueAtIndex(CFMutableArrayRef array, CFIndex idx, const void *value) {
+    // &#x901A;&#x8FC7;&#x7ED9;&#x5B9A;&#x7684; CFTypeID &#x6765;&#x9A8C;&#x8BC1;&#x6307;&#x5B9A;&#x5143;&#x7D20;&#x662F;&#x5426;&#x5339;&#x914D; Core Foundation &#x6865;&#x63A5;
+    CF_OBJC_FUNCDISPATCHV(__kCFArrayTypeID, void, (NSMutableArray *)array, insertObject:(id)value atIndex:(NSUInteger)idx);
+    // &#x901A;&#x8FC7;&#x7ED9;&#x5B9A;&#x7684; CFTypeID &#x6765;&#x9A8C;&#x8BC1; Core Foundation &#x7C7B;&#x578B;&#x5408;&#x6CD5;&#x6027;
+    __CFGenericValidateType(array, __kCFArrayTypeID);
+    CFAssert1(__CFArrayGetType(array) != __kCFArrayImmutable, __kCFLogAssertion, &quot;%s(): array is immutable&quot;, __PRETTY_FUNCTION__);
+    CFAssert2(0 &lt;= idx &amp;&amp; idx &lt;= __CFArrayGetCount(array), __kCFLogAssertion, &quot;%s(): index (%d) out of bounds&quot;, __PRETTY_FUNCTION__, idx);
+    // &#x7C7B;&#x578B;&#x68C0;&#x67E5;
+    CHECK_FOR_MUTATION(array);
+    // &#x8C03;&#x7528;&#x8BE5;&#x51FD;&#x6570;&#x8FDB;&#x884C;&#x5177;&#x4F53;&#x7684;&#x6570;&#x7EC4;&#x53D8;&#x52A8;&#x8FC7;&#x7A0B;
+    _CFArrayReplaceValues(array, CFRangeMake(idx, 0), &amp;value, 1);
+}
+
+// &#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x6CA1;&#x6709;&#x7ECF;&#x8FC7; ObjC &#x7684;&#x8C03;&#x5EA6;&#x68C0;&#x67E5;&#xFF0C;&#x5373; CF_OBJC_FUNCDISPATCHV &#x65B9;&#x6CD5;
+// &#x6240;&#x4EE5;&#x4E3A;&#x5B89;&#x5168;&#x8003;&#x8651;&#xFF0C;&#x53EA;&#x80FD;&#x7528;&#x5728;&#x5DF2;&#x7ECF;&#x8FDB;&#x884C;&#x8C03;&#x5EA6;&#x68C0;&#x67E5;&#x7684;&#x51FD;&#x6570;&#x5165;&#x53E3;&#x4E4B;&#x540E;
+void _CFArrayReplaceValues(CFMutableArrayRef array, CFRange range, const void **newValues, CFIndex newCount) {
+    // &#x8FDB;&#x4E00;&#x6B65;&#x7C7B;&#x578B;&#x68C0;&#x67E5;
+    CHECK_FOR_MUTATION(array);
+    // &#x52A0;&#x9501;&#x64CD;&#x4F5C;&#xFF0C;&#x589E;&#x52A0;&#x81EA;&#x65CB;&#x9501;&#x9632;&#x6B62;&#x7ADE;&#x4E89;
+    BEGIN_MUTATION(array);
+    // &#x58F0;&#x660E;&#x56DE;&#x8C03;
+    const CFArrayCallBacks *cb;
+    // &#x504F;&#x79FB;&#x4E0B;&#x6807;&#xFF0C;&#x5143;&#x7D20;&#x603B;&#x6570;&#xFF0C;&#x6570;&#x7EC4;&#x6539;&#x53D8;&#x540E;&#x5143;&#x7D20;&#x603B;&#x6570;
+    CFIndex idx, cnt, futureCnt;
+    const void **newv, *buffer[256];
+    // &#x83B7;&#x53D6;&#x6570;&#x7EC4;&#x4E2D;&#x5143;&#x7D20;&#x4E2A;&#x6570;
+    cnt = __CFArrayGetCount(array);
+    // &#x65B0;&#x6570;&#x7EC4;&#x5143;&#x7D20;&#x603B;&#x6570; = &#x539F;&#x6570;&#x7EC4;&#x5143;&#x7D20;&#x603B;&#x6570; - &#x5220;&#x9664;&#x7684;&#x5143;&#x7D20;&#x4E2A;&#x6570; + &#x589E;&#x52A0;&#x7684;&#x5143;&#x7D20;&#x4E2A;&#x6570;
+    futureCnt = cnt - range.length + newCount;
+    CFAssert1(newCount &lt;= futureCnt, __kCFLogAssertion, &quot;%s(): internal error 1&quot;, __PRETTY_FUNCTION__);
+    // &#x83B7;&#x53D6;&#x6570;&#x7EC4;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;
+    cb = __CFArrayGetCallBacks(array);
+    // &#x6784;&#x9020;&#x5206;&#x914D;&#x91CA;&#x653E;&#x5185;&#x5B58;&#x62BD;&#x8C61;
+    CFAllocatorRef allocator = __CFGetAllocator(array);
+    // &#x9700;&#x8981;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x6301;&#x6709;&#x65B0;&#x5143;&#x7D20;&#xFF0C;&#x5E76;&#x4E3A;&#x5176;&#x5206;&#x914D;&#x4E00;&#x4E2A;&#x4E34;&#x65F6;&#x7F13;&#x51B2;&#x533A;
+    // &#x6807;&#x51C6;&#x662F;&#x65B0;&#x5143;&#x7D20;&#x7684;&#x4E2A;&#x6570;&#x662F;&#x5426;&#x8D85;&#x8FC7;256
+    if (NULL != cb-&gt;retain &amp;&amp; !hasBeenFinalized(array)) {
+    newv = (newCount &lt;= 256) ? (const void **)buffer : (const void **)CFAllocatorAllocate(kCFAllocatorSystemDefault, newCount * sizeof(void *), 0);
+    if (newv != buffer &amp;&amp; __CFOASafe) __CFSetLastAllocationEventName(newv, &quot;CFArray (temp)&quot;);
+        // &#x4E3A;&#x65B0;&#x5143;&#x7D20;&#x589E;&#x52A0;&#x6570;&#x636E;&#x7F13;&#x51B2;&#x533A;
+        for (idx = 0; idx &lt; newCount; idx++) {
+            newv[idx] = (void *)INVOKE_CALLBACK2(cb-&gt;retain, allocator, (void *)newValues[idx]);
+        }
+    } else {
+        newv = newValues;
+    }
+    // &#x6570;&#x636E;&#x6296;&#x52A8;&#x91CF;&#x81EA;&#x52A0;
+    array-&gt;_mutations++;
+    // &#x73B0;&#x5728;&#x5C06;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;&#x7684;&#x5B58;&#x50A8;&#x533A;&#x57DF;&#x5206;&#x6210;&#x4E86;&#x4E09;&#x4E2A;&#x90E8;&#x5206;&#xFF0C;&#x6BCF;&#x4E2A;&#x90E8;&#x5206;&#x90FD;&#x6709;&#x53EF;&#x80FD;&#x4E3A;&#x7A7A;
+    // A: &#x4ECE;&#x7D22;&#x5F15;&#x4E0B;&#x6807;&#x96F6;&#x7684;&#x4F4D;&#x7F6E;&#x5230;&#x5C0F;&#x4E8E; range.location &#x7684;&#x533A;&#x57DF;
+    // B: &#x4F20;&#x5165;&#x7684; range.location &#x533A;&#x57DF;
+    // C: &#x4ECE; range.location + range.length &#x5230;&#x6570;&#x7EC4;&#x672B;&#x5C3E;
+    // &#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x7D22;&#x5F15;0&#x7684;&#x4F4D;&#x7F6E;&#x4E0D;&#x4E00;&#x5B9A;&#x4F4D;&#x4E8E;&#x53EF;&#x7528;&#x5B58;&#x50A8;&#x7684;&#x6700;&#x4F4E;&#x4F4D;&#xFF0C;&#x5F53;&#x53D8;&#x5316;&#x4F4D;&#x7F6E;&#x65B0;&#x503C;&#x6570;&#x91CF;&#x4E0E;&#x65E7;&#x503C;&#x6570;&#x91CF;&#x4E0D;&#x540C;&#x65F6;&#xFF0C;B&#x533A;&#x57DF;&#x9700;&#x8981;&#x5148;&#x91CA;&#x653E;&#x518D;&#x66FF;&#x6362;&#xFF0C;&#x7136;&#x540E;A&#x548C;C&#x4E2D;&#x7684;&#x503C;&#x6839;&#x636E;&#x60C5;&#x51B5;&#x8FDB;&#x884C;&#x4F4D;&#x79FB;
+    if (0 &lt; range.length) {
+        // &#x6B63;&#x5E38;&#x91CA;&#x653E;&#x53D8;&#x5316;&#x533A;&#x57DF;&#x64CD;&#x4F5C;
+        __CFArrayReleaseValues(array, range, false);
+    }
+    // B &#x533A;&#x73B0;&#x5728;&#x4E3A;&#x6E05;&#x7A7A;&#x72B6;&#x6001;&#xFF0C;&#x9700;&#x8981;&#x91CD;&#x65B0;&#x586B;&#x5145;&#x6570;&#x636E;
+    if (0) {
+        // &#x6B64;&#x5904;&#x9690;&#x85CF;&#x4E86;&#x5224;&#x65AD;&#x6761;&#x4EF6;&#x548C;&#x4EE3;&#x7801;&#x3002;
+        // &#x5927;&#x6982;&#x64CD;&#x4F5C;&#x662F;&#x6392;&#x9664;&#x5176;&#x4ED6;&#x7684;&#x5E72;&#x6270;&#x9879;&#xFF0C;&#x4F8B;&#x5982; B &#x533A;&#x6570;&#x636E;&#x672A;&#x5B8C;&#x5168;&#x91CA;&#x653E;&#x7B49;&#x3002;
+    } else if (NULL == array-&gt;_store) {
+        // &#x901A;&#x8FC7;&#x6570;&#x636E;&#x7684;&#x9996;&#x5730;&#x5740;&#x5F15;&#x7528;&#x6307;&#x9488;&#x6765;&#x5224;&#x65AD; B &#x533A;&#x91CA;&#x653E;
+        if (0) {
+            // &#x6B64;&#x5904;&#x9690;&#x85CF;&#x4E86;&#x5224;&#x65AD;&#x6761;&#x4EF6;&#x548C;&#x4EE3;&#x7801;
+            // &#x6392;&#x9664;&#x5E72;&#x6270;&#x6761;&#x4EF6;&#xFF0C;&#x4F8B;&#x5982; futureCnt &#x4E0D;&#x5408;&#x6CD5;&#x7B49;
+        } else if (0 &lt;= futureCnt) {
+            // &#x58F0;&#x660E;&#x4E00;&#x4E2A;&#x53CC;&#x7AEF;&#x961F;&#x5217;&#x5BF9;&#x8C61;
+            struct __CFArrayDeque *deque;
+            // &#x6839;&#x636E;&#x5143;&#x7D20;&#x603B;&#x6570;&#x786E;&#x5B9A;&#x73AF;&#x72B6;&#x7F13;&#x51B2;&#x533A;&#x57DF;&#x53EF;&#x8F7D;&#x5143;&#x7D20;&#x603B;&#x4E2A;&#x6570;
+            CFIndex capacity = __CFArrayDequeRoundUpCapacity(futureCnt);
+            // &#x6839;&#x636E;&#x5143;&#x7D20;&#x4E2A;&#x6570;&#x786E;&#x5B9A;&#x7A7A;&#x95F4;&#x5206;&#x914D;&#x5927;&#x5C0F;
+            CFIndex size = sizeof(struct __CFArrayDeque) + capacity * sizeof(struct __CFArrayBucket);
+            // &#x901A;&#x8FC7;&#x7F13;&#x51B2;&#x533A;&#x6784;&#x9020;&#x5668;&#x6765;&#x6784;&#x9020;&#x5B58;&#x50A8;&#x7F13;&#x5B58;
+            deque = (struct __CFArrayDeque *)CFAllocatorAllocate((allocator), size, isStrongMemory(array) ? __kCFAllocatorGCScannedMemory : 0);
+            if (__CFOASafe) __CFSetLastAllocationEventName(deque, &quot;CFArray (store-deque)&quot;);
+            // &#x786E;&#x5B9A;&#x53CC;&#x7AEF;&#x961F;&#x5217;&#x5DE6;&#x503C;
+            deque-&gt;_leftIdx = (capacity - newCount) / 2;
+            deque-&gt;_capacity = capacity;
+            __CFAssignWithWriteBarrier((void **)&amp;array-&gt;_store, (void *)deque);
+            // &#x5B8C;&#x6210; B &#x533A;&#x6784;&#x9020;&#xFF0C;&#x5B89;&#x5168;&#x91CA;&#x653E;&#x6570;&#x7EC4;
+            if (CF_IS_COLLECTABLE_ALLOCATOR(allocator)) auto_zone_release(objc_collectableZone(), deque);
+        }
+    } else {        // Deque
+    // &#x6839;&#x636E; B &#x533A;&#x5143;&#x7D20;&#x53D8;&#x5316;&#xFF0C;&#x91CD;&#x65B0;&#x5B9A;&#x4F4D; A &#x548C; C &#x533A;&#x5143;&#x7D20;&#x5B58;&#x50A8;&#x72B6;&#x6001;
+        if (0) {
+        } else if (range.length != newCount) {
+            // &#x4F20;&#x5165; array &#x5F15;&#x7528;&#xFF0C;&#x6700;&#x7EC8;&#x6839;&#x636E;&#x53D8;&#x5316;&#x4F7F;&#x5F97;&#x6570;&#x7EC4;&#x66F4;&#x65B0;A&#x3001;B&#x3001;C&#x5206;&#x533A;&#x89C4;&#x5219;
+            __CFArrayRepositionDequeRegions(array, range, newCount);
+        }
+    }
+    // &#x5C06;&#x533A;&#x57DF;B&#x7684;&#x65B0;&#x53D8;&#x5316;&#x62F7;&#x8D1D;&#x5230;B&#x533A;&#x57DF;
+    if (0 &lt; newCount) {
+        if (0) {
+        } else {    // Deque
+            // &#x8BBF;&#x95EE;&#x7EBF;&#x6027;&#x5B58;&#x50A8;&#x533A;
+            struct __CFArrayDeque *deque = (struct __CFArrayDeque *)array-&gt;_store;
+            // &#x5728;&#x539F;&#x57FA;&#x7840;&#x4E0A;&#xFF0C;&#x589E;&#x52A0;&#x4E00;&#x6BB5;&#x7F13;&#x5B58;&#x533A;&#x57DF;
+            struct __CFArrayBucket *raw_buckets = (struct __CFArrayBucket *)((uint8_t *)deque + sizeof(struct __CFArrayDeque));
+            // &#x66F4;&#x6539;B&#x533A;&#x57DF;&#x6570;&#x636E;&#xFF0C;&#x7C7B;&#x4F3C;&#x4E0E; memcpy&#xFF0C;&#x4F46;&#x662F;&#x6709;&#x5199;&#x5C4F;&#x969C;(write barrier)&#xFF0C;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;
+            objc_memmove_collectable(raw_buckets + deque-&gt;_leftIdx + range.location, newv, newCount * sizeof(struct __CFArrayBucket));
+        }
+    }
+    // &#x8BBE;&#x7F6E;&#x65B0;&#x7684;&#x5143;&#x7D20;&#x4E2A;&#x6570;&#x5C5E;&#x6027;
+    __CFArraySetCount(array, futureCnt);
+    // &#x91CA;&#x653E;&#x7F13;&#x5B58;&#x533A;&#x57DF;
+    if (newv != buffer &amp;&amp; newv != newValues) CFAllocatorDeallocate(kCFAllocatorSystemDefault, newv);
+    // &#x89E3;&#x9664;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x4FDD;&#x62A4;
+    END_MUTATION(array);
+}
+</code></pre>
+<p>&#x5728; <code>CFArray</code> &#x7684;&#x63D2;&#x5165;&#x5143;&#x7D20;&#x64CD;&#x4F5C;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x5F88;&#x6E05;&#x695A;&#x7684;&#x770B;&#x51FA;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;<strong>&#x53CC;&#x7AEF;&#x961F;&#x5217;</strong>(dequeue)&#x7684;&#x63D2;&#x5165;&#x5143;&#x7D20;&#x64CD;&#x4F5C;&#xFF0C;&#x800C;&#x4E14;&#x662F;&#x4E00;&#x79CD;&#x4EFF;&#x7167; C++ STL &#x6807;&#x51C6;&#x5E93;&#x7684;&#x5B58;&#x50A8;&#x65B9;&#x5F0F;&#xFF0C;<strong>&#x7F13;&#x51B2;&#x533A;&#x5D4C;&#x5957; map &#x8868;</strong>&#x7684;&#x9759;&#x6001;&#x5B9E;&#x73B0;&#x3002;&#x7528;&#x793A;&#x610F;&#x56FE;&#x6765;&#x8BF4;&#x660E;&#x4E00;&#x4E0B;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF1A;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/cfarray-1.png" alt="cfarray-1">
+&#x5728; STL &#x4E2D;&#x7684; deque&#xFF0C;&#x662F;&#x4F7F;&#x7528;&#x7684; map &#x8868;&#x6765;&#x8BB0;&#x5F55;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#xFF0C;&#x800C;&#x5728; Core Foundation &#x4E2D;&#xFF0C;<code>CFArray</code> &#x5728;&#x4FDD;&#x8BC1;&#x8FD9;&#x6837;&#x7684;&#x4E8C;&#x6B21;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#x7684;&#x65F6;&#x5019;&#x5F88;&#x76F4;&#x63A5;&#x5730;&#x8FD0;&#x7528;&#x4E86;&#x4E8C;&#x9636;&#x6307;&#x9488; <code>_store</code>&#x3002;&#x5728;&#x4FEE;&#x6539;&#x5143;&#x7D20;&#x7684;&#x64CD;&#x4F5C;&#x4E2D;&#xFF0C;<code>CFArray</code> &#x4E5F;&#x7565;&#x663E;&#x5F97;&#x66B4;&#x529B;&#x4E00;&#x4E9B;&#xFF0C;<strong>&#x5148;&#x5BF9;&#x6570;&#x7EC4;&#x8FDB;&#x884C;&#x5927;&#x5757;&#x7684;&#x5206;&#x533A;&#x64CD;&#x4F5C;&#xFF0C;&#x518D;&#x6309;&#x7167;&#x987A;&#x5E8F;&#x586B;&#x5145;&#x6570;&#x636E;&#xFF0C;&#x7EC4;&#x5408;&#x6210;&#x4E3A;&#x4E00;&#x5757;&#x65B0;&#x7684;&#x53CC;&#x7AEF;&#x961F;&#x5217;</strong>&#xFF0C;&#x4F8B;&#x5982;&#x5728;&#x4E0A;&#x56FE;&#x4E2D;&#x7684;&#x53CC;&#x7AEF;&#x961F;&#x5217;&#x4E2D;&#xFF0C;&#x5728;&#x4E0B;&#x6807;&#x4E3A; 7 &#x7684;&#x5143;&#x7D20;&#x4E4B;&#x524D;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x503C;&#x4E3A; <code>100</code> &#x7684;&#x5143;&#x7D20;&#xFF1A;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/cfarray-2.1.png" alt="cfarray-2.1"></p>
+<p>&#x6839;&#x636E;&#x7D22;&#x5F15;&#x4E0B;&#x6807;&#x4F1A;&#x627E;&#x5230;&#x6307;&#x5B9A;&#x90E8;&#x5206;&#x7684;&#x7F13;&#x5B58;&#x533A;&#xFF0C;&#x5C06;&#x5176;&#x62FF;&#x51FA;&#x5E76;&#x8FDB;&#x884C;&#x91CD;&#x65B0;&#x6784;&#x9020;&#x3002;&#x6784;&#x9020;&#x8FC7;&#x7A0B;&#x4E2D;&#x6216;&#x5C06;&#x5176;&#x5212;&#x5206;&#x6210; A&#x3001;B&#x3001;C &#x4E09;&#x4E2A;&#x533A;&#x57DF;&#xFF0C;B &#x533A;&#x57DF;&#x662F;&#x4FEE;&#x6539;&#x90E8;&#x5206;&#x3002;&#x5F53;&#x7136;&#x5982;&#x679C;&#x4E0D;&#x591F;&#x7684;&#x8BDD;&#xFF0C;&#x7CFB;&#x7EDF;&#x4F1A;&#x81EA;&#x5DF1;&#x8FDB;&#x884C;&#x7F13;&#x5B58;&#x533A;&#x7684;&#x6269;&#x5BB9;&#xFF0C;&#x5373; <code>CFAllocatorRef</code> &#x5B98;&#x65B9;&#x63D0;&#x4F9B;&#x7684;&#x5185;&#x5B58;&#x5206;&#x914D;/&#x91CA;&#x653E;&#x7B56;&#x7565;&#x3002;</p>
+<p><code>CFAllocatorRef</code> &#x662F; Core Foundation &#x4E2D;&#x7684;&#x5206;&#x914D;&#x548C;&#x91CA;&#x653E;&#x5185;&#x5B58;&#x7684;&#x7B56;&#x7565;&#x3002;&#x591A;&#x6570;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x7528;&#x9ED8;&#x8BA4;&#x5206;&#x914D;&#x5668; <code>kCFAllocatorDefault</code> &#xFF0C;&#x7B49;&#x4EF7;&#x4E8E;&#x4F20;&#x5165; <code>NULL</code> &#x53C2;&#x6570;&#xFF0C;&#x8FD9;&#x7528;&#x4F1A;&#x7528; Core Foundation &#x6240;&#x8C13;&#x7684;&#x201C;&#x5E38;&#x89C4;&#x65B9;&#x6CD5;&#x201D;&#x6765;&#x5206;&#x914D;&#x548C;&#x91CA;&#x653E;&#x5185;&#x5B58;&#x3002;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#x53EF;&#x80FD;&#x4F1A;&#x6709;&#x53D8;&#x5316;&#xFF0C;&#x6211;&#x4EEC;&#x4E0D;&#x5E94;&#x8BE5;&#x4EE5;&#x6765;&#x4E0E;&#x4EFB;&#x4F55;&#x7279;&#x6B8A;&#x884C;&#x4E3A;&#x3002;&#x7528;&#x5230;&#x7279;&#x6B8A;&#x5206;&#x914D;&#x5668;&#x7684;&#x60C5;&#x51B5;&#x5F88;&#x5C11;&#xFF0C;&#x4E0B;&#x6765;&#x662F;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x4E2D;&#x7ED9;&#x51FA;&#x7684;&#x6807;&#x51C6;&#x5206;&#x914D;&#x5668;&#x53CA;&#x5176;&#x529F;&#x80FD;&#x3002;</p>
+<table>
+<thead>
+<tr>
+<th>kCFAllocatorDefault</th>
+<th>&#x9ED8;&#x8BA4;&#x5206;&#x914D;&#x5668;&#xFF0C;&#x4E0E;&#x4F20;&#x5165;<code>NULL</code>&#x7B49;&#x4EF7;&#x3002;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kCFAllocatorSystemDefault</td>
+<td>&#x539F;&#x59CB;&#x7684;&#x9ED8;&#x8BA4;&#x7CFB;&#x7EDF;&#x5206;&#x914D;&#x5668;&#x3002;&#x8FD9;&#x4E2A;&#x5206;&#x914D;&#x5668;&#x7528;&#x6765;&#x5E94;&#x5BF9;&#x4E07;&#x4E00;&#x7528;<code>CFAllocatorSetDefault</code>&#x6539;&#x53D8;&#x4E86;&#x9ED8;&#x8BA4;&#x5206;&#x914D;&#x5668;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x5F88;&#x5C11;&#x7528;&#x5230;&#x3002;</td>
+</tr>
+<tr>
+<td>kCFAllocatorMalloc</td>
+<td>&#x8C03;&#x7528;<code>malloc</code>&#x3001;<code>realloc</code>&#x548C;<code>free</code>&#x3002;&#x5982;&#x679C;&#x7528;<code>malloc</code>&#x521B;&#x5EFA;&#x4E86;&#x5185;&#x5B58;&#xFF0C;&#x90A3;&#x8FD9;&#x4E2A;&#x5206;&#x914D;&#x5668;&#x5BF9;&#x4E8E;&#x91CA;&#x653E;<code>CFData</code>&#x548C;<code>CFString</code>&#x5C31;&#x5F88;&#x6709;&#x7528;&#x3002;</td>
+</tr>
+<tr>
+<td>kCFAllocatorMallocZone</td>
+<td>&#x5728;&#x9ED8;&#x8BA4;&#x7684;<code>malloc</code>&#x533A;&#x57DF;&#x4E2D;&#x521B;&#x5EFA;&#x548C;&#x91CA;&#x653E;&#x5185;&#x5B58;&#x3002;&#x5728; Mac &#x4E0A;&#x5F00;&#x542F;&#x4E86;&#x5783;&#x573E;&#x6536;&#x96C6;&#x7684;&#x8BDD;&#xFF0C;&#x8FD9;&#x4E2A;&#x5206;&#x914D;&#x5668;&#x4F1A;&#x5F88;&#x6709;&#x7528;&#xFF0C;&#x4F46;&#x5728; iOS &#x4E2D;&#x57FA;&#x672C;&#x4E0A;&#x6CA1;&#x4EC0;&#x4E48;&#x7528;&#x3002;</td>
+</tr>
+<tr>
+<td>kCFAllocatorNull</td>
+<td>&#x4EC0;&#x4E48;&#x90FD;&#x4E0D;&#x505A;&#x3002;&#x8DDF;<code>kCFAllocatorMalloc</code>&#x4E00;&#x6837;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x60F3;&#x91CA;&#x653E;&#x5185;&#x5B58;&#xFF0C;&#x8FD9;&#x4E2A;&#x5206;&#x914D;&#x5668;&#x5BF9;&#x4E8E;&#x91CA;&#x653E;<code>CFData</code>&#x548C;<code>CFString</code>&#x5C31;&#x5F88;&#x6709;&#x7528;&#x3002;</td>
+</tr>
+<tr>
+<td>KCFAllocatorUseContext</td>
+<td>&#x53EA;&#x6709;<code>CFAllocatorCreate</code>&#x51FD;&#x6570;&#x7528;&#x5230;&#x3002;&#x521B;&#x5EFA;<code>CFAllocator</code>&#x65F6;&#xFF0C;&#x7CFB;&#x7EDF;&#x9700;&#x8981;&#x5206;&#x914D;&#x5185;&#x5B58;&#x3002;&#x5C31;&#x50CF;&#x5176;&#x4ED6;&#x6240;&#x6709;&#x7684;<code>Create</code>&#x65B9;&#x6CD5;&#xFF0C;&#x4E5F;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x5206;&#x914D;&#x5668;&#x3002;&#x8FD9;&#x4E2A;&#x7279;&#x6B8A;&#x7684;&#x5206;&#x914D;&#x5668;&#x544A;&#x8BC9;<code>CFAllocatorCreate</code>&#x7528;&#x4F20;&#x5165;&#x7684;&#x51FD;&#x6570;&#x6765;&#x5206;&#x914D;<code>CFAllocator</code>&#x3002;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x5728; <code>_CFArrayReplaceValues</code> &#x65B9;&#x6CD5;&#x4E2D;&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5224;&#x65AD;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">if</span> (newv != buffer &amp;&amp; newv != newValues)
+    CFAllocatorDeallocate(kCFAllocatorSystemDefault, newv);
+</code></pre>
+<p>&#x4F1A;&#x68C0;&#x67E5;&#x4E00;&#x4E0B;&#x7F13;&#x5B58;&#x533A;&#x7684;&#x6570;&#x91CF;&#x95EE;&#x9898;&#xFF0C;&#x5982;&#x679C;&#x6570;&#x91CF;&#x8FC7;&#x591A;&#x4F1A;&#x91CA;&#x653E;&#x6389;&#x591A;&#x4F59;&#x7684;&#x7F13;&#x5B58;&#x533A;&#x3002;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x5177;&#x6709;&#x901A;&#x7528;&#x6027;&#xFF0C;&#x4E0D;&#x4EC5;&#x4EC5;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5728;&#x63D2;&#x5165;&#x5143;&#x7D20;&#x64CD;&#x4F5C;&#xFF0C;&#x5728;&#x589E;&#x52A0;(<code>CFArrayAppendValue</code>)&#x3001;&#x66FF;&#x6362;(<code>CFArrayReplaceValues</code>)&#x3001;&#x5220;&#x9664;(<code>CFArrayRemoveValueAtIndex</code>)&#x64CD;&#x4F5C;&#x5747;&#x53EF;&#x4F7F;&#x7528;&#x3002;&#x7531;&#x4E8E;&#x5C06;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x91C7;&#x53D6;&#x5206;&#x5757;&#x7BA1;&#x7406;&#xFF0C;&#x6240;&#x4EE5;&#x65F6;&#x95F4;&#x5206;&#x644A;&#xFF0C;&#x590D;&#x6742;&#x5EA6;&#x5927;&#x5E45;&#x5EA6;&#x964D;&#x4F4E;&#x3002;&#x6240;&#x4EE5;&#xFF0C;&#x6211;&#x4EEC;&#x770B;&#x5230; <code>CFArray</code> &#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x5728;&#x67E5;&#x8BE2;&#x3001;&#x589E;&#x6DFB;&#x5143;&#x7D20;&#x64CD;&#x4F5C;&#x4E2D;&#x5747;&#x6709;&#x8F83;&#x9AD8;&#x7684;&#x6C34;&#x5E73;&#x3002;</p>
+<p>&#x800C;&#x5728; <code>NSMutableArray</code> &#x7684;&#x5B9E;&#x73B0;&#x4E2D;&#xFF0C;&#x82F9;&#x679C;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x79FB;&#x52A8;&#x7AEF;&#x7684;&#x5C0F;&#x5185;&#x5B58;&#x7279;&#x70B9;&#xFF0C;&#x4F7F;&#x7528; <code>CFArray</code> &#x4E2D;&#x5728;&#x4E24;&#x7AEF;&#x589E;&#x52A0;&#x53EF;&#x6269;&#x5145;&#x7684;&#x7F13;&#x5B58;&#x533A;&#x5219;&#x4F1A;&#x9020;&#x6210;&#x5927;&#x91CF;&#x7684;&#x6D6A;&#x8D39;&#x3002;&#x5728; <a href="http://blog.joyingx.me/2015/05/03/NSMutableArray%20%E5%8E%9F%E7%90%86%E6%8F%AD%E9%9C%B2/" target="_blank">NSMutableArray&#x539F;&#x7406;&#x63ED;&#x9732;</a> &#x4E00;&#x6587;&#x4E2D;&#x4F7F;&#x7528;&#x9006;&#x5411;&#x7684;&#x601D;&#x8DEF;&#xFF0C;&#x6316;&#x6398; <code>NSMutableArray</code> &#x7684;&#x5B9E;&#x73B0;&#x539F;&#x7406;&#xFF0C;&#x5176;&#x505A;&#x6CD5;&#x662F;&#x4F7F;&#x7528;<em>&#x73AF;&#x5F62;&#x7F13;&#x51B2;&#x533A;</em>&#x5BF9;&#x7F13;&#x5B58;&#x90E8;&#x5206;&#x505A;&#x5230;&#x6700;&#x5927;&#x5316;&#x7684;&#x538B;&#x7F29;&#xFF0C;&#x8FD9;&#x662F;&#x82F9;&#x679C;&#x9488;&#x5BF9;&#x4E8E;&#x79FB;&#x52A8;&#x8BBE;&#x5907;&#x7684;&#x5C40;&#x9650;&#x800C;&#x63D0;&#x51FA;&#x7684;&#x65B9;&#x6848;&#x3002;</p>
+<h2 id="&#x53C2;&#x8003;&#x8D44;&#x6599;&#xFF1A;">&#x53C2;&#x8003;&#x8D44;&#x6599;&#xFF1A;</h2>
+<p><a href="https://www.mikeash.com/pyblog/friday-qa-2012-03-09-lets-build-nsmutablearray.html" target="_blank">Let&apos;s Build NSMutableArray</a></p>
+<p><a href="https://github.com/opensource-apple/CF/blob/master/CFArray.h" target="_blank">GNUStep &#xB7; NSArray</a></p>
+<p><a href="http://stackoverflow.com/questions/22591296/what-is-the-data-structure-behind-nsmutablearray" target="_blank">What is the data structure behind NSMutableArray?</a></p>
+<p><a href="https://opensource.apple.com/source/CF/CF-855.17/CFArray.c" target="_blank">Apple Source Code - CF-855.17</a></p>
+<blockquote>
+<p>&#x82E5;&#x60F3;&#x67E5;&#x770B;&#x66F4;&#x591A;&#x7684;iOS Source Probe&#x6587;&#x7AE0;&#xFF0C;&#x6536;&#x5F55;&#x5728;&#x8FD9;&#x4E2A;<a href="https://github.com/Desgard/iOS-Source-Probe" target="_blank">Github&#x4ED3;&#x5E93;&#x4E2D;</a>&#x3002;</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="从经典问题来看 Copy 方法.html" class="navigation navigation-prev " aria-label="Previous page: 从经典问题来看 Copy 方法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Run Loop 记录与源码注释.html" class="navigation navigation-next " aria-label="Next page: Run Loop 记录与源码注释(作者Kylin)">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"CFArray 的历史渊源及实现原理","level":"4.1.2","depth":2,"next":{"title":"Run Loop 记录与源码注释(作者Kylin)","level":"4.1.3","depth":2,"path":"Objective-C/Foundation/Run Loop 记录与源码注释.md","ref":"Objective-C/Foundation/Run Loop 记录与源码注释.md","articles":[]},"previous":{"title":"从经典问题来看 Copy 方法","level":"4.1.1","depth":2,"path":"Objective-C/Foundation/从经典问题来看 Copy 方法.md","ref":"Objective-C/Foundation/从经典问题来看 Copy 方法.md","articles":[]},"dir":"ltr"},"config":{"plugins":["splitter","github","multipart","mathjax"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/Desgard"},"splitter":{},"search":{},"multipart":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"cn","gitbook":"*"},"file":{"path":"Objective-C/Foundation/CFArray 的历史渊源及实现原理.md","mtime":"2018-07-09T00:41:04.807Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-09T00:56:45.312Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,964 @@
+
+<!DOCTYPE HTML>
+<html lang="cn" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>浅谈 block - clang 改写后的 block 结构 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-multipart/multipart.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="浅谈 block（2） - 截获变量方式.html" />
+    
+    
+    <link rel="prev" href="load 方法全程跟踪.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 1 - iOS Runtime 源码解析</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" >
+            
+                <span>
+            
+                    
+                    objc/runtime.h 708
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="浅谈Associated Objects.html">
+            
+                <a href="浅谈Associated Objects.html">
+            
+                    
+                    浅谈Associated Objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                <a href="objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                    
+                    对象方法消息传递流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.3" data-path="objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                <a href="objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                    
+                    消息转发过程分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.4" data-path="用 isa 承载对象的类信息.html">
+            
+                <a href="用 isa 承载对象的类信息.html">
+            
+                    
+                    用 isa 承载对象的类信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.5" data-path="weak 弱引用的实现方式.html">
+            
+                <a href="weak 弱引用的实现方式.html">
+            
+                    
+                    weak 弱引用的实现方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.6" data-path="load 方法全程跟踪.html">
+            
+                <a href="load 方法全程跟踪.html">
+            
+                    
+                    load 方法全程跟踪
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.1.7" data-path="浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                <a href="浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                    
+                    浅谈 block - clang 改写后的 block 结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.8" data-path="浅谈 block（2） - 截获变量方式.html">
+            
+                <a href="浅谈 block（2） - 截获变量方式.html">
+            
+                    
+                    浅谈 block - 截获变量方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 2 - macOS & iOS 系统源码及相关开源库</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <span>
+            
+                    
+                    cctools/include/mach-o 895
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                <a href="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                    
+                    Mach-O 文件格式探索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" >
+            
+                <span>
+            
+                    
+                    Fishhook
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                <a href="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                    
+                    巧用符号表 - 探求 fishhook 原理（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                <a href="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                    
+                    验证试验 - 探求 fishhook 原理（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 3 - Foundation 框架源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" >
+            
+                <span>
+            
+                    
+                    Foundation
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="../Foundation/从经典问题来看 Copy 方法.html">
+            
+                <a href="../Foundation/从经典问题来看 Copy 方法.html">
+            
+                    
+                    从经典问题来看 Copy 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="../Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                <a href="../Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                    
+                    CFArray 的历史渊源及实现原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="../Foundation/Run Loop 记录与源码注释.html">
+            
+                <a href="../Foundation/Run Loop 记录与源码注释.html">
+            
+                    
+                    Run Loop 记录与源码注释(作者Kylin)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 4 - UIKit 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" >
+            
+                <span>
+            
+                    
+                    UIKit
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.1.1" data-path="../Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                <a href="../Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                    
+                    复用的精妙 - UITableView 复用技术原理分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.1.2" data-path="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                <a href="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                    
+                    AutoLayout 中的线性规划 - Simplex 算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 5 - SDWebImage 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" >
+            
+                <span>
+            
+                    
+                    SDWebImage v3.8.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1.1" data-path="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                    
+                    SDWebImage Source Probe: WebCache
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.2" data-path="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                    
+                    SDWebImage Source Probe: Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.3" data-path="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                    
+                    SDWebImage Source Probe: Downloader
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.4" data-path="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                    
+                    SDWebImage Source Probe: Operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 6 - Swift 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" >
+            
+                <span>
+            
+                    
+                    Swift v4.0
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.1.1" data-path="../../Swift/Swift Probe - Optional.html">
+            
+                <a href="../../Swift/Swift Probe - Optional.html">
+            
+                    
+                    Swift Probe - Optional
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 7 - Shadowsocks 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" >
+            
+                <span>
+            
+                    
+                    Shadowsocks v2.9.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="8.1.1" data-path="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                    
+                    Shadowsocks Probe I - Socks5 与 EventLoop 事件分发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.1.2" data-path="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                    
+                    Shadowsocks Probe II - TCP 代理过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >浅谈 block - clang 改写后的 block 结构</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>&#x4F5C;&#x8005;&#xFF1A;&#x51AC;&#x74DC;</p>
+<p>&#x539F;&#x6587;&#x94FE;&#x63A5;&#xFF1A;<a href="https://desgard.com/2016/08/11/copy/" target="_blank">Guardia &#xB7; &#x74DC;&#x5730;</a></p>
+</blockquote>
+<h1 id="&#x6D45;&#x8C08;-block---clang-&#x6539;&#x5199;&#x540E;&#x7684;-block-&#x7ED3;&#x6784;">&#x6D45;&#x8C08; block - clang &#x6539;&#x5199;&#x540E;&#x7684; block &#x7ED3;&#x6784;</h1>
+<p>&#x8FD9;&#x51E0;&#x5929;&#x4E3A;&#x4E86;&#x5DE9;&#x56FA;&#x77E5;&#x8BC6;&#xFF0C;&#x4ECE; iOS &#x7684;&#x5404;&#x4E2A;&#x77E5;&#x8BC6;&#x70B9;&#x5F00;&#x59CB;&#x5B66;&#x4E60;&#xFF0C;&#x5E0C;&#x671B;&#x81EA;&#x5DF1;&#x5BF9;&#x6BCF;&#x4E00;&#x4E2A;&#x77E5;&#x8BC6;&#x7406;&#x89E3;&#x7684;&#x66F4;&#x52A0;&#x6DF1;&#x5165;&#x7684;&#x4E86;&#x89E3;&#x3002;&#x8FD9;&#x6B21;&#x6765;&#x5206;&#x4EAB;&#x4E00;&#x4E0B; block &#x7684;&#x5B66;&#x4E60;&#x7B14;&#x8BB0;&#x3002;</p>
+<h2 id="block-&#x7B80;&#x4ECB;">block &#x7B80;&#x4ECB;</h2>
+<p>block &#x88AB;&#x5F53;&#x505A;&#x6269;&#x5C55;&#x7279;&#x6027;&#x800C;&#x88AB;&#x52A0;&#x5165; GCC &#x7F16;&#x8BD1;&#x5668;&#x4E2D;&#x7684;&#x3002;&#x81EA;&#x4ECE; OS X 10.4 &#x548C; iOS 4.0 &#x4E4B;&#x540E;&#xFF0C;&#x8FD9;&#x4E2A;&#x7279;&#x6027;&#x88AB;&#x52A0;&#x5165;&#x4E86; Clang &#x4E2D;&#x3002;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x4ECA;&#x5929;&#x4F7F;&#x7528;&#x7684; block &#x5728; C&#x3001;C++&#x3001;Objective-C &#x548C; Objective-C++ &#x4E2D;&#x5747;&#x53EF;&#x4F7F;&#x7528;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E; block &#x7684;&#x8BED;&#x6CD5;&#xFF0C;&#x53EA;&#x653E;&#x4E00;&#x5F20;&#x56FE;&#x5373;&#x53EF;&#x3002;&#x5728;&#x4E4B;&#x540E;&#x7684; block &#x7CFB;&#x5217;&#x6587;&#x7AE0;&#x4E2D;&#x4F1A;&#x8BE6;&#x7EC6;&#x8BF4;&#x660E;&#x5176;&#x7528;&#x6CD5;&#x3002;</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/208988-0e4c759180531b28.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img_1.jpg"></p>
+<h2 id="c-&#x4E2D;&#x7684;-block">C &#x4E2D;&#x7684; block</h2>
+<p>&#x8BF4;&#x8D77; Xcode &#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x8BD1;&#x5668; clang &#xFF0C;&#x4E0D;&#x5F97;&#x4E0D;&#x63D0;&#x53CA; clang &#x5728;&#x6574;&#x4E2A; &#x7F16;&#x8BD1; - &#x94FE;&#x63A5; &#x8FC7;&#x7A0B;&#x4E2D;&#x6240;&#x8D77;&#x5230;&#x7684;&#x4F5C;&#x7528;&#x3002;&#x5728;&#x7F16;&#x8BD1;&#x671F;&#xFF0C; clang &#x9996;&#x5148;&#x5BF9; Objective-C &#x4EE3;&#x7801;&#x505A;&#x5206;&#x6790;&#x68C0;&#x67E5;&#xFF0C;&#x786E;&#x4FDD;&#x4EE3;&#x7801;&#x4E2D;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x660E;&#x663E;&#x7684;&#x9519;&#x8BEF;&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x5176;&#x8F6C;&#x6362;&#x6210;&#x4E3A;&#x4F4E;&#x7EA7;&#x7684;&#x7C7B;&#x6C47;&#x7F16;&#x4EE3;&#x7801;&#xFF0C;&#x5373;&#x6211;&#x4EEC;&#x7ECF;&#x5E38;&#x8BF4;&#x7684;<strong>&#x4E2D;&#x95F4;&#x7801;</strong>&#x3002;</p>
+<p>&#x5728;&#x5B66;&#x4E60; Objective-C &#x4E2D;&#x7684; block &#xFF0C;&#x4F1A;&#x7ECF;&#x5E38;&#x4F7F;&#x7528;&#x7684; clang &#x7684; <code>-rewrite-objc</code> &#x547D;&#x4EE4;&#x6765;&#x5C06; block &#x7684;&#x8BED;&#x6CD5;&#x8F6C;&#x6362;&#x6210;C&#x8BED;&#x8A00;&#x7684; struct &#x7ED3;&#x6784;&#xFF0C;&#x4ECE;&#x800C;&#x4F9B;&#x6211;&#x4EEC;&#x5B66;&#x4E60;&#x53C2;&#x8003;&#x3002;</p>
+<p>&#x5148;&#x4ECE;&#x6700;&#x7B80;&#x5355;&#x7684;C&#x8BED;&#x8A00;&#x4E2D;&#x7684; block &#x770B;&#x8D77;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-keyword">void</span> (^outside)(<span class="hljs-keyword">void</span>) = ^{
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello block!\n&quot;</span>);
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span> </span>{
+    outside();
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x7136;&#x540E;&#x4F7F;&#x7528; <code>clang -rewrite-objc</code> &#x547D;&#x4EE4;&#x5BF9; <code>blockTest.c</code> &#x8FDB;&#x884C; block &#x8BED;&#x6CD5;&#x8F6C;&#x6362;&#xFF0C;&#x5F97;&#x5230; blockTest.cpp &#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x3002;</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/208988-b590f135364802bb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img_2.jpg"></p>
+<p>&#x5728;&#x7CBE;&#x7B80;&#x4EE3;&#x7801;&#x540E;&#xFF0C;&#x9009;&#x53D6;&#x51FA;&#x4E3B;&#x8981;&#x5173;&#x6CE8;&#x7684;&#x4EE3;&#x7801;&#x7247;&#x6BB5;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> __block_impl {
+    <span class="hljs-keyword">void</span> *isa;
+    <span class="hljs-keyword">int</span> Flags;
+    <span class="hljs-keyword">int</span> Reserved;
+    <span class="hljs-keyword">void</span> *FuncPtr;
+};
+
+<span class="hljs-keyword">struct</span> __outside_block_impl_0 {
+    <span class="hljs-keyword">struct</span> __block_impl impl;
+    <span class="hljs-keyword">struct</span> __outside_block_desc_0* Desc;
+    __outside_block_impl_0(<span class="hljs-keyword">void</span> *fp, <span class="hljs-keyword">struct</span> __outside_block_desc_0 *desc, <span class="hljs-keyword">int</span> flags=<span class="hljs-number">0</span>) {
+        impl.isa = &amp;_NSConcreteGlobalBlock;
+        impl.Flags = flags;
+        impl.FuncPtr = fp;
+        Desc = desc;
+    }
+};
+
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> __outside_block_func_0(<span class="hljs-keyword">struct</span> __outside_block_impl_0 *__cself) {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello block!\n&quot;</span>);
+}
+
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> __outside_block_desc_0 {
+    <span class="hljs-keyword">size_t</span> reserved;
+    <span class="hljs-keyword">size_t</span> Block_size;
+} __outside_block_desc_0_DATA = { 
+    <span class="hljs-number">0</span>, 
+    <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> __outside_block_impl_0)
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span> </span>{
+    ((<span class="hljs-keyword">void</span> (*)(__block_impl *))((__block_impl *)outside)-&gt;FuncPtr)((__block_impl *)outside);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4EE3;&#x7801;&#x53EF;&#x80FD;&#x6709;&#x4E9B;&#x96BE;&#x61C2;&#xFF0C;&#x9010;&#x4E00;&#x6765;&#x5206;&#x6790;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> __outside_block_func_0(<span class="hljs-keyword">struct</span> __outside_block_impl_0 *__cself) {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello block!\n&quot;</span>);
+}
+</code></pre>
+<p>&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x5E94;&#x8BE5;&#x662F;&#x548C;&#x6E90;&#x4EE3;&#x7801;&#x6700;&#x76F8;&#x8FD1;&#x7684;&#x90E8;&#x5206;&#x3002;&#x5E76;&#x4E14;&#xFF0C;&#x6E90;&#x4EE3;&#x7801;&#x4E2D;&#x7684; block &#x540D;&#x88AB;&#x91CD;&#x65B0;&#x7EC4;&#x5408;&#x6210;&#x4E00;&#x79CD;&#x65B0;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x5F62;&#x5F0F;&#xFF0C;&#x800C;&#x751F;&#x6210;&#x4E86;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x51FD;&#x6570;&#x540D;&#x3002;&#x5728;&#x53C2;&#x6570;&#x4E0A;&#x53D1;&#x73B0;&#x5176;&#x5B9E;&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#x540D;&#x53C8;&#x662F;&#x4E00;&#x79CD;&#x65B0;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x7EC4;&#x5408;&#x5F62;&#x5F0F;&#xFF08;<code>__xxx_block_impl_y</code>&#xFF1A;&#x8FD9;&#x91CC;&#x7684; xxx &#x662F; <strong>block &#x540D;&#x79F0;</strong>&#xFF0C;y &#x662F;<strong>&#x8BE5;&#x51FD;&#x6570;&#x51FA;&#x73B0;&#x7684;&#x987A;&#x5E8F;&#x503C;</strong>&#xFF09;&#x3002;</p>
+<p>&#x7EE7;&#x7EED;&#x6765;&#x770B;&#x770B;&#x53C2;&#x6570; <code>__cself</code> &#x7684;&#x58F0;&#x660E;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> __outside_block_impl_0 {
+    <span class="hljs-keyword">struct</span> __block_impl impl;
+    <span class="hljs-keyword">struct</span> __outside_block_desc_0* Desc;
+
+    <span class="hljs-comment">// &#x6784;&#x9020;&#x51FD;&#x6570;</span>
+    __outside_block_impl_0(<span class="hljs-keyword">void</span> *fp, <span class="hljs-keyword">struct</span> __outside_block_desc_0 *desc, <span class="hljs-keyword">int</span> flags=<span class="hljs-number">0</span>) {
+        impl.isa = &amp;_NSConcreteGlobalBlock;
+        impl.Flags = flags;
+        impl.FuncPtr = fp;
+        Desc = desc;
+    }
+};
+</code></pre>
+<p>&#x7B2C;&#x4E00;&#x4E2A;&#x6210;&#x5458;<code>impl</code>&#xFF0C;&#x662F; __block_impl &#x7C7B;&#x578B;&#xFF0C;&#x7ED3;&#x6784;&#x4F53;&#x5728;&#x751F;&#x6210;&#x6587;&#x4EF6;&#x4E2D;&#x4E5F;&#x662F;&#x51FA;&#x73B0;&#x7684;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> __block_impl {
+    <span class="hljs-keyword">void</span> *isa;
+    <span class="hljs-keyword">int</span> Flags;
+    <span class="hljs-keyword">int</span> Reserved;
+    <span class="hljs-keyword">void</span> *FuncPtr;
+};
+</code></pre>
+<ul>
+<li>isa&#x6307;&#x9488;&#xFF1A;&#x6307;&#x5411;&#x4E00;&#x4E2A;&#x7C7B;&#x5BF9;&#x8C61;&#x3002;&#x5728;&#x975E; GC &#x6A21;&#x5F0F;&#x4E0B;&#x6709;&#x4E09;&#x79CD;&#x7C7B;&#x578B;&#xFF1A;<code>_NSConcreteStackBlock</code>&#x3001;<code>_NSConcreteGlobalBlock</code>&#x3001;<code>_NSConcreteMallocBlock</code>&#x3002;</li>
+<li>Flags&#xFF1A;block &#x7684;&#x8D1F;&#x8F7D;&#x4FE1;&#x606F;&#xFF08;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x548C;&#x7C7B;&#x578B;&#x4FE1;&#x606F;&#xFF09;&#xFF0C;&#x6309;&#x4F4D;&#x5B58;&#x50A8;&#x3002;&#x5728;&#x4E0B;&#x9762;&#x6709;&#x8BE6;&#x7EC6;&#x8BF4;&#x660E;&#x3002;</li>
+<li>Reserved&#xFF1A;&#x4FDD;&#x7559;&#x53D8;&#x91CF;&#x3002;</li>
+<li>FuncPtr&#xFF1A;&#x6307;&#x5411; block &#x51FD;&#x6570;&#x5730;&#x5740;&#x7684;&#x6307;&#x9488;&#x3002;</li>
+</ul>
+<p>&#x5728; runtime &#x7684;&#x6E90;&#x7801;&#x4E2D;&#xFF0C;&#x5BF9;&#x4E8E; Flags &#x7684;&#x679A;&#x4E3E;&#x8981;&#x6BD4;&#x6587;&#x6863;&#x4E2D;&#x63CF;&#x8FF0;&#x7684;&#x66F4;&#x52A0;&#x8BE6;&#x7EC6;&#xFF0C;&#x5176;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">enum</span> {
+    BLOCK_DEALLOCATING =      (<span class="hljs-number">0x0001</span>),  <span class="hljs-comment">// runtime</span>
+    BLOCK_REFCOUNT_MASK =     (<span class="hljs-number">0xfffe</span>),  <span class="hljs-comment">// runtime</span>
+    BLOCK_NEEDS_FREE =        (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">24</span>), <span class="hljs-comment">// runtime</span>
+    BLOCK_HAS_COPY_DISPOSE =  (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">25</span>), <span class="hljs-comment">// compiler</span>
+    BLOCK_HAS_CTOR =          (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">26</span>), <span class="hljs-comment">// compiler: helpers have C++ code</span>
+    BLOCK_IS_GC =             (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">27</span>), <span class="hljs-comment">// runtime</span>
+    BLOCK_IS_GLOBAL =         (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">28</span>), <span class="hljs-comment">// compiler</span>
+    BLOCK_USE_STRET =         (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">29</span>), <span class="hljs-comment">// compiler: undefined if !BLOCK_HAS_SIGNATURE</span>
+    BLOCK_HAS_SIGNATURE  =    (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">30</span>)  <span class="hljs-comment">// compiler</span>
+};
+</code></pre>
+<p>&#x5728; clang &#x7684;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x4E2D;&#xFF0C;&#x6709;&#x8FD9;&#x4E48;&#x4E00;&#x53E5;&#x8BDD;&#xFF1A;</p>
+<blockquote>
+<p>The flags field is set to zero unless there are variables imported into the Block that need helper functions for program level <code>Block_copy()</code> and <code>Block_release()</code> operations, in which case the (1&lt;&lt;25) flags bit is set.</p>
+</blockquote>
+<p>&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x4E00;&#x822C;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4E00;&#x4E2A; block &#x7684; flags &#x6210;&#x5458;&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;&#x4E3A; 0&#x3002;&#x5982;&#x679C;&#x5F53; block &#x9700;&#x8981; <code>Block_copy()</code> &#x548C; <code>Block_release</code> &#x8FD9;&#x7C7B;&#x62F7;&#x8D1D;&#x8F85;&#x52A9;&#x51FD;&#x6570;&#xFF0C;&#x5219;&#x4F1A;&#x8BBE;&#x7F6E;&#x6210; <code>1 &lt;&lt; 25</code> &#xFF0C;&#x4E5F;&#x5C31;&#x662F; <strong>BLOCK_HAS_COPY_DISPOSE</strong> &#x7C7B;&#x578B;&#x3002;&#x53EF;&#x4EE5;&#x641C;&#x7D22;&#x5230;&#x5927;&#x91CF;&#x8BB2;&#x8FF0; <code>Block_copy</code> &#x65B9;&#x6CD5;&#x7684;&#x535A;&#x6587;&#xFF0C;&#x5176;&#x4E2D;&#x6D89;&#x53CA;&#x5230;&#x4E86; <strong>BLOCK_HAS_COPY_DISPOSE</strong> &#x3002;</p>
+<p>&#x603B;&#x7ED3;&#x4E00;&#x4E0B;&#x679A;&#x4E3E;&#x7C7B;&#x7684;&#x7528;&#x6CD5;&#xFF0C;&#x524D; 16 &#x4F4D;&#x5373;&#x8D77;&#x5230;&#x6807;&#x8BB0;&#x4F5C;&#x7528;&#xFF0C;&#x53C8;&#x53EF;&#x8BB0;&#x5F55;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#xFF1A;</p>
+<ul>
+<li><strong>BLOCK_DEALLOCATING</strong>&#xFF1A;&#x91CA;&#x653E;&#x6807;&#x8BB0;&#x3002;&#x4E00;&#x822C;&#x5E38;&#x7528; <strong>BLOCK_NEEDS_FREE</strong> &#x505A; &#x4F4D;&#x4E0E; &#x64CD;&#x4F5C;&#xFF0C;&#x4E00;&#x540C;&#x4F20;&#x5165; Flags &#xFF0C;&#x544A;&#x77E5;&#x8BE5; block &#x53EF;&#x91CA;&#x653E;&#x3002;</li>
+<li><strong>BLOCK_REFCOUNT_MASK</strong>&#xFF1A;&#x4E00;&#x822C;&#x53C2;&#x4E0E;&#x5224;&#x65AD;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x53EF;&#x9009;&#x7528;&#x53C2;&#x6570;&#x3002;</li>
+<li><strong>BLOCK_NEEDS_FREE</strong>&#xFF1A;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;&#x8BE5;&#x679A;&#x4E3E;&#x4F4D;&#xFF0C;&#x6765;&#x544A;&#x77E5;&#x8BE5; block &#x53EF;&#x91CA;&#x653E;&#x3002;&#x610F;&#x5728;&#x8BF4;&#x660E; block &#x662F; heap block &#xFF0C;&#x5373;&#x6211;&#x4EEC;&#x5E38;&#x8BF4;&#x7684; <strong>_NSConcreteMallocBlock</strong> &#x3002;</li>
+<li><strong>BLOCK_HAS_COPY_DISPOSE</strong>&#xFF1A;&#x662F;&#x5426;&#x62E5;&#x6709;&#x62F7;&#x8D1D;&#x8F85;&#x52A9;&#x51FD;&#x6570;&#xFF08;a copy helper function&#xFF09;&#x3002;</li>
+<li><strong>BLOCK_HAS_CTOR</strong>&#xFF1A;&#x662F;&#x5426;&#x62E5;&#x6709; block &#x6790;&#x6784;&#x51FD;&#x6570;&#xFF08;dispose function&#xFF09;&#x3002;</li>
+<li><strong>BLOCK_IS_GC</strong>&#xFF1A;&#x662F;&#x5426;&#x542F;&#x7528; GC &#x673A;&#x5236;&#xFF08;Garbage Collection&#xFF09;&#x3002;</li>
+<li><strong>BLOCK_HAS_SIGNATURE</strong>&#xFF1A;&#x4E0E; <strong>BLOCK_USE_STRET</strong> &#x76F8;&#x5BF9;&#xFF0C;&#x5224;&#x65AD;&#x662F;&#x5426;&#x5F53;&#x524D; block &#x62E5;&#x6709;&#x4E00;&#x4E2A;&#x7B7E;&#x540D;&#x3002;&#x7528;&#x4E8E; runtime &#x65F6;&#x52A8;&#x6001;&#x8C03;&#x7528;&#x3002;</li>
+</ul>
+<p>&#x6211;&#x4EEC;&#x8FD4;&#x56DE;&#x7ED3;&#x6784;&#x4F53; <code>__outside_block_impl_0</code> &#x7EE7;&#x7EED;&#x770B;&#x7B2C;&#x4E8C;&#x4E2A;&#x6210;&#x5458; Desc &#x6307;&#x9488;&#x3002;&#x4EE5;&#x4E0B;&#x662F; <code>__outside_block_desc_0</code> &#x7ED3;&#x6784;&#x4F53;&#x58F0;&#x660E;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> __outside_block_desc_0 {
+    <span class="hljs-keyword">size_t</span> reserved;
+    <span class="hljs-keyword">size_t</span> Block_size;
+} __outside_block_desc_0_DATA = { 
+    <span class="hljs-number">0</span>, 
+    <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> __outside_block_impl_0)
+};
+</code></pre>
+<p>&#x5176;&#x4E2D;&#x4E24;&#x4E2A;&#x6210;&#x5458;&#x4E5F;&#x53EF;&#x4EE5;&#x4ECE;&#x540D;&#x5B57;&#x770B;&#x51FA;&#xFF0C;&#x63CF;&#x8FF0;&#x7684;&#x662F; block &#x7684;&#x9884;&#x7559;&#x533A;&#x7A7A;&#x95F4;&#x548C; block &#x7684;&#x5927;&#x5C0F;&#x3002;&#x5176;&#x4E2D;<code>size_t</code>&#x7C7B;&#x578B;&#x5728;64&#x4F4D;&#x73AF;&#x5883;&#x4E0B;&#x5E94;&#x4E3A;<code>long unsigned int</code>&#xFF0C;&#x8BE5;&#x5B8F;&#x5B9A;&#x4E49;&#x5728; C&#x6807;&#x51C6;&#x5E93; &#x7684; <strong>stddef.h</strong> &#x4E2D;&#x3002;<code>__outside_block_desc_0_DATA</code> &#x662F;&#x8BE5;&#x7ED3;&#x6784;&#x4F53;&#x7C7B;&#x578B;&#x7684;&#x73AF;&#x5883;&#x91CF;&#xFF0C;&#x4F7F;&#x7528;&#x6210;&#x5458;&#x5BF9;&#x9F50;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x5FEB;&#x6377;&#x6784;&#x9020;&#x3002;</p>
+<p>&#x518D;&#x6765;&#x770B;&#x6700;&#x91CD;&#x8981;&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x5373; <code>__outside_block_impl_0</code> &#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// &#x6784;&#x9020;&#x51FD;&#x6570;</span>
+__outside_block_impl_0(<span class="hljs-keyword">void</span> *fp, <span class="hljs-keyword">struct</span> __outside_block_desc_0 *desc, <span class="hljs-keyword">int</span> flags=<span class="hljs-number">0</span>) {
+   impl.isa = &amp;_NSConcreteGlobalBlock;
+   impl.Flags = flags;
+   impl.FuncPtr = fp;
+   Desc = desc;
+}
+</code></pre>
+<p>&#x8FD9;&#x91CC;&#x7684;&#x6240;&#x6709;&#x8FC7;&#x7A0B;&#x9664;&#x4E86; &amp;_NSConcreteGlobalBlock &#x4EE5;&#x5916;&#x90FD;&#x6BD4;&#x8F83;&#x597D;&#x7406;&#x89E3;&#x3002;&#x5148;&#x8DF3;&#x8FC7;&#x8FD9;&#x90E8;&#x5206;&#xFF0C;&#x653E;&#x5728;&#x6587;&#x7AE0;&#x6700;&#x540E;&#x8FDB;&#x884C;&#x5206;&#x6790;&#x3002;&#x7EE7;&#x7EED;&#x770B;&#x4E00;&#x4E0B;&#x5165;&#x53E3;&#x51FD;&#x6570; main()&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span> </span>{
+    ((<span class="hljs-keyword">void</span> (*)(__block_impl *))((__block_impl *)outside)-&gt;FuncPtr)((__block_impl *)outside);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x53BB;&#x6389;&#x5F3A;&#x5236;&#x8F6C;&#x6362;&#x90E8;&#x5206;&#xFF0C;&#x589E;&#x5F3A;&#x53EF;&#x8BFB;&#x6027;&#xFF1A;</p>
+<pre><code class="lang-c">outside -&gt; FuncPtr(outside);
+</code></pre>
+<p>&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x5728;&#x6267;&#x884C;&#x6211;&#x4EEC;&#x5B9A;&#x4E49;&#x7684; block &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F1A;&#x8BBF;&#x95EE; impl &#x7684; FuncPrt &#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x6307;&#x9488;&#x3002;&#x800C;&#x5728;&#x521D;&#x59CB;&#x5316;&#xFF08;&#x6790;&#x6784;&#xFF09;&#x65F6;&#xFF0C;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x4F1A;&#x88AB;&#x6307;&#x5411; block &#x7684;&#x6267;&#x884C;&#x51FD;&#x6570;&#x4F53;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x4E00;&#x5F00;&#x59CB;&#x5206;&#x6790;&#x7684; <code>__outside_block_func_0</code> &#x65B9;&#x6CD5;&#x3002;&#x5E76;&#x4E14;&#x4F20;&#x5165;&#x81EA;&#x8EAB;&#x4E3A;&#x53C2;&#x6570;&#x3002;&#x6240;&#x4EE5;&#x4E0A;&#x6587;&#x6240;&#x63D0;&#x53CA;&#x7684; <code>__cself</code> &#x53C2;&#x6570;&#xFF0C;&#x5176;&#x5B9E;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x4E2D;&#x7684;<strong>&#x6240;&#x5C5E;&#x5BF9;&#x8C61;</strong>&#xFF0C;&#x5728; C++ &#x4E2D;&#x6211;&#x4EEC;&#x5E38;&#x7528; this &#x6307;&#x9488;&#x63CF;&#x8FF0;&#xFF1B;&#x800C;&#x5728; Objective-C &#x4E2D;&#xFF0C;&#x5E38;&#x5E38;&#x4F7F;&#x7528; self &#x3002;</p>
+<p>&#x5199;&#x5230;&#x8FD9;&#x91CC;&#xFF0C;&#x7B14;&#x8005;&#x6709;&#x4E00;&#x4E9B;&#x5F88;&#x6709;&#x610F;&#x601D;&#x7684;&#x8054;&#x60F3;&#x3002;&#x5728; Objective-C &#x7684;&#x8BBE;&#x8BA1;&#x4E2D;&#xFF0C;&#x4E3A;&#x4E86;&#x7A81;&#x51FA;&#x5BF9;&#x8C61;&#x4E0E;&#x65B9;&#x6CD5;&#x95F4;&#x7684;&#x6240;&#x5C5E;&#x5173;&#x7CFB;&#xFF0C;&#x7ECF;&#x5E38;&#x4F1A;&#x4F20;&#x9012;&#x4E00;&#x4E2A;&#x6307;&#x9488;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x3002;&#x4F8B;&#x5982;&#x5728;&#x8BB8;&#x591A; Foundation &#x6846;&#x67B6;&#x4E2D;&#x7684; Delegate &#x65B9;&#x6CD5;&#xFF0C;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x5F80;&#x5F80;&#x662F;&#x59D4;&#x6258;&#x65B9;&#x6CD5;&#x7684;&#x53D1;&#x8D77;&#x8005;&#x672C;&#x8EAB;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x518D;&#x6765;&#x770B;&#x4E00;&#x4E0B;&#x4E4B;&#x524D;&#x7565;&#x8FC7;&#x7684; _NSConcreteGlobalBlock &#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x4EFB;&#x610F;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684; isa &#x6307;&#x9488;&#xFF0C;&#x5176;&#x6307;&#x5411;&#x7684;&#x5BF9;&#x8C61;&#x662F;&#x81EA;&#x8EAB;&#x7684;&#x7C7B;&#x5BF9;&#x8C61;&#xFF1B;&#x800C;&#x7C7B;&#x5BF9;&#x8C61;&#x7684; isa &#x6307;&#x9488;&#xFF0C;&#x6307;&#x5411;&#x7684;&#x662F;&#x5143;&#x7C7B;&#xFF08;meta class&#xFF09;&#x3002;&#x800C; block &#x867D;&#x7136;&#x4E5F;&#x662F;&#x5BF9;&#x8C61;&#xFF0C;&#x4F46;&#x5176;&#x7ED3;&#x6784;&#x662F;&#x5F02;&#x4E8E; NSObject &#x7684;&#x3002;&#x6700;&#x65B0;&#x7248;&#x672C;&#x7684; object &#x7ED3;&#x6784;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> objc_class : objc_object {
+    <span class="hljs-comment">// Class ISA;</span>
+    Class superclass;
+    <span class="hljs-keyword">cache_t</span> cache;             <span class="hljs-comment">// formerly cache pointer and vtable</span>
+    <span class="hljs-keyword">class_data_bits_t</span> bits;    <span class="hljs-comment">// class_rw_t * plus custom rr/alloc flags</span>
+}
+</code></pre>
+<p><img src="http://upload-images.jianshu.io/upload_images/208988-26fce38e44961829.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img_3.png"></p>
+<p>&#x5176;&#x4E2D; object &#x7684; isa &#x6307;&#x9488;&#x662F;&#x4ECE; objc_objcet &#x4E2D;&#x7EE7;&#x627F;&#x800C;&#x6765;&#x7684;&#x3002;&#x800C; block &#x4E3A;&#x4E86;&#x6A21;&#x62DF; object &#x7ED3;&#x6784;&#xFF0C;&#x4E5F;&#x7528;&#x5230;&#x4E86; isa &#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x4E86;&#x5206;&#x7C7B;&#x3002;&#x5176;&#x4E2D; _NSConcreteGlobalBlock &#x5C31;&#x662F;&#x5176;&#x4E2D;&#x4E4B;&#x4E00;&#x3002;</p>
+<p>&#x5173;&#x4E8E; block &#x7C7B;&#x578B;&#x5C06;&#x4F1A;&#x5728; block &#x7CFB;&#x5217;&#x5176;&#x4ED6;&#x6587;&#x4E2D;&#x4ECB;&#x7ECD;&#xFF0C;&#x8FD9;&#x91CC;&#x7531;&#x4E8E;&#x6211;&#x4EEC;&#x7684; block &#x662F;&#x5904;&#x5728;&#x5168;&#x5C40;&#x4F4D;&#x7F6E;&#xFF0C;&#x6240;&#x4EE5;&#x5176;&#x7C7B;&#x578B;&#x4E3A; _NSConcreteGlobalBlock&#x3002;</p>
+<p>&#x5728;&#x5B66;&#x4E60; C &#x4E2D;&#x7684; block &#xFF0C;&#x901A;&#x8FC7; clang &#x7684;&#x8BED;&#x4E49;&#x8F6C;&#x6362;&#x5C06; block &#x8BED;&#x6CD5;&#x4F7F;&#x7528; C &#x8BED;&#x8A00;&#x63CF;&#x8FF0;&#xFF0C;&#x4F7F;&#x5F97;&#x6211;&#x4EEC;&#x66F4;&#x8FDB;&#x4E00;&#x6B65;&#x7684;&#x6DF1;&#x5165;&#x5B66;&#x4E60; block &#x7684;&#x5185;&#x90E8;&#x5B9E;&#x73B0;&#x3002;</p>
+<h2 id="&#x5BF9;&#x4E8E;-clang--rewrite-objc-&#x4E00;&#x79CD;&#x8BEF;&#x533A;">&#x5BF9;&#x4E8E; clang -rewrite-objc &#x4E00;&#x79CD;&#x8BEF;&#x533A;</h2>
+<p>&#x5F88;&#x591A;&#x65F6;&#x5019;&#xFF0C;&#x4F1A;&#x60F3;&#x5F53;&#x7136;&#x7684;&#x8BA4;&#x4E3A;&#xFF0C;&#x5728;&#x7F16;&#x8BD1;&#x671F;&#xFF0C;clang &#x5BF9;&#x4EE3;&#x7801;&#x8FDB;&#x884C;&#x8BED;&#x4E49;&#x5224;&#x65AD;&#x4E4B;&#x540E;&#xFF0C;&#x4F1A;&#x50CF; <code>-rewrite-objc</code> &#x4E00;&#x6837;&#x5BF9;&#x4EE3;&#x7801;&#x8FDB;&#x884C;&#x8F6C;&#x8BD1;&#x6210; C &#x8BED;&#x8A00;&#xFF0C;&#x8FDB;&#x800C;&#x8F6C;&#x6362;&#x6210;&#x4E2D;&#x95F4;&#x7801;&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x8BE5;&#x547D;&#x4EE4;&#x5E76;<strong>&#x4E0D;&#x80FD;&#x4EE3;&#x8868;&#x7F16;&#x8BD1;&#x540E;&#x6240;&#x6267;&#x884C;&#x7684;&#x4EE3;&#x7801;</strong>&#x3002;</p>
+<p>&#x5728;&#x5DE7;&#x54E5;&#x5F88;&#x4E45;&#x4E4B;&#x524D;<a href="http://blog.devtang.com/2013/07/28/a-look-inside-blocks/" target="_blank">&#x8C08;Objective-C Block&#x7684;&#x5B9E;&#x73B0;</a>&#x7684;&#x6587;&#x4E2D;&#xFF0C;&#x6709;&#x8FD9;&#x4E48;&#x4E00;&#x4E2A;&#x4EE3;&#x7801;&#x7247;&#x6BB5;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span> </span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{ 
+    ^{ <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello, World!\n&quot;</span>); } (); 
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; 
+}
+</code></pre>
+<p>&#x5728;&#x4F7F;&#x7528; <code>-rewrite-objc</code> &#x8FDB;&#x884C;&#x8BED;&#x6CD5;&#x8F6C;&#x6362;&#x540E;&#xFF0C;&#x6240;&#x663E;&#x793A;&#x7684; block &#x7C7B;&#x578B;&#x4E3A; _NSConcreteStackBlock &#x3002;&#x800C;&#x6839;&#x636E;&#x6211;&#x4EEC;&#x5BF9;&#x4E8E; block &#x7684;&#x8BA4;&#x77E5;&#xFF0C;&#x5F53; block &#x6CA1;&#x6709;&#x5F15;&#x7528;&#x5916;&#x90E8;&#x7684;&#x53D8;&#x91CF;&#x5BF9;&#x8C61;&#x65F6;&#xFF0C;&#x5176;&#x7C7B;&#x578B;&#x5E94;&#x4E3A; _NSConcreteGlobalBlock&#x3002;&#x96BE;&#x9053;&#xFF0C;clang &#x5BF9;&#x4E8E; Objective-C &#x4E2D;&#x7684; block &#x548C; C &#x4E2D;&#x7684; block &#x5904;&#x7406;&#xFF0C;&#x4F1A;&#x6709;&#x5DEE;&#x5F02;&#x5417;&#xFF1F;&#x5176;&#x5B9E;&#x4E0D;&#x662F;&#x7684;&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x505A;&#x8FD9;&#x4E2A;&#x5B9E;&#x9A8C;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-keyword">void</span> (^outside)(<span class="hljs-keyword">void</span>) = ^(<span class="hljs-keyword">void</span>) {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello, block!\n&quot;</span>);
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">void</span> (^inside)(<span class="hljs-keyword">void</span>) = ^(<span class="hljs-keyword">void</span>) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello, block!\n&quot;</span>);
+    };
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;outside: %p\n&quot;</span>, outside);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;inside:  %p\n&quot;</span>, inside);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<pre><code class="lang-c">outside: <span class="hljs-number">0x10d48e040</span>
+inside:  <span class="hljs-number">0x10d48e080</span>
+</code></pre>
+<p>&#x4ECE;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x4E0A;&#x770B;&#xFF0C;&#x4E24;&#x4E2A; block &#x88AB;&#x5B58;&#x50A8;&#x5728;&#x540C;&#x4E00;&#x533A;&#x57DF;&#xFF0C;&#x4E5F;&#x5C31;&#x662F; .data &#x5E38;&#x91CF;&#x533A;&#x3002;</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/208988-8deb7e7cc8475e58.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img_4.jpg"></p>
+<p>&#x53EF;&#x662F;&#x5728; main &#x51FD;&#x6570;&#x5185;&#x58F0;&#x660E;&#x7684; block &#x7C7B;&#x578B;&#xFF0C;&#x901A;&#x8FC7; <code>clang -rewrite-objc</code> &#x5DE5;&#x5177;&#x8F6C;&#x6362;&#x540E;&#x4ECD;&#x4E3A; _NSConcreteStackBlock &#x6808;&#x5B58;&#x50A8; block &#x7C7B;&#x578B;&#x3002;&#x4ECE;&#x8FD9;&#x4E2A;&#x4FA7;&#x9762;&#xFF0C;&#x53EF;&#x4EE5;&#x660E;&#x767D;&#x5176;&#x5B9E; clang &#x5BF9;&#x8BED;&#x6CD5;&#x7684;&#x89E3;&#x91CA;&#x8F6C;&#x6362;&#xFF0C;<strong>&#x4E0D;&#x4E00;&#x5B9A;&#x51FA;&#x73B0;&#x5728;&#x7F16;&#x8BD1;&#x8FC7;&#x7A0B;&#x4E2D;</strong>&#x3002;&#x800C;&#x5728;&#x7F16;&#x8BD1;&#x671F;&#x95F4;&#x8F6C;&#x6362;&#x6210;&#x4E2D;&#x95F4;&#x7801;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5728;&#x65B0;&#x7248;&#x672C;&#x7684; clang &#x7F16;&#x8BD1;&#x5668;&#x5DF2;&#x7ECF;&#x4E0D;&#x9700;&#x8981;&#x89E3;&#x91CA;&#x6210;c&#x7684;&#x8BED;&#x6CD5;&#x8FDB;&#x884C;&#x8FC7;&#x5EA6;&#xFF0C;&#x4ECE;&#x800C;&#x7FFB;&#x8BD1;&#x6210;&#x4E2D;&#x95F4;&#x7801;&#x3002;&#x800C;&#x662F;&#xFF0C;&#x5728;&#x8BED;&#x6CD5;&#x68C0;&#x6D4B;&#x540E;&#xFF0C;&#x76F4;&#x63A5;&#x8F6C;&#x81F3;&#x4E2D;&#x95F4;&#x7801;&#xFF0C;&#x63D0;&#x4EA4;&#x81F3; llvm &#x8FDB;&#x884C;&#x94FE;&#x63A5;&#x5904;&#x7406;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#xFF0C;&#x901A;&#x8FC7; <code>clang -rewrite-objc</code> &#x547D;&#x4EE4;&#xFF0C;&#x4EC5;&#x5C06;&#x6269;&#x5C55;&#x8BED;&#x6CD5;&#x901A;&#x8FC7;&#x53EF;&#x8BFB;&#x6027;&#x66F4;&#x9AD8;&#x7684; C &#x8BED;&#x6CD5;&#x8FDB;&#x884C;&#x6539;&#x5199;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x7F16;&#x8BD1;&#x671F;&#x4E2D;&#x7684;&#x5B50;&#x7F16;&#x8BD1;&#x8FC7;&#x7A0B;&#x3002;&#x6211;&#x4EEC;&#x4EC5;&#x4EC5;&#x901A;&#x8FC7;&#x4ED6;&#x6765;&#x4E86;&#x89E3; block &#x771F;&#x6B63;&#x7684;&#x7ED3;&#x6784;&#x5C31;&#x5DF2;&#x7ECF;&#x8DB3;&#x591F;&#x4E86;&#x3002;</p>
+<h2 id="&#x5C3E;&#x58F0;">&#x5C3E;&#x58F0;</h2>
+<p>&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x8BB2;&#x8FF0;&#x4E86; block &#x7684;&#x7ED3;&#x6784;&#x4EE5;&#x53CA;&#x6307;&#x5411; block &#x51FD;&#x6570;&#x4F53;&#x7684;&#x5177;&#x4F53;&#x65B9;&#x5F0F;&#x3002;&#x5728;&#x4EE5;&#x540E;&#x7684; block &#x7CFB;&#x5217;&#x5B66;&#x4E60;&#x7B14;&#x8BB0;&#x4E2D;&#xFF0C;&#x8FD8;&#x4F1A;&#x7EE7;&#x7EED;&#x8BB0;&#x5F55; block &#x7C7B;&#x578B;&#x3001; block &#x4F7F;&#x7528;&#x7B49;&#x76F8;&#x5173;&#x77E5;&#x8BC6;&#x3002;</p>
+<hr>
+<h2 id="&#x53C2;&#x8003;&#x8D44;&#x6599;">&#x53C2;&#x8003;&#x8D44;&#x6599;</h2>
+<p><a href="http://www.galloway.me.uk/2013/05/a-look-inside-blocks-episode-3-block-copy/" target="_blank">A look inside blocks (Block_copy)</a></p>
+<p><a href="http://clang.llvm.org/docs/BlockLanguageSpec.html" target="_blank">clang&#x5B98;&#x65B9;&#x6587;&#x6863;&#xFF1A;block &#x6269;&#x5C55;&#x8BED;&#x6CD5;</a></p>
+<blockquote>
+<p>&#x82E5;&#x60F3;&#x67E5;&#x770B;&#x66F4;&#x591A;&#x7684;iOS Source Probe&#x6587;&#x7AE0;&#xFF0C;&#x6536;&#x5F55;&#x5728;&#x8FD9;&#x4E2A;<a href="https://github.com/Desgard/iOS-Source-Probe" target="_blank">Github&#x4ED3;&#x5E93;&#x4E2D;</a>&#x3002;</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="load 方法全程跟踪.html" class="navigation navigation-prev " aria-label="Previous page: load 方法全程跟踪">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="浅谈 block（2） - 截获变量方式.html" class="navigation navigation-next " aria-label="Next page: 浅谈 block - 截获变量方式">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"浅谈 block - clang 改写后的 block 结构","level":"2.1.7","depth":2,"next":{"title":"浅谈 block - 截获变量方式","level":"2.1.8","depth":2,"path":"Objective-C/Runtime/浅谈 block（2） - 截获变量方式.md","ref":"Objective-C/Runtime/浅谈 block（2） - 截获变量方式.md","articles":[]},"previous":{"title":"load 方法全程跟踪","level":"2.1.6","depth":2,"path":"Objective-C/Runtime/load 方法全程跟踪.md","ref":"Objective-C/Runtime/load 方法全程跟踪.md","articles":[]},"dir":"ltr"},"config":{"plugins":["splitter","github","multipart","mathjax"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/Desgard"},"splitter":{},"search":{},"multipart":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"cn","gitbook":"*"},"file":{"path":"Objective-C/Runtime/浅谈 block（1） - clang 改写后的 block 结构.md","mtime":"2018-07-09T00:41:04.816Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-09T00:56:45.312Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,1213 @@
+
+<!DOCTYPE HTML>
+<html lang="cn" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>巧用符号表 - 探求 fishhook 原理（一） · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-multipart/multipart.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="验证试验 - 探求 fishhook 原理（二）.html" />
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 1 - iOS Runtime 源码解析</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" >
+            
+                <span>
+            
+                    
+                    objc/runtime.h 708
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="../../Objective-C/Runtime/浅谈Associated Objects.html">
+            
+                <a href="../../Objective-C/Runtime/浅谈Associated Objects.html">
+            
+                    
+                    浅谈Associated Objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="../../Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                <a href="../../Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                    
+                    对象方法消息传递流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.3" data-path="../../Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                <a href="../../Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                    
+                    消息转发过程分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.4" data-path="../../Objective-C/Runtime/用 isa 承载对象的类信息.html">
+            
+                <a href="../../Objective-C/Runtime/用 isa 承载对象的类信息.html">
+            
+                    
+                    用 isa 承载对象的类信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.5" data-path="../../Objective-C/Runtime/weak 弱引用的实现方式.html">
+            
+                <a href="../../Objective-C/Runtime/weak 弱引用的实现方式.html">
+            
+                    
+                    weak 弱引用的实现方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.6" data-path="../../Objective-C/Runtime/load 方法全程跟踪.html">
+            
+                <a href="../../Objective-C/Runtime/load 方法全程跟踪.html">
+            
+                    
+                    load 方法全程跟踪
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.7" data-path="../../Objective-C/Runtime/浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                <a href="../../Objective-C/Runtime/浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                    
+                    浅谈 block - clang 改写后的 block 结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.8" data-path="../../Objective-C/Runtime/浅谈 block（2） - 截获变量方式.html">
+            
+                <a href="../../Objective-C/Runtime/浅谈 block（2） - 截获变量方式.html">
+            
+                    
+                    浅谈 block - 截获变量方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 2 - macOS & iOS 系统源码及相关开源库</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <span>
+            
+                    
+                    cctools/include/mach-o 895
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="../mach-o/Mach-O 文件格式探索.html">
+            
+                <a href="../mach-o/Mach-O 文件格式探索.html">
+            
+                    
+                    Mach-O 文件格式探索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" >
+            
+                <span>
+            
+                    
+                    Fishhook
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="3.2.1" data-path="巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                <a href="巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                    
+                    巧用符号表 - 探求 fishhook 原理（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="验证试验 - 探求 fishhook 原理（二）.html">
+            
+                <a href="验证试验 - 探求 fishhook 原理（二）.html">
+            
+                    
+                    验证试验 - 探求 fishhook 原理（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 3 - Foundation 框架源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" >
+            
+                <span>
+            
+                    
+                    Foundation
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="../../Objective-C/Foundation/从经典问题来看 Copy 方法.html">
+            
+                <a href="../../Objective-C/Foundation/从经典问题来看 Copy 方法.html">
+            
+                    
+                    从经典问题来看 Copy 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="../../Objective-C/Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                <a href="../../Objective-C/Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                    
+                    CFArray 的历史渊源及实现原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="../../Objective-C/Foundation/Run Loop 记录与源码注释.html">
+            
+                <a href="../../Objective-C/Foundation/Run Loop 记录与源码注释.html">
+            
+                    
+                    Run Loop 记录与源码注释(作者Kylin)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 4 - UIKit 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" >
+            
+                <span>
+            
+                    
+                    UIKit
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.1.1" data-path="../../Objective-C/Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                <a href="../../Objective-C/Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                    
+                    复用的精妙 - UITableView 复用技术原理分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.1.2" data-path="../../Objective-C/UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                <a href="../../Objective-C/UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                    
+                    AutoLayout 中的线性规划 - Simplex 算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 5 - SDWebImage 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" >
+            
+                <span>
+            
+                    
+                    SDWebImage v3.8.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1.1" data-path="../../Objective-C/SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                <a href="../../Objective-C/SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                    
+                    SDWebImage Source Probe: WebCache
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.2" data-path="../../Objective-C/SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                <a href="../../Objective-C/SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                    
+                    SDWebImage Source Probe: Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.3" data-path="../../Objective-C/SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                <a href="../../Objective-C/SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                    
+                    SDWebImage Source Probe: Downloader
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.4" data-path="../../Objective-C/SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                <a href="../../Objective-C/SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                    
+                    SDWebImage Source Probe: Operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 6 - Swift 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" >
+            
+                <span>
+            
+                    
+                    Swift v4.0
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.1.1" data-path="../../Swift/Swift Probe - Optional.html">
+            
+                <a href="../../Swift/Swift Probe - Optional.html">
+            
+                    
+                    Swift Probe - Optional
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 7 - Shadowsocks 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" >
+            
+                <span>
+            
+                    
+                    Shadowsocks v2.9.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="8.1.1" data-path="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                    
+                    Shadowsocks Probe I - Socks5 与 EventLoop 事件分发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.1.2" data-path="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                    
+                    Shadowsocks Probe II - TCP 代理过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >巧用符号表 - 探求 fishhook 原理（一）</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>&#x4F5C;&#x8005;&#xFF1A;&#x51AC;&#x74DC;</p>
+<p>&#x539F;&#x6587;&#x94FE;&#x63A5;&#xFF1A;<a href="http://www.desgard.com/fishhook-1/" target="_blank">Guardia &#xB7; &#x74DC;&#x5730;</a></p>
+</blockquote>
+<h1 id="&#x5DE7;&#x7528;&#x7B26;&#x53F7;&#x8868;---&#x63A2;&#x6C42;-fishhook-&#x539F;&#x7406;&#xFF08;&#x4E00;&#xFF09;">&#x5DE7;&#x7528;&#x7B26;&#x53F7;&#x8868; - &#x63A2;&#x6C42; fishhook &#x539F;&#x7406;&#xFF08;&#x4E00;&#xFF09;</h1>
+<blockquote>
+<p>&#x8FD9;&#x662F; <em>&#x63A2;&#x6C42; fishhook &#x539F;&#x7406;</em> &#x7CFB;&#x5217;&#x7684;&#x7B2C;&#x4E00;&#x7BC7;&#x3002;&#x4E3B;&#x8981;&#x8BB2;&#x8FF0;&#x4E86; Facebook &#x5F00;&#x6E90;&#x5E93; <a href="">fishhook</a> &#x7684;&#x6E90;&#x7801;&#x5B9E;&#x73B0;&#x7EC6;&#x8282;&#x3002;&#x9700;&#x8981;&#x5177;&#x5907; Mach-O &#x76F8;&#x5173;&#x77E5;&#x8BC6;&#x3002;&#x53EF;&#x4EE5;&#x5148;&#x9605;&#x8BFB; <em><a href="http://www.desgard.com/iosre-1/" target="_blank">Mach-O &#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x63A2;&#x7D22;</a></em> &#x4E00;&#x6587;&#x3002;</p>
+</blockquote>
+<h2 id="&#x5173;&#x4E8E;&#x7B26;&#x53F7;&#x8868;&#x7684;&#x57FA;&#x672C;&#x77E5;&#x8BC6;">&#x5173;&#x4E8E;&#x7B26;&#x53F7;&#x8868;&#x7684;&#x57FA;&#x672C;&#x77E5;&#x8BC6;</h2>
+<h3 id="lazy-binding-&#x8FC7;&#x7A0B;">Lazy Binding &#x8FC7;&#x7A0B;</h3>
+<p>&#x5728;&#x4E4B;&#x524D;&#x7684;<a href="http://www.desgard.com/iosre-1/" target="_blank">Mach-O &#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x63A2;&#x7D22;</a>&#x4E00;&#x6587;&#x4E2D;&#x63D0;&#x53CA;&#x5230;&#x4E86; <code>__DATA.__la_symbol_ptr</code> &#x548C; <code>__DATA.__nl_symbol_ptr</code> &#x8FD9;&#x4E24;&#x4E2A;&#x6307;&#x9488;&#x8868;&#xFF0C;&#x5206;&#x522B;&#x4E3A;<strong>lazy binding&#x6307;&#x9488;&#x8868;</strong>&#x548C;<strong>non lazy binding&#x6307;&#x9488;&#x8868;</strong>&#x3002;&#x5E76;&#x4E14;&#x8FD9;&#x4E24;&#x4E2A;&#x6307;&#x9488;&#x8868;&#xFF0C;&#x4FDD;&#x5B58;&#x7740;&#x4E0E;&#x5B57;&#x7B26;&#x4E32;&#x6807;&#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;&#x6307;&#x9488;&#x3002;</p>
+<p>&#x800C; Mach-O &#x6587;&#x4EF6;&#x6587;&#x4EF6;&#x4E2D;&#x901A;&#x8FC7; dyld &#x52A0;&#x8F7D;&#x7684; Lazy Binding &#x8868;&#x5E76;&#x6CA1;&#x6709;&#x5728;&#x52A0;&#x8F7D;&#x8FC7;&#x7A0B;&#x4E2D;&#x76F4;&#x63A5;&#x786E;&#x5B9A;&#x5730;&#x5740;&#x5217;&#x8868;&#xFF0C;&#x800C;&#x662F;&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x8C03;&#x7528;&#x8BE5;&#x51FD;&#x6570;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x901A;&#x8FC7; <strong>PLT(Procedure Linkage Table)</strong> &#x6765;&#x8FDB;&#x884C;&#x4E00;&#x6B21; Lazy Binding&#x3002;&#x6765;&#x4F7F;&#x7528; <code>printf</code> &#x65B9;&#x6CD5;&#x9A8C;&#x8BC1;&#x4E00;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> * argv[])</span> </span>{
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, <span class="hljs-string">&quot;hello world&quot;</span>);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, <span class="hljs-string">&quot;hello desgard&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x62D6;&#x5230; <em>Hopper</em> &#x4E2D;&#x67E5;&#x770B;&#x6C47;&#x7F16;&#xFF1A;</p>
+<pre><code class="lang-c"> _main:
+push       rbp
+mov        rbp, rsp
+sub        rsp, <span class="hljs-number">0x10</span>
+lea        rdi, qword [<span class="hljs-number">0x100000f8e</span>] ; <span class="hljs-string">&quot;hello world\\n&quot;</span>, argument <span class="hljs-string">&quot;format&quot;</span> <span class="hljs-keyword">for</span> method imp___stubs__printf
+mov        dword [rbp+var_4], <span class="hljs-number">0x0</span>
+mov        al, <span class="hljs-number">0x0</span>
+call       imp___stubs__printf
+lea        rdi, qword [<span class="hljs-number">0x100000f9b</span>] ; <span class="hljs-string">&quot;hello desgard\\n&quot;</span>, argument <span class="hljs-string">&quot;format&quot;</span> <span class="hljs-keyword">for</span> method imp___stubs__printf
+mov        dword [rbp+var_8], eax
+mov        al, <span class="hljs-number">0x0</span>
+call       imp___stubs__printf
+xor        ecx, ecx
+mov        dword [rbp+var_C], eax
+mov        eax, ecx
+add        rsp, <span class="hljs-number">0x10</span>
+pop        rbp
+ret
+</code></pre>
+<p>&#x53D1;&#x73B0;&#x5728;&#x4F7F;&#x7528; <code>printf</code> &#x7684;&#x65F6;&#x5019;&#x4F1A;&#x89E6;&#x53D1; <code>call imp__stubs__printf</code> &#x8FD9;&#x6761;&#x6307;&#x4EE4;&#x3002;&#x70B9;&#x51FB;&#x8FDB;&#x5165; <code>imp__stubs__printf</code> &#x7684;&#x5B58;&#x50A8;&#x4F4D;&#x7F6E;&#x67E5;&#x770B;&#xFF1A;</p>
+<pre><code class="lang-c"> imp___stubs__printf:
+jmp        qword [_printf_ptr] ; _printf, CODE XREF=_main+<span class="hljs-number">24</span>, _main+<span class="hljs-number">41</span>
+; ================================
+; &#x7EE7;&#x7EED;&#x8DDF;&#x8E2A;....
+
+<span class="hljs-number">0x100001010</span>         dq         _printf  ; DATA XREF=imp___stubs__printf
+</code></pre>
+<p>&#x5728;&#x4E24;&#x4E2A; <code>printf</code> &#x65B9;&#x6CD5;&#x524D;&#x52A0;&#x4E0A;&#x65AD;&#x70B9;&#xFF0C;&#x4F7F;&#x7528; <em>lldb</em> &#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x8C03;&#x8BD5;&#xFF1A;</p>
+<p><img src="../../image/15101394649922/15119414520860.jpg" alt=""></p>
+<p>&#x4E3A;&#x4EC0;&#x4E48;&#x8FD9;&#x91CC;&#x8981;&#x89C2;&#x6D4B; <code>0x10001010</code> &#x8FD9;&#x4E2A;&#x5730;&#x5740;&#xFF1F;&#x56E0;&#x4E3A; <code>imp___stubs__printf</code> &#x8FD9;&#x4E2A;&#x6307;&#x9488;&#x6307;&#x5411;&#x4E86;&#x5B83;&#x3002;&#x8FD9;&#x8BF4;&#x660E;&#x5728; <code>__la_symbol_ptr</code> &#x8868;&#x4E2D;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x4E86;&#x8BB0;&#x5F55;&#x3002;&#x4F7F;&#x7528; <em>MachOView</em> &#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;&#xFF1A;</p>
+<p><img src="../../image/15101394649922/15119418259666.jpg" alt=""></p>
+<p>&#x53D1;&#x73B0;&#x5728; <code>__DATA.__la_symbol_ptr</code> &#x4E2D;&#x7684;&#x8BB0;&#x5F55;&#x503C;&#x4E0E; <em>lldb</em> &#x4E2D; <code>x 0x10001010</code> &#x547D;&#x4EE4;&#x8F93;&#x51FA;&#x7684;&#x8BB0;&#x5F55;&#x503C;&#x5747;&#x4E3A; <code>01 00 00 0f 84</code>&#x3002;&#x8FD9;&#x4E2A;&#x503C;&#x5BF9;&#x5E94;&#x7684;&#x5730;&#x5740;&#x5C31;&#x662F; <code>imp___stubs__printf</code> &#x8FD9;&#x4E2A;&#x6869;&#x4F4D;&#x7F6E;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-number">0x100000f84</span>         push       <span class="hljs-number">0x0</span>
+<span class="hljs-number">0x100000f89</span>         jmp        <span class="hljs-number">0x100000f74</span>
+</code></pre>
+<pre><code class="lang-c">; Section __stub_helper
+<span class="hljs-number">0x100000f74</span>         lea        r11, qword [dyld_stub_binder_100001000+<span class="hljs-number">8</span>]   ; CODE XREF=<span class="hljs-number">0x100000f89</span>
+<span class="hljs-number">0x100000f7b</span>         push       r11
+<span class="hljs-number">0x100000f7d</span>         jmp        qword [dyld_stub_binder_100001000]          ; dyld_stub_binder
+<span class="hljs-number">0x100000f83</span>         db         <span class="hljs-number">0x90</span>
+<span class="hljs-number">0x100000f84</span>         push       <span class="hljs-number">0x0</span>
+<span class="hljs-number">0x100000f89</span>         jmp        <span class="hljs-number">0x100000f74</span>
+</code></pre>
+<p>&#x8FD9;&#x4E2A;&#x4F4D;&#x7F6E;&#x662F;&#x4E0D;&#x662F;&#x4F3C;&#x66FE;&#x76F8;&#x8BC6;&#xFF1F;&#x662F;&#x7684;&#xFF0C;&#x5728;<a href="http://www.desgard.com/iosre-1/" target="_blank">Mach-O &#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x63A2;&#x7D22;</a>&#x4E00;&#x6587;&#x4E2D;&#x7684;&#x9A8C;&#x8BC1;&#x8BD5;&#x9A8C;&#xFF0C;&#x5DF2;&#x7ECF;&#x8BD5;&#x9A8C;&#x8FC7;&#x4E86; Stub &#x673A;&#x5236;&#x3002;&#x8BF4;&#x9053;&#x8FD9;&#x91CC;&#xFF0C;&#x6211;&#x4EEC;&#x5728; MachOView &#x4E2D;&#x7684; <code>__TEXT.__stubs</code> &#x8FD9;&#x4E2A; Section &#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;&#xFF1A;</p>
+<p><img src="../../image/15101394649922/15119440533652.jpg" alt=""></p>
+<p>&#x4E0E;&#x9884;&#x60F3;&#x4E2D;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x76F8;&#x540C;&#x7684;&#x3002;&#x8FD9;&#x4E2A;&#x5728; <code>__TEXT.__stub_helper</code> &#x4E2D;&#x89E3;&#x6790;&#x51FA;&#x7684;&#x6C47;&#x7F16;&#x4EE3;&#x7801;&#x548C; <em>Hopper</em> &#x4E2D;&#x5B8C;&#x5168;&#x4E00;&#x81F4;&#x3002;&#x5728;&#x8FD9;&#x91CC;&#x901A;&#x8FC7; <code>_stub_helper</code> &#x6765;&#x8C03;&#x7528; <code>dyld_stu_binder</code> &#x65B9;&#x6CD5;&#x8BA1;&#x7B97; <code>printf</code> &#x51FD;&#x6570;&#x7684;&#x771F;&#x5B9E;&#x5730;&#x5740;&#x3002;&#x5176;&#x5177;&#x4F53;&#x4FE1;&#x606F;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;<code>jmpq 0x100000f74</code> &#x5C31;&#x662F;&#x5728; <code>pushq</code> &#x53C2;&#x6570; <code>$0x0</code> &#xFF08;link &#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x6807;&#x8BB0;&#x503C;&#xFF09;&#x540E;&#x8DF3;&#x8F6C;&#x5230;&#x8FD9;&#x4E2A; section &#x7684;&#x5934;&#x90E8;&#xFF0C;&#x5E76;&#x8C03;&#x7528; <code>binder</code> &#x65B9;&#x6CD5;&#x3002;</p>
+<p><code>binder</code> &#x65B9;&#x6CD5;&#x7684;&#x4F5C;&#x7528;&#x7B80;&#x5355;&#x6765;&#x8BB2;&#x5C31;&#x662F;&#x8BA1;&#x7B97;&#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;&#x5730;&#x5740;&#x8FDB;&#x884C;&#x7ED1;&#x5B9A;&#xFF0C;&#x4E4B;&#x540E;&#x8FDB;&#x800C;&#x8C03;&#x7528;&#x5BF9;&#x5E94;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x5728;&#x7B2C;&#x4E8C;&#x6B21;&#x8F93;&#x51FA; <code>0x10001010</code> &#x7684;&#x503C;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53D1;&#x73B0;&#x4E0E;&#x7B2C;&#x4E00;&#x6B21;&#x7684;&#x503C;&#x4E0D;&#x76F8;&#x540C;&#x4E86;&#x3002;&#x53D8;&#x6210;&#x4E86; <code>7f ff 76 cc 98 c4</code>&#x3002;&#x8FD9;&#x4E2A;&#x5730;&#x5740;&#x5176;&#x5B9E;&#x5C31;&#x662F; <code>printf</code> &#x7684;&#x771F;&#x5B9E;&#x5730;&#x5740;&#x3002;&#x901A;&#x8FC7; <code>x</code> &#x547D;&#x4EE4;&#x53CA;&#x65B9;&#x6CD5;&#x540D;&#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;&#xFF1A;</p>
+<p><img src="../../image/15101394649922/15119461061753.jpg" alt=""></p>
+<p>&#x4E5F;&#x5C31;&#x662F;&#x8BF4; <code>__DATA.__la_symbol_ptr</code> &#x4E2D;&#x6307;&#x5411; <code>printf</code> &#x5730;&#x5740;&#x7684;&#x503C;&#x5DF2;&#x7ECF;&#x53D1;&#x751F;&#x4E86;&#x6539;&#x53D8;&#xFF0C;&#x5E76;&#x771F;&#x6B63;&#x7684;&#x6307;&#x5411;&#x4E86; <code>printf</code> &#x6307;&#x4EE4;&#x3002;</p>
+<h3 id="dynamic-symbol-table">Dynamic Symbol Table</h3>
+<p><strong>Dynamic Symbol Table</strong> &#x52A8;&#x6001;&#x7B26;&#x53F7;&#x8868;&#x662F;&#x7528;&#x6765;&#x52A0;&#x8F7D;&#x52A8;&#x6001;&#x5E93;&#x7684;&#x65F6;&#x5019;&#x5BFC;&#x51FA;&#x7684;&#x7B26;&#x53F7;&#x8868;&#xFF0C;&#x8BE5;&#x8868;&#x5728; dyld &#x65F6;&#x671F;&#x4F7F;&#x7528;&#xFF0C;&#x5E76;&#x4E14;&#x5728;&#x5BF9;&#x8C61;&#x88AB;&#x52A0;&#x8F7D;&#x7684;&#x65F6;&#x5019;&#x6620;&#x5C04;&#x5230;&#x8FDB;&#x7A0B;&#x7684;&#x5730;&#x5740;&#x7A7A;&#x95F4;&#x3002;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x8BF4; DST &#x662F;&#x7B26;&#x53F7;&#x8868;&#x7684;&#x5B50;&#x96C6;&#x3002;&#x5BF9;&#x4E8E; ELF &#x6765;&#x8BB2;&#xFF0C;DST &#x662F;&#x6709;&#x5176;&#x5B9A;&#x4E49;&#x7684;&#xFF1B;&#x4F46;&#x662F;&#x5BF9;&#x4E8E; Mach-O &#x6765;&#x8BF4;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A; DST &#x5C31;&#x662F; <strong>Symbol Stubs</strong>&#x3002;DST &#x548C; Mach-O &#x4E2D;&#x7684; <em>Indirect Addressing</em> &#x6709;&#x5F88;&#x5927;&#x7684;&#x5173;&#x8054;&#xFF0C;&#x8FD9;&#x91CC;&#x7ED9;&#x51FA; Apple &#x5BF9;&#x4E8E; <em>Indirect Addressing</em> &#x7684;[&#x5B98;&#x65B9;&#x6587;&#x6863;] (<a href="https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/MachOTopics/1-Articles/indirect_addressing.html)&#x3002;" target="_blank">https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/MachOTopics/1-Articles/indirect_addressing.html)&#x3002;</a></p>
+<p>&#x8FD9;&#x4E2A;&#x6587;&#x6863;&#x7684;&#x4E3B;&#x8981;&#x5185;&#x5BB9;&#x662F;&#x4ECB;&#x7ECD;&#x4E86; <em>Non-lazy symbol references</em>&#x3001;<em>Lazy symbol reference</em> &#x7684;&#x7279;&#x70B9;&#x548C;&#x533A;&#x522B;&#x3002;&#x5176;&#x4E2D; <em>Lazy symbol reference</em> &#x662F;&#x6307;&#x5728;&#x65B9;&#x6CD5;&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x8C03;&#x7528;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F1A;&#x6839;&#x636E; dyld &#x8FC7;&#x7A0B;&#x65F6;&#x52A0;&#x8F7D;&#x7684;&#x6620;&#x5C04;&#x5730;&#x5740;&#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF0C;&#x5B8C;&#x6210;&#x7ED1;&#x5B9A;&#x64CD;&#x4F5C;&#x3002;</p>
+<p><img src="../../image/15101394649922/15119572694685.jpg" alt=""></p>
+<p>&#x3010;&#x901A;&#x8FC7; MachOView &#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x67E5;&#x770B; <strong>Dynamic Symbol Table</strong> &#x4E2D;&#x7684;&#x6240;&#x6709; <em>Indirect Symbol</em>&#x3011;</p>
+<h2 id="&#x7406;&#x89E3;-fishhook">&#x7406;&#x89E3; fishhook</h2>
+<h3 id="&#x660E;&#x786E;&#x601D;&#x8DEF;">&#x660E;&#x786E;&#x601D;&#x8DEF;</h3>
+<p>&#x6839;&#x636E;&#x4E0A;&#x9762;&#x7684;&#x5B9E;&#x6218;&#x5185;&#x5BB9;&#xFF0C;&#x6211;&#x4EEC;&#x7406;&#x89E3;&#x4E86; Lazy Binding &#x8FD9;&#x4E2A;&#x8FC7;&#x7A0B;&#x3002;&#x53D7;&#x6B64;&#x542F;&#x53D1;&#xFF0C;&#x6211;&#x4EEC;&#x662F;&#x4E0D;&#x662F;&#x53EF;&#x4EE5;&#x91CD;&#x65B0;&#x7ED1;&#x5B9A; Mach-O &#x7684; Symbol &#x4ECE;&#x800C; hook &#x4E00;&#x4E9B; C &#x4E2D;&#x7684;&#x5E93;&#x51FD;&#x6570;&#x5462;&#xFF1F;&#x8FD9;&#x4E2A;&#x601D;&#x8DEF;&#x5728; <a href="https://github.com/facebook/fishhook" target="_blank">fishhook</a> &#x4E2D;&#x5DF2;&#x7ECF;&#x5B9E;&#x73B0;&#x3002;</p>
+<h3 id="&#x51C6;&#x5907;">&#x51C6;&#x5907;</h3>
+<p>&#x4E3A;&#x4E86;&#x7B80;&#x5316;&#x5206;&#x6790;&#x8FC7;&#x7A0B;&#xFF0C;&#x6211;&#x4EEC;&#x5F15;&#x5165;&#x4E86;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF0C;&#x4E4B;&#x540E;&#x7684;&#x5206;&#x6790;&#x90FD;&#x4F1A;&#x56F4;&#x7ED5;&#x7740;&#x8FD9;&#x4E2A;&#x4F8B;&#x5B50;&#x6765;&#x8FDB;&#x884C;&#x3002;&#x5B9E;&#x4F8B;&#x4EE3;&#x7801;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x5C31;&#x662F;&#x4FEE;&#x6539;&#x5E93;&#x51FD;&#x6570; <code>strlen</code>&#xFF0C;&#x8BA9;&#x5176;&#x59CB;&#x7EC8;&#x8FD4;&#x56DE; <code>666</code>&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;fishhook.h&quot;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-title">int</span> <span class="hljs-params">(*original_strlen)</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *_s)</span></span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">new_strlen</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *_s)</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-number">666</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> * argv[])</span> </span>{
+    <span class="hljs-keyword">struct</span> rebinding strlen_rebinding = { <span class="hljs-string">&quot;strlen&quot;</span>, new_strlen,
+        (<span class="hljs-keyword">void</span> *)&amp;original_strlen };
+    rebind_symbols((<span class="hljs-keyword">struct</span> rebinding[<span class="hljs-number">1</span>]){ strlen_rebinding }, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">char</span> *str = <span class="hljs-string">&quot;hellolazy&quot;</span>;
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, <span class="hljs-built_in">strlen</span>(str));
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x5728; <code>main</code> &#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x6784;&#x9020;&#x4E86;&#x4E00;&#x4E2A; <code>rebinding</code> &#x7ED3;&#x6784;&#x4F53;&#x5B9E;&#x4F8B;&#xFF0C;&#x4F7F;&#x7528;<strong>&#x539F;&#x65B9;&#x6CD5;&#x540D;</strong>&#x3001;<strong>&#x65B0;&#x65B9;&#x6CD5;&#x7684;&#x6307;&#x9488;</strong>&#x4EE5;&#x53CA;<strong>&#x4E00;&#x4E2A;&#x4E8C;&#x9636;&#x6307;&#x9488;</strong>&#xFF08;&#x540E;&#x9762;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4E86;&#x89E3;&#x5230;&#x8FD9;&#x91CC;&#x5B58;&#x50A8;&#x4E86; <code>__bss</code> &#x6BB5;&#x4E2D;&#x539F;&#x65B9;&#x6CD5;&#x7684;&#x5730;&#x5740;&#xFF09;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> rebinding {
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name;        <span class="hljs-comment">// &#x539F;&#x65B9;&#x6CD5;&#x540D;</span>
+    <span class="hljs-keyword">void</span> *replacement;        <span class="hljs-comment">// &#x65B0;&#x65B9;&#x6CD5;&#x7684;&#x4EE3;&#x7801;&#x6BB5;&#x9996;&#x5730;&#x5740;</span>
+    <span class="hljs-keyword">void</span> **replaced;        <span class="hljs-comment">// &#x65E7;&#x65B9;&#x6CD5;&#x7684;&#x6307;&#x9488;</span>
+};
+</code></pre>
+<p>&#x5728;&#x8DDF;&#x8E2A;&#x4EE3;&#x7801;&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x5148;&#x4F7F;&#x7528; <code>nm</code> &#x547D;&#x4EE4;&#x5BF9;&#x751F;&#x6210;&#x7684;&#x6267;&#x884C;&#x6587;&#x4EF6;&#x67E5;&#x770B; File &#x4E2D;&#x7684;&#x7B26;&#x53F7;&#x4FE1;&#x606F;&#xFF08; <code>-n</code> &#x53C2;&#x6570;&#x662F;&#x6839;&#x636E;&#x5DF2;&#x77E5;&#x5730;&#x5740;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-c">$ nm -n TestObjcProj
+                 U ___memcpy_chk
+                 U __dyld_get_image_header
+                 U __dyld_get_image_vmaddr_slide
+                 U __dyld_image_count
+                 U __dyld_register_func_for_add_image
+                 U _dladdr
+                 U _free
+                 U _malloc
+                 U _printf
+                 U _strcmp
+                 U _strlen
+                 U _strnlen
+                 U dyld_stub_binder
+<span class="hljs-number">0000000100000000</span> T __mh_execute_header
+<span class="hljs-number">0000000100000690</span> t _rebind_symbols_image
+<span class="hljs-number">00000001000006f</span>0 t _prepend_rebindings
+<span class="hljs-number">00000001000007</span>d0 t _rebind_symbols_for_image
+<span class="hljs-number">0000000100000</span>b00 t _rebind_symbols
+<span class="hljs-number">0000000100000</span>bc0 t __rebind_symbols_for_image
+<span class="hljs-number">0000000100000</span>bf0 t _perform_rebinding_with_section
+<span class="hljs-number">0000000100000e10</span> T _new_strlen
+<span class="hljs-number">0000000100000e20</span> T _main
+<span class="hljs-number">0000000100001090</span> b __rebindings_head
+<span class="hljs-number">0000000100001098</span> b _original_strlen
+</code></pre>
+<p>&#x8FD9;&#x91CC;&#x6BCF;&#x4E00;&#x884C;&#x4EE3;&#x8868;&#x4E00;&#x4E2A;&#x7B26;&#x53F7;&#xFF0C;&#x4E09;&#x5217;&#x503C;&#x5206;&#x522B;&#x4EE3;&#x8868;<strong>&#x5730;&#x5740;</strong>&#xFF0C;<strong>&#x7B26;&#x53F7;&#x8BF4;&#x660E;</strong> &#x548C; <strong>&#x7B26;&#x53F7;&#x540D;</strong>&#x3002;&#x5176;&#x4E2D;&#x7B26;&#x53F7;&#x8BF4;&#x660E;&#x4E3A;&#x4EE5;&#x4E0B;&#x89C4;&#x5219;&#xFF1A;</p>
+<ul>
+<li>&#x5C0F;&#x5199;&#x4EE3;&#x8868;&#x4F5C;&#x7528;&#x57DF;&#x4E3A; <em>Local</em>&#xFF0C;&#x5927;&#x5199;&#x4EE3;&#x8868;&#x7B26;&#x53F7;&#x662F; <em>Global(external)</em> &#x7684;&#x3002;</li>
+<li><code>A</code> - &#x7B26;&#x53F7;&#x503C;&#x662F;&#x7EDD;&#x5BF9;&#x7684;&#xFF0C;&#x5728;&#x94FE;&#x63A5;&#x8FC7;&#x7A0B;&#x4E2D;&#x4E0D;&#x5141;&#x8BB8;&#x5BF9;&#x5176;&#x6539;&#x53D8;&#xFF0C;&#x8FD9;&#x4E2A;&#x7B26;&#x53F7;&#x5E38;&#x5E38;&#x51FA;&#x73B0;&#x5728;<strong>&#x4E2D;&#x65AD;&#x5411;&#x91CF;&#x8868;</strong>&#x4E2D;&#x3002;</li>
+<li><code>B</code> - &#x7B26;&#x53F7;&#x503C;&#x51FA;&#x73B0;&#x5728;&#x5185;&#x5B58; <em>BSS</em> &#x6BB5;&#x3002;&#x4F8B;&#x5982;&#x5728;&#x67D0;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x4E2D;&#x5B9A;&#x4E49;&#x5168;&#x5C40;&#x7684; <em>static</em> &#x65B9;&#x6CD5; <code>static void test</code>&#xFF0C;&#x5219;&#x7B26;&#x53F7; <em>test</em> &#x7684;&#x7C7B;&#x578B;&#x4E3A; <code>b</code>&#xFF0C;&#x5207;&#x5B58;&#x50A8;&#x4E8E; <em>BSS</em> &#x4E2D;&#x3002;&#x5176;&#x503C;&#x4E3A;&#x8BE5;&#x7B26;&#x53F7;&#x5728; <em>BSS</em> &#x4E2D;&#x7684;&#x504F;&#x79FB;&#x3002;&#x4E00;&#x822C;&#x6765;&#x8BF4;&#xFF0C;<em>BSS</em> &#x5206;&#x914D;&#x5728; RAM &#x4E2D;&#x3002;</li>
+<li><code>C</code> - &#x79F0;&#x4E3A;<strong>Common Symbol</strong> <strong>&#x4E00;&#x822C;&#x7B26;&#x53F7;</strong>&#xFF0C;&#x662F;&#x4E3A;&#x521D;&#x59CB;&#x5316;&#x7684;&#x6570;&#x636E;&#x6BB5;&#x3002;&#x8BE5;&#x7B26;&#x53F7;&#x4E0D;&#x5305;&#x542B;&#x4E8E;&#x666E;&#x901A;&#x7684; Section &#x4E2D;&#x3002;&#x53EA;&#x6709;&#x5728;&#x94FE;&#x63A5;&#x8FC7;&#x7A0B;&#x624D;&#x4F1A;&#x8FDB;&#x884C;&#x5206;&#x914D;&#x3002;&#x7B26;&#x53F7;&#x7684;&#x503C;&#x4E3A;&#x6240;&#x9700;&#x8981;&#x7684;&#x5B57;&#x8282;&#x6570;&#x3002;</li>
+<li><code>D</code> - &#x79F0;&#x4E4B;&#x4E3A; <strong>Data Symbol</strong>&#x3002;&#x4F4D;&#x4E8E;&#x521D;&#x59CB;&#x5316;&#x6570;&#x636E;&#x6BB5;&#x4E2D;&#x3002;&#x4E00;&#x822C;&#x5206;&#x914D;&#x5230; <em>Data Section</em> &#x4E2D;&#x3002;&#x4F8B;&#x5982;&#x5168;&#x5C40;&#x7684; <code>int table[5] = {233, 123, 321, 132, 231};</code>&#xFF0C;&#x4F1A;&#x5206;&#x914D;&#x5230;&#x521D;&#x59CB;&#x5316;&#x6570;&#x636E;&#x6BB5;&#x4E2D;&#x3002;</li>
+<li><code>T</code> - &#x8BE5;&#x7B26;&#x53F7;&#x4F4D;&#x4E8E;&#x4EE3;&#x7801;&#x533A; <em>TS</em> &#x4E2D;&#x3002;</li>
+<li><code>U</code> - &#x8BF4;&#x660E;<strong>&#x5F53;&#x524D;&#x6587;&#x4EF6;&#x4E2D;&#x8BE5;&#x7B26;&#x53F7;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x8BE5;&#x7B26;&#x53F7;&#x7684;&#x5B9A;&#x4E49;&#x5728;&#x522B;&#x7684;&#x6587;&#x4EF6;&#x4E2D;</strong>&#x3002;</li>
+</ul>
+<p>&#x6211;&#x4EEC;&#x627E;&#x5230;&#x8FD9;&#x51E0;&#x4E2A;&#x4E0E; <code>strlen</code> &#x5148;&#x5173;&#x7684;&#x7B26;&#x53F7;&#xFF0C;&#x5148;&#x8BB0;&#x5F55;&#x4E0B;&#x6765;&#xFF1A;</p>
+<pre><code class="lang-c">                 U _strlen    <span class="hljs-meta"># &#x7CFB;&#x7EDF;&#x5E93;&#x65B9;&#x6CD5;&#xFF0C;dyld &#x52A8;&#x6001;&#x52A0;&#x8F7D;&#xFF0C;&#x6240;&#x4EE5;&#x672A;&#x5B9A;&#x4E49;</span>
+<span class="hljs-number">0000000100000e10</span> T _new_strlen  <span class="hljs-meta"># &#x81EA;&#x5B9A;&#x4E49;&#x65B9;&#x6CD5;&#xFF0C;&#x4F4D;&#x4E8E; Text Section</span>
+<span class="hljs-number">0000000100001098</span> b _original_strlen  <span class="hljs-meta">#</span>
+</code></pre>
+<p>&#x53E6;&#x5916;&#x6211;&#x4EEC;&#x8FD8;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x7684;&#x4E00;&#x4E9B;&#x57FA;&#x5730;&#x5740;&#x4FE1;&#x606F;&#x3002;&#x4F8B;&#x5982;&#xFF1A;<strong>Lazy Symbol Pointer Table</strong>(<code>__DATA.__la_symbol_ptr</code>)&#x3001;<strong>Indirect Symbol Table</strong>&#x3001;<strong>Symbol Table</strong>&#x3002;&#x8FD9;&#x4E9B;&#x5747;&#x80FD;&#x4ECE; <em>MachOView</em> &#x4E2D;&#x83B7;&#x5F97;&#x5230;&#x3002;</p>
+<p><img src="../../image/15101394649922/15133014200273.jpg" alt=""></p>
+<p>&#x83B7;&#x53D6;&#x5230; <code>__DATA.__la_symbol_ptr</code> &#x57FA;&#x5730;&#x5740;&#x4E3A; <code>0x100001010</code>&#x3002;</p>
+<p><img src="../../image/15101394649922/15133015712894.jpg" alt=""></p>
+<p>&#x8FD9;&#x91CC;&#x83B7;&#x53D6;&#x5230;&#x5728; <strong>Indirect Symbols</strong> &#x4E2D;&#xFF0C;<code>_strlen</code> &#x7B26;&#x53F7;&#x7684;&#x5730;&#x5740;&#x4E3A; <code>0x1000025f0</code>&#x3002;</p>
+<p><img src="../../image/15101394649922/15133019900468.jpg" alt=""></p>
+<p>&#x8FD9;&#x91CC;&#x53EF;&#x4EE5;&#x83B7;&#x53D6;&#x5230;&#x5728; <strong>Symbol Table</strong> &#x4E2D;&#x5BF9;&#x5E94;&#x7684;&#x7B26;&#x53F7;&#x4F4D;&#x7F6E; <code>0x100002560</code>&#xFF0C;&#x800C;&#x4E14;&#x5176;&#x4E2D;&#x8FD8;&#x80FD;&#x68C0;&#x7D22;&#x5230;&#x5728; <strong>String Table</strong> &#x4E2D;&#x5BF9;&#x5E94;&#x7684;&#x7B26;&#x53F7; <code>_strlen</code> &#x7684;&#x7B26;&#x53F7;&#x540D;&#x79F0;&#x3002;</p>
+<h3 id="&#x8C03;&#x8BD5;&#x4EE3;&#x7801;">&#x8C03;&#x8BD5;&#x4EE3;&#x7801;</h3>
+<p>&#x5728;&#x8FDB;&#x884C; hook &#x7684;&#x4EE3;&#x7801;&#x903B;&#x8F91;&#x4E2D;&#xFF0C;&#x5728;&#x58F0;&#x660E;&#x4E00;&#x4E2A; <code>strlen_rebinding</code> &#x5B9E;&#x4F8B;&#x4E4B;&#x540E;&#xFF0C;&#x9700;&#x8981;&#x624B;&#x52A8;&#x8C03;&#x7528;&#x65B9;&#x6CD5; <code>rebind_symbols</code> &#xFF0C;&#x5176;&#x4E2D;&#x9700;&#x8981;&#x4F20;&#x5165;&#x4E00;&#x4E2A; <code>rebinding</code> &#x6570;&#x7EC4;&#x7684;&#x5934;&#x5730;&#x5740;&#xFF0C;&#x4EE5;&#x53CA;&#x5176; <em>size</em>&#x3002;&#x4E0B;&#x9762;&#x6765;&#x770B;&#x4E00;&#x4E0B; <code>rebind_symbols</code> &#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __SIZE_TYPE__ long unsigned int</span>
+<span class="hljs-keyword">typedef</span> __SIZE_TYPE__ <span class="hljs-keyword">size_t</span>;
+<span class="hljs-comment">/**
+ * rebind_symbols
+ * struct rebinding rebindings[] - rebinding &#x7ED3;&#x6784;&#x4F53;&#x6570;&#x7EC4;
+ * size_t rebindings_nel - &#x6570;&#x7EC4;&#x957F;&#x5EA6;
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">rebind_symbols</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> rebinding rebindings[], size_t rebindings_nel)</span> </span>{
+    <span class="hljs-comment">// &#x7EF4;&#x62A4;&#x4E00;&#x4E2A; rebindings_entry &#x7684;&#x7ED3;&#x6784;</span>
+    <span class="hljs-comment">// &#x5C06; rebinding &#x7684;&#x591A;&#x4E2A;&#x5B9E;&#x4F8B;&#x7EC4;&#x7EC7;&#x6210;&#x4E00;&#x4E2A;&#x94FE;&#x8868;</span>
+    <span class="hljs-keyword">int</span> retval = prepend_rebindings(&amp;_rebindings_head, rebindings, rebindings_nel);
+    <span class="hljs-comment">// &#x5224;&#x65AD;&#x662F;&#x5426; malloc &#x5931;&#x8D25;&#xFF0C;&#x5931;&#x8D25;&#x4F1A;&#x8FD4;&#x56DE; -1</span>
+    <span class="hljs-keyword">if</span> (retval &lt; <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">return</span> retval;
+    }
+    <span class="hljs-comment">// _rebindings_head -&gt; next &#x662F;&#x7B2C;&#x4E00;&#x6B21;&#x8C03;&#x7528;&#x7684;&#x6807;&#x5FD7;&#x7B26;&#xFF0C;NULL &#x5219;&#x4EE3;&#x8868;&#x7B2C;&#x4E00;&#x6B21;&#x8C03;&#x7528;</span>
+    <span class="hljs-keyword">if</span> (!_rebindings_head-&gt;next) {
+        <span class="hljs-comment">// &#x7B2C;&#x4E00;&#x6B21;&#x8C03;&#x7528;&#xFF0C;&#x5C06; _rebind_symbols_for_image &#x6CE8;&#x518C;&#x4E3A;&#x56DE;&#x8C03;</span>
+        _dyld_register_func_for_add_image(_rebind_symbols_for_image);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// &#x5148;&#x83B7;&#x53D6; dyld &#x955C;&#x50CF;&#x6570;&#x91CF;</span>
+        <span class="hljs-keyword">uint32_t</span> c = _dyld_image_count();
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">uint32_t</span> i = <span class="hljs-number">0</span>; i &lt; c; i++) {
+            <span class="hljs-comment">// &#x6839;&#x636E;&#x4E0B;&#x6807;&#x4F9D;&#x6B21;&#x8FDB;&#x884C;&#x91CD;&#x7ED1;&#x5B9A;&#x8FC7;&#x7A0B;</span>
+            _rebind_symbols_for_image(_dyld_get_image_header(i), _dyld_get_image_vmaddr_slide(i));
+        }
+    }
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;&#x72B6;&#x6001;&#x503C;</span>
+    <span class="hljs-keyword">return</span> retval;
+}
+</code></pre>
+<p>&#x4E3A;&#x4E86;<strong>&#x5C06;&#x591A;&#x6B21;&#x7ED1;&#x5B9A;&#x65F6;&#x7684;&#x591A;&#x4E2A;&#x7B26;&#x53F7;</strong>&#x7EC4;&#x7EC7;&#x6210;&#x4E00;&#x4E2A;&#x94FE;&#x5F0F;&#x7ED3;&#x6784;&#xFF0C;<em>fishhook</em> &#x81EA;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x4E2A;&#x94FE;&#x8868;&#x7ED3;&#x6784;&#x6765;&#x7EC4;&#x7EC7;&#x8FD9;&#x4E2A;&#x903B;&#x8F91;&#xFF0C;&#x5176;&#x4E2D;&#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> rebindings_entry {
+    <span class="hljs-keyword">struct</span> rebinding *rebindings; <span class="hljs-comment">// rebinding &#x6570;&#x7EC4;&#x5B9E;&#x4F8B;</span>
+    <span class="hljs-keyword">size_t</span> rebindings_nel; <span class="hljs-comment">// &#x5143;&#x7D20;&#x6570;&#x91CF;</span>
+    <span class="hljs-keyword">struct</span> rebindings_entry *next; <span class="hljs-comment">// &#x94FE;&#x8868;&#x7D22;&#x5F15;</span>
+};
+
+<span class="hljs-comment">// &#x5168;&#x5C40;&#x91CF;&#xFF0C;&#x76F4;&#x63A5;&#x62FF;&#x51FA;&#x8868;&#x5934;</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> rebindings_entry *_rebindings_head;
+</code></pre>
+<p>&#x5728; <code>prepend_rebindings</code> &#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;<em>fishhook</em> &#x4F1A;&#x7EF4;&#x62A4;&#x8FD9;&#x4E2A;&#x7ED3;&#x6784;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-comment">/**
+ * prepend_rebindings &#x7528;&#x4E8E; rebindings_entry &#x7ED3;&#x6784;&#x7684;&#x7EF4;&#x62A4;
+ * struct rebindings_entry **rebindings_head - &#x5BF9;&#x5E94;&#x7684;&#x662F; static &#x7684; _rebindings_head
+ * struct rebinding rebindings[] - &#x4F20;&#x5165;&#x7684;&#x65B9;&#x6CD5;&#x7B26;&#x53F7;&#x6570;&#x7EC4;
+ * size_t nel - &#x6570;&#x7EC4;&#x5BF9;&#x5E94;&#x7684;&#x5143;&#x7D20;&#x6570;&#x91CF;
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">prepend_rebindings</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> rebindings_entry **rebindings_head,
+                              <span class="hljs-keyword">struct</span> rebinding rebindings[],
+                              size_t nel)</span> </span>{
+    <span class="hljs-comment">// &#x58F0;&#x660E; rebindings_entry &#x4E00;&#x4E2A;&#x6307;&#x9488;&#xFF0C;&#x5E76;&#x4E3A;&#x5176;&#x5206;&#x914D;&#x7A7A;&#x95F4;</span>
+    <span class="hljs-keyword">struct</span> rebindings_entry *new_entry = (<span class="hljs-keyword">struct</span> rebindings_entry *) <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> rebindings_entry));
+    <span class="hljs-comment">// &#x5206;&#x914D;&#x7A7A;&#x95F4;&#x5931;&#x8D25;&#x7684;&#x5BB9;&#x9519;&#x5904;&#x7406;</span>
+    <span class="hljs-keyword">if</span> (!new_entry) {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    }
+    <span class="hljs-comment">// &#x4E3A;&#x94FE;&#x8868;&#x4E2D;&#x5143;&#x7D20;&#x7684; rebindings &#x5B9E;&#x4F8B;&#x5206;&#x914D;&#x6307;&#x5B9A;&#x7A7A;&#x95F4;</span>
+    new_entry-&gt;rebindings = (<span class="hljs-keyword">struct</span> rebinding *) <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> rebinding) * nel);
+    <span class="hljs-comment">// &#x5206;&#x914D;&#x7A7A;&#x95F4;&#x5931;&#x8D25;&#x7684;&#x5BB9;&#x9519;&#x5904;&#x7406;</span>
+    <span class="hljs-keyword">if</span> (!new_entry-&gt;rebindings) {
+        <span class="hljs-built_in">free</span>(new_entry);
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    }
+    <span class="hljs-comment">// &#x5C06; rebindings &#x6570;&#x7EC4;&#x4E2D; copy &#x5230; new_entry -&gt; rebingdings &#x6210;&#x5458;&#x4E2D;</span>
+    <span class="hljs-built_in">memcpy</span>(new_entry-&gt;rebindings, rebindings, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> rebinding) * nel);
+    <span class="hljs-comment">// &#x4E3A; new_entry -&gt; rebindings_nel &#x8D4B;&#x503C;</span>
+    new_entry-&gt;rebindings_nel = nel;
+    <span class="hljs-comment">// &#x4E3A; new_entry -&gt; newx &#x8D4B;&#x503C;&#xFF0C;&#x7EF4;&#x62A4;&#x94FE;&#x8868;&#x7ED3;&#x6784;</span>
+    new_entry-&gt;next = *rebindings_head;
+    <span class="hljs-comment">// &#x79FB;&#x52A8; head &#x6307;&#x9488;&#xFF0C;&#x6307;&#x5411;&#x8868;&#x5934;</span>
+    *rebindings_head = new_entry;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E4B;&#x540E;&#x8FD9;&#x4E00;&#x90E8;&#x5206;&#x7684;&#x7ED3;&#x6784;&#x5C06;&#x4F1A;&#x6301;&#x7EED;&#x88AB;&#x7EF4;&#x62A4;&#xFF0C;&#x7528;&#x56FE;&#x793A;&#x6765;&#x8BF4;&#x660E;&#x4E00;&#x4E0B;&#xFF1A;</p>
+<p><img src="../../image/15101394649922/15133214554985.jpg" alt=""></p>
+<p>&#x5728;&#x6267;&#x884C;&#x5B8C;&#x94FE;&#x8868;&#x7684;&#x521D;&#x59CB;&#x5316;&#x53CA;&#x7ED3;&#x6784;&#x7EF4;&#x62A4;&#x7684; <code>prepend_rebindings</code> &#x65B9;&#x6CD5;&#xFF0C;&#x7EE7;&#x7EED;&#x6267;&#x884C;&#x3002;&#x7531;&#x4E8E;&#x6211;&#x4EEC;&#x7684; <code>strlen</code> &#x662F; dyld &#x52A0;&#x8F7D;&#x7684;&#x7CFB;&#x7EDF;&#x5E93;&#x65B9;&#x6CD5;&#xFF0C;&#x6240;&#x4EE5; <code>_rebindings_head -&gt; next</code> &#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x8C03;&#x7528;&#x7684;&#x65F6;&#x5019;&#x4E3A;&#x7A7A;&#xFF0C;&#x56E0;&#x4E3A;&#x6CA1;&#x6709;&#x505A;&#x8FC7;&#x66FF;&#x6362;&#x7B26;&#x53F7;&#xFF0C;&#x6240;&#x4EE5;&#x4F1A;&#x8C03;&#x7528; <code>_dyld_register_func_for_add_image</code> &#x6765;&#x6CE8;&#x518C; <code>_rebind_symbols_for_image</code> &#x65B9;&#x6CD5;&#xFF0C;&#x4E4B;&#x540E;&#x7A0B;&#x5E8F;&#x6BCF;&#x6B21;&#x52A0;&#x8F7D;&#x52A8;&#x6001;&#x5E93;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x90FD;&#x4F1A;&#x53BB;&#x8C03;&#x7528;&#x8BE5;&#x65B9;&#x6CD5;&#x3002;&#x5982;&#x679C;&#x4E0D;&#x662F;&#x7B2C;&#x4E00;&#x6B21;&#x66FF;&#x6362;&#x7B26;&#x53F7;&#xFF0C;&#x5219;<strong>&#x904D;&#x5386;&#x5DF2;&#x7ECF;&#x52A0;&#x8F7D;&#x7684;&#x52A8;&#x6001;&#x5E93;</strong>&#x3002;</p>
+<p>&#x8FD9;&#x4E00;&#x5757;&#x7684;&#x6D41;&#x7A0B;&#x4E5F;&#x662F; <em>fishhook</em> &#x4EE3;&#x7801;&#x7684;&#x7CBE;&#x9AD3;&#x90E8;&#x5206;&#xFF0C;&#x9010;&#x4E00;&#x6765;&#x5206;&#x6790;&#x8FD9;&#x4E9B;&#x5730;&#x65B9;&#x3002;</p>
+<h4 id="dyldregisterfuncforaddimage-&#x662F;&#x4EC0;&#x4E48;&#xFF1F;"><code>_dyld_register_func_for_add_image</code> &#x662F;&#x4EC0;&#x4E48;&#xFF1F;</h4>
+<p>&#x8FD9;&#x91CC;&#x7B14;&#x8005;&#x67E5;&#x770B;&#x4E86; Apple &#x5B98;&#x65B9;&#x7684; <code>dyld.h</code> &#x5934;&#x6587;&#x4EF6;&#xFF0C;&#x5176;&#x4E2D;&#x5BF9;&#x4E8E; <code>_dyld_register_func_for_add_image</code> &#x6709;&#x8F83;&#x4E3A;&#x8BE6;&#x7EC6;&#x7684;&#x8BF4;&#x660E;&#xFF08;<a href="https://opensource.apple.com/source/dyld/dyld-433.5/include/mach-o/dyld.h.auto.html" target="_blank">dyld.h</a>&#xFF09;&#xFF1A;</p>
+<blockquote>
+<p>The following functions allow you to install callbacks which will be called by dyld whenever an image is loaded or unloaded.  During a call to _dyld_register_func_for_add_image() the callback func is called for every existing image.  Later, it is called as each new image is loaded and bound (but initializers not yet run).  The callback registered with _dyld_register_func_for_remove_image() is called after any terminators in an image are run and before the image is un-memory-mapped.</p>
+</blockquote>
+<p><code>_dyld_register_func_for_add_image</code> &#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x5F53;&#x955C;&#x50CF; <em>Image</em> &#x88AB; <em>load</em> &#x6216;&#x662F; <em>unload</em> &#x7684;&#x65F6;&#x5019;&#x90FD;&#x4F1A;&#x7531; dyld &#x4E3B;&#x52A8;&#x8C03;&#x7528;&#x3002;&#x5F53;&#x8BE5;&#x65B9;&#x6CD5;&#x88AB;&#x89E6;&#x53D1;&#x65F6;&#xFF0C;&#x4F1A;&#x4E3A;&#x6BCF;&#x4E2A;&#x955C;&#x50CF;&#x89E6;&#x53D1;&#x5176;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x3002;&#x4E4B;&#x540E;&#x5219;&#x5C06;&#x5176;&#x955C;&#x50CF;&#x4E0E;&#x5176;&#x56DE;&#x7535;&#x51FD;&#x6570;&#x8FDB;&#x884C;&#x7ED1;&#x5B9A;&#xFF08;&#x4F46;&#x662F;&#x672A;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#xFF09;&#x3002;&#x4F7F;&#x7528; <code>_dyld_register_func_for_add_image</code> &#x6CE8;&#x518C;&#x7684;&#x56DE;&#x8C03;&#x5C06;&#x5728;&#x955C;&#x50CF;&#x4E2D;&#x7684; terminators &#x542F;&#x52A8;&#x540E;&#x88AB;&#x8C03;&#x7528;&#x3002;</p>
+<h4 id="&#x4E3A;&#x4EC0;&#x4E48;&#x4F20;&#x5165;&#x7684;-rebindsymbolsforimage-&#x4F5C;&#x4E3A;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x5462;&#xFF1F;">&#x4E3A;&#x4EC0;&#x4E48;&#x4F20;&#x5165;&#x7684; <code>_rebind_symbols_for_image</code> &#x4F5C;&#x4E3A;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x5462;&#xFF1F;</h4>
+<pre><code class="lang-c"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> _dyld_register_func_for_add_image(<span class="hljs-keyword">void</span> (*func)(<span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> mach_header* mh, <span class="hljs-keyword">intptr_t</span> vmaddr_slide))    __OSX_AVAILABLE_STARTING(__MAC_10_1, __IPHONE_2_0);
+<span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> _dyld_register_func_for_remove_image(<span class="hljs-keyword">void</span> (*func)(<span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> mach_header* mh, <span class="hljs-keyword">intptr_t</span> vmaddr_slide)) __OSX_AVAILABLE_STARTING(__MAC_10_1, __IPHONE_2_0);
+</code></pre>
+<p><code>extern</code> &#x5173;&#x952E;&#x5B57;&#x6765;&#x544A;&#x77E5;&#x7F16;&#x8BD1;&#x5668;<strong>&#x5F53;&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8BF7;&#x5728;&#x5176;&#x4ED6;&#x6A21;&#x5757;&#x4E2D;&#x5BFB;&#x627E;&#x8BE5;&#x65B9;&#x6CD5;&#x5B9A;&#x4E49;</strong>&#x3002;&#x5E76;&#x4E14;&#x5728;&#x8FD9;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#x7684;&#x58F0;&#x660E;&#x4E2D;&#xFF0C;&#x6240;&#x6CE8;&#x518C;&#x65B9;&#x6CD5;&#x7684;&#x53C2;&#x6570;&#x5217;&#x8868;&#x4E00;&#x5B9A;&#x662F; <code>(const struct mach_header* mh, intptr_t vmaddr_slide)</code>&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-comment">/**
+ * _rebind_symbols_for_image &#x662F; rebind_symbols_for_image &#x7684;&#x4E00;&#x4E2A;&#x5165;&#x53E3;&#x65B9;&#x6CD5;
+ * &#x8FD9;&#x4E2A;&#x5165;&#x53E3;&#x65B9;&#x6CD5;&#x5B58;&#x5728;&#x7684;&#x610F;&#x4E49;&#x662F;&#x6EE1;&#x8DB3; _dyld_register_func_for_add_image &#x4F20;&#x5165;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x7684;&#x683C;&#x5F0F;
+ * header - Mach-O &#x5934;
+ * slide - intptr_t &#x6301;&#x6709;&#x6307;&#x9488;
+ */</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> _rebind_symbols_for_image(<span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> mach_header *header,
+                                      <span class="hljs-keyword">intptr_t</span> slide) {
+    <span class="hljs-comment">// &#x5916;&#x5C42;&#x662F;&#x4E00;&#x4E2A;&#x5165;&#x53E3;&#x51FD;&#x6570;&#xFF0C;&#x610F;&#x5728;&#x8C03;&#x7528;&#x6709;&#x6548;&#x7684;&#x65B9;&#x6CD5; rebind_symbols_for_image</span>
+    rebind_symbols_for_image(_rebindings_head, header, slide);
+}
+</code></pre>
+<p>&#x770B;&#x5230; <code>_rebind_symbols_for_image</code> &#x662F;&#x4E2A;&#x5165;&#x53E3;&#xFF0C;&#x6211;&#x4EEC;&#x7684;&#x95EE;&#x9898;&#x4E5F;&#x5C31;&#x8FCE;&#x5203;&#x800C;&#x89E3;&#x4E86;&#x3002;&#x6DFB;&#x52A0;&#x8FD9;&#x4E2A;&#x5165;&#x53E3;&#x65B9;&#x6CD5;&#x5176;&#x5B9E;&#x662F;&#x4E3A;&#x4E86;&#x9002;&#x5E94;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7684;&#x53C2;&#x6570;&#x683C;&#x5F0F;&#xFF0C;&#x4F46;&#x662F;&#x771F;&#x6B63;&#x8C03;&#x7528;&#x7684; <code>rebind_symbols_for_image</code> &#x6240;&#x9700;&#x8981;&#x7684;&#x53C2;&#x6570;&#x4E0D;&#x6EE1;&#x8DB3;&#x5176;&#x65B9;&#x6CD5;&#x7684;&#x63CF;&#x8FF0;&#x3002;</p>
+<h4 id="intptrt-&#x662F;&#x4EC0;&#x4E48;&#x7C7B;&#x578B;&#xFF1F;"><code>intptr_t</code> &#x662F;&#x4EC0;&#x4E48;&#x7C7B;&#x578B;&#xFF1F;</h4>
+<p>&#x81F3;&#x4E8E; <code>intptr_t</code>&#xFF0C;&#x7B14;&#x8005;&#x5728;&#x4E4B;&#x524D;&#x9605;&#x8BFB; <a href="https://book.douban.com/subject/25827246/" target="_blank"><em>Understanding and using C pointers</em></a> &#x65F6;&#x89C1;&#x8FC7;&#x3002;&#x4E0B;&#x9762;&#x4E3A;&#x5F15;&#x7528;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-comment">/// /usr/include/stdint.h</span>
+
+<span class="hljs-comment">/* Types for `void *&apos; pointers. */</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> __WORDSIZE == 64</span>
+<span class="hljs-meta"># <span class="hljs-meta-keyword">ifndef</span> __intptr_t_defined</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> <span class="hljs-keyword">intptr_t</span>;
+<span class="hljs-meta"># <span class="hljs-meta-keyword">define</span> __intptr_t_defined</span>
+<span class="hljs-meta"># <span class="hljs-meta-keyword">endif</span></span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> <span class="hljs-keyword">uintptr_t</span>;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span>
+<span class="hljs-meta"># <span class="hljs-meta-keyword">ifndef</span> __intptr_t_defined</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">int</span> <span class="hljs-keyword">intptr_t</span>;
+<span class="hljs-meta"># <span class="hljs-meta-keyword">define</span> __intptr_t_defined</span>
+<span class="hljs-meta"># <span class="hljs-meta-keyword">endif</span></span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> <span class="hljs-keyword">uintptr_t</span>;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+</code></pre>
+<blockquote>
+<p><code>intptr_t</code> &#x548C; <code>uintptr_t</code> &#x8FD9;&#x4E24;&#x79CD;&#x7C7B;&#x578B;&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#x6307;&#x9488;&#x5730;&#x5740;&#x3002;&#x4ECE;&#x5B57;&#x9762;&#x4E0A;&#x770B;&#xFF0C;<code>intptr_t</code> &#x50CF;&#x662F;&#x4E00;&#x4E2A;&#x6574;&#x578B;&#x6307;&#x9488;&#x7C7B;&#x578B;&#xFF0C;&#x800C;&#x4E14;&#x5728; <code>stdint.h</code> &#x7684;&#x6CE8;&#x91CA;&#x4E2D;&#x4E5F;&#x53EF;&#x4EE5;&#x770B;&#x5230; <em>Types for void </em>pointers<em> &#x7684;&#x63CF;&#x8FF0;&#xFF0C;&#x4F46;&#x6211;&#x4EEC;&#x770B;&#x5230;&#x5B9E;&#x9645;&#x4E0A; <code>intptr_t</code> &#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x6574;&#x6570;&#xFF0C;&#x5728; 64 &#x4F4D;&#x5E73;&#x53F0;&#x4E2D;&#x5B9A;&#x4E49;&#x4E3A; <code>long int</code>&#xFF0C;&#x5426;&#x5219;&#x5B9A;&#x4E49;&#x4E3A; <code>int</code>&#x3002;&#x6211;&#x4EEC;&#x77E5;&#x9053; C &#x8BED;&#x8A00;&#x7684;&#x6307;&#x9488;&#x5B9E;&#x9645;&#x4E0A;&#x5C31;&#x662F;&#x53D8;&#x91CF;&#x7684;&#x5730;&#x5740;&#xFF0C;&#x5728; 64 &#x4F4D;&#x5E73;&#x53F0;&#x4E0A;&#x6307;&#x9488;&#x4E3A; 8 &#x5B57;&#x8282;&#xFF0C;&#x5728; 32 &#x4F4D;&#x5E73;&#x53F0;&#x4E0A;&#x6307;&#x9488;&#x4E3A; 4 &#x5B57;&#x8282;&#xFF0C;&#x800C; <code>intptr_t</code> &#x521A;&#x597D;&#x662F;&#x548C;&#x8FD9;&#x4E2A;&#x5B57;&#x8282;&#x6570;&#x5BF9;&#x5E94;&#xFF0C;&#x4F7F;&#x7528;&#x5B83;&#x53EF;&#x4EE5;&#x5B89;&#x5168;&#x5730;&#x8FDB;&#x884C;&#x6574;&#x6570;&#x4E0E;&#x6307;&#x9488;&#x7684;&#x8F6C;&#x6362;&#x8FD0;&#x7B97;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x5F53;&#x9700;&#x8981;&#x5C06;&#x6307;&#x9488;&#x4F5C;&#x4E3A;&#x6574;&#x6570;&#x8FD0;&#x7B97;&#x65F6;&#xFF0C;&#x5C06;&#x5B83;&#x8F6C;&#x6362;&#x6210; <code>intptr_t</code> &#x8FDB;&#x884C;&#x8FD0;&#x7B97;&#x624D;&#x662F;&#x5B89;&#x5168;&#x7684;&#x3002;<em>*&#x4F7F;&#x7528; <code>int</code> &#x65F6;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>intptr_t</code> &#x6765;&#x4FDD;&#x8BC1;&#x5E73;&#x53F0;&#x7684;&#x901A;&#x7528;&#x6027;&#xFF0C;&#x5B83;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x5E73;&#x53F0;&#x4E0A;&#x7F16;&#x8BD1;&#x65F6;&#x957F;&#x5EA6;&#x4E0D;&#x540C;&#xFF0C;&#x4F46;&#x90FD;&#x662F;&#x6807;&#x51C6;&#x7684;&#x5E73;&#x53F0;&#x5B57;&#x957F;</em></em>&#x3002;</p>
+</blockquote>
+<p>&#x7B80;&#x800C;&#x8A00;&#x4E4B;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x6807;&#x51C6;&#x5B57;&#x957F;&#x7684;&#x5B58;&#x50A8;&#x91CF;&#xFF0C;&#x7528;&#x6765;&#x4EE3;&#x8868;&#x65B9;&#x6CD5;&#x5730;&#x5740;&#x7684;&#x504F;&#x79FB;&#x91CF;&#x3002;</p>
+<h3 id="&#x91CD;&#x7ED1;&#x5B9A;&#x5BFB;&#x5740;---&#x57FA;&#x5740;&#x51C6;&#x5907;&#x8FC7;&#x7A0B;">&#x91CD;&#x7ED1;&#x5B9A;&#x5BFB;&#x5740; - &#x57FA;&#x5740;&#x51C6;&#x5907;&#x8FC7;&#x7A0B;</h3>
+<p><code>rebind_symbols_for_image</code> &#x65B9;&#x6CD5;&#x63CF;&#x8FF0;&#x7684;&#x4E5F;&#x5C31;&#x662F;&#x6574;&#x4E2A; <em>fishhook</em> &#x7CBE;&#x534E;&#x6240;&#x5728; - <strong>&#x91CD;&#x7ED1;&#x5B9A;&#x7B26;&#x53F7;&#x8FC7;&#x7A0B;</strong>&#x3002;&#x7EE7;&#x7EED;&#x8DDF;&#x8E2A;&#x4EE3;&#x7801;&#x6765;&#x7406;&#x89E3;&#x6BCF;&#x4E00;&#x884C;&#x7684;&#x610F;&#x56FE;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">rebind_symbols_for_image</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> rebindings_entry *rebindings,
+                                     <span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> mach_header *header,
+                                     intptr_t slide)</span> </span>{
+    Dl_info info;
+    <span class="hljs-keyword">if</span> (dladdr(header, &amp;info) == <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-comment">// &#x58F0;&#x660E;&#x51E0;&#x4E2A;&#x67E5;&#x627E;&#x91CF;:</span>
+    <span class="hljs-comment">// linkedit_segment, symtab_command, dysymtab_command</span>
+    <span class="hljs-keyword">segment_command_t</span> *cur_seg_cmd;
+    <span class="hljs-keyword">segment_command_t</span> *linkedit_segment = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">struct</span> symtab_command* symtab_cmd = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">struct</span> dysymtab_command* dysymtab_cmd = <span class="hljs-literal">NULL</span>;
+
+    <span class="hljs-comment">// &#x521D;&#x59CB;&#x5316;&#x6E38;&#x6807;</span>
+    <span class="hljs-comment">// header = 0x100000000 - &#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x57FA;&#x5740;&#x9ED8;&#x8BA4;&#x504F;&#x79FB;</span>
+    <span class="hljs-comment">// sizeof(mach_header_t) = 0x20 - Mach-O Header &#x90E8;&#x5206;</span>
+    <span class="hljs-comment">// &#x9996;&#x5148;&#x9700;&#x8981;&#x8DF3;&#x8FC7; Mach-O Header</span>
+    <span class="hljs-keyword">uintptr_t</span> cur = (<span class="hljs-keyword">uintptr_t</span>)header + <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">mach_header_t</span>);
+    <span class="hljs-comment">// &#x904D;&#x5386;&#x6BCF;&#x4E00;&#x4E2A; Load Command&#xFF0C;&#x6E38;&#x6807;&#x6BCF;&#x4E00;&#x6B21;&#x504F;&#x79FB;&#x6BCF;&#x4E2A;&#x547D;&#x4EE4;&#x7684; Command Size &#x5927;&#x5C0F;</span>
+    <span class="hljs-comment">// header -&gt; ncmds: Load Command &#x52A0;&#x8F7D;&#x547D;&#x4EE4;&#x6570;&#x91CF;</span>
+    <span class="hljs-comment">// cur_seg_cmd -&gt; cmdsize: Load &#x5927;&#x5C0F;</span>
+    <span class="hljs-keyword">for</span> (uint i = <span class="hljs-number">0</span>; i &lt; header-&gt;ncmds; i++, cur += cur_seg_cmd-&gt;cmdsize) {
+        <span class="hljs-comment">// &#x53D6;&#x51FA;&#x5F53;&#x524D;&#x7684; Load Command</span>
+        cur_seg_cmd = (<span class="hljs-keyword">segment_command_t</span> *)cur;
+        <span class="hljs-comment">// Load Command &#x7684;&#x7C7B;&#x578B;&#x662F; LC_SEGMENT</span>
+        <span class="hljs-keyword">if</span> (cur_seg_cmd-&gt;cmd == LC_SEGMENT_ARCH_DEPENDENT) {
+            <span class="hljs-comment">// &#x6BD4;&#x5BF9;&#x4E00;&#x4E0B; Load Command &#x7684; name &#x662F;&#x5426;&#x4E3A; __LINKEDIT</span>
+            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(cur_seg_cmd-&gt;segname, SEG_LINKEDIT) == <span class="hljs-number">0</span>) {
+                <span class="hljs-comment">// &#x68C0;&#x7D22;&#x5230; __LINKEDIT</span>
+                linkedit_segment = cur_seg_cmd;
+            }
+        }
+        <span class="hljs-comment">// &#x5224;&#x65AD;&#x5F53;&#x524D; Load Command &#x662F;&#x5426;&#x662F; LC_SYMTAB &#x7C7B;&#x578B;</span>
+        <span class="hljs-comment">// LC_SEGMENT - &#x4EE3;&#x8868;&#x5F53;&#x524D;&#x533A;&#x57DF;&#x94FE;&#x63A5;&#x5668;&#x4FE1;&#x606F;</span>
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cur_seg_cmd-&gt;cmd == LC_SYMTAB) {
+            <span class="hljs-comment">// &#x68C0;&#x7D22;&#x5230; LC_SYMTAB</span>
+            symtab_cmd = (<span class="hljs-keyword">struct</span> symtab_command*)cur_seg_cmd;
+        }
+        <span class="hljs-comment">// &#x5224;&#x65AD;&#x5F53;&#x524D; Load Command &#x662F;&#x5426;&#x662F; LC_DYSYMTAB &#x7C7B;&#x578B;</span>
+        <span class="hljs-comment">// LC_DYSYMTAB - &#x4EE3;&#x8868;&#x52A8;&#x6001;&#x94FE;&#x63A5;&#x5668;&#x4FE1;&#x606F;&#x533A;&#x57DF;</span>
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cur_seg_cmd-&gt;cmd == LC_DYSYMTAB) {
+            <span class="hljs-comment">// &#x68C0;&#x7D22;&#x5230; LC_DYSYMTAB</span>
+            dysymtab_cmd = (<span class="hljs-keyword">struct</span> dysymtab_command*)cur_seg_cmd;
+        }
+    }
+
+    <span class="hljs-comment">// &#x5BB9;&#x9519;&#x5904;&#x7406;</span>
+    <span class="hljs-keyword">if</span> (!symtab_cmd || !dysymtab_cmd || !linkedit_segment ||
+        !dysymtab_cmd-&gt;nindirectsyms) {
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-comment">// slide: ASLR &#x504F;&#x79FB;&#x91CF;</span>
+    <span class="hljs-comment">// vmaddr: SEG_LINKEDIT &#x7684;&#x865A;&#x62DF;&#x5730;&#x5740;</span>
+    <span class="hljs-comment">// fileoff: SEG_LINKEDIT &#x5730;&#x5740;&#x504F;&#x79FB;</span>
+    <span class="hljs-comment">// &#x5F0F;&#x2460;&#xFF1A;base = SEG_LINKEDIT&#x771F;&#x5B9E;&#x5730;&#x5740; - SEG_LINKEDIT&#x5730;&#x5740;&#x504F;&#x79FB;</span>
+    <span class="hljs-comment">// &#x5F0F;&#x2461;&#xFF1A;SEG_LINKEDIT&#x771F;&#x5B9E;&#x5730;&#x5740; = SEG_LINKEDIT&#x865A;&#x62DF;&#x5730;&#x5740; + ASLR&#x504F;&#x79FB;&#x91CF;</span>
+    <span class="hljs-comment">// &#x5C06;&#x2461;&#x4EE3;&#x5165;&#x2460;&#xFF1A;Base = SEG_LINKEDIT&#x865A;&#x62DF;&#x5730;&#x5740; + ASLR&#x504F;&#x79FB;&#x91CF; - SEG_LINKEDIT&#x5730;&#x5740;&#x504F;&#x79FB;</span>
+    <span class="hljs-keyword">uintptr_t</span> linkedit_base = (<span class="hljs-keyword">uintptr_t</span>)slide + linkedit_segment-&gt;vmaddr - linkedit_segment-&gt;fileoff;
+    <span class="hljs-comment">// &#x901A;&#x8FC7; base + symtab &#x7684;&#x504F;&#x79FB;&#x91CF; &#x8BA1;&#x7B97; symtab &#x8868;&#x7684;&#x9996;&#x5730;&#x5740;&#xFF0C;&#x5E76;&#x83B7;&#x53D6; nlist_t &#x7ED3;&#x6784;&#x4F53;&#x5B9E;&#x4F8B;</span>
+    <span class="hljs-keyword">nlist_t</span> *symtab = (<span class="hljs-keyword">nlist_t</span> *)(linkedit_base + symtab_cmd-&gt;symoff);
+    <span class="hljs-comment">// &#x901A;&#x8FC7; base + stroff &#x5B57;&#x7B26;&#x8868;&#x504F;&#x79FB;&#x91CF;&#x8BA1;&#x7B97;&#x5B57;&#x7B26;&#x8868;&#x4E2D;&#x7684;&#x9996;&#x5730;&#x5740;&#xFF0C;&#x83B7;&#x53D6;&#x5B57;&#x7B26;&#x4E32;&#x8868;</span>
+    <span class="hljs-keyword">char</span> *strtab = (<span class="hljs-keyword">char</span> *)(linkedit_base + symtab_cmd-&gt;stroff);
+    <span class="hljs-comment">// &#x901A;&#x8FC7; base + indirectsymoff &#x504F;&#x79FB;&#x91CF;&#x6765;&#x8BA1;&#x7B97;&#x52A8;&#x6001;&#x7B26;&#x53F7;&#x8868;&#x7684;&#x9996;&#x5730;&#x5740;</span>
+    <span class="hljs-keyword">uint32_t</span> *indirect_symtab = (<span class="hljs-keyword">uint32_t</span> *)(linkedit_base + dysymtab_cmd-&gt;indirectsymoff);
+
+    <span class="hljs-comment">// &#x5F52;&#x96F6;&#x6E38;&#x6807;&#xFF0C;&#x590D;&#x7528;</span>
+    cur = (<span class="hljs-keyword">uintptr_t</span>)header + <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">mach_header_t</span>);
+    <span class="hljs-comment">// &#x518D;&#x6B21;&#x904D;&#x5386; Load Commands</span>
+    <span class="hljs-keyword">for</span> (uint i = <span class="hljs-number">0</span>; i &lt; header-&gt;ncmds; i++, cur += cur_seg_cmd-&gt;cmdsize) {
+        cur_seg_cmd = (<span class="hljs-keyword">segment_command_t</span> *)cur;
+        <span class="hljs-comment">// Load Command &#x7684;&#x7C7B;&#x578B;&#x662F; LC_SEGMENT</span>
+        <span class="hljs-keyword">if</span> (cur_seg_cmd-&gt;cmd == LC_SEGMENT_ARCH_DEPENDENT) {
+            <span class="hljs-comment">// &#x67E5;&#x8BE2; Segment Name &#x8FC7;&#x6EE4;&#x51FA; __DATA &#x6216;&#x8005; __DATA_CONST</span>
+            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(cur_seg_cmd-&gt;segname, SEG_DATA) != <span class="hljs-number">0</span> &amp;&amp;
+                <span class="hljs-built_in">strcmp</span>(cur_seg_cmd-&gt;segname, SEG_DATA_CONST) != <span class="hljs-number">0</span>) {
+                <span class="hljs-keyword">continue</span>;
+            }
+            <span class="hljs-comment">// &#x904D;&#x5386; Segment &#x4E2D;&#x7684; Section</span>
+            <span class="hljs-keyword">for</span> (uint j = <span class="hljs-number">0</span>; j &lt; cur_seg_cmd-&gt;nsects; j++) {
+                <span class="hljs-comment">// &#x53D6;&#x51FA; Section</span>
+                <span class="hljs-keyword">section_t</span> *sect = (<span class="hljs-keyword">section_t</span> *)(cur + <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">segment_command_t</span>)) + j;
+                <span class="hljs-comment">// flags &amp; SECTION_TYPE &#x901A;&#x8FC7; SECTION_TYPE &#x63A9;&#x7801;&#x83B7;&#x53D6; flags &#x8BB0;&#x5F55;&#x7C7B;&#x578B;&#x7684; 8 bit</span>
+                <span class="hljs-comment">// &#x5982;&#x679C; section &#x7684;&#x7C7B;&#x578B;&#x4E3A; S_LAZY_SYMBOL_POINTERS</span>
+                <span class="hljs-comment">// &#x8FD9;&#x4E2A;&#x7C7B;&#x578B;&#x4EE3;&#x8868; lazy symbol &#x6307;&#x9488; Section</span>
+                <span class="hljs-keyword">if</span> ((sect-&gt;flags &amp; SECTION_TYPE) == S_LAZY_SYMBOL_POINTERS) {
+                    <span class="hljs-comment">// &#x8FDB;&#x884C; rebinding &#x91CD;&#x5199;&#x64CD;&#x4F5C;</span>
+                    perform_rebinding_with_section(rebindings, sect, slide, symtab, strtab, indirect_symtab);
+                }
+                <span class="hljs-comment">// &#x8FD9;&#x4E2A;&#x7C7B;&#x578B;&#x4EE3;&#x8868; non-lazy symbol &#x6307;&#x9488; Section</span>
+                <span class="hljs-keyword">if</span> ((sect-&gt;flags &amp; SECTION_TYPE) == S_NON_LAZY_SYMBOL_POINTERS) {
+                    perform_rebinding_with_section(rebindings, sect, slide, symtab, strtab, indirect_symtab);
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p><code>rebind_symbols_for_image</code> &#x65B9;&#x6CD5;&#x5C55;&#x793A;&#x4E86;&#x51B2;&#x7ED1;&#x5B9A;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x6240;&#x6709;&#x8BA1;&#x7B97;&#x5730;&#x5740;&#x7684;&#x6D41;&#x7A0B;&#x3002;&#x6D4F;&#x89C8;&#x8FC7;&#x4EE3;&#x7801;&#x4E4B;&#x540E;&#x601D;&#x8003;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#xFF1A;<strong>&#x4E3A;&#x4E86;&#x5B8C;&#x6210;&#x91CD;&#x7ED1;&#x5B9A;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x83B7;&#x53D6;&#x54EA;&#x4E9B;&#x5730;&#x5740;&#x4FE1;&#x606F;&#x5462;&#xFF1F;</strong></p>
+<h4 id="1-&#x83B7;&#x53D6;-linkedit-base-addr">1. &#x83B7;&#x53D6; Linkedit Base Addr</h4>
+<p><em>fishhook</em> &#x7EDD;&#x5927;&#x591A;&#x6570;&#x91CD;&#x8981;&#x7684;&#x5730;&#x5740;&#x8BA1;&#x7B97;&#x90FD;&#x8981;&#x4F7F;&#x7528;&#x5230;&#x6216;&#x662F;&#x95F4;&#x63A5;&#x4F7F;&#x7528;&#x5230; <strong>Linkedit Base Addr</strong>&#x3002;&#x8981;&#x5982;&#x4F55;&#x7406;&#x89E3;&#x8FD9;&#x4E2A;&#x57FA;&#x5730;&#x5740;&#x5462;&#xFF1F;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x6210;&#xFF1A; <strong>Linkedit Segment &#x5728;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x9996;&#x5730;&#x5740;</strong>&#x3002;</p>
+<p>&#x4E3A;&#x4EC0;&#x4E48; <em>Linkedit Segment</em> &#x9996;&#x5730;&#x5740;&#x4FE1;&#x606F;&#x5341;&#x5206;&#x91CD;&#x8981;&#xFF0C;&#x56E0;&#x4E3A;&#x5728; <em>Load Command</em> &#x4E2D;&#xFF0C;<code>LC_SYMTAB</code> &#x548C; <code>LC_DYSYMTAB</code> &#x7684;&#x4E2D;&#x6240;&#x8BB0;&#x5F55;&#x7684; Offset &#x90FD;&#x662F;&#x57FA;&#x4E8E; <strong>__LINKEDIT</strong> &#x6BB5;&#x7684;&#x3002;&#x800C; <code>LC_SYMTAB</code> &#x4E2D;&#x901A;&#x8FC7;&#x504F;&#x79FB;&#x91CF;&#x53EF;&#x4EE5;&#x62FF;&#x5230;<strong>symtab &#x7B26;&#x53F7;&#x8868;&#x9996;&#x5730;&#x5740;</strong>&#x3001;<strong>strtab &#x7B26;&#x53F7;&#x540D;&#x79F0;&#x5B57;&#x7B26;&#x8868;&#x9996;&#x5730;&#x5740;</strong>&#x4EE5;&#x53CA;<strong>indirect_symtab &#x8DF3;&#x8F6C;&#x8868;&#x9996;&#x5730;&#x5740;</strong>&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x62FF;&#x5230; <strong>Indirect Symbols</strong> &#x7684;&#x9996;&#x5730;&#x5740; <code>indirect_symtab</code> &#x518D;&#x52A0;&#x4E0A; <code>LC_SEGMENT.__DATA</code> &#x4E2D;&#x4EFB;&#x4F55;&#x4E00;&#x4E2A; <em>Section</em> &#x4FE1;&#x606F;&#x7684; <code>reverved1</code> &#x5B57;&#x6BB5;&#x5C31;&#x53EF;&#x4EE5;&#x83B7;&#x53D6;&#x5230;&#x5BF9;&#x5E94;&#x7684; <em>Indirect Address</em> &#x4FE1;&#x606F;&#x3002;&#x5728;&#x8FD9;&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x904D;&#x5386;&#x6BCF;&#x4E00;&#x4E2A; <strong>Indirect Symbols</strong>&#xFF0C;&#x5E76;&#x4EE5;&#x7D22;&#x5F15;&#x65B9;&#x5F0F;&#x83B7;&#x53D6;&#x5230;&#x6BCF;&#x4E00;&#x4E2A; <code>nlist</code> &#x7ED3;&#x6784;&#x7684;&#x7B26;&#x53F7;&#xFF0C;&#x4ECE;&#x7B26;&#x53F7;&#x4E2D;&#x83B7;&#x53D6;&#x5230;&#x7B26;&#x53F7;&#x540D;&#x5B57;&#x7B26;&#x4E32;&#x5728;&#x5B57;&#x7B26;&#x8868;&#x4E2D;&#x7684;&#x504F;&#x79FB;&#x91CF;&#xFF0C;&#x8FDB;&#x800C;&#x7EE7;&#x7EED;&#x83B7;&#x53D6;&#x7B26;&#x53F7;&#x540D;&#x3002;</p>
+<p><img src="../../image/15101394649922/15134938187077.jpg" alt=""></p>
+<h4 id="2-&#x4E8C;&#x6B21;&#x904D;&#x5386;-load-command-&#x7684;&#x76EE;&#x7684;">2. &#x4E8C;&#x6B21;&#x904D;&#x5386; Load Command &#x7684;&#x76EE;&#x7684;</h4>
+<p>&#x7B2C;&#x4E00;&#x6B21;&#x904D;&#x5386;&#x7684;&#x76EE;&#x7684;&#x5728;&#x7B2C;&#x4E00;&#x4E2A;&#x7591;&#x95EE;&#x4E2D;&#x5DF2;&#x7ECF;&#x89E3;&#x91CA;&#x7684;&#x5F88;&#x6E05;&#x695A;&#x4E86;&#xFF0C;&#x904D;&#x5386;&#x76EE;&#x7684;&#x6709;&#x4E09;&#x4E2A;&#xFF0C;&#x4E3A;&#x4E86;&#x627E;&#x51FA; <code>LC_SEGMENT(__LINKEDIT)</code>&#x3001;<code>LC_SYMTAB</code> &#x548C; <code>LC_DYSYMTAB</code> &#x4E09;&#x4E2A; <strong>Load Command</strong>&#xFF0C;&#x4ECE;&#x800C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x8BA1;&#x7B97;&#x51FA; <em>Base Address</em>&#x3001;<em>Symbol Table</em>&#x3001;<em>Dynamic Symbol</em> &#x548C; <em>String Table</em> &#x7684;&#x4F4D;&#x7F6E;&#x3002;</p>
+<p>&#x800C;&#x5728;&#x7B2C;&#x4E8C;&#x6B21;&#x904D;&#x5386;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x83B7;&#x53D6;&#x7684;&#x662F; <code>LC_SEGMENT(__DATA)</code> &#x4E2D; <code>__nl_symbol_ptr</code> &#x548C; <code>__la_symbol_ptr</code> &#x8FD9;&#x4E24;&#x4E2A; <em>Section</em>&#x3002;&#x5176;&#x76EE;&#x7684;&#x662F;&#x4E3A;&#x4E86;&#x786E;&#x5B9A; <strong>lazy binding&#x6307;&#x9488;&#x8868;</strong> &#x548C; <strong>non lazy binding&#x6307;&#x9488;&#x8868;</strong> &#x5728; <em>Dynamic Symbol</em> &#x4E2D;&#x5BF9;&#x5E94;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#x83B7;&#x53D6;&#x5230; <em>reserved1</em> &#x5B57;&#x6BB5;&#x3002;&#x8FD9;&#x4E2A;&#x5728;&#x540E;&#x9762;&#x6211;&#x4EEC;&#x4F1A;&#x505A;&#x4E00;&#x4E2A;&#x9A8C;&#x8BC1;&#x5B9E;&#x73B0;&#x3002;</p>
+<h3 id="&#x91CD;&#x7ED1;&#x5B9A;">&#x91CD;&#x7ED1;&#x5B9A;</h3>
+<p>&#x5728;&#x4E00;&#x5207;&#x57FA;&#x5740;&#x51C6;&#x5907;&#x597D;&#x4E4B;&#x540E;&#xFF0C;&#x5F00;&#x59CB;&#x8FDB;&#x884C;&#x91CD;&#x7ED1;&#x5B9A; <code>perform_rebinding_with_section</code> &#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">perform_rebinding_with_section</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> rebindings_entry *rebindings,
+                                           section_t *section,
+                                           intptr_t slide,
+                                           nlist_t *symtab,
+                                           <span class="hljs-keyword">char</span> *strtab,
+                                           uint32_t *indirect_symtab)</span> </span>{
+    <span class="hljs-comment">// &#x5728; Indirect Symbol &#x8868;&#x4E2D;&#x68C0;&#x7D22;&#x5230;&#x5BF9;&#x5E94;&#x4F4D;&#x7F6E;</span>
+    <span class="hljs-keyword">uint32_t</span> *indirect_symbol_indices = indirect_symtab + section-&gt;reserved1;
+    <span class="hljs-comment">// &#x83B7;&#x53D6; _DATA.__nl_symbol_ptr(&#x6216;__la_symbol_ptr) Section</span>
+    <span class="hljs-comment">// &#x5DF2;&#x77E5;&#x5176; value &#x662F;&#x4E00;&#x4E2A;&#x6307;&#x9488;&#x7C7B;&#x578B;&#xFF0C;&#x6574;&#x6BB5;&#x533A;&#x57DF;&#x7528;&#x4E8C;&#x9636;&#x6307;&#x9488;&#x6765;&#x83B7;&#x53D6;</span>
+    <span class="hljs-keyword">void</span> **indirect_symbol_bindings = (<span class="hljs-keyword">void</span> **)((<span class="hljs-keyword">uintptr_t</span>)slide + section-&gt;addr);
+    <span class="hljs-comment">// &#x7528; size / &#x4E00;&#x9636;&#x6307;&#x9488;&#x6765;&#x8BA1;&#x7B97;&#x4E2A;&#x6570;&#xFF0C;&#x904D;&#x5386;&#x6574;&#x4E2A; Section</span>
+    <span class="hljs-keyword">for</span> (uint i = <span class="hljs-number">0</span>; i &lt; section-&gt;size / <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">void</span> *); i++) {
+        <span class="hljs-comment">// &#x901A;&#x8FC7;&#x4E0B;&#x6807;&#x6765;&#x83B7;&#x53D6;&#x6BCF;&#x4E00;&#x4E2A; Indirect Address &#x7684; Value</span>
+        <span class="hljs-comment">// &#x8FD9;&#x4E2A; Value &#x4E5F;&#x662F;&#x5916;&#x5C42;&#x5BFB;&#x5740;&#x65F6;&#x9700;&#x8981;&#x7684;&#x4E0B;&#x6807;</span>
+        <span class="hljs-keyword">uint32_t</span> symtab_index = indirect_symbol_indices[i];
+        <span class="hljs-keyword">if</span> (symtab_index == INDIRECT_SYMBOL_ABS || symtab_index == INDIRECT_SYMBOL_LOCAL ||
+            symtab_index == (INDIRECT_SYMBOL_LOCAL   | INDIRECT_SYMBOL_ABS)) {
+            <span class="hljs-keyword">continue</span>;
+        }
+        <span class="hljs-comment">// &#x83B7;&#x53D6;&#x7B26;&#x53F7;&#x540D;&#x5728;&#x5B57;&#x7B26;&#x8868;&#x4E2D;&#x7684;&#x504F;&#x79FB;&#x5730;&#x5740;</span>
+        <span class="hljs-keyword">uint32_t</span> strtab_offset = symtab[symtab_index].n_un.n_strx;
+        <span class="hljs-comment">// &#x83B7;&#x53D6;&#x7B26;&#x53F7;&#x540D;</span>
+        <span class="hljs-keyword">char</span> *symbol_name = strtab + strtab_offset;
+        <span class="hljs-comment">// &#x8FC7;&#x6EE4;&#x6389;&#x7B26;&#x53F7;&#x540D;&#x5C0F;&#x4E8E; 4 &#x4F4D;&#x7684;&#x7B26;&#x53F7;</span>
+        <span class="hljs-keyword">if</span> (strnlen(symbol_name, <span class="hljs-number">2</span>) &lt; <span class="hljs-number">2</span>) {
+            <span class="hljs-keyword">continue</span>;
+        }
+        <span class="hljs-comment">// &#x53D6;&#x51FA; rebindings &#x7ED3;&#x6784;&#x4F53;&#x5B9E;&#x4F8B;&#x6570;&#x7EC4;&#xFF0C;&#x5F00;&#x59CB;&#x904D;&#x5386;&#x94FE;&#x8868;</span>
+        <span class="hljs-keyword">struct</span> rebindings_entry *cur = rebindings;
+        <span class="hljs-keyword">while</span> (cur) {
+            <span class="hljs-comment">// &#x5BF9;&#x4E8E;&#x94FE;&#x8868;&#x4E2D;&#x6BCF;&#x4E00;&#x4E2A; rebindings &#x6570;&#x7EC4;&#x7684;&#x6BCF;&#x4E00;&#x4E2A; rebinding &#x5B9E;&#x4F8B;</span>
+            <span class="hljs-comment">// &#x4F9D;&#x6B21;&#x5728; String Table &#x5339;&#x914D;&#x7B26;&#x53F7;&#x540D;</span>
+            <span class="hljs-keyword">for</span> (uint j = <span class="hljs-number">0</span>; j &lt; cur-&gt;rebindings_nel; j++) {
+                <span class="hljs-comment">// &#x7B26;&#x53F7;&#x540D;&#x4E0E;&#x65B9;&#x6CD5;&#x540D;&#x5339;&#x914D;</span>
+                <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(&amp;symbol_name[<span class="hljs-number">1</span>], cur-&gt;rebindings[j].name) == <span class="hljs-number">0</span>) {
+                    <span class="hljs-comment">// &#x5982;&#x679C;&#x662F;&#x7B2C;&#x4E00;&#x6B21;&#x5BF9;&#x8DF3;&#x8F6C;&#x5730;&#x5740;&#x8FDB;&#x884C;&#x91CD;&#x5199;</span>
+                    <span class="hljs-keyword">if</span> (cur-&gt;rebindings[j].replaced != <span class="hljs-literal">NULL</span> &amp;&amp;
+                        indirect_symbol_bindings[i] != cur-&gt;rebindings[j].replacement) {
+                        <span class="hljs-comment">// &#x8BB0;&#x5F55;&#x539F;&#x59CB;&#x8DF3;&#x8F6C;&#x5730;&#x5740;</span>
+                        *(cur-&gt;rebindings[j].replaced) = indirect_symbol_bindings[i];
+                    }
+                    <span class="hljs-comment">// &#x91CD;&#x5199;&#x8DF3;&#x8F6C;&#x5730;&#x5740;</span>
+                    indirect_symbol_bindings[i] = cur-&gt;rebindings[j].replacement;
+                    <span class="hljs-comment">// &#x5B8C;&#x6210;&#x540E;&#x4E0D;&#x518D;&#x5BF9;&#x5F53;&#x524D; Indirect Symbol &#x5904;&#x7406;</span>
+                    <span class="hljs-comment">// &#x7EE7;&#x7EED;&#x8FED;&#x4EE3;&#x5230;&#x4E0B;&#x4E00;&#x4E2A; Indirect Symbol</span>
+                    <span class="hljs-keyword">goto</span> symbol_loop;
+                }
+            }
+            <span class="hljs-comment">// &#x94FE;&#x8868;&#x904D;&#x5386;</span>
+            cur = cur-&gt;next;
+        }
+    symbol_loop:;
+    }
+}
+</code></pre>
+<p>&#x8FD9;&#x6BB5;&#x65B9;&#x6CD5;&#x4E3B;&#x8981;&#x63CF;&#x8FF0;&#x4E86;&#x66FF;&#x6362; <code>__DATA.__la_symbol_ptr</code> &#x548C; <code>__DATA.__la_symbol_ptr</code> &#x7684; <em>Indirect Pointer</em> &#x4E3B;&#x8981;&#x8FC7;&#x7A0B;&#x3002;&#x4ECE; <code>reserved1</code> &#x5B57;&#x6BB5;&#x83B7;&#x53D6;&#x5230; <em>Indirect Symbols</em> &#x5BF9;&#x5E94;&#x7684;&#x4F4D;&#x7F6E;&#x3002;&#x4ECE;&#x4E2D;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x83B7;&#x53D6;&#x5230;&#x6307;&#x5B9A;&#x7B26;&#x53F7;&#x7684;&#x504F;&#x79FB;&#x91CF;&#xFF0C;&#x8FD9;&#x4E2A;&#x504F;&#x79FB;&#x91CF;&#x4E3B;&#x8981;&#x7528;&#x6765;&#x5728; String Table &#x4E2D;&#x68C0;&#x7D22;&#x51FA;&#x7B26;&#x53F7;&#x540D;&#x79F0;&#x5B57;&#x7B26;&#x4E32;&#x3002;&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x627E;&#x5230; <code>__DATA.__la_symbol_ptr</code> &#x548C; <code>__DATA.__la_symbol_ptr</code> &#x8FD9;&#x4E24;&#x4E2A; Section&#x3002;&#x8FD9;&#x4E24;&#x4E2A;&#x8868;&#x4E2D;&#xFF0C;&#x90FD;&#x662F;&#x7531; <em>Indirect Pointer</em> &#x6784;&#x6210;&#x7684;&#x6307;&#x9488;&#x6570;&#x7EC4;&#xFF0C;&#x4F46;&#x662F;<strong>&#x5176;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x51B3;&#x5B9A;&#x4E86;&#x6211;&#x4EEC;&#x8C03;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x5E94;&#x8BE5;&#x4EE5;&#x54EA;&#x4E2A;&#x4EE3;&#x7801;&#x6BB5;&#x7684;&#x65B9;&#x6CD5;&#x6765;&#x6267;&#x884C;</strong>&#x3002;&#x6211;&#x4EEC;&#x904D;&#x5386;&#x8FD9;&#x4E2A;&#x6307;&#x9488;&#x6570;&#x7EC4;&#x4E2D;&#x6BCF;&#x4E00;&#x4E2A;&#x6307;&#x9488;&#xFF0C;&#x5728;&#x6BCF;&#x4E00;&#x5C42;&#x904D;&#x5386;&#x4E2D;&#x53D6;&#x51FA;&#x5176;&#x7B26;&#x53F7;&#x540D;&#x79F0;&#xFF0C;&#x4E0E;&#x6211;&#x4EEC;&#x7684; <code>rebindings</code> &#x94FE;&#x8868;&#x4E2D;&#x6BCF;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x8FDB;&#x884C;&#x6BD4;&#x5BF9;&#xFF0C;&#x5F53;&#x540D;&#x79F0;&#x5339;&#x914D;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x91CD;&#x5199;&#x5176;&#x6307;&#x5411;&#x5730;&#x5740;&#x3002;</p>
+<p><img src="../../image/15101394649922/15134988564426.jpg" alt=""></p>
+<h2 id="&#x5C0F;&#x7ED3;">&#x5C0F;&#x7ED3;</h2>
+<p>&#x4EE5;&#x4E0A;&#x5C31;&#x662F; <em>fishhook</em> &#x7684;&#x5168;&#x90E8;&#x6E90;&#x7801;&#x5B9E;&#x73B0;&#x3002;&#x672C;&#x6587;&#x5B8C;&#x6210;&#x4E86;&#x5BF9;&#x4E8E; <em>fishhook</em> &#x5168;&#x90E8;&#x8FD0;&#x884C;&#x65F6;&#x6D41;&#x7A0B;&#x8FDB;&#x884C;&#x4E86;&#x8BE6;&#x5C3D;&#x7684;&#x5206;&#x6790;&#x3002;&#x5728; <a href="">&#x9A8C;&#x8BC1;&#x8BD5;&#x9A8C; - &#x63A2;&#x6C42; fishhook &#x539F;&#x7406;&#xFF08;&#x4E8C;&#xFF09;</a> &#x4E2D;&#xFF0C;&#x5C06;&#x4F1A;&#x5BF9; <em>fishhook</em> &#x7684;&#x5168;&#x90E8;&#x6D41;&#x7A0B;&#x4EE5;&#x8BA1;&#x7B97;&#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x6A21;&#x62DF;&#x5B9E;&#x8DF5;&#x3002;&#x5E76;&#x5BF9; <em>fishhook</em> &#x4EE3;&#x7801;&#x4E2D;&#x7684;&#x4E00;&#x4E9B;&#x5904;&#x7406;&#x548C;&#x6280;&#x5DE7;&#x505A;&#x51FA;&#x4E00;&#x4E00;&#x5256;&#x6790;&#x3002;&#x5C3D;&#x8BF7;&#x671F;&#x5F85;&#x3002;</p>
+<h2 id="&#x5F15;&#x6587;">&#x5F15;&#x6587;</h2>
+<ul>
+<li><a href="http://linuxtools-rst.readthedocs.io/zh_CN/latest/" target="_blank">Linux Tools Quick Tutorial</a></li>
+<li><a href="https://amywushu.github.io/2017/02/27/%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-Hook-%E5%8E%9F%E7%90%86%E4%B9%8B-fishhook-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90.html" target="_blank">Hook &#x539F;&#x7406;&#x4E4B; fishhook &#x6E90;&#x7801;&#x89E3;&#x6790;</a></li>
+</ul>
+<h2 id="&#x9E23;&#x8C22;">&#x9E23;&#x8C22;</h2>
+<p>&#x611F;&#x8C22; <a href="http://www.alonemonkey.com/" target="_blank">AloneMonkey</a> &#x548C; <a href="http://jmpews.github.io/" target="_blank">jmpews</a> &#x4E24;&#x4F4D;&#x5927;&#x725B;&#x5BF9;&#x6211;&#x7684;&#x4E00;&#x4E9B;&#x5E2E;&#x52A9;&#x3002;</p>
+<blockquote>
+<p>&#x82E5;&#x60F3;&#x67E5;&#x770B;&#x66F4;&#x591A;&#x7684;iOS Source Probe&#x6587;&#x7AE0;&#xFF0C;&#x6536;&#x5F55;&#x5728;&#x8FD9;&#x4E2A;<a href="https://github.com/Desgard/iOS-Source-Probe" target="_blank">Github&#x4ED3;&#x5E93;&#x4E2D;</a>&#x3002;</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+                <a href="验证试验 - 探求 fishhook 原理（二）.html" class="navigation navigation-next navigation-unique" aria-label="Next page: 验证试验 - 探求 fishhook 原理（二）">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"巧用符号表 - 探求 fishhook 原理（一）","level":"3.2.1","depth":2,"next":{"title":"验证试验 - 探求 fishhook 原理（二）","level":"3.2.2","depth":2,"path":"C/fishhook/验证试验 - 探求 fishhook 原理（二）.md","ref":"C/fishhook/验证试验 - 探求 fishhook 原理（二）.md","articles":[]},"previous":{"title":"Fishhook","level":"3.2","depth":1,"ref":"","articles":[{"title":"巧用符号表 - 探求 fishhook 原理（一）","level":"3.2.1","depth":2,"path":"C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.md","ref":"C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.md","articles":[]},{"title":"验证试验 - 探求 fishhook 原理（二）","level":"3.2.2","depth":2,"path":"C/fishhook/验证试验 - 探求 fishhook 原理（二）.md","ref":"C/fishhook/验证试验 - 探求 fishhook 原理（二）.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["splitter","github","multipart","mathjax"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/Desgard"},"splitter":{},"search":{},"multipart":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"cn","gitbook":"*"},"file":{"path":"C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.md","mtime":"2018-07-09T00:41:04.804Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-09T00:56:45.312Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

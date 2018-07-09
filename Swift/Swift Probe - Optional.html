@@ -1,0 +1,928 @@
+
+<!DOCTYPE HTML>
+<html lang="cn" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Swift Probe - Optional · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-multipart/multipart.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 1 - iOS Runtime 源码解析</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" >
+            
+                <span>
+            
+                    
+                    objc/runtime.h 708
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="../Objective-C/Runtime/浅谈Associated Objects.html">
+            
+                <a href="../Objective-C/Runtime/浅谈Associated Objects.html">
+            
+                    
+                    浅谈Associated Objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="../Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                <a href="../Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                    
+                    对象方法消息传递流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.3" data-path="../Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                <a href="../Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                    
+                    消息转发过程分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.4" data-path="../Objective-C/Runtime/用 isa 承载对象的类信息.html">
+            
+                <a href="../Objective-C/Runtime/用 isa 承载对象的类信息.html">
+            
+                    
+                    用 isa 承载对象的类信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.5" data-path="../Objective-C/Runtime/weak 弱引用的实现方式.html">
+            
+                <a href="../Objective-C/Runtime/weak 弱引用的实现方式.html">
+            
+                    
+                    weak 弱引用的实现方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.6" data-path="../Objective-C/Runtime/load 方法全程跟踪.html">
+            
+                <a href="../Objective-C/Runtime/load 方法全程跟踪.html">
+            
+                    
+                    load 方法全程跟踪
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.7" data-path="../Objective-C/Runtime/浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                <a href="../Objective-C/Runtime/浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                    
+                    浅谈 block - clang 改写后的 block 结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.8" data-path="../Objective-C/Runtime/浅谈 block（2） - 截获变量方式.html">
+            
+                <a href="../Objective-C/Runtime/浅谈 block（2） - 截获变量方式.html">
+            
+                    
+                    浅谈 block - 截获变量方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 2 - macOS & iOS 系统源码及相关开源库</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <span>
+            
+                    
+                    cctools/include/mach-o 895
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="../C/mach-o/Mach-O 文件格式探索.html">
+            
+                <a href="../C/mach-o/Mach-O 文件格式探索.html">
+            
+                    
+                    Mach-O 文件格式探索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" >
+            
+                <span>
+            
+                    
+                    Fishhook
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                <a href="../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                    
+                    巧用符号表 - 探求 fishhook 原理（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                <a href="../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                    
+                    验证试验 - 探求 fishhook 原理（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 3 - Foundation 框架源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" >
+            
+                <span>
+            
+                    
+                    Foundation
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="../Objective-C/Foundation/从经典问题来看 Copy 方法.html">
+            
+                <a href="../Objective-C/Foundation/从经典问题来看 Copy 方法.html">
+            
+                    
+                    从经典问题来看 Copy 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="../Objective-C/Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                <a href="../Objective-C/Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                    
+                    CFArray 的历史渊源及实现原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="../Objective-C/Foundation/Run Loop 记录与源码注释.html">
+            
+                <a href="../Objective-C/Foundation/Run Loop 记录与源码注释.html">
+            
+                    
+                    Run Loop 记录与源码注释(作者Kylin)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 4 - UIKit 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" >
+            
+                <span>
+            
+                    
+                    UIKit
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.1.1" data-path="../Objective-C/Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                <a href="../Objective-C/Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                    
+                    复用的精妙 - UITableView 复用技术原理分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.1.2" data-path="../Objective-C/UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                <a href="../Objective-C/UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                    
+                    AutoLayout 中的线性规划 - Simplex 算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 5 - SDWebImage 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" >
+            
+                <span>
+            
+                    
+                    SDWebImage v3.8.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1.1" data-path="../Objective-C/SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                <a href="../Objective-C/SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                    
+                    SDWebImage Source Probe: WebCache
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.2" data-path="../Objective-C/SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                <a href="../Objective-C/SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                    
+                    SDWebImage Source Probe: Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.3" data-path="../Objective-C/SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                <a href="../Objective-C/SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                    
+                    SDWebImage Source Probe: Downloader
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.4" data-path="../Objective-C/SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                <a href="../Objective-C/SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                    
+                    SDWebImage Source Probe: Operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 6 - Swift 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" >
+            
+                <span>
+            
+                    
+                    Swift v4.0
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="7.1.1" data-path="Swift Probe - Optional.html">
+            
+                <a href="Swift Probe - Optional.html">
+            
+                    
+                    Swift Probe - Optional
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 7 - Shadowsocks 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" >
+            
+                <span>
+            
+                    
+                    Shadowsocks v2.9.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="8.1.1" data-path="../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                <a href="../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                    
+                    Shadowsocks Probe I - Socks5 与 EventLoop 事件分发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.1.2" data-path="../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                <a href="../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                    
+                    Shadowsocks Probe II - TCP 代理过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Swift Probe - Optional</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>&#x4F5C;&#x8005;&#xFF1A;&#x51AC;&#x74DC;</p>
+<p>&#x539F;&#x6587;&#x94FE;&#x63A5;&#xFF1A;<a href="http://www.desgard.com/swift-optional/" target="_blank">Guardia &#xB7; &#x74DC;&#x5730;</a></p>
+</blockquote>
+<h1 id="swift-probe---optional">Swift Probe - Optional</h1>
+<p>&#x6700;&#x8FD1;&#x5728;&#x7814;&#x7A76; Swift &#x4E2D;&#x597D;&#x73A9;&#x7684;&#x4E1C;&#x897F;&#xFF0C;&#x6253;&#x7B97;&#x5C06;&#x4E00;&#x4E9B;&#x5B66;&#x4E60;&#x7B14;&#x8BB0;&#xFF0C;&#x6574;&#x7406;&#x6210;&#x4E00;&#x4E2A;&#x7CFB;&#x5217;&#x4FBF;&#x4E8E;&#x81EA;&#x5DF1;&#x6E29;&#x4E60;&#x4E14;&#x4E0E;&#x5927;&#x5BB6;&#x4EA4;&#x6D41;&#x3002;&#x8FD9;&#x6B21;&#x6765;&#x73A9;&#x5F04;&#x4E00;&#x4E0B; Optional&#x3002;</p>
+<h2 id="optional-&#x5F15;&#x5165;&#x7531;&#x6765;">Optional &#x5F15;&#x5165;&#x7531;&#x6765;</h2>
+<p>Optional &#x7279;&#x6027;&#x662F; Swift &#x4E2D;&#x7684;&#x4E00;&#x5927;&#x7279;&#x8272;&#xFF0C;&#x7528;&#x6765;&#x89E3;&#x51B3;&#x53D8;&#x91CF;&#x662F;&#x5426;&#x5B58;&#x6709; <code>nil</code> &#x503C;&#x7684;&#x60C5;&#x51B5;&#x3002;&#x8FD9;&#x6837;&#x65E2;&#x53EF;&#x51CF;&#x5C11;&#x5728;&#x6570;&#x636E;&#x4F20;&#x9012;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x7531;&#x4E8E; <code>nil</code> &#x5E26;&#x6765;&#x7684;&#x4E0D;&#x786E;&#x5B9A;&#x6027;&#xFF0C;&#x9632;&#x6B62;&#x672A;&#x5904;&#x7406; <code>nil</code> &#x800C;&#x5E26;&#x6765;&#x7684;&#x7A0B;&#x5E8F;&#x5D29;&#x6E83;&#x3002;</p>
+<p>Optional &#x5728;&#x9AD8;&#x7EA7;&#x8BED;&#x8A00;&#x4E2D;&#x5176;&#x5B9E;&#x5E76;&#x4E0D;&#x662F; Swift &#x7684;&#x9996;&#x521B;&#xFF0C;&#x800C;&#x662F;&#x6548;&#x4EFF;&#x5176;&#x4ED6;&#x8BED;&#x8A00;&#x5B66;&#x4E60;&#x6765;&#x7684;&#x7279;&#x6027;&#x3002;2015 &#x5E74;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4E3A;&#x4E86;&#x8FCE;&#x5408; Swift &#x7684; Optional &#x7279;&#x6027;&#xFF0C;&#x5728; Objective-C &#x4E2D;&#x4E5F;&#x5F15;&#x5165;&#x4E86; Nullability &#x7279;&#x6027;&#x3002;Swift &#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x5F3A;&#x7C7B;&#x578B;&#x8BED;&#x8A00;&#xFF0C;&#x9700;&#x8981;&#x5728;&#x7F16;&#x8BD1;&#x671F;&#x8FDB;&#x884C;&#x5B89;&#x5168;&#x68C0;&#x67E5;&#xFF0C;&#x6240;&#x4EE5;&#x5F15;&#x5165;&#x4E86;&#x7C7B;&#x578B;&#x63A8;&#x65AD;&#x7684;&#x7279;&#x6027;&#x3002;&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;&#x63A8;&#x65AD;&#x7684;&#x5B89;&#x5168;&#xFF0C;&#x4E8E;&#x662F;&#x53C8;&#x5F15;&#x5165;&#x4E86; Optional &#x7279;&#x6027;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x6CA1;&#x6709; Optional &#x5230;&#x5E95;&#x6709;&#x5982;&#x4F55;&#x7684;&#x5371;&#x9669;&#x5462;&#xFF1F;&#x6211;&#x4EEC;&#x7528; C++ &#x7684;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x6765;&#x770B;&#x4E00;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">auto</span> numbers = { <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span> };
+    <span class="hljs-keyword">auto</span> iterator_of_4 = <span class="hljs-built_in">std</span>::find(numbers.begin(), numbers.end(), <span class="hljs-number">4</span>);
+
+    <span class="hljs-keyword">if</span> (iterator_of_4 == numbers.end()) {
+        <span class="hljs-comment">// &#x672A;&#x67E5;&#x627E;&#x5230; 4 &#x7684;&#x64CD;&#x4F5C;</span>
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Not found 4&quot;</span> &lt;&lt; <span class="hljs-built_in">endl</span>;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// &#x4EE3;&#x7801;&#x6267;&#x884C;</span>
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Got it&quot;</span> &lt;&lt; <span class="hljs-built_in">endl</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x5728;&#x4F7F;&#x7528;&#x8FED;&#x4EE3;&#x5668;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x5F80;&#x5F80;&#x8981;&#x5224;&#x65AD;&#x8FED;&#x4EE3;&#x5668;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x904D;&#x5386;&#x5230;&#x672B;&#x5C3E;&#xFF0C;&#x624D;&#x53EF;&#x4EE5;&#x53BB;&#x7EE7;&#x7EED;&#x64CD;&#x4F5C;&#x3002;&#x56E0;&#x4E3A;&#x6709;<strong>&#x503C;&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x60C5;&#x51B5;</strong>&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x4EE5;&#x5F80;&#x7684;&#x64CD;&#x4F5C;&#x4E2D;&#x90FD;&#x4F1A;&#x4F7F;&#x7528;<strong>&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x503C;&#x6765;&#x8868;&#x793A;&#x67D0;&#x79CD;&#x7279;&#x6B8A;&#x7684;&#x542B;&#x4E49;</strong>&#xFF0C;&#x901A;&#x5E38;&#x60C5;&#x51B5;&#x4E0B;&#x5BF9;&#x4E8E;&#x8FD9;&#x79CD;&#x7279;&#x6B8A;&#x503C;&#x79F0;&#x4F5C; <em>Sentinal Value</em>&#xFF0C;&#x5728;&#x5F88;&#x591A;&#x7B97;&#x6CD5;&#x4E66;&#x4E2D;&#x79F0;&#x5176;&#x4E3A;<strong>&#x54E8;&#x5175;&#x503C;</strong>&#x3002;&#x4F7F;&#x7528;&#x54E8;&#x5175;&#x503C;&#x4F1A;&#x6709;&#x8FD9;&#x4E48;&#x4E24;&#x4E2A;&#x5F0A;&#x7AEF;&#xFF1A;&#x5176;&#x4E00;&#x662F;<strong>&#x5F62;&#x5982; <code>std::find</code> &#x6216;&#x8005;&#x662F; <code>std::binary_search</code> &#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#x90FD;&#x4ECE;&#x5B83;&#x4EEC;&#x5404;&#x81EA;&#x7684;&#x7B7E;&#x540D;&#x4EE5;&#x53CA;&#x8C03;&#x7528;&#x4E0A;&#xFF0C;&#x90FD;&#x65E0;&#x6CD5;&#x5F97;&#x77E5;&#x5B83;&#x7684;&#x9519;&#x8BEF;&#x60C5;&#x51B5;&#xFF0C;&#x4EE5;&#x53CA;&#x5BF9;&#x5E94;&#x7684;&#x9519;&#x8BEF;&#x60C5;&#x51B5;&#x5904;&#x7406;&#x65B9;&#x5F0F;</strong>&#x3002;&#x53E6;&#x5916;&#xFF0C;&#x4EE5;&#x54E8;&#x5175;&#x503C;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x4F7F;&#x6211;&#x4EEC;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;&#x7F16;&#x8BD1;&#x5668;&#x6765;&#x5F3A;&#x5236;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x7684;&#x884C;&#x4E3A;&#x3002;&#x56E0;&#x4E3A;&#x7F16;&#x8BD1;&#x5668;&#x5BF9;&#x6B64;&#x662F;&#x6BEB;&#x65E0;&#x611F;&#x77E5;&#x7684;&#xFF0C;&#x5176;&#x54E8;&#x5175;&#x503C;&#x90FD;&#x662F;&#x7531;&#x8BED;&#x8A00;&#x4F5C;&#x8005;&#x6216;&#x662F;&#x540E;&#x671F;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x7684;&#x7EA6;&#x5B9A;&#x4FD7;&#x6210;&#xFF0C;&#x4F8B;&#x5982; C &#x4E2D;&#x6587;&#x4EF6;&#x8BFB;&#x53D6;&#x7684; <code>open</code> &#x51FD;&#x6570;&#xFF0C;&#x5728;&#x8BFB;&#x53D6;&#x5931;&#x8D25;&#x4E0B;&#x4E3A; <code>-1</code>&#xFF0C;&#x6216;&#x662F;&#x4E0A;&#x4F8B;&#x4E2D; <code>numbers.end()</code> &#x8FD9;&#x4E2A;&#x8FED;&#x4EE3;&#x4F4D;&#xFF0C;&#x53EA;&#x6709;&#x5728;&#x7A0B;&#x5E8F;&#x5D29;&#x6E83;&#x4E4B;&#x540E;&#xFF0C;&#x624D;&#x80FD;&#x663E;&#x51FA;&#x539F;&#x5F62;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x7A81;&#x51FA; Optional &#x7684;&#x5FC5;&#x8981;&#x6027;&#xFF0C;<a href="https://boxueio.com/series/optional-is-not-an-option/ebook/138" target="_blank">&#x6CCA;&#x5B66;&#x7F51;</a>&#xFF08;&#x7B14;&#x8005;&#x4E5F;&#x662F;&#x6700;&#x8FD1;&#x624D;&#x770B;&#x8FC7;&#x7684;&#xFF0C;&#x8FD9;&#x91CC;&#x63A8;&#x8350;&#x4E00;&#x4E0B;&#x1F60E;&#xFF09;&#x4E2D;&#x7ED9;&#x51FA;&#x4E86;&#x4E00;&#x4E2A;&#x54E8;&#x5175;&#x503C;&#x65B9;&#x6848;&#x4E5F;&#x65E0;&#x6CD5;&#x89E3;&#x51B3;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A; Objective-C &#x7684;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<pre><code class="lang-ObjC"><span class="hljs-built_in">NSString</span> *tmp = <span class="hljs-literal">nil</span>;
+
+<span class="hljs-keyword">if</span> ([tmp rangeOfString: <span class="hljs-string">@&quot;Swift&quot;</span>].location != <span class="hljs-built_in">NSNotFound</span>) {
+    <span class="hljs-comment">// Will print out for nil string</span>
+    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;Something about swift&quot;</span>);
+}
+</code></pre>
+<p>&#x867D;&#x7136; <code>tmp</code> &#x7684;&#x503C;&#x4E3A; <code>nil</code>&#xFF0C;&#x4F46;&#x8C03;&#x7528; <code>tmp</code> &#x7684; <code>rangeOfString</code> &#x65B9;&#x6CD5;&#x5374;&#x662F;&#x5408;&#x6CD5;&#x7684;&#xFF0C;&#x5B83;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x503C;&#x4E3A; 0 &#x7684; <code>NSRange</code> &#xFF0C;&#x6240;&#x4EE5; <code>location</code> &#x7684;&#x503C;&#x4E5F;&#x662F; 0&#x3002;&#x4F46;&#x662F; <code>NSNotFound</code> &#x7684;&#x503C;&#x5374;&#x662F; <code>NSIntegerMax</code>&#x3002;&#x6240;&#x4EE5;&#x5C3D;&#x7BA1; <code>tmp</code> &#x7684;&#x503C;&#x4E3A; <code>nil</code>&#xFF0C; &#x6211;&#x4EEC;&#x8FD8;&#x80FD;&#x591F;&#x5728; Terminal &#x4E2D;&#x770B;&#x5230; <code>Something about swift</code> &#x7684;&#x8F93;&#x51FA;&#x3002;&#x6240;&#x4EE5;&#xFF0C;&#x5F53;&#x4E3A; <code>nil</code> &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x4ECD;&#x65E7;&#x9700;&#x8981;&#x7279;&#x6B8A;&#x8003;&#x8651;&#x3002;</p>
+<p>&#x4E8E;&#x662F;&#xFF0C;&#x8FD9;&#x5C31;&#x662F; Optional &#x7684;&#x7531;&#x6765;&#xFF0C;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x4F7F;&#x7528; Sentinal Value &#x7EA6;&#x5B9A;&#x800C;&#x65E0;&#x6CD5;&#x89E3;&#x51B3;&#x7684;&#x95EE;&#x9898;&#x3002;</p>
+<h2 id="&#x4F7F;&#x7528;-optional-&#x5B9E;&#x73B0;&#x65B9;&#x6CD5;">&#x4F7F;&#x7528; Optional &#x5B9E;&#x73B0;&#x65B9;&#x6CD5;</h2>
+<p>&#x8FD9;&#x91CC;&#x662F; Swift Probe &#x7CFB;&#x5217;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x4E0D;&#x8BF4;&#x5176;&#x7528;&#x6CD5;&#x3002;&#x5728; Swift &#x7684;&#x6E90;&#x7801;&#x4E2D;&#xFF0C;Optional &#x4EE5;&#x679A;&#x4E3E;&#x7C7B;&#x578B;&#x6765;&#x5B9A;&#x4E49;&#x7684;&#xFF1A;</p>
+<pre><code class="lang-swift">@_fixed_layout
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Optional</span>&lt;<span class="hljs-title">Wrapped</span>&gt; : <span class="hljs-title">ExpressibleByNilLiteral</span> </span>{
+    <span class="hljs-keyword">case</span> <span class="hljs-keyword">none</span>
+    <span class="hljs-keyword">case</span> some(<span class="hljs-type">Wrapped</span>)
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">init</span>(<span class="hljs-number">_</span> some: <span class="hljs-type">Wrapped</span>)
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">map</span><span class="hljs-params">(<span class="hljs-number">_</span> transform: <span class="hljs-params">(Wrapped)</span></span></span> <span class="hljs-keyword">throws</span> -&gt; <span class="hljs-type">U</span>) <span class="hljs-keyword">rethrows</span> -&gt; <span class="hljs-type">U</span>?
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">flatMap</span><span class="hljs-params">(<span class="hljs-number">_</span> transform: <span class="hljs-params">(Wrapped)</span></span></span> <span class="hljs-keyword">throws</span> -&gt; <span class="hljs-type">U</span>?) <span class="hljs-keyword">rethrows</span> -&gt; <span class="hljs-type">U</span>?
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">init</span>(nilLiteral: ())
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">var</span> unsafelyUnwrapped: <span class="hljs-type">Wrapped</span> { <span class="hljs-keyword">get</span> }
+}
+</code></pre>
+<p>&#x5F53;&#x7136;&#x5728;&#x679A;&#x4E3E;&#x4E2D;&#x8FD8;&#x6709;&#x5F88;&#x591A;&#x65B9;&#x6CD5;&#x5E76;&#x6CA1;&#x6709;&#x5217;&#x51FA;&#xFF0C;&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x8BE6;&#x7EC6;&#x6765;&#x8C08;&#x3002;&#x5728;&#x679A;&#x4E3E;&#x5B9A;&#x4E49;&#x4E4B;&#x524D;&#xFF0C;&#x6709;&#x4E00;&#x4E2A;&#x5C5E;&#x6027;&#x6807;&#x8BC6;&#xFF08;attribute&#xFF09;  - <code>@_fixed_layout</code>&#xFF0C;&#x7531;&#x6B64;&#x6807;&#x8BC6;&#x4FEE;&#x9970;&#x7684;&#x7C7B;&#x578B;&#x5728; SIL &#xFF08;Swift intermediate
+ Language&#xFF09;&#x751F;&#x6210;&#x9636;&#x6BB5;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x3002;&#x5B83;&#x7684;&#x4E3B;&#x8981;&#x4F5C;&#x7528;&#x662F;&#x5C06;&#x8FD9;&#x4E2A;&#x7C7B;&#x578B;&#x786E;&#x5B9A;&#x4E3A;&#x56FA;&#x5B9A;&#x5E03;&#x5C40;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x8FD9;&#x4E2A;&#x7C7B;&#x578B;&#x7684;&#x7A7A;&#x95F4;&#x5360;&#x7528;&#x786E;&#x5B9A;&#x4E14;&#x65E0;&#x6CD5;&#x6539;&#x53D8;&#x3002;</p>
+<p>&#x7531;&#x4E8E; Optional &#x662F;&#x591A;&#x7C7B;&#x578B;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x901A;&#x8FC7; <code>&lt;Wrapped&gt;</code> &#x6765;&#x58F0;&#x660E;&#x6CDB;&#x578B;&#x3002;<code>ExpressibleByNilLiteral</code> &#x534F;&#x8BAE;&#x4EC5;&#x4EC5;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code class="lang-swift"><span class="hljs-keyword">init</span>(nilLiteral: ())    <span class="hljs-comment">// &#x4F7F;&#x7528; nil &#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A;&#x5B9E;&#x4F8B;</span>
+</code></pre>
+<p>&#x4E0D;&#x770B;&#x65B9;&#x6CD5;&#xFF0C;&#x4EC5;&#x4EC5;&#x770B;&#x8FD9;&#x4E2A;&#x679A;&#x4E3E;&#x5B9A;&#x4E49;&#xFF0C;&#x5176;&#x5B9E;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x6A21;&#x62DF;&#x4E00;&#x4E9B;&#x5F88;&#x7B80;&#x5355;&#x7684;&#x65B9;&#x6CD5;&#x3002;&#x4F8B;&#x5982;&#x6211;&#x4EEC;&#x6765;&#x89E3;&#x51B3;&#x4E0A;&#x6587;&#x4E2D; C++ <code>std::find</code> &#x90A3;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x5BF9; <code>Array</code> &#x6570;&#x636E;&#x7ED3;&#x6784;&#x6765;&#x5199;&#x4E00;&#x4E2A; <code>extension</code>&#xFF1A;</p>
+<pre><code class="lang-swift"><span class="hljs-keyword">import</span> Foundation
+
+<span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Optional</span>&lt;<span class="hljs-title">Wrapped</span>&gt; </span>{
+    <span class="hljs-keyword">case</span> <span class="hljs-keyword">none</span>
+    <span class="hljs-keyword">case</span> some(<span class="hljs-type">Wrapped</span>)
+}
+
+<span class="hljs-class"><span class="hljs-keyword">extension</span> <span class="hljs-title">Array</span> <span class="hljs-title">where</span> <span class="hljs-title">Element</span>: <span class="hljs-title">Equatable</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-number">_</span> element: Element)</span></span> -&gt; <span class="hljs-type">Optional</span>&lt;<span class="hljs-type">Index</span>&gt; {
+        <span class="hljs-keyword">var</span> index = startIndex
+        <span class="hljs-keyword">while</span> index != endIndex {
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">self</span>[index] == element {
+                <span class="hljs-keyword">return</span> .some(index)
+            }
+            formIndex(after: &amp;index)
+        }
+        <span class="hljs-keyword">return</span> .<span class="hljs-keyword">none</span>
+    }
+}
+</code></pre>
+<p>&#x4EE3;&#x7801;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x5C31;&#x662F;&#x5C06;&#x5F53;&#x524D;&#x6570;&#x7EC4;&#x505A;&#x4E00;&#x6B21;&#x904D;&#x5386;&#x6765;&#x67E5;&#x627E;&#x8FD9;&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x5982;&#x679C;&#x627E;&#x5230;&#x5219;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;  <code>some</code> &#x7C7B;&#x522B;&#x4EE3;&#x8868;&#x8FD9;&#x4E2A; Optional &#x7ED3;&#x679C;&#x662F;&#x5B58;&#x5728;&#x7684;&#x3002;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5219;&#x8FD4;&#x56DE; <code>none</code>&#x3002;&#x6211;&#x4EEC;&#x6765;&#x6D4B;&#x8BD5;&#x4E00;&#x4E0B;&#xFF1A;</p>
+<p><img src="http://i2.kiimg.com/600799/e68a22fe9728f410.jpg" alt=""></p>
+<p>&#x53D1;&#x73B0;&#x5982;&#x679C; <code>find</code> &#x65B9;&#x6CD5;&#x5728; <code>Array</code> &#x4E2D;&#x65E0;&#x6CD5;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x5143;&#x7D20;&#xFF0C;&#x5219;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; <code>none</code> &#x7684; Optional &#x5BF9;&#x8C61;&#x3002;</p>
+<p>&#x7531;&#x4E8E;&#x5728; Swift &#x7684;&#x6E90;&#x7801;&#x4E2D;&#x5DF2;&#x7ECF;&#x5B9A;&#x4E49;&#x4E86; Optional&#xFF0C;&#x5E76;&#x4E14;&#x4F7F;&#x7528;&#x7279;&#x5B9A;&#x7684;&#x91CD;&#x8F7D;&#x6807;&#x8BB0;&#x7B26;&#x53F7;&#x8FDB;&#x884C;&#x7B80;&#x5316;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x4E5F;&#x53EF;&#x4EE5;&#x7B80;&#x5199;&#x4E0A;&#x8FF0;&#x7684; <code>find</code> &#xFF1A;</p>
+<pre><code class="lang-swift"><span class="hljs-class"><span class="hljs-keyword">extension</span> <span class="hljs-title">Array</span> <span class="hljs-title">where</span> <span class="hljs-title">Element</span>: <span class="hljs-title">Equatable</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-number">_</span> element: Element)</span></span> -&gt; <span class="hljs-type">Index</span>? {
+        <span class="hljs-keyword">var</span> index = startIndex
+        <span class="hljs-keyword">while</span> index != endIndex {
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">self</span>[index] == element {
+                <span class="hljs-keyword">return</span> index
+            }
+            formIndex(after: &amp;index)
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+    }
+}
+</code></pre>
+<p>&#x7531;&#x4E8E; Swift &#x901A;&#x8FC7; <code>?</code> &#x6765;&#x5BF9; Optional &#x7C7B;&#x578B;&#x505A;&#x4E86;&#x7B80;&#x5316;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x5C06;&#x8FD4;&#x56DE;&#x503C;&#x4FEE;&#x6539;&#x6210; <code>Index?</code> &#x5373;&#x53EF;&#x3002;&#x5176;&#x4ED6;&#x5730;&#x65B9;&#x4E5F;&#x7C7B;&#x4F3C;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x503C;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#xFF0C;&#x6CA1;&#x6709;&#x5219;&#x8FD4;&#x56DE; <code>nil</code>&#x3002;&#x6211;&#x4EEC;&#x4F7F;&#x7528; <code>if let</code> &#x4F7F;&#x7528;&#x8303;&#x5F0F;&#x6765;&#x9A8C;&#x8BC1;&#x4E00;&#x4E0B; Optioinal &#x7684;&#x4F5C;&#x7528;&#xFF1A;</p>
+<p><img src="http://i2.kiimg.com/600799/25548e1aecb79f8a.jpg" alt=""></p>
+<h2 id="optional-&#x4E2D;-map-&#x548C;-flatmap-&#x5B9E;&#x73B0;">Optional &#x4E2D; map &#x548C; flatMap &#x5B9E;&#x73B0;</h2>
+<p>&#x5728;&#x5F15;&#x5165;&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<pre><code class="lang-swift"><span class="hljs-keyword">import</span> Foundation
+
+<span class="hljs-keyword">let</span> author: <span class="hljs-type">String</span>? = <span class="hljs-string">&quot;gua&quot;</span>
+<span class="hljs-keyword">var</span> <span class="hljs-type">AUTHOR</span>: <span class="hljs-type">String</span>? = <span class="hljs-literal">nil</span>
+
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> author = author {
+    <span class="hljs-keyword">let</span> <span class="hljs-type">AUTHOR</span> = author.uppercased()
+}
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x901A;&#x8FC7;&#x4E00;&#x6BB5;&#x5C0F;&#x5199;&#x7684; Optional &#x5B57;&#x7B26;&#x4E32;&#x5E38;&#x91CF;&#x505A;&#x51FA;&#x4FEE;&#x6539;&#x540E;&#x6765;&#x4E3A;&#x5176;&#x4ED6;&#x8FDB;&#x884C;&#x8D4B;&#x503C;&#x3002;&#x90A3;&#x4E48;&#x5982;&#x679C;&#x6211;&#x4EEC; <code>AUTHOR</code> &#x662F;&#x4E2A;&#x5E38;&#x91CF;&#x5E94;&#x8BE5;&#x600E;&#x4E48;&#x505A;&#x5462;&#xFF1F;&#x5176;&#x5B9E;&#x5B57;&#x7B26;&#x4E32;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x5305;&#x542B;&#x5B57;&#x7B26;&#x91CF;&#x548C; <code>nil</code> &#x91CF;&#x7684;&#x96C6;&#x5408;&#xFF0C;&#x5904;&#x7406;&#x8FD9;&#x79CD;&#x96C6;&#x5408;&#x7684;&#x65F6;&#x5019;&#x4F7F;&#x7528; <code>map</code> &#x5C31;&#x53EF;&#x4EE5;&#x89E3;&#x51B3;&#x4E86;&#xFF1A;</p>
+<pre><code class="lang-swift"><span class="hljs-keyword">var</span> <span class="hljs-type">AUTHOR</span>: <span class="hljs-type">String</span>? = author.<span class="hljs-built_in">map</span> { $<span class="hljs-number">0</span>.uppercased() } <span class="hljs-comment">// Optional(&quot;GUA&quot;)</span>
+</code></pre>
+<p>&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x5C31;&#x5F97;&#x5230;&#x4E86;&#x4E00;&#x4E2A;&#x65B0;&#x7684; Optional &#x5E38;&#x91CF;&#x3002;&#x90A3;&#x4E48; <code>map</code> &#x65B9;&#x6CD5;&#x5BF9;&#x4E8E; Optional &#x91CF;&#x662F;&#x600E;&#x4E48;&#x5904;&#x7406;&#x7684;&#x5462;&#xFF1F;&#x6765;&#x9605;&#x8BFB;&#x4EE5;&#x4E0B;&#x6E90;&#x7801;&#xFF1A;</p>
+<pre><code class="lang-swift">@_inlineable
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">map</span>&lt;U&gt;<span class="hljs-params">(
+    <span class="hljs-number">_</span> transform: <span class="hljs-params">(Wrapped)</span></span></span> <span class="hljs-keyword">throws</span> -&gt; <span class="hljs-type">U</span>
+    ) <span class="hljs-keyword">rethrows</span> -&gt; <span class="hljs-type">U</span>? {
+    <span class="hljs-keyword">switch</span> <span class="hljs-keyword">self</span> {
+    <span class="hljs-keyword">case</span> .some(<span class="hljs-keyword">let</span> y):
+        <span class="hljs-keyword">return</span> .some(<span class="hljs-keyword">try</span> transform(y))
+    <span class="hljs-keyword">case</span> .<span class="hljs-keyword">none</span>:
+        <span class="hljs-keyword">return</span> .<span class="hljs-keyword">none</span>
+    }
+}
+</code></pre>
+<p>&#x9996;&#x5148;&#x8981;&#x8BF4;&#x660E;&#x7684;&#x662F; <code>Wrapped</code> &#xFF0C;&#x8FD9;&#x662F; <code>Optional</code> &#x7C7B;&#x578B;&#x7684;&#x6CDB;&#x578B;&#x53C2;&#x6570;&#xFF0C;&#x8868;&#x793A; Optional &#x5B9E;&#x9645;&#x5305;&#x88C5;&#x7684;&#x7684;&#x503C;&#x7C7B;&#x578B;&#x3002;</p>
+<p>&#x53E6;&#x5916;&#x6765;&#x89E3;&#x91CA;&#x4E00;&#x4E0B; <code>rethrows</code> &#x5173;&#x952E;&#x5B57;&#xFF1A;&#x6709;&#x8FD9;&#x4E48;&#x4E00;&#x4E2A;&#x573A;&#x666F;&#xFF0C;&#x5728;&#x5F88;&#x591A;&#x65B9;&#x6CD5;&#x4E2D;&#x8981;&#x4F20;&#x5165;&#x4E00;&#x4E2A;&#x95ED;&#x5305;&#x6765;&#x6267;&#x884C;&#xFF0C;&#x5F53;&#x4F20;&#x5165;&#x7684;&#x95ED;&#x5305;&#x4E2D;&#x6CA1;&#x6709;&#x5F02;&#x5E38;&#x6211;&#x4EEC;&#x5C31;&#x4E0D;&#x9700;&#x8981;&#x5904;&#x7406;&#xFF0C;&#x6709;&#x5F02;&#x5E38;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x4F7F;&#x7528; <code>throws</code> &#x5173;&#x952E;&#x5B57;&#x6765;&#x58F0;&#x660E;&#x4EE5;&#x4E0B;&#xFF0C;&#x4EE3;&#x8868;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x3002;&#x4F46;&#x662F;&#x67D0;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4E00;&#x4E2A;&#x95ED;&#x5305;&#x51FD;&#x6570;&#x672C;&#x8EAB;&#x4E0D;&#x4F1A;&#x4EA7;&#x751F;&#x5F02;&#x5E38;&#xFF0C;&#x4F46;&#x662F;&#x4F5C;&#x4E3A;&#x5176;&#x4ED6;&#x51FD;&#x6570;&#x7684;&#x53C2;&#x6570;&#x5C31;&#x4F1A;&#x51FA;&#x73B0;&#x5F02;&#x5E38;&#x60C5;&#x51B5;&#x3002;&#x8FD9;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x4F7F;&#x7528; <code>rethrows</code> &#x5BF9;&#x51FD;&#x6570;&#x8FDB;&#x884C;&#x58F0;&#x660E;&#x4ECE;&#x800C;&#x5411;&#x4E0A;&#x5C42;&#x4F20;&#x9012;&#x5F02;&#x5E38;&#x60C5;&#x51B5;&#x3002;</p>
+<p>&#x6682;&#x4E14;&#x6211;&#x4EEC;&#x5148;&#x4E0D;&#x53BB;&#x8003;&#x8651;&#x5F02;&#x5E38;&#x60C5;&#x51B5;&#xFF0C;&#x6839;&#x636E;&#x6E90;&#x7801;&#x7684;&#x601D;&#x8DEF;&#x81EA;&#x884C;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A; <code>map</code> &#x65B9;&#x6CD5;&#x6765;&#x5904;&#x7406; Optional &#x95EE;&#x9898;&#xFF1A;</p>
+<pre><code class="lang-swift"><span class="hljs-class"><span class="hljs-keyword">extension</span> <span class="hljs-title">Optional</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">myMap</span>&lt;T&gt;<span class="hljs-params">(<span class="hljs-number">_</span> transform: <span class="hljs-params">(Wrapped)</span></span></span> -&gt; <span class="hljs-type">T</span>) -&gt; <span class="hljs-type">T</span>? {
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> value = <span class="hljs-keyword">self</span> {
+            <span class="hljs-keyword">return</span> transform(value)
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+    }
+}
+</code></pre>
+<p>&#x5F88;&#x7B80;&#x5355;&#x7684;&#x5C31;&#x5B9E;&#x73B0;&#x4E86;&#x7B49;&#x540C;&#x4E4B;&#x524D; <code>map</code> &#x6548;&#x679C;&#x7684;&#x529F;&#x80FD;&#x3002;</p>
+<p>&#x6839;&#x636E;&#x6B64;&#x5904;&#x7684; <code>map</code> &#x5B9E;&#x73B0;&#xFF0C;&#x7EE7;&#x7EED;&#x5F15;&#x5165;&#x4E0B;&#x4E00;&#x4E2A;&#x793A;&#x4F8B;&#xFF1A;</p>
+<pre><code class="lang-swift"><span class="hljs-keyword">let</span> stringOne: <span class="hljs-type">String</span>? = <span class="hljs-string">&quot;1&quot;</span>
+<span class="hljs-keyword">let</span> ooo = stringOne.<span class="hljs-built_in">map</span> { <span class="hljs-type">Int</span>($<span class="hljs-number">0</span>) } <span class="hljs-comment">// Optional&lt;Optional&lt;Int&gt;&gt;</span>
+</code></pre>
+<p>&#x7531;&#x4E8E; <code>Int($0)</code> &#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; <code>Int?</code> &#x7684; Optional &#x91CF;&#xFF0C;&#x800C; <code>map</code> &#x7531;&#x4E4B;&#x524D;&#x7684;&#x6E90;&#x7801;&#x53EF;&#x77E5;&#xFF0C;&#x53C8;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; Optional &#x7C7B;&#x578B;&#xFF0C;&#x56E0;&#x6B64; <code>ooo</code> &#x53D8;&#x91CF;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x53CC;&#x5C42;&#x5D4C;&#x5957; Optional &#x5BF9;&#x8C61;&#x3002;&#x800C;&#x6211;&#x4EEC;&#x5E0C;&#x671B;&#x7684;&#x4EC5;&#x4EC5;&#x662F;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; <code>Int</code> &#x578B;&#x6574;&#x6570;&#x5C31;&#x597D;&#x4E86;&#xFF0C;&#x6B64;&#x65F6;&#x5F15;&#x5165; <code>flatMap</code> &#x6765;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF1A;</p>
+<pre><code class="lang-swift"><span class="hljs-keyword">let</span> stringOne: <span class="hljs-type">String</span>? = <span class="hljs-string">&quot;1&quot;</span>
+<span class="hljs-keyword">let</span> ooo = stringOne.flatMap { <span class="hljs-type">Int</span>($<span class="hljs-number">0</span>) } <span class="hljs-comment">// Optional&lt;Int&gt;</span>
+</code></pre>
+<p><code>flatMap</code> &#x4E0E; <code>map</code> &#x7684;&#x533A;&#x522B;&#x662F;&#x5BF9; closure &#x53C2;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF0C;&#x4E4B;&#x540E;&#x5BF9;&#x5176;&#x503C;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#xFF0C;&#x800C;&#x4E0D;&#x4F1A;&#x50CF; <code>map</code> &#x4E00;&#x6837;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x4E00;&#x6B21; <code>.some()</code> &#x7684; Optional &#x5C01;&#x88C5;&#xFF1A;</p>
+<pre><code class="lang-swift">@_inlineable
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">flatMap</span>&lt;U&gt;<span class="hljs-params">(
+    <span class="hljs-number">_</span> transform: <span class="hljs-params">(Wrapped)</span></span></span> <span class="hljs-keyword">throws</span> -&gt; <span class="hljs-type">U</span>?
+    ) <span class="hljs-keyword">rethrows</span> -&gt; <span class="hljs-type">U</span>? {
+    <span class="hljs-keyword">switch</span> <span class="hljs-keyword">self</span> {
+    <span class="hljs-keyword">case</span> .some(<span class="hljs-keyword">let</span> y):
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">try</span> transform(y)
+    <span class="hljs-keyword">case</span> .<span class="hljs-keyword">none</span>:
+        <span class="hljs-keyword">return</span> .<span class="hljs-keyword">none</span>
+    }
+}
+</code></pre>
+<p>&#x4EE5;&#x4E0A;&#x5C31;&#x662F;&#x5BF9;&#x4E8E; Optional &#x7684; <code>map</code> &#x548C; <code>flatMap</code> &#x5206;&#x6790;&#x3002;</p>
+<h2 id="nil-coalescing-&#x5B9E;&#x73B0;">Nil Coalescing &#x5B9E;&#x73B0;</h2>
+<p>&#x6709;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5728; Optional &#x503C;&#x4E3A; <code>nil</code> &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8BBE;&#x5B9A;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x503C;&#x3002;&#x7528;&#x4EE5;&#x5F80;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x80AF;&#x5B9A;&#x4F1A;&#x4F7F;&#x7528;&#x4E09;&#x5143;&#x64CD;&#x4F5C;&#x7B26;&#xFF1A;</p>
+<pre><code class="lang-swift"><span class="hljs-keyword">var</span> userInput: <span class="hljs-type">String</span>? = <span class="hljs-literal">nil</span>
+<span class="hljs-keyword">let</span> username = userInput != <span class="hljs-literal">nil</span> ? userInput! : <span class="hljs-string">&quot;Gua&quot;</span>
+</code></pre>
+<p>&#x5982;&#x6B64;&#x5199;&#x6CD5;&#x8FC7;&#x4E8E;&#x5197;&#x957F;&#xFF0C;&#x5BF9;&#x5F00;&#x53D1;&#x8005;&#x5341;&#x5206;&#x4E0D;&#x53CB;&#x597D;&#x3002;&#x4E3A;&#x4E86;&#x8868;&#x610F;&#x6E05;&#x6670;&#xFF0C;&#x4EE3;&#x7801;&#x65B9;&#x4FBF;&#xFF0C;Swift &#x5F15;&#x5165;&#x4E86; Nil Coalescing &#x6765;&#x7B80;&#x5316;&#x4E66;&#x5199;&#x3002;&#x4E8E;&#x662F;&#x4E4B;&#x524D;&#x7684; <code>username</code> &#x7684;&#x5B9A;&#x4E49;&#x53EF;&#x4EE5;&#x7B80;&#x5199;&#x6210;&#x8FD9;&#x6837;&#xFF1A;</p>
+<pre><code class="lang-swift"><span class="hljs-keyword">let</span> username = userInput ?? <span class="hljs-string">&quot;Gua&quot;</span>
+</code></pre>
+<p><code>??</code> &#x64CD;&#x4F5C;&#x7B26;&#x5F3A;&#x5236;&#x8981;&#x6C42;&#x53EF;&#x80FD;&#x4E3A; <code>nil</code> &#x7684;&#x53D8;&#x91CF;&#x8981;&#x5199;&#x5728;&#x5DE6;&#x8FB9;&#xFF0C;&#x9ED8;&#x8BA4;&#x503C;&#x5199;&#x5728;&#x53F3;&#x8FB9;&#xFF0C;&#x8FD9;&#x6837;&#x4E5F;&#x7EDF;&#x4E00;&#x4E86;&#x4EE3;&#x7801;&#x98CE;&#x683C;&#x3002;&#x6211;&#x4EEC;&#x6DF1;&#x5165;&#x5230;&#x6E90;&#x7801;&#x6765;&#x770B; Nil Coalescing &#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x5B9E;&#x73B0;&#xFF1A;</p>
+<pre><code class="lang-swift">@_transparent
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">func</span> ?? &lt;T&gt;<span class="hljs-params">(<span class="hljs-keyword">optional</span>: T?, defaultValue: @autoclosure <span class="hljs-params">()</span></span></span> <span class="hljs-keyword">throws</span> -&gt; <span class="hljs-type">T</span>) <span class="hljs-keyword">rethrows</span> -&gt; <span class="hljs-type">T</span> {
+    <span class="hljs-keyword">switch</span> <span class="hljs-keyword">optional</span> {
+    <span class="hljs-keyword">case</span> .some(<span class="hljs-keyword">let</span> value):
+        <span class="hljs-keyword">return</span> value
+    <span class="hljs-keyword">case</span> .<span class="hljs-keyword">none</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">try</span> defaultValue()
+    }
+}
+</code></pre>
+<p>&#x89E3;&#x91CA;&#x4E24;&#x4E2A;&#x6807;&#x8BB0;&#xFF1A;</p>
+<ol>
+<li><code>@_transparent</code>&#xFF1A;&#x6807;&#x660E;&#x8BE5;&#x51FD;&#x6570;&#x5E94;&#x8BE5;&#x5728; pipeline &#x4E2D;&#x66F4;&#x65E9;&#x7684;&#x8FDB;&#x884C;&#x51FD;&#x6570;&#x5185;&#x8054;&#x64CD;&#x4F5C;&#x3002;&#x7528;&#x4E8E;&#x975E;&#x5E38;&#x539F;&#x59CB;&#x3001;&#x7B80;&#x5355;&#x7684;&#x51FD;&#x6570;&#x64CD;&#x4F5C;&#x3002;&#x4ED6;&#x4E0E; <code>@_inline</code> &#x7684;&#x533A;&#x522B;&#x5C31;&#x662F;&#x5728;&#x6CA1;&#x6709;&#x4F18;&#x5316;&#x8BBE;&#x7F6E;&#x7684; debug &#x6A21;&#x5F0F;&#x4E0B;&#x4E5F;&#x4F1A;&#x4F7F;&#x5F97;&#x51FD;&#x6570;&#x5185;&#x8FDE;&#x63A5;&#xFF0C;&#x4E0E; <code>@_inline (__always)</code> &#x6807;&#x8BB0;&#x5341;&#x5206;&#x76F8;&#x4F3C;&#x3002;</li>
+<li><code>@autoclosure</code>&#xFF1A;&#x8FD9;&#x4E2A;&#x6807;&#x8BB0;&#x5728; @Onevcat &#x7684; <a href="http://swifter.tips/autoclosure/" target="_blank">Swifter Tips</a> &#x7528;&#x5DF2;&#x7ECF;&#x6709;&#x5F88;&#x597D;&#x7684;&#x4ECB;&#x7ECD;&#x548C;&#x5B9E;&#x7528;&#x573A;&#x666F;&#x8BF4;&#x660E;&#x3002;&#x5176;&#x4F5C;&#x7528;&#x662F;<strong>&#x5C06;&#x4E00;&#x53E5;&#x8868;&#x8FBE;&#x5F0F;&#x81EA;&#x52A8;&#x5730;&#x5C01;&#x88C5;&#x6210;&#x4E00;&#x4E2A;&#x95ED;&#x5305;</strong>&#x3002;&#x8FD9;&#x6837;&#x5C01;&#x88C5;&#x7684;&#x76EE;&#x7684;&#x662F;&#x5F53;&#x9ED8;&#x8BA4;&#x503C;&#x662F;&#x7ECF;&#x8FC7;&#x4E00;&#x7CFB;&#x5217;&#x8BA1;&#x7B97;&#x5F97;&#x5230;&#x7ED3;&#x6784;&#x73AF;&#x5883;&#x4E0B;&#xFF0C;&#x5B9E;&#x7528; <code>@autoclosure</code> &#x5C01;&#x88C5;&#x4F1A;&#x7B80;&#x5316;&#x4F20;&#x7EDF;&#x95ED;&#x5305;&#x7684;&#x5F00;&#x9500;&#xFF0C;&#x56E0;&#x4E3A;&#x5982;&#x679C;&#x662F;&#x4F20;&#x7EDF;&#x95ED;&#x5305;&#x9700;&#x8981;&#x5148;&#x6267;&#x884C;&#x518D;&#x5224;&#x65AD;&#xFF0C;&#x800C; <code>@autoclosure</code> &#x5DE7;&#x5999;&#x7684;&#x907F;&#x514D;&#x4E86;&#x8FD9;&#x4E00;&#x70B9;&#x3002;</li>
+</ol>
+<h2 id="&#x7ED3;&#x8BED;">&#x7ED3;&#x8BED;</h2>
+<p>Swift &#x6E90;&#x7801;&#x5206;&#x6790;&#x662F;&#x7B14;&#x8005;&#x4E00;&#x76F4;&#x60F3;&#x5F00;&#x7684;&#x65B0;&#x5751;&#x3002;&#x672C;&#x6587;&#x4EC5;&#x4EC5;&#x4ECB;&#x7ECD;&#x4E86; Optional &#x7684;&#x5B9E;&#x73B0;&#x4E2D;&#x6700;&#x6838;&#x5FC3;&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x7136;&#x800C;&#x53EA;&#x662F; Swift &#x7684;&#x51B0;&#x5C71;&#x4E00;&#x89D2;&#x3002;&#x5E0C;&#x671B;&#x4E0E;&#x8BFB;&#x8005;&#x591A;&#x591A;&#x4EA4;&#x6D41;&#xFF0C;&#x5171;&#x540C;&#x8FDB;&#x6B65;&#x3002;</p>
+<h2 id="&#x53C2;&#x8003;&#x6587;&#x732E;">&#x53C2;&#x8003;&#x6587;&#x732E;</h2>
+<p><a href="https://github.com/apple/swift/blob/master/stdlib/public/core/Optional.swift" target="_blank">Apple Swift Source Code</a></p>
+<p><a href="http://blog.devtang.com/2016/02/27/swift-gym-1-nested-optional/" target="_blank">Swift &#x70E7;&#x8111;&#x4F53;&#x64CD;&#xFF08;&#x4E00;&#xFF09; - Optional &#x7684;&#x5D4C;&#x5957;</a></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Swift Probe - Optional","level":"7.1.1","depth":2,"next":{"title":"Shadowsocks v2.9.1","level":"8.1","depth":1,"ref":"","articles":[{"title":"Shadowsocks Probe I - Socks5 与 EventLoop 事件分发","level":"8.1.1","depth":2,"path":"Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.md","ref":"Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.md","articles":[]},{"title":"Shadowsocks Probe II - TCP 代理过程","level":"8.1.2","depth":2,"path":"Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.md","ref":"Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.md","articles":[]}]},"previous":{"title":"Swift v4.0","level":"7.1","depth":1,"ref":"","articles":[{"title":"Swift Probe - Optional","level":"7.1.1","depth":2,"path":"Swift/Swift Probe - Optional.md","ref":"Swift/Swift Probe - Optional.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["splitter","github","multipart","mathjax"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/Desgard"},"splitter":{},"search":{},"multipart":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"cn","gitbook":"*"},"file":{"path":"Swift/Swift Probe - Optional.md","mtime":"2018-07-09T00:41:04.852Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-09T00:56:45.312Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

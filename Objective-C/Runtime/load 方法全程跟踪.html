@@ -1,0 +1,1086 @@
+
+<!DOCTYPE HTML>
+<html lang="cn" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>load 方法全程跟踪 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-multipart/multipart.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="浅谈 block（1） - clang 改写后的 block 结构.html" />
+    
+    
+    <link rel="prev" href="weak 弱引用的实现方式.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 1 - iOS Runtime 源码解析</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" >
+            
+                <span>
+            
+                    
+                    objc/runtime.h 708
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="浅谈Associated Objects.html">
+            
+                <a href="浅谈Associated Objects.html">
+            
+                    
+                    浅谈Associated Objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                <a href="objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                    
+                    对象方法消息传递流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.3" data-path="objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                <a href="objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                    
+                    消息转发过程分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.4" data-path="用 isa 承载对象的类信息.html">
+            
+                <a href="用 isa 承载对象的类信息.html">
+            
+                    
+                    用 isa 承载对象的类信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.5" data-path="weak 弱引用的实现方式.html">
+            
+                <a href="weak 弱引用的实现方式.html">
+            
+                    
+                    weak 弱引用的实现方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.1.6" data-path="load 方法全程跟踪.html">
+            
+                <a href="load 方法全程跟踪.html">
+            
+                    
+                    load 方法全程跟踪
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.7" data-path="浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                <a href="浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                    
+                    浅谈 block - clang 改写后的 block 结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.8" data-path="浅谈 block（2） - 截获变量方式.html">
+            
+                <a href="浅谈 block（2） - 截获变量方式.html">
+            
+                    
+                    浅谈 block - 截获变量方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 2 - macOS & iOS 系统源码及相关开源库</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <span>
+            
+                    
+                    cctools/include/mach-o 895
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                <a href="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                    
+                    Mach-O 文件格式探索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" >
+            
+                <span>
+            
+                    
+                    Fishhook
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                <a href="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                    
+                    巧用符号表 - 探求 fishhook 原理（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                <a href="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                    
+                    验证试验 - 探求 fishhook 原理（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 3 - Foundation 框架源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" >
+            
+                <span>
+            
+                    
+                    Foundation
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="../Foundation/从经典问题来看 Copy 方法.html">
+            
+                <a href="../Foundation/从经典问题来看 Copy 方法.html">
+            
+                    
+                    从经典问题来看 Copy 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="../Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                <a href="../Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                    
+                    CFArray 的历史渊源及实现原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="../Foundation/Run Loop 记录与源码注释.html">
+            
+                <a href="../Foundation/Run Loop 记录与源码注释.html">
+            
+                    
+                    Run Loop 记录与源码注释(作者Kylin)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 4 - UIKit 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" >
+            
+                <span>
+            
+                    
+                    UIKit
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.1.1" data-path="../Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                <a href="../Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                    
+                    复用的精妙 - UITableView 复用技术原理分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.1.2" data-path="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                <a href="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                    
+                    AutoLayout 中的线性规划 - Simplex 算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 5 - SDWebImage 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" >
+            
+                <span>
+            
+                    
+                    SDWebImage v3.8.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1.1" data-path="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                    
+                    SDWebImage Source Probe: WebCache
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.2" data-path="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                    
+                    SDWebImage Source Probe: Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.3" data-path="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                    
+                    SDWebImage Source Probe: Downloader
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.4" data-path="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                    
+                    SDWebImage Source Probe: Operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 6 - Swift 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" >
+            
+                <span>
+            
+                    
+                    Swift v4.0
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.1.1" data-path="../../Swift/Swift Probe - Optional.html">
+            
+                <a href="../../Swift/Swift Probe - Optional.html">
+            
+                    
+                    Swift Probe - Optional
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 7 - Shadowsocks 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" >
+            
+                <span>
+            
+                    
+                    Shadowsocks v2.9.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="8.1.1" data-path="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                    
+                    Shadowsocks Probe I - Socks5 与 EventLoop 事件分发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.1.2" data-path="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                    
+                    Shadowsocks Probe II - TCP 代理过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >load 方法全程跟踪</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>&#x4F5C;&#x8005;&#xFF1A;&#x51AC;&#x74DC;</p>
+<p>&#x539F;&#x6587;&#x94FE;&#x63A5;&#xFF1A;<a href="http://www.desgard.com/isa/" target="_blank">Guardia &#xB7; &#x74DC;&#x5730;</a></p>
+</blockquote>
+<h1 id="load-&#x65B9;&#x6CD5;&#x5168;&#x7A0B;&#x8DDF;&#x8E2A;">load &#x65B9;&#x6CD5;&#x5168;&#x7A0B;&#x8DDF;&#x8E2A;</h1>
+<p>&#x51E0;&#x5929;&#x524D; Github &#x7684; <a href="https://github.com/RetVal" target="_blank">RetVal</a> &#x5927;&#x795E;&#x66F4;&#x65B0;&#x4E86;&#x53EF; debug &#x7248;&#x672C;&#x7684; 706 <code>&lt;objc/runtime.h&gt;</code> &#x6E90;&#x7801;&#xFF0C;&#x4E8E;&#x662F;&#x8BA9;&#x6E90;&#x7801;&#x9605;&#x8BFB;&#x5B66;&#x4E60;&#x5F97;&#x4EE5;&#x7EE7;&#x7EED;&#x3002;&#x672C;&#x6587;&#x5C06;&#x4ECB;&#x7ECD;&#x4E2A;&#x4EBA;&#x5B66;&#x4E60; <code>load</code> &#x65B9;&#x6CD5;&#x7684;&#x5168;&#x90E8;&#x6D41;&#x7A0B;&#x3002;</p>
+<h2 id="load-&#x65B9;&#x6CD5;&#x7684;&#x8C03;&#x7528;&#x65F6;&#x673A;">load &#x65B9;&#x6CD5;&#x7684;&#x8C03;&#x7528;&#x65F6;&#x673A;</h2>
+<p>&#x4ECE; <em>Effective Objective-C 2.0 - 52 Specific Ways to Improve Your iOS and OS X Programs</em> &#x4E00;&#x4E66;&#x4E2D;&#x8BB2;&#x8FF0;&#x5230;&#xFF1A;Objective-C &#x4E2D;&#x7EDD;&#x5927;&#x591A;&#x6570;&#x7C7B;&#x90FD;&#x7EE7;&#x627F;&#x81EA; <code>NSObject</code> &#x6839;&#x7C7B;&#xFF0C;&#x6BCF;&#x4E2A;&#x7C7B;&#x90FD;&#x6709;&#x4E24;&#x4E2A;&#x521D;&#x59CB;&#x5316;&#x65B9;&#x6CD5;&#xFF0C;&#x5176;&#x4E2D;&#x4E4B;&#x4E00;&#x5C31;&#x662F; <code>load</code> &#x65B9;&#x6CD5;&#x3002;</p>
+<pre><code class="lang-c">+ (<span class="hljs-keyword">void</span>)load
+</code></pre>
+<p>&#x5BF9;&#x4E8E;&#x6BCF;&#x4E00;&#x4E2A; <em>Class</em> &#x548C; <em>Category</em> &#x6765;&#x8BF4;&#xFF0C;&#x5FC5;&#x5B9A;&#x4F1A;&#x8C03;&#x7528;&#x6B64;&#x65B9;&#x6CD5;&#xFF0C;&#x800C;&#x4E14;&#x4EC5;&#x8C03;&#x7528;&#x4E00;&#x6B21;&#x3002;&#x5F53;&#x5305;&#x542B; <em>Class</em> &#x548C; <em>Category</em> &#x7684;&#x7A0B;&#x5E8F;&#x5E93;&#x8F7D;&#x5165;&#x7CFB;&#x7EDF;&#x65F6;&#xFF0C;&#x5C31;&#x4F1A;&#x6267;&#x884C;&#x6B64;&#x65B9;&#x6CD5;&#xFF0C;&#x5E76;&#x4E14;&#x6B64;&#x8FC7;&#x7A0B;&#x901A;&#x5E38;&#x662F;&#x5728;&#x7A0B;&#x5E8F;&#x542F;&#x52A8;&#x7684;&#x65F6;&#x5019;&#x6267;&#x884C;&#x3002;</p>
+<p>&#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;&#x73B0;&#x5728;&#x7684; iOS &#x7CFB;&#x7EDF;&#x4E2D;&#x5DF2;&#x7ECF;&#x52A0;&#x5165;&#x4E86;<strong>&#x52A8;&#x6001;&#x52A0;&#x8F7D;&#x7279;&#x6027;&#xFF08;Dynamic Loading&#xFF09;</strong>&#xFF0C;&#x8FD9;&#x662F;&#x4ECE; macOS &#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4E2D;&#x8FC1;&#x79FB;&#x800C;&#x6765;&#x7684;&#x7279;&#x6027;&#xFF0C;&#x7B49;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x542F;&#x52A8;&#x597D;&#x4E4B;&#x540E;&#x518D;&#x53BB;&#x52A0;&#x8F7D;&#x7A0B;&#x5E8F;&#x5E93;&#x3002;&#x5982;&#x679C; <em>Class</em> &#x548C;&#x5176; <em>Category</em> &#x4E2D;&#x90FD;&#x91CD;&#x5199;&#x4E86; <code>load</code> &#x65B9;&#x6CD5;&#xFF0C;&#x5219;&#x5148;&#x8C03;&#x7528; <em>Class</em> &#x4E2D;&#x7684;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x901A;&#x8FC7; <a href="https://github.com/RetVal" target="_blank">RetVal</a> &#x5C01;&#x88C5;&#x597D;&#x7684; debug &#x7248;&#x6700;&#x65B0;&#x6E90;&#x7801;&#x8FDB;&#x884C;&#x65AD;&#x70B9;&#x8C03;&#x8BD5;&#xFF0C;&#x6765;&#x8FFD;&#x8E2A;&#x4E00;&#x4E0B; <code>load</code> &#x65B9;&#x6CD5;&#x7684;&#x5168;&#x90E8;&#x5904;&#x7406;&#x8FC7;&#x7A0B;&#xFF0C;&#x4EE5;&#x4FBF;&#x4E8E;&#x4E86;&#x89E3;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x4EE5;&#x53CA; Objective-C &#x5F3A;&#x5927;&#x7684;&#x52A8;&#x6001;&#x6027;&#x3002;</p>
+<p>&#x521B;&#x5EFA;&#x4E00;&#x4E2A; <em>Class</em> &#x6587;&#x4EF6; <code>DGObject.m</code>&#xFF0C;&#x7136;&#x540E;&#x5728;&#x5176;&#x4E2D;&#x589E;&#x52A0; <code>load</code> &#x65B9;&#x6CD5;&#x3002;&#x5728;&#x8FD0;&#x884C; proj &#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x89C1; <code>load</code> &#x65B9;&#x6CD5;&#x7684;&#x8C03;&#x7528;&#x65F6;&#x673A;&#x662F;&#x5728;&#x5165;&#x53E3;&#x51FD;&#x6570;&#x4E3B;&#x7A0B;&#x5E8F;&#x4E4B;&#x524D;&#x3002;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/14837770930294.jpg" alt=""></p>
+<p>&#x4E0B;&#x9762;&#x5728; <code>load</code> &#x65B9;&#x6CD5;&#x4E0B;&#x589E;&#x52A0;&#x65AD;&#x70B9;&#xFF0C;&#x67E5;&#x770B;&#x5176;&#x8C03;&#x7528;&#x6808;&#x5E76;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x6267;&#x884C;&#x65F6;&#x5019;&#x7684;&#x4E0A;&#x5C42;&#x4EE3;&#x7801;&#xFF1A;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/14837787124422.jpg" alt=""></p>
+<p>&#x8C03;&#x7528;&#x6808;&#x663E;&#x793A;&#x6808;&#x60C5;&#x51B5;&#x4E3A;&#x5982;&#x4E0B;&#x65B9;&#x6CD5;&#x5BF9;&#x8C61;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-number">0</span>  +[XXObject load]
+<span class="hljs-number">1</span>  call_class_loads()
+<span class="hljs-number">2</span>  call_load_methods
+<span class="hljs-number">3</span>  load_images
+<span class="hljs-number">4</span>  dyld::notifySingle(dyld_image_states, ImageLoader <span class="hljs-keyword">const</span>*)
+<span class="hljs-number">11</span> _dyld_start
+</code></pre>
+<p>&#x8FFD;&#x5176;&#x6E90;&#x5934;&#xFF0C;&#x4ECE; <code>_dyld_start</code> &#x5F00;&#x59CB;&#x63A2;&#x7A76;&#x3002;<strong>dyld(The Dynamic Link Editor)</strong>&#x662F; Apple &#x7684;&#x52A8;&#x6001;&#x94FE;&#x63A5;&#x5E93;&#xFF0C;&#x7CFB;&#x7EDF;&#x5185;&#x6838;&#x505A;&#x597D;&#x542F;&#x52A8;&#x7A0B;&#x5E8F;&#x7684;&#x521D;&#x59CB;&#x51C6;&#x5907;&#x540E;&#xFF0C;&#x5C06;&#x5176;&#x4ED6;&#x4E8B;&#x52A1;&#x4EA4;&#x7ED9; dyld &#x8D1F;&#x8D23;&#x3002;&#x5BF9;&#x4E8E; dyld &#x8FD9;&#x91CC;&#x4E0D;&#x518D;&#x7EC6;&#x7A76;&#xFF0C;&#x5728;&#x4EE5;&#x540E;&#x5BF9;&#x4E8E;&#x52A8;&#x6001;&#x5E93;&#x7684;&#x5B66;&#x4E60;&#x65F6;&#x8FDB;&#x884C;&#x7814;&#x7A76;&#x3002;</p>
+<p>&#x5728;&#x7814;&#x7A76; <code>load_images</code> &#x65B9;&#x6CD5;&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x6765;&#x7814;&#x7A76;&#x4E00;&#x4E0B;&#x4EC0;&#x4E48;&#x662F; <strong>images</strong>&#x3002;<strong>images</strong>&#x8868;&#x793A;&#x7684;&#x662F;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#xFF08;&#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6;&#x6216;&#x8005;&#x52A8;&#x6001;&#x94FE;&#x63A5;&#x5E93;.so&#x6587;&#x4EF6;&#xFF09;&#x7F16;&#x8BD1;&#x540E;&#x7684;&#x7B26;&#x53F7;&#x3001;&#x4EE3;&#x7801;&#x7B49;&#x3002;&#x6240;&#x4EE5; <code>load_images</code> &#x7684;&#x5DE5;&#x4F5C;&#x662F;<strong>&#x4F20;&#x5165;&#x5904;&#x7406;&#x8FC7;&#x540E;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x5E76;&#x8BA9; <code>Runtime</code> &#x8FDB;&#x884C;&#x5904;&#x7406;</strong>&#xFF0C;&#x5E76;&#x4E14;&#x6BCF;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5BF9;&#x5E94;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x5B9E;&#x4F8B;&#x6765;&#x8D1F;&#x8D23;&#x52A0;&#x8F7D;&#xFF0C;&#x8FD9;&#x91CC;&#x7684;&#x5B9E;&#x4F8B;&#x662F; <code>ImageLoader</code>&#xFF0C;&#x6211;&#x4EEC;&#x4ECE;&#x8C03;&#x7528;&#x6808;&#x7684;&#x65B9;&#x6CD5; 4 &#x53EF;&#x4EE5;&#x6E05;&#x695A;&#x7684;&#x770B;&#x5230;&#x53C2;&#x6570;&#x7C7B;&#x578B;&#xFF1A;</p>
+<pre><code class="lang-c">dyld::notifySingle(dyld_image_states, ImageLoader <span class="hljs-keyword">const</span>*)
+</code></pre>
+<p><code>ImageLoader</code> &#x5904;&#x7406;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x7684;&#x65F6;&#x673A;&#x662F;&#x5728; <code>main</code> &#x5165;&#x53E3;&#x51FD;&#x6570;&#x4EE5;&#x524D;&#xFF0C;&#x5B83;&#x5728;&#x52A0;&#x8F7D;&#x6587;&#x4EF6;&#x65F6;&#x4E3B;&#x8981;&#x505A;&#x4E24;&#x4E2A;&#x5DE5;&#x4F5C;&#xFF1A;</p>
+<ul>
+<li>&#x5728;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x65F6;&#x5B83;&#x5148;&#x5C06;&#x52A8;&#x6001;&#x94FE;&#x63A5;&#x7684; image &#x9012;&#x5F52;&#x52A0;&#x8F7D; &#xFF08;&#x4E5F;&#x5C31;&#x662F;&#x4E0A;&#x9762;&#x6D4B;&#x8BD5;&#x6808;&#x4E2D;&#x4E00;&#x4E32;&#x7684;&#x9012;&#x5F52;&#x8C03;&#x7528;&#x7684;&#x65F6;&#x523B;&#xFF09;</li>
+<li>&#x518D;&#x4ECE;&#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6; image &#x9012;&#x5F52;&#x52A0;&#x8F7D;&#x6240;&#x6709;&#x7B26;&#x53F7;</li>
+</ul>
+<h2 id="&#x7B80;&#x5355;&#x4E86;&#x89E3;-image">&#x7B80;&#x5355;&#x4E86;&#x89E3; image</h2>
+<p>&#x5728; <a href="https://github.com/Draveness/iOS-Source-Code-Analyze/blob/master/contents/objc/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3%20load%20%E6%96%B9%E6%B3%95%E4%B9%88%EF%BC%9F.md" target="_blank">&#x4F60;&#x771F;&#x7684;&#x4E86;&#x89E3; load &#x65B9;&#x6CD5;&#x4E48;&#xFF1F;</a> &#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x4E2D;&#xFF0C;<em>Draveness</em> &#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x79CD;&#x65AD;&#x70B9;&#x53D1;&#x6765;&#x6253;&#x5370;&#x51FA;&#x6240;&#x6709;&#x52A0;&#x8F7D;&#x7684;&#x955C;&#x50CF;&#x3002;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/14838483024359.jpg" alt=""></p>
+<p>&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x5C06;&#x5F53;&#x524D;&#x8F7D;&#x5165;&#x7684; image &#x5168;&#x90E8;&#x663E;&#x793A;&#xFF0C;&#x6211;&#x4EEC;&#x5C55;&#x793A;&#x7684;&#x662F; image &#x7684; <em>path</em> &#x548C; <em>slice</em> &#x4FE1;&#x606F;&#x3002;</p>
+<pre><code class="lang-c">...
+(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *) $<span class="hljs-number">22</span> = <span class="hljs-number">0x00007fff9c1f07a0</span> <span class="hljs-string">&quot;/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/DictionaryServices.framework/Versions/A/DictionaryServices&quot;</span>
+(<span class="hljs-keyword">const</span> mach_header *) $<span class="hljs-number">23</span> = <span class="hljs-number">0x00007fff9c1f0000</span>
+(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *) $<span class="hljs-number">24</span> = <span class="hljs-number">0x00007fff9c51bb10</span> <span class="hljs-string">&quot;/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/SharedFileList.framework/Versions/A/SharedFileList&quot;</span>
+(<span class="hljs-keyword">const</span> mach_header *) $<span class="hljs-number">25</span> = <span class="hljs-number">0x00007fff9c51b000</span>
+(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *) $<span class="hljs-number">26</span> = <span class="hljs-number">0x00007fff9ca70d90</span> <span class="hljs-string">&quot;/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation&quot;</span>
+(<span class="hljs-keyword">const</span> mach_header *) $<span class="hljs-number">27</span> = <span class="hljs-number">0x00007fff9ca70000</span>
+(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *) $<span class="hljs-number">28</span> = <span class="hljs-number">0x00007fff5fbff870</span> <span class="hljs-string">&quot;/Users/Desgard_Duan/Library/Developer/Xcode/DerivedData/objc-frsvxngqnjxvxwahvxtwjglbkjlt/Build/Products/Debug/debug-objc&quot;</span>
+(<span class="hljs-keyword">const</span> mach_header *) $<span class="hljs-number">29</span> = <span class="hljs-number">0x0000000100000000</span>
+</code></pre>
+<p>&#x8FD9;&#x91CC;&#x4F1A;&#x4F20;&#x5165;&#x5F88;&#x591A;&#x7684;&#x52A8;&#x6001;&#x94FE;&#x63A5;&#x5E93; <code>.dylib</code> &#x4EE5;&#x53CA;&#x5B98;&#x65B9;&#x9759;&#x6001;&#x6846;&#x67B6; <code>.framework</code> &#x7684; image&#xFF0C;&#x800C; <em>path</em> &#x5C31;&#x662F;&#x5176;&#x5BF9;&#x5E94;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x7684;&#x5730;&#x5740;&#x3002;&#x5728; <code>&lt;mach-o/dyld.h&gt;</code> &#x52A8;&#x6001;&#x5E93;&#x5934;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x4E5F;&#x4E3A;&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x4E86;&#x67E5;&#x8BE2;&#x6240;&#x6709;&#x52A8;&#x6001;&#x5E93; image &#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5728;&#x8FD9;&#x91CC;&#x4E5F;&#x7B80;&#x5355;&#x4ECB;&#x7ECD;&#x4E00;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;mach-o/dyld.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">listImages</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">uint32_t</span> i;
+    <span class="hljs-keyword">uint32_t</span> ic = _dyld_image_count();
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Got %d images\n&quot;</span>, ic);
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; ic; ++ i) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: %p\t%s\t(slide: %p)\n&quot;</span>,
+               i,
+               _dyld_get_image_header(i),
+               _dyld_get_image_name(i),
+               _dyld_get_image_vmaddr_slide(i));
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    listImages();
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7CFB;&#x7EDF;&#x5E93;&#x63D0;&#x4F9B;&#x7684;&#x63A5;&#x53E3;&#x65B9;&#x6CD5;&#xFF0C;&#x6765;&#x6DF1;&#x5165;&#x5B66;&#x4E60;&#x5B98;&#x65B9;&#x7684;&#x52A8;&#x6001;&#x5E93;&#x60C5;&#x51B5;&#x3002;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/14838490225420.jpg" alt=""></p>
+<h2 id="&#x7EE7;&#x7EED;&#x7814;&#x7A76;-loadimages">&#x7EE7;&#x7EED;&#x7814;&#x7A76; load_images</h2>
+<pre><code class="lang-c"><span class="hljs-comment">// load_images</span>
+<span class="hljs-comment">// &#x6267;&#x884C; dyld &#x63D0;&#x4F9B;&#x7684;&#x5E76;&#x4E14;&#x5DF2;&#x88AB; map_images &#x5904;&#x7406;&#x540E;&#x7684; image &#x4E2D;&#x7684; +load</span>
+<span class="hljs-comment">// &#x9501;&#x5B9A;&#x72B6;&#x6001;&#xFF1A;runtimeLock&#x5199;&#x64CD;&#x4F5C;&#x548C; loadMethodLock &#x65B9;&#x6CD5;&#xFF0C;&#x4FDD;&#x8BC1;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;</span>
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">hasLoadMethods</span><span class="hljs-params">(<span class="hljs-keyword">const</span> headerType *mhdr)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">prepare_load_methods</span><span class="hljs-params">(<span class="hljs-keyword">const</span> headerType *mhdr)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span>
+<span class="hljs-title">load_images</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *path __unused, <span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> mach_header *mh)</span> </span>{
+    <span class="hljs-comment">// &#x6CA1;&#x6709;&#x67E5;&#x8BE2;&#x5230;&#x4F20;&#x5165; Class &#x4E2D;&#x7684; load &#x65B9;&#x6CD5;&#xFF0C;&#x89C6;&#x4E3A;&#x9501;&#x5B9A;&#x72B6;&#x6001;</span>
+    <span class="hljs-comment">// &#x5219;&#x65E0;&#x9700;&#x7ED9;&#x5176;&#x52A0;&#x8F7D;&#x6743;&#x9650;&#xFF0C;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;</span>
+    <span class="hljs-keyword">if</span> (!hasLoadMethods((<span class="hljs-keyword">const</span> headerType *)mh)) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-comment">// &#x5B9A;&#x4E49;&#x53EF;&#x9012;&#x5F52;&#x9501;&#x5BF9;&#x8C61;</span>
+    <span class="hljs-comment">// &#x7531;&#x4E8E; load_images &#x65B9;&#x6CD5;&#x7531; dyld &#x8FDB;&#x884C;&#x56DE;&#x8C03;&#xFF0C;&#x6240;&#x4EE5;&#x6570;&#x636E;&#x9700;&#x4E0A;&#x9501;&#x624D;&#x80FD;&#x4FDD;&#x8BC1;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;</span>
+    <span class="hljs-comment">// &#x4E3A;&#x4E86;&#x9632;&#x6B62;&#x591A;&#x6B21;&#x52A0;&#x9501;&#x9020;&#x6210;&#x7684;&#x6B7B;&#x9501;&#x60C5;&#x51B5;&#xFF0C;&#x4F7F;&#x7528;&#x53EF;&#x9012;&#x5F52;&#x9501;&#x89E3;&#x51B3;</span>
+    <span class="hljs-keyword">recursive_mutex_locker_t</span> lock(loadMethodLock);
+
+    <span class="hljs-comment">// &#x6536;&#x96C6;&#x6240;&#x6709;&#x7684; +load &#x65B9;&#x6CD5;</span>
+    {
+        <span class="hljs-comment">// &#x5BF9; Darwin &#x63D0;&#x4F9B;&#x7684;&#x7EBF;&#x7A0B;&#x5199;&#x9501;&#x7684;&#x5C01;&#x88C5;&#x7C7B;</span>
+        <span class="hljs-keyword">rwlock_writer_t</span> lock2(runtimeLock);
+        <span class="hljs-comment">// &#x63D0;&#x524D;&#x51C6;&#x5907;&#x597D;&#x6EE1;&#x8DB3; +load &#x65B9;&#x6CD5;&#x8C03;&#x7528;&#x6761;&#x4EF6;&#x7684; Class</span>
+        prepare_load_methods((<span class="hljs-keyword">const</span> headerType *)mh);
+
+    }
+
+    <span class="hljs-comment">// &#x8C03;&#x7528; +load &#x65B9;&#x6CD5; (without runtimeLock - re-entrant)</span>
+    call_load_methods();
+}
+</code></pre>
+<p>&#x91CD;&#x65B0;&#x56DE;&#x5230; <code>load_images</code> &#x65B9;&#x6CD5;&#xFF0C;<code>hasLoadMethods</code> &#x51FD;&#x6570;&#x5F15;&#x8D77;&#x6CE8;&#x610F;&#x3002;&#x5176;&#x4E2D;&#x4E3A;&#x4E86;&#x67E5;&#x8BE2; <code>load</code> &#x51FD;&#x6570;&#x5217;&#x8868;&#xFF0C;&#x4F1A;&#x5206;&#x522B;&#x67E5;&#x8BE2;&#x8BE5;&#x51FD;&#x6570;&#x5728;&#x5185;&#x5B58;&#x6570;&#x636E;&#x6BB5;&#x4E0A;&#x6307;&#x5B9A; section &#x533A;&#x57DF;&#x662F;&#x5426;&#x6709;&#x6240;&#x8BB0;&#x5F55;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// &#x5FEB;&#x901F;&#x67E5;&#x8BE2;&#x662F;&#x5426;&#x5B58;&#x5728; +load &#x51FD;&#x6570;&#x5217;&#x8868;</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">hasLoadMethods</span><span class="hljs-params">(<span class="hljs-keyword">const</span> headerType *mhdr)</span> </span>{
+    <span class="hljs-keyword">size_t</span> count;
+    <span class="hljs-keyword">if</span> (_getObjc2NonlazyClassList(mhdr, &amp;count)  &amp;&amp;  count &gt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">if</span> (_getObjc2NonlazyCategoryList(mhdr, &amp;count)  &amp;&amp;  count &gt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}
+</code></pre>
+<p>&#x5728; <code>objc-file.mm</code> &#x6587;&#x4EF6;&#x4E2D;&#x5B58;&#x6709;&#x4EE5;&#x4E0B;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// &#x7C7B;&#x4F3C;&#x4E8E; C++ &#x7684;&#x6A21;&#x677F;&#x5199;&#x6CD5;&#xFF0C;&#x901A;&#x8FC7;&#x5B8F;&#x6765;&#x5904;&#x7406;&#x6CDB;&#x578B;&#x64CD;&#x4F5C;</span>
+<span class="hljs-comment">// &#x51FD;&#x6570;&#x5185;&#x5BB9;&#x662F;&#x4ECE;&#x5185;&#x5B58;&#x6570;&#x636E;&#x6BB5;&#x7684;&#x67D0;&#x4E2A;&#x533A;&#x4E0B;&#x67E5;&#x8BE2;&#x8BE5;&#x4F4D;&#x7F6E;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x5E76;&#x56DE;&#x4F20;&#x6307;&#x9488;</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> GETSECT(name, type, sectname)                                   \
+    type *name(const headerType *mhdr, size_t *outCount) {              \
+        return getDataSection&lt;type&gt;(mhdr, sectname, nil, outCount);     \
+    }                                                                   \
+    type *name(const header_info *hi, size_t *outCount) {               \
+        return getDataSection&lt;type&gt;(hi-&gt;mhdr(), sectname, nil, outCount); \
+    }</span>
+
+<span class="hljs-comment">// &#x6839;&#x636E; dyld &#x5BF9; images &#x7684;&#x89E3;&#x6790;&#x6765;&#x5728;&#x7279;&#x5B9A;&#x533A;&#x57DF;&#x67E5;&#x8BE2;&#x5185;&#x5B58;</span>
+GETSECT(_getObjc2ClassList,           <span class="hljs-keyword">classref_t</span>,      <span class="hljs-string">&quot;__objc_classlist&quot;</span>);
+GETSECT(_getObjc2NonlazyCategoryList, <span class="hljs-keyword">category_t</span> *,    <span class="hljs-string">&quot;__objc_nlcatlist&quot;</span>);
+</code></pre>
+<p>&#x5728; Apple &#x7684;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728; <code>__DATA</code> &#x6BB5;&#x4E2D;&#x67E5;&#x8BE2;&#x5230; <code>__objc_classlist</code> &#x7684;&#x7528;&#x9014;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x7528;&#x5728;<strong>&#x8BBF;&#x95EE; Objective-C &#x7684;&#x7C7B;&#x5217;&#x8868;</strong>&#xFF0C;&#x800C; <code>__objc_nlcatlist</code> &#x7528;&#x4E8E;<strong>&#x8BBF;&#x95EE; Objective-C &#x7684; <code>+load</code> &#x51FD;&#x6570;&#x5217;&#x8868;&#xFF0C;&#x6BD4; <code>__mod_init_func</code> &#x66F4;&#x65E9;&#x88AB;&#x6267;&#x884C;</strong>&#x3002;&#x8FD9;&#x4E00;&#x5757;&#x5BF9;&#x7C7B;&#x4FE1;&#x606F;&#x7684;&#x89E3;&#x6790;&#x662F;&#x7531; dyld &#x5904;&#x7406;&#x65F6;&#x671F;&#x5B8C;&#x6210;&#x7684;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x4E0A;&#x6587;&#x63D0;&#x5230;&#x7684; <code>map_images</code> &#x65B9;&#x6CD5;&#x7684;&#x89E3;&#x6790;&#x5DE5;&#x4F5C;&#x3002;&#x800C;&#x4E14;&#x4ECE;&#x4FA7;&#x9762;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;Objective-C &#x7684;&#x5F3A;&#x5927;&#x52A8;&#x6001;&#x6027;&#xFF0C;&#x4E0E; dyld &#x524D;&#x671F;&#x5904;&#x7406;&#x5BC6;&#x4E0D;&#x53EF;&#x5206;&#x3002;</p>
+<h2 id="&#x53EF;&#x9012;&#x5F52;&#x9501;">&#x53EF;&#x9012;&#x5F52;&#x9501;</h2>
+<p>&#x5728; <code>load_images</code> &#x65B9;&#x6CD5;&#x6240;&#x5728;&#x7684; <code>objc-runtime-new.mm</code> &#x4E2D;&#xFF0C;&#x5168;&#x5C40; <code>loadMethodLock</code> &#x662F;&#x4E00;&#x4E2A; <code>recursive_mutex_t</code> &#x7C7B;&#x578B;&#x7684;&#x53D8;&#x91CF;&#x3002;&#x8FD9;&#x4E2A;&#x662F;&#x82F9;&#x679C;&#x516C;&#x53F8;&#x901A;&#x8FC7; C &#x5B9E;&#x73B0;&#x7684;&#x4E00;&#x4E2A;&#x4E92;&#x65A5;&#x9012;&#x5F52;&#x9501; Class&#xFF0C;&#x6765;&#x89E3;&#x51B3;&#x591A;&#x6B21;&#x4E0A;&#x9501;&#x800C;&#x4E0D;&#x4F1A;&#x53D1;&#x751F;&#x6B7B;&#x9501;&#x7684;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#x5176;&#x4F5C;&#x7528;&#x4E0E; <code>NSRecursiveLock</code> &#x76F8;&#x540C;&#xFF0C;&#x4F46;&#x4E0D;&#x662F;&#x7531; <code>NSLock</code> &#x518D;&#x5C01;&#x88C5;&#xFF0C;&#x800C;&#x662F;&#x901A;&#x8FC7; C &#x4E3A; Runtime &#x7684;&#x4F7F;&#x7528;&#x573A;&#x666F;&#x800C;&#x5199;&#x7684;&#x4E00;&#x4E2A; Class&#x3002;&#x66F4;&#x591A;&#x5173;&#x4E8E;&#x7EBF;&#x7A0B;&#x9501;&#x7684;&#x77E5;&#x8BC6;&#xFF0C;&#x5F3A;&#x70C8;&#x63A8;&#x8350; <em>bestswifter</em> &#x8FD9;&#x7BC7;&#x535A;&#x6587; <em><a href="https://bestswifter.com/ios-lock/" target="_blank">&#x6DF1;&#x5165;&#x7406;&#x89E3; iOS &#x5F00;&#x53D1;&#x4E2D;&#x7684;&#x9501;</a></em>&#x3002;</p>
+<h2 id="&#x51C6;&#x5907;-load-&#x8FD0;&#x884C;&#x7684;&#x4ECE;&#x5C5E;-class">&#x51C6;&#x5907; +load &#x8FD0;&#x884C;&#x7684;&#x4ECE;&#x5C5E; Class</h2>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">prepare_load_methods</span><span class="hljs-params">(<span class="hljs-keyword">const</span> headerType *mhdr)</span> </span>{
+    <span class="hljs-keyword">size_t</span> count, i;
+
+    runtimeLock.assertWriting();
+
+    <span class="hljs-comment">// &#x6536;&#x96C6; Class &#x4E2D;&#x7684; +load &#x65B9;&#x6CD5;</span>
+    <span class="hljs-comment">// &#x83B7;&#x53D6;&#x6240;&#x6709;&#x7684;&#x7C7B;&#x7684;&#x5217;&#x8868;</span>
+    <span class="hljs-keyword">classref_t</span> *classlist = 
+        _getObjc2NonlazyClassList(mhdr, &amp;count);
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; count; i++) {
+        <span class="hljs-comment">// &#x901A;&#x8FC7; remapClass &#x83B7;&#x53D6;&#x7C7B;&#x6307;&#x9488;</span>
+        <span class="hljs-comment">// schedul_class_load &#x9012;&#x5F52;&#x5230;&#x7236;&#x7C7B;&#x9010;&#x5C42;&#x8F7D;&#x5165;</span>
+        schedule_class_load(remapClass(classlist[i]));
+    }
+
+    <span class="hljs-comment">// &#x6536;&#x96C6; Category &#x4E2D;&#x7684; +load &#x65B9;&#x6CD5;</span>
+    <span class="hljs-keyword">category_t</span> **categorylist = _getObjc2NonlazyCategoryList(mhdr, &amp;count);
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; count; i++) {
+        <span class="hljs-keyword">category_t</span> *cat = categorylist[i];
+        <span class="hljs-comment">// &#x901A;&#x8FC7; remapClass &#x83B7;&#x53D6; Category &#x5BF9;&#x8C61;&#x5B58;&#x6709;&#x7684; Class &#x5BF9;&#x8C61;</span>
+        Class cls = remapClass(cat-&gt;cls);
+        <span class="hljs-keyword">if</span> (!cls) <span class="hljs-keyword">continue</span>; 
+        <span class="hljs-comment">// &#x5BF9;&#x7C7B;&#x8FDB;&#x884C;&#x7B2C;&#x4E00;&#x6B21;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x4E3B;&#x8981;&#x7528;&#x6765;&#x5206;&#x914D;&#x53EF;&#x8BFB;&#x5199;&#x6570;&#x636E;&#x7A7A;&#x95F4;&#x5E76;&#x8FD4;&#x56DE;&#x771F;&#x6B63;&#x7684;&#x7C7B;&#x7ED3;&#x6784;</span>
+        realizeClass(cls);
+        assert(cls-&gt;ISA()-&gt;isRealized());
+        <span class="hljs-comment">// &#x5C06;&#x9700;&#x8981;&#x6267;&#x884C; load &#x7684; Category &#x6DFB;&#x52A0;&#x5230;&#x4E00;&#x4E2A;&#x5168;&#x5C40;&#x5217;&#x8868;&#x4E2D;</span>
+        add_category_to_loadable_list(cat);
+    }
+}
+</code></pre>
+<p><code>prepare_load_methods</code> &#x4F5C;&#x7528;&#x662F;&#x4E3A; load &#x65B9;&#x6CD5;&#x505A;&#x51C6;&#x5907;&#xFF0C;&#x4ECE;&#x4EE3;&#x7801;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x51FA; Class &#x7684; load &#x65B9;&#x6CD5;&#x662F;&#x4F18;&#x5148;&#x4E8E; Category&#x3002;&#x5176;&#x4E2D;&#x5728;&#x6536;&#x96C6; Class &#x7684; load &#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x56E0;&#x4E3A;&#x9700;&#x8981;&#x5BF9; Class &#x5173;&#x7CFB;&#x6811;&#x7684;&#x6839;&#x8282;&#x70B9;&#x9010;&#x5C42;&#x904D;&#x5386;&#x8FD0;&#x884C;&#xFF0C;&#x5728; <code>schedule_class_load</code> &#x65B9;&#x6CD5;&#x4E2D;&#x4F7F;&#x7528;&#x6DF1;&#x5C42;&#x9012;&#x5F52;&#x7684;&#x65B9;&#x5F0F;&#x9012;&#x5F52;&#x5230;&#x6839;&#x8282;&#x70B9;&#xFF0C;&#x4F18;&#x5148;&#x8FDB;&#x884C;&#x6536;&#x96C6;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// &#x7528;&#x6765;&#x89C4;&#x5212;&#x6267;&#x884C; Class &#x7684; load &#x65B9;&#x6CD5;&#xFF0C;&#x5305;&#x62EC;&#x7236;&#x7C7B;</span>
+<span class="hljs-comment">// &#x9012;&#x5F52;&#x8C03;&#x7528; +load &#x65B9;&#x6CD5;&#x901A;&#x8FC7; cls &#x6307;&#x9488;&#x4EE5;&#x53CA;</span>
+<span class="hljs-comment">// &#x8981;&#x6C42;&#x662F; cls &#x6307;&#x9488;&#x7684; Class &#x5FC5;&#x987B;&#x5DF2;&#x7ECF;&#x8FDB;&#x884C;&#x94FE;&#x63A5;&#x64CD;&#x4F5C;</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">schedule_class_load</span><span class="hljs-params">(Class cls)</span> </span>{
+    <span class="hljs-keyword">if</span> (!cls) <span class="hljs-keyword">return</span>;
+    <span class="hljs-comment">// &#x67E5;&#x770B; RW_REALIZED &#x662F;&#x5426;&#x88AB;&#x6807;&#x8BB0;</span>
+    assert(cls-&gt;isRealized());
+
+    <span class="hljs-comment">// &#x67E5;&#x770B; RW_LOADED &#x662F;&#x5426;&#x88AB;&#x6807;&#x8BB0;</span>
+    <span class="hljs-keyword">if</span> (cls-&gt;data()-&gt;flags &amp; RW_LOADED) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-comment">// &#x9012;&#x5F52;&#x5230;&#x6DF1;&#x5C42;&#xFF08;&#x8D85;&#x7C7B;&#xFF09;&#x8FD0;&#x884C;</span>
+    schedule_class_load(cls-&gt;superclass);
+
+    <span class="hljs-comment">// &#x5C06;&#x9700;&#x8981;&#x6267;&#x884C; load &#x7684; Class &#x6DFB;&#x52A0;&#x5230;&#x4E00;&#x4E2A;&#x5168;&#x5C40;&#x5217;&#x8868;&#x4E2D;</span>
+    add_class_to_loadable_list(cls);
+    <span class="hljs-comment">// &#x6807;&#x8BB0; RW_LOADED &#x7B26;&#x53F7;</span>
+    cls-&gt;setInfo(RW_LOADED); 
+}
+</code></pre>
+<p>&#x5728; <code>schedule_class_load</code> &#x4E2D;&#xFF0C;Class &#x7684;&#x8BFB;&#x53D6;&#x65B9;&#x5F0F;&#x662F;&#x7528; cls &#x6307;&#x9488;&#x65B9;&#x5F0F;&#xFF0C;&#x5176;&#x4E2D;&#x6709;&#x5F88;&#x591A;&#x5185;&#x5B58;&#x7B26;&#x53F7;&#x4F4D;&#x7528;&#x6765;&#x8BB0;&#x5F55;&#x72B6;&#x6001;&#x3002;<code>isRealized()</code> &#x67E5;&#x770B;&#x7684;&#x5C31;&#x662F; <code>RW_REALIZED</code> &#x4F4D;&#xFF0C;&#x8BE5;&#x4F4D;&#x8BB0;&#x5F55;&#x7684;&#x662F;<strong>&#x5F53;&#x524D; Class &#x662F;&#x5426;&#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A;&#x7C7B;&#x7684;&#x6307;&#x6807;</strong>&#x3002;&#x800C;&#x4E4B;&#x540E;&#x67E5;&#x770B;&#x7684; <code>RW_LOADED</code> &#x662F;&#x8BB0;&#x5F55;&#x5F53;&#x524D;&#x7C7B;&#x7684; <code>+load</code> &#x65B9;&#x6CD5;&#x662F;&#x5426;&#x88AB;&#x88AB;&#x8C03;&#x7528;&#x3002;</p>
+<p>&#x5728;&#x5B58;&#x50A8;&#x9759;&#x6001;&#x8868;&#x7684;&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x65B9;&#x6CD5;&#x5BF9;&#x8C61;&#x4F1A;&#x4EE5;&#x6307;&#x9488;&#x7684;&#x65B9;&#x5F0F;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x4F20;&#x9012;&#xFF0C;&#x7136;&#x540E;&#x7528;&#x540D;&#x4E3A; <code>loadable_classes</code> &#x7684;&#x9759;&#x6001;&#x7C7B;&#x6570;&#x7EC4;&#x5BF9;&#x5373;&#x5C06;&#x8FD0;&#x884C;&#x7684; load &#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x5B58;&#x50A8;&#xFF0C;&#x5176;&#x4E0B;&#x6807;&#x7D22;&#x5F15; <code>loadable_classes_used</code> &#x4E3A;&#xFF08;&#x4ECE;&#x96F6;&#x5F00;&#x59CB;&#x7684;&#xFF09;&#x5168;&#x5C40;&#x91CF;&#xFF0C;&#x5E76;&#x5728;&#x6BCF;&#x6B21;&#x5F55;&#x5165;&#x65B9;&#x6CD5;&#x540E;&#x505A;&#x81EA;&#x52A0;&#x64CD;&#x4F5C;&#x5B9E;&#x73B0;&#x7D22;&#x5F15;&#x7684;&#x504F;&#x79FB;&#x3002;</p>
+<p>&#x7531;&#x6B64;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x5728; <code>prepare_load_methods</code> &#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;Runtime &#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x4E86; Class &#x548C; Category &#x7684;&#x7B5B;&#x9009;&#x8FC7;&#x6EE4;&#x5DE5;&#x4F5C;&#xFF0C;&#x5E76;&#x4E14;&#x5C06;&#x5373;&#x5C06;&#x6267;&#x884C;&#x7684; load &#x65B9;&#x6CD5;&#x4EE5;&#x6307;&#x9488;&#x7684;&#x5F62;&#x5F0F;&#x7EC4;&#x7EC7;&#x6210;&#x4E86;&#x4E00;&#x4E2A;&#x7EBF;&#x6027;&#x8868;&#x7ED3;&#x6784;&#xFF0C;&#x4E3A;&#x4E4B;&#x540E;&#x6267;&#x884C;&#x64CD;&#x4F5C;&#x4E2D;&#x6253;&#x4E0B;&#x57FA;&#x7840;&#x3002;</p>
+<h2 id="&#x901A;&#x8FC7;&#x51FD;&#x6570;&#x6307;&#x9488;&#x8BA9;-load-&#x65B9;&#x6CD5;&#x8DD1;&#x8D77;&#x6765;">&#x901A;&#x8FC7;&#x51FD;&#x6570;&#x6307;&#x9488;&#x8BA9; load &#x65B9;&#x6CD5;&#x8DD1;&#x8D77;&#x6765;</h2>
+<p>&#x7ECF;&#x8FC7;&#x52A0;&#x8F7D;&#x955C;&#x50CF;&#x3001;&#x7F13;&#x5B58;&#x7C7B;&#x5217;&#x8868;&#x540E;&#xFF0C;&#x5F00;&#x59CB;&#x6267;&#x884C; <code>call_load_methods</code> &#x65B9;&#x6CD5;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">call_load_methods</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{
+    <span class="hljs-comment">// &#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x5F55;&#x5165;</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> loading = NO;
+    <span class="hljs-comment">// &#x662F;&#x5426;&#x6709;&#x5173;&#x8054;&#x7684; Category</span>
+    <span class="hljs-keyword">bool</span> more_categories;
+    loadMethodLock.assertLocked();
+
+    <span class="hljs-comment">// &#x7531;&#x4E8E; loading &#x662F;&#x5168;&#x5C40;&#x9759;&#x6001;&#x5E03;&#x5C14;&#x91CF;&#xFF0C;&#x5982;&#x679C;&#x5DF2;&#x7ECF;&#x5F55;&#x5165;&#x65B9;&#x6CD5;&#x5219;&#x76F4;&#x63A5;&#x9000;&#x51FA;</span>
+    <span class="hljs-keyword">if</span> (loading) <span class="hljs-keyword">return</span>;
+    loading = YES;
+    <span class="hljs-comment">// &#x58F0;&#x660E;&#x4E00;&#x4E2A; autoreleasePool &#x5BF9;&#x8C61;</span>
+    <span class="hljs-comment">// &#x4F7F;&#x7528; push &#x64CD;&#x4F5C;&#x5176;&#x76EE;&#x7684;&#x662F;&#x4E3A;&#x4E86;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684; autoreleasePool &#x5BF9;&#x8C61;</span>
+    <span class="hljs-keyword">void</span> *pool = objc_autoreleasePoolPush();
+
+    <span class="hljs-keyword">do</span> {
+        <span class="hljs-comment">// &#x91CD;&#x590D;&#x8C03;&#x7528; load &#x65B9;&#x6CD5;&#xFF0C;&#x76F4;&#x5230;&#x6CA1;&#x6709;</span>
+        <span class="hljs-keyword">while</span> (loadable_classes_used &gt; <span class="hljs-number">0</span>) {
+            call_class_loads();
+        }
+
+        <span class="hljs-comment">// &#x8C03;&#x7528; Category &#x4E2D;&#x7684; load &#x65B9;&#x6CD5;</span>
+        more_categories = call_category_loads();
+
+        <span class="hljs-comment">// &#x7EE7;&#x7EED;&#x8C03;&#x7528;&#xFF0C;&#x76F4;&#x5230;&#x6240;&#x6709; Class &#x5168;&#x90E8;&#x5B8C;&#x6210;</span>
+    } <span class="hljs-keyword">while</span> (loadable_classes_used &gt; <span class="hljs-number">0</span>  ||  more_categories);
+    <span class="hljs-comment">// &#x5C06;&#x521B;&#x5EFA;&#x7684; autoreleasePool &#x5BF9;&#x8C61;&#x91CA;&#x653E;</span>
+    objc_autoreleasePoolPop(pool);
+    <span class="hljs-comment">// &#x66F4;&#x6539;&#x5168;&#x5C40;&#x6807;&#x8BB0;&#xFF0C;&#x8868;&#x793A;&#x5DF2;&#x7ECF;&#x5F55;&#x5165;</span>
+    loading = NO;
+}
+</code></pre>
+<p>&#x5176;&#x5B9E; <code>call_load_methods</code> &#x7531;&#x4EE5;&#x4E0A;&#x4EE3;&#x7801;&#x53EF;&#x77E5;&#xFF0C;&#x4EC5;&#x662F;&#x8FD0;&#x884C; load &#x65B9;&#x6CD5;&#x7684;&#x5165;&#x53E3;&#x3002;&#x5176;&#x4E2D;&#x6700;&#x91CD;&#x8981;&#x7684;&#x65B9;&#x6CD5; <code>call_class_loads</code> &#x4F1A;&#x4ECE;&#x4E00;&#x4E2A;&#x5F85;&#x52A0;&#x8F7D;&#x7684;&#x7C7B;&#x5217;&#x8868;  <code>loadable_classes</code> &#x4E2D;&#x5BFB;&#x627E;&#x5BF9;&#x5E94;&#x7684;&#x7C7B;&#xFF0C;&#x5E76;&#x4F7F;&#x7528; <code>selector(load)</code> &#x7684;&#x5B9E;&#x73B0;&#x5E76;&#x6267;&#x884C;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">call_class_loads</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{
+    <span class="hljs-comment">// &#x58F0;&#x660E;&#x4E0B;&#x6807;&#x504F;&#x79FB;</span>
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-comment">// &#x5206;&#x79BB;&#x52A0;&#x8F7D;&#x7684; Class &#x5217;&#x8868;</span>
+    <span class="hljs-keyword">struct</span> loadable_class *classes = loadable_classes;
+    <span class="hljs-comment">// &#x8C03;&#x7528;&#x6807;&#x8BB0;</span>
+    <span class="hljs-keyword">int</span> used = loadable_classes_used;
+    loadable_classes = nil;
+    loadable_classes_allocated = <span class="hljs-number">0</span>;
+    loadable_classes_used = <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// &#x8C03;&#x7528;&#x5217;&#x8868;&#x4E2D;&#x7684; Class &#x7C7B;&#x7684; load &#x65B9;&#x6CD5;</span>
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; used; i++) {
+        <span class="hljs-comment">// &#x83B7;&#x53D6; Class &#x6307;&#x9488;</span>
+        Class cls = classes[i].cls;
+        <span class="hljs-comment">// &#x83B7;&#x53D6;&#x65B9;&#x6CD5;&#x5BF9;&#x8C61;</span>
+        <span class="hljs-keyword">load_method_t</span> load_method = (<span class="hljs-keyword">load_method_t</span>)classes[i].method;
+        <span class="hljs-keyword">if</span> (!cls) <span class="hljs-keyword">continue</span>;
+        <span class="hljs-keyword">if</span> (PrintLoading) {
+            _objc_inform(<span class="hljs-string">&quot;LOAD: +[%s load]\n&quot;</span>, cls-&gt;nameForLogging());
+        }
+        <span class="hljs-comment">// &#x65B9;&#x6CD5;&#x8C03;&#x7528;</span>
+        (*load_method)(cls, SEL_load);
+    }
+    <span class="hljs-comment">// &#x91CA;&#x653E; Class &#x5217;&#x8868;</span>
+    <span class="hljs-keyword">if</span> (classes) <span class="hljs-built_in">free</span>(classes);
+}
+</code></pre>
+<p>&#x8BFB;&#x5B8C;&#x6E90;&#x7801;&#xFF0C;&#x4E5F;&#x8BB8;&#x4F1A;&#x597D;&#x5947;&#x4E3A;&#x4EC0;&#x4E48; <code>(*load_method)(cls, SEL_load);</code> &#x8FD9;&#x4E00;&#x53E5;&#x53EF;&#x4EE5;&#x8C03;&#x7528; load &#x65B9;&#x6CD5;&#xFF1F;</p>
+<p>&#x5176;&#x5B9E;&#x8FD9;&#x662F; C &#x4E2D;&#x7684;<strong>&#x51FD;&#x6570;&#x6307;&#x9488;</strong>&#x57FA;&#x672C;&#x6982;&#x5FF5;&#x3002;&#x5728;&#x8FD9;&#x91CC;&#x6211;&#x7528;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x4F8B;&#x5B50;&#x505A;&#x4E2A;&#x7B80;&#x8981;&#x8BF4;&#x660E;&#xFF08;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x770B;&#x61C2;&#xFF0C;&#x9700;&#x8981;&#x8865;&#x8865;&#x57FA;&#x7840;&#x4E86;0.0&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#import &lt;Foundation/Foundation.h&gt;</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello World\n&quot;</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> * argv[])</span> </span>{
+    @autoreleasepool {
+        <span class="hljs-keyword">void</span> (*dy_run)() = run;
+        (*dy_run)();
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x5176;&#x7ED3;&#x679C;&#x4F1A;&#x53D1;&#x73B0;&#x6267;&#x884C;&#x4E86; <code>run</code> &#x65B9;&#x6CD5;&#xFF0C;&#x5E76;&#x8F93;&#x51FA;&#x4E86; <code>Hello World</code>&#x3002;&#x8FD9;&#x91CC;&#xFF0C;&#x6211;&#x4EEC;&#x901A;&#x8FC7;&#x4E00;&#x4E2A; <code>void (*fptr)()</code> &#x7C7B;&#x578B;&#x7684;&#x51FD;&#x6570;&#x6307;&#x9488;&#xFF0C;&#x5C06; <code>run</code> &#x51FD;&#x6570;&#x83B7;&#x53D6;&#x51FA;&#xFF0C;&#x5E76;&#x8FD0;&#x884C;&#x51FD;&#x6570;&#x3002;&#x5B9E;&#x9645;&#x4E0A;&#x5176;&#x4E2D;&#x7684;&#x5DE5;&#x4F5C;&#x662F;&#x6293;&#x53D6; <code>run</code> &#x51FD;&#x6570;&#x7684;&#x5730;&#x5740;&#x5E76;&#x5B58;&#x50A8;&#x5728;&#x6307;&#x9488;&#x53D8;&#x91CF;&#x4E2D;&#x3002;&#x6211;&#x4EEC;&#x901A;&#x8FC7;&#x6307;&#x9488;&#x8FD0;&#x884C;&#x5BF9;&#x5E94;&#x7684;&#x5730;&#x5740;&#x90E8;&#x5206;&#xFF0C;&#x5176;&#x6548;&#x679C;&#x4E3A;&#x6267;&#x884C;&#x4E86; <code>run</code> &#x51FD;&#x6570;&#x3002;</p>
+<p>&#x8FD4;&#x56DE;&#x65B9;&#x6CD5;&#x4E2D;&#x7684; <code>load_method_t</code>&#xFF0C;&#x6211;&#x4EEC;&#x5728;&#x5168;&#x5C40;&#x4F4D;&#x7F6E;&#x53D1;&#x73B0;&#x4E86;&#x8BE5;&#x7C7B;&#x578B;&#x7684;&#x5B9A;&#x4E49;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">void</span><span class="hljs-params">(*load_method_t)</span><span class="hljs-params">(id, SEL)</span></span>;
+</code></pre>
+<p><code>id</code> &#x53C2;&#x6570;&#x53EF;&#x4EE5;&#x4F20;&#x9012;&#x4E00;&#x4E2A;&#x7C7B;&#x4FE1;&#x606F;&#xFF0C;&#x8FD9;&#x91CC;&#x662F;&#x5C06; <code>cls</code> Class &#x7684;&#x6307;&#x9488;&#x548C; <code>SEL</code> &#x9009;&#x62E9;&#x5B50;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x4F20;&#x5165;&#x3002;</p>
+<p>&#x81F3;&#x6B64;&#x5B8C;&#x6210;&#x4E86; load &#x65B9;&#x6CD5;&#x7684;&#x52A8;&#x6001;&#x8C03;&#x7528;&#x3002;</p>
+<h2 id="&#x5168;&#x5C40;-class-&#x5B58;&#x50A8;&#x7EBF;&#x6027;&#x8868;&#x6570;&#x636E;&#x7ED3;&#x6784;">&#x5168;&#x5C40; Class &#x5B58;&#x50A8;&#x7EBF;&#x6027;&#x8868;&#x6570;&#x636E;&#x7ED3;&#x6784;</h2>
+<p>&#x603B;&#x7ED3;&#x4E00;&#x4E0B; Class &#x4E2D; load &#x65B9;&#x6CD5;&#x7684;&#x5168;&#x90E8;&#x6D41;&#x7A0B;&#xFF0C;&#x7528;&#x6D41;&#x7A0B;&#x56FE;&#x5C06;&#x5176;&#x63CF;&#x8FF0;&#x4E00;&#x4E0B;&#xFF1A;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/14844929413362.jpg" alt=""></p>
+<p>&#x4E0B;&#x9762;&#x6765;&#x7814;&#x7A76;&#x4E00;&#x4E0B;&#xFF0C;&#x5B58;&#x50A8; Class &#x7684;&#x5168;&#x5C40;&#x8868;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x662F;&#x600E;&#x6837;&#x7684;&#x3002;</p>
+<p>&#x627E;&#x5230;&#x4E4B;&#x524D;&#x7684; <code>add_class_to_loadable_list</code> &#x5F00;&#x59CB;&#x5206;&#x6790;&#xFF1A;</p>
+<pre><code class="lang-c">void add_class_to_loadable_list(Class cls) {
+    // &#x5B9A;&#x4E49;&#x65B9;&#x6CD5;&#x6307;&#x9488;
+    // &#x76EE;&#x7684;&#x662F;&#x6784;&#x9020;&#x51FD;&#x6570;&#x6307;&#x9488;
+    IMP method;
+
+    loadMethodLock.assertLocked();
+    // &#x901A;&#x8FC7; cls &#x4E2D;&#x7684; getLoadMethod &#x65B9;&#x6CD5;&#xFF0C;&#x76F4;&#x63A5;&#x83B7;&#x5F97; load &#x65B9;&#x6CD5;&#x4F53;&#x5B58;&#x50A8;&#x5730;&#x5740;
+    method = cls-&gt;getLoadMethod();
+    // &#x6CA1;&#x6709; load &#x65B9;&#x6CD5;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;
+    if (!method) return;     
+    if (PrintLoading) {
+        _objc_inform(&quot;LOAD: class &apos;%s&apos; scheduled for +load&quot;, 
+                     cls-&gt;nameForLogging());
+    }
+    // &#x5224;&#x65AD;&#x6570;&#x7EC4;&#x662F;&#x5426;&#x5DF2;&#x6EE1;
+    if (loadable_classes_used == loadable_classes_allocated) {
+        // &#x52A8;&#x6001;&#x6269;&#x5BB9;&#xFF0C;&#x4E3A;&#x7EBF;&#x6027;&#x8868;&#x91CA;&#x653E;&#x7A7A;&#x95F4;
+        loadable_classes_allocated = loadable_classes_allocated*2 + 16;
+        loadable_classes = (struct loadable_class *)
+            realloc(loadable_classes,
+                              loadable_classes_allocated *
+                              sizeof(struct loadable_class));
+    }
+    // &#x5C06; Class &#x6307;&#x9488;&#x548C;&#x65B9;&#x6CD5;&#x6307;&#x9488;&#x8BB0;&#x5F55;
+    loadable_classes[loadable_classes_used].cls = cls;
+    loadable_classes[loadable_classes_used].method = method;
+    // &#x6E38;&#x6807;&#x81EA;&#x52A0;&#x504F;&#x79FB;
+    loadable_classes_used++;
+}
+</code></pre>
+<p>&#x5728;&#x8BB0;&#x5F55;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5176; Class &#x6307;&#x9488;&#x548C;&#x65B9;&#x6CD5;&#x6307;&#x9488;&#x7684;&#x8BB0;&#x5F55;&#x624B;&#x6BB5;&#x662F;&#x901A;&#x8FC7;&#x6784;&#x9020; <code>loadable_classes</code> &#x8FD9;&#x4E2A;&#x7C7B;&#x578B;&#x7684;&#x6570;&#x7EC4;&#x8FDB;&#x884C;&#x9759;&#x6001;&#x7EBF;&#x6027;&#x8868;&#x8BB0;&#x5F55;&#x3002;&#x8FD9;&#x4E2A;&#x7C7B;&#x578B;&#x7684;&#x6570;&#x7EC4;&#x5176;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> objc_class *Class;
+<span class="hljs-keyword">struct</span> loadable_class {
+    Class cls;
+    IMP method;
+};
+</code></pre>
+<p>&#x5176; <code>objc_class</code> &#x7ED3;&#x6784;&#x7B14;&#x8005;&#x5728;<em><a href="http://www.desgard.com/isa/" target="_blank">&#x7528; isa &#x627F;&#x8F7D;&#x5BF9;&#x8C61;&#x7684;&#x7C7B;&#x4FE1;&#x606F;</a></em>&#x4E00;&#x6587;&#x4E2D;&#x6709;&#x8F83;&#x4E3A;&#x8BE6;&#x7EC6;&#x7684;&#x4ECB;&#x7ECD;&#xFF0C;&#x8FD9;&#x662F;&#x5BF9;&#x4E8E; Class &#x7684;&#x62BD;&#x8C61;&#x3002;&#x4ECE;&#x6B64;&#x770B;&#x51FA;&#xFF0C;&#x5168;&#x5C40; Class &#x5B58;&#x50A8;&#x7EBF;&#x6027;&#x8868;&#x7ED3;&#x6784;&#xFF0C;&#x5185;&#x90E8;&#x8BB0;&#x5F55;&#x7684;&#x4FE1;&#x606F;&#x53EA;&#x6709; Class &#x6307;&#x9488;&#x548C;&#x65B9;&#x6CD5;&#x6307;&#x9488;&#xFF0C;&#x8FD9;&#x5DF2;&#x7ECF;&#x8DB3;&#x591F;&#x4E86;&#x3002;</p>
+<p>load &#x65B9;&#x6CD5;&#x7684;&#x8C03;&#x7528;&#x60C5;&#x51B5;&#x81F3;&#x6B64;&#x5DF2;&#x7ECF;&#x5168;&#x90E8;&#x6E05;&#x6670;&#x3002;&#x601D;&#x8DEF;&#x68B3;&#x7406;&#x5982;&#x4E0B;&#x4E09;&#x5927;&#x6D41;&#x7A0B;&#xFF1A;</p>
+<ul>
+<li>Load Images: &#x901A;&#x8FC7; <code>dyld</code> &#x8F7D;&#x5165; image &#x6587;&#x4EF6;&#xFF0C;&#x5F15;&#x5165; Class&#x3002;</li>
+<li>Prepare Load Methods: &#x51C6;&#x5907; load &#x65B9;&#x6CD5;&#x3002;&#x8FC7;&#x6EE4;&#x65E0;&#x6548;&#x7C7B;&#x3001;&#x65E0;&#x6548;&#x65B9;&#x6CD5;&#xFF0C;&#x5C06; load &#x65B9;&#x6CD5;&#x6307;&#x9488;&#x548C;&#x6240;&#x5C5E; Class &#x6307;&#x9488;&#x6536;&#x96C6;&#x81F3;&#x5168;&#x5C40; Class &#x5B58;&#x50A8;&#x7EBF;&#x6027;&#x8868; <code>loadable_classes</code> &#x4E2D;&#xFF0C;&#x5176;&#x4E2D;&#x4F1A;&#x6D89;&#x53CA;&#x5230;&#x81EA;&#x52A8;&#x6269;&#x5C55;&#x7A7A;&#x95F4;&#x548C;&#x7236;&#x7C7B;&#x4F18;&#x5148;&#x7684;&#x9012;&#x5F52;&#x8C03;&#x7528;&#x95EE;&#x9898;&#x3002;</li>
+<li>Call Load Methods: &#x6839;&#x636E;&#x6536;&#x96C6;&#x5230;&#x7684;&#x51FD;&#x6570;&#x6307;&#x9488;&#xFF0C;&#x5BF9; load &#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x52A8;&#x6001;&#x8C03;&#x7528;&#x3002;&#x8FDB;&#x4E00;&#x6B65;&#x8FC7;&#x6EE4;&#x65E0;&#x6548;&#x65B9;&#x6CD5;&#xFF0C;&#x5E76;&#x8BB0;&#x5F55; log &#x65E5;&#x5FD7;&#x3002;</li>
+</ul>
+<h2 id="load-&#x65B9;&#x6CD5;&#x4F5C;&#x7528;">Load &#x65B9;&#x6CD5;&#x4F5C;&#x7528;</h2>
+<p><code>load</code> &#x65B9;&#x6CD5;&#x662F;&#x6211;&#x4EEC;&#x5728;&#x5F00;&#x53D1;&#x4E2D;&#x6700;&#x63A5;&#x8FD1; app &#x542F;&#x52A8;&#x7684;&#x53EF;&#x63A7;&#x65B9;&#x6CD5;&#x3002;&#x5373;&#x5728; app &#x542F;&#x52A8;&#x4EE5;&#x540E;&#xFF0C;&#x5165;&#x53E3;&#x51FD;&#x6570; <code>main</code> &#x4E4B;&#x524D;&#x3002;</p>
+<p>&#x7531;&#x4E8E;&#x8C03;&#x7528;&#x6709;&#x7740; <em>non-lazy</em> &#x5C5E;&#x6027;&#xFF0C;&#x5E76;&#x4E14;&#x5728;&#x8FD0;&#x884C;&#x671F;&#x53EA;&#x8C03;&#x7528;&#x4E00;&#x6B21;&#xFF0C;&#x4E8E;&#x662F;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>load</code> &#x72EC;&#x6709;&#x7684;&#x7279;&#x6027;&#x548C;&#x8C03;&#x7528;&#x65F6;&#x673A;&#x6765;&#x5C1D;&#x8BD5; Method Swizzling&#x3002;&#x5F53;&#x7136;&#x56E0;&#x4E3A; load &#x8C03;&#x7528;&#x65F6;&#x673A;&#x8FC7;&#x65E9;&#xFF0C;&#x5E76;&#x4E14;&#x5F53;&#x591A;&#x4E2A; Class &#x6CA1;&#x6709;&#x5173;&#x8054;&#xFF08;&#x7EE7;&#x627F;&#x4E0E;&#x6D3E;&#x751F;&#xFF09;&#xFF0C;&#x6211;&#x4EEC;&#x65E0;&#x6CD5;&#x77E5;&#x9053; Class &#x4E2D; load &#x65B9;&#x6CD5;&#x7684;&#x4F18;&#x5148;&#x8C03;&#x7528;&#x5173;&#x7CFB;&#xFF0C;&#x6240;&#x4EE5;&#x4E00;&#x822C;&#x4E0D;&#x4F1A;&#x5728; load &#x65B9;&#x6CD5;&#x4E2D;&#x5F15;&#x5165;&#x5176;&#x4ED6;&#x7684;&#x7C7B;&#xFF0C;&#x8FD9;&#x662F;&#x5728;&#x5F00;&#x53D1;&#x5F53;&#x4E2D;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x3002;</p>
+<h2 id="&#x53C2;&#x8003;&#x6587;&#x732E;">&#x53C2;&#x8003;&#x6587;&#x732E;</h2>
+<p><a href="https://github.com/Draveness/iOS-Source-Code-Analyze/blob/master/contents/objc/%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3%20load%20%E6%96%B9%E6%B3%95%E4%B9%88%EF%BC%9F.md" target="_blank">&#x4F60;&#x771F;&#x7684;&#x4E86;&#x89E3; Objective-C &#x4E2D;&#x7684;load &#x65B9;&#x6CD5;&#x4E48;&#xFF1F;</a></p>
+<p><a href="http://stackoverflow.com/questions/13326435/nsobject-load-and-initialize-what-do-they-do" target="_blank">NSObject +load and +initialize - What do they do?</a></p>
+<p><a href="https://www.mikeash.com/pyblog/friday-qa-2009-05-22-objective-c-class-loading-and-initialization.html" target="_blank">Objective-C Class Loading and Initialization</a></p>
+<p><a href="https://medium.com/@kostiakoval/load-vs-initialize-a1b3dc7ad6eb#.5fhb7mfip" target="_blank">+load VS +initialize</a></p>
+<p><a href="http://blog.leichunfeng.com/blog/2015/05/02/objective-c-plus-load-vs-plus-initialize/" target="_blank">Objective-C +load vs +initialize</a></p>
+<p><a href="http://stackoverflow.com/questions/15315668/objective-c-what-is-a-lazy-class" target="_blank">Objective-C: What is a lazy class?</a></p>
+<blockquote>
+<p>&#x82E5;&#x60F3;&#x67E5;&#x770B;&#x66F4;&#x591A;&#x7684;iOS Source Probe&#x6587;&#x7AE0;&#xFF0C;&#x6536;&#x5F55;&#x5728;&#x8FD9;&#x4E2A;<a href="https://github.com/Desgard/iOS-Source-Probe" target="_blank">Github&#x4ED3;&#x5E93;&#x4E2D;</a>&#x3002;</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="weak 弱引用的实现方式.html" class="navigation navigation-prev " aria-label="Previous page: weak 弱引用的实现方式">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="浅谈 block（1） - clang 改写后的 block 结构.html" class="navigation navigation-next " aria-label="Next page: 浅谈 block - clang 改写后的 block 结构">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"load 方法全程跟踪","level":"2.1.6","depth":2,"next":{"title":"浅谈 block - clang 改写后的 block 结构","level":"2.1.7","depth":2,"path":"Objective-C/Runtime/浅谈 block（1） - clang 改写后的 block 结构.md","ref":"Objective-C/Runtime/浅谈 block（1） - clang 改写后的 block 结构.md","articles":[]},"previous":{"title":"weak 弱引用的实现方式","level":"2.1.5","depth":2,"path":"Objective-C/Runtime/weak 弱引用的实现方式.md","ref":"Objective-C/Runtime/weak 弱引用的实现方式.md","articles":[]},"dir":"ltr"},"config":{"plugins":["splitter","github","multipart","mathjax"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/Desgard"},"splitter":{},"search":{},"multipart":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"cn","gitbook":"*"},"file":{"path":"Objective-C/Runtime/load 方法全程跟踪.md","mtime":"2018-07-09T00:41:04.811Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-09T00:56:45.312Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

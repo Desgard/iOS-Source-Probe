@@ -1,0 +1,1079 @@
+
+<!DOCTYPE HTML>
+<html lang="cn" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>浅谈Associated Objects · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-multipart/multipart.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html" />
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 1 - iOS Runtime 源码解析</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" >
+            
+                <span>
+            
+                    
+                    objc/runtime.h 708
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="2.1.1" data-path="浅谈Associated Objects.html">
+            
+                <a href="浅谈Associated Objects.html">
+            
+                    
+                    浅谈Associated Objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                <a href="objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                    
+                    对象方法消息传递流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.3" data-path="objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                <a href="objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                    
+                    消息转发过程分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.4" data-path="用 isa 承载对象的类信息.html">
+            
+                <a href="用 isa 承载对象的类信息.html">
+            
+                    
+                    用 isa 承载对象的类信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.5" data-path="weak 弱引用的实现方式.html">
+            
+                <a href="weak 弱引用的实现方式.html">
+            
+                    
+                    weak 弱引用的实现方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.6" data-path="load 方法全程跟踪.html">
+            
+                <a href="load 方法全程跟踪.html">
+            
+                    
+                    load 方法全程跟踪
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.7" data-path="浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                <a href="浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                    
+                    浅谈 block - clang 改写后的 block 结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.8" data-path="浅谈 block（2） - 截获变量方式.html">
+            
+                <a href="浅谈 block（2） - 截获变量方式.html">
+            
+                    
+                    浅谈 block - 截获变量方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 2 - macOS & iOS 系统源码及相关开源库</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <span>
+            
+                    
+                    cctools/include/mach-o 895
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                <a href="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                    
+                    Mach-O 文件格式探索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" >
+            
+                <span>
+            
+                    
+                    Fishhook
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                <a href="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                    
+                    巧用符号表 - 探求 fishhook 原理（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                <a href="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                    
+                    验证试验 - 探求 fishhook 原理（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 3 - Foundation 框架源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" >
+            
+                <span>
+            
+                    
+                    Foundation
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="../Foundation/从经典问题来看 Copy 方法.html">
+            
+                <a href="../Foundation/从经典问题来看 Copy 方法.html">
+            
+                    
+                    从经典问题来看 Copy 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="../Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                <a href="../Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                    
+                    CFArray 的历史渊源及实现原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="../Foundation/Run Loop 记录与源码注释.html">
+            
+                <a href="../Foundation/Run Loop 记录与源码注释.html">
+            
+                    
+                    Run Loop 记录与源码注释(作者Kylin)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 4 - UIKit 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" >
+            
+                <span>
+            
+                    
+                    UIKit
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.1.1" data-path="../Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                <a href="../Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                    
+                    复用的精妙 - UITableView 复用技术原理分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.1.2" data-path="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                <a href="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                    
+                    AutoLayout 中的线性规划 - Simplex 算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 5 - SDWebImage 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" >
+            
+                <span>
+            
+                    
+                    SDWebImage v3.8.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1.1" data-path="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                    
+                    SDWebImage Source Probe: WebCache
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.2" data-path="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                    
+                    SDWebImage Source Probe: Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.3" data-path="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                    
+                    SDWebImage Source Probe: Downloader
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.4" data-path="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                    
+                    SDWebImage Source Probe: Operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 6 - Swift 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" >
+            
+                <span>
+            
+                    
+                    Swift v4.0
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.1.1" data-path="../../Swift/Swift Probe - Optional.html">
+            
+                <a href="../../Swift/Swift Probe - Optional.html">
+            
+                    
+                    Swift Probe - Optional
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 7 - Shadowsocks 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" >
+            
+                <span>
+            
+                    
+                    Shadowsocks v2.9.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="8.1.1" data-path="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                    
+                    Shadowsocks Probe I - Socks5 与 EventLoop 事件分发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.1.2" data-path="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                    
+                    Shadowsocks Probe II - TCP 代理过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >浅谈Associated Objects</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>&#x4F5C;&#x8005;&#xFF1A;&#x51AC;&#x74DC;</p>
+<p>&#x539F;&#x6587;&#x94FE;&#x63A5;&#xFF1A;<a href="http://www.desgard.com/2016/07/30/AssociatedObjectsIntroduction/" target="_blank">Guardia &#xB7; &#x74DC;&#x5730;</a></p>
+</blockquote>
+<h1 id="&#x6D45;&#x8C08;associated-objects">&#x6D45;&#x8C08;Associated Objects</h1>
+<p>&#x4FD7;&#x8BDD;&#x8BF4;&#xFF1A;&#x201C;&#x91D1;&#x65E0;&#x8DB3;&#x8D64;&#xFF0C;&#x4EBA;&#x65E0;&#x5B8C;&#x4EBA;&#x3002;&#x201D;&#x5BF9;&#x4E8E;&#x6BCF;&#x4E00;&#x4E2A;Class&#x4E5F;&#x662F;&#x8FD9;&#x6837;&#xFF0C;&#x5C3D;&#x7BA1;&#x6211;&#x4EEC;&#x8BF4;&#x8FD9;&#x4E2A;Class&#x7684;&#x4EE3;&#x7801;&#x89C4;&#x8303;&#x3001;&#x903B;&#x8F91;&#x6E05;&#x6670;&#x5408;&#x7406;&#x7B49;&#x7B49;&#xFF0C;&#x4F46;&#x662F;&#x603B;&#x4F1A;&#x6709;&#x5B83;&#x7684;&#x77ED;&#x677F;&#xFF0C;&#x6216;&#x8005;&#x968F;&#x7740;&#x9700;&#x6C42;&#x6F14;&#x8FDB;&#x800C;&#x65E0;&#x6CD5;&#x8BA2;&#x5236;&#x5B9E;&#x73B0;&#x529F;&#x80FD;&#x3002;&#x4E8E;&#x662F;&#x5728;Objective-C 2.0&#x4E2D;&#x5F15;&#x5165;&#x4E86;<strong>category</strong>&#x8FD9;&#x4E2A;&#x7279;&#x6027;&#xFF0C;&#x7528;&#x4EE5;&#x52A8;&#x6001;&#x5730;&#x4E3A;&#x5DF2;&#x6709;&#x7C7B;&#x6DFB;&#x52A0;&#x65B0;&#x884C;&#x4E3A;&#x3002;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x7684;&#x8BBE;&#x8BA1;&#x7528;&#x6765;&#x63CF;&#x8FF0;&#x4E8B;&#x7269;&#x7684;&#x7EC4;&#x6210;&#x5F80;&#x5F80;&#x662F;&#x4F7F;&#x7528;Class&#x4E2D;&#x7684;&#x5C5E;&#x6027;&#x6210;&#x5458;&#xFF0C;&#x8FD9;&#x4E5F;&#x5C31;<strong>&#x5C40;&#x9650;&#x4E86;&#x65B9;&#x6CD5;&#x7684;&#x5E7F;&#x5EA6;</strong>&#xFF08;&#x5728;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x79F0;&#x4E4B;&#x4E3A;<strong><a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html" target="_blank">An otherwise notable shortcoming for Objective-C</a></strong>&#xFF0C;&#x8BD1;&#x4E3A;&#xFF1A;<em>Objc&#x7684;&#x4E00;&#x4E2A;&#x663E;&#x8457;&#x7F3A;&#x9677;</em>&#xFF09;&#x3002;&#x6240;&#x4EE5;&#x5728;Runtime&#x4E2D;&#x5F15;&#x5165;&#x4E86;<strong>Associated Objects</strong>&#x6765;&#x5F25;&#x8865;&#x8FD9;&#x4E00;&#x7F3A;&#x9677;&#x3002;</p>
+<p>&#x53E6;&#x5916;&#xFF0C;&#x8BF7;&#x5E26;&#x7740;&#x4EE5;&#x4E0B;&#x7591;&#x95EE;&#x6765;&#x9605;&#x8BFB;&#x6B64;&#x6587;&#xFF1A;</p>
+<ul>
+<li>Associated Objects &#x4F7F;&#x7528;&#x573A;&#x666F;&#x3002;</li>
+<li>Associated Objects &#x4E94;&#x79CD;<code>objc_AssociationPolicy</code>&#x6709;&#x4EC0;&#x4E48;&#x533A;&#x522B;&#x3002;</li>
+<li>Associated Objects &#x7684;&#x5B58;&#x50A8;&#x7ED3;&#x6784;&#x3002;</li>
+</ul>
+<h2 id="associated-objects-introduction">Associated Objects Introduction</h2>
+<p>Associated Objects&#x662F;Objective-C 2.0&#x4E2D;Runtime&#x7684;&#x7279;&#x6027;&#x4E4B;&#x4E00;&#x3002;&#x6700;&#x65E9;&#x5F00;&#x59CB;&#x4F7F;&#x7528;&#x662F;&#x5728;<em>OS X Snow Leopard</em>&#x548C;<em>iOS 4</em>&#x4E2D;&#x3002;&#x5728;<code>&lt;objc/runtime.h&gt;</code>&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x4E09;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x4E5F;&#x662F;&#x6211;&#x4EEC;&#x6DF1;&#x5165;&#x63A2;&#x7A76;Associated Objects&#x7684;&#x7A81;&#x7834;&#x53E3;&#xFF1A;</p>
+<ul>
+<li>objc_setAssociatedObject</li>
+<li>objc_getAssociatedObject</li>
+<li>objc_removeAssociatedObjects</li>
+</ul>
+<blockquote>
+<p>void objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)</p>
+</blockquote>
+<ul>
+<li><code>object</code>&#xFF1A;&#x4F20;&#x5165;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x7684;&#x6240;&#x5C5E;&#x5BF9;&#x8C61;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x589E;&#x52A0;&#x6210;&#x5458;&#x7684;&#x5B9E;&#x4F8B;&#x5BF9;&#x8C61;&#xFF0C;&#x4E00;&#x822C;&#x6765;&#x8BF4;&#x4F20;&#x5165;self&#x3002;</li>
+<li><code>key</code>&#xFF1A;&#x4E00;&#x4E2A;&#x552F;&#x4E00;&#x6807;&#x8BB0;&#x3002;&#x5728;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x4E2D;&#x63A8;&#x8350;&#x4F7F;&#x7528;<code>static char</code>&#xFF0C;&#x5F53;&#x7136;&#x66F4;&#x63A8;&#x8350;&#x662F;&#x6307;&#x9488;&#x3002;&#x4E3A;&#x4E86;&#x4FBF;&#x6377;&#xFF0C;&#x4E00;&#x822C;&#x4F7F;&#x7528;<code>selector</code>&#xFF0C;&#x8FD9;&#x6837;&#x5728;&#x540E;&#x9762;getter&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x5229;&#x7528;<code>_cmd</code>&#x6765;&#x65B9;&#x4FBF;&#x7684;&#x53D6;&#x51FA;<code>selector</code>&#x3002;</li>
+<li><code>value</code>&#xFF1A;&#x4F20;&#x5165;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x3002;</li>
+<li><code>policy</code>&#xFF1A;<code>objc_AssociationPolicy</code>&#x662F;&#x4E00;&#x4E2A;ObjC&#x679A;&#x4E3E;&#x7C7B;&#x578B;&#xFF0C;&#x4E5F;&#x4EE3;&#x8868;&#x5173;&#x8054;&#x7B56;&#x7565;&#x3002;</li>
+</ul>
+<blockquote>
+<p>void objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)</p>
+<p>void objc_removeAssociatedObjects(id object)</p>
+</blockquote>
+<p>&#x4ECE;&#x53C2;&#x6570;&#x7C7B;&#x578B;&#x53C2;&#x6570;&#x7C7B;&#x578B;&#x4E0A;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x8F7B;&#x6613;&#x7684;&#x5F97;&#x51FA;getter&#x548C;remove&#x65B9;&#x6CD5;&#x4F20;&#x5165;&#x53C2;&#x6570;&#x7684;&#x542B;&#x4E49;&#x3002;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;<strong>objc_removeAssociatedObjects&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x4F1A;&#x79FB;&#x9664;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x6240;&#x6709;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x3002;</strong>&#x5176;&#x5B9E;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x6211;&#x4EEC;&#x4E00;&#x822C;&#x662F;&#x7528;&#x4E0D;&#x5230;&#x7684;&#xFF0C;&#x79FB;&#x9664;&#x6240;&#x6709;&#x5173;&#x8054;&#x610F;&#x5473;&#x7740;&#x5C06;&#x7C7B;&#x6062;&#x590D;&#x6210;<strong>&#x65E0;&#x4EFB;&#x4F55;&#x5173;&#x8054;&#x7684;&#x539F;&#x59CB;&#x72B6;&#x6001;</strong>&#xFF0C;&#x8FD9;&#x4E0D;&#x662F;&#x6211;&#x4EEC;&#x5E0C;&#x671B;&#x7684;&#x3002;&#x6240;&#x4EE5;&#x4E00;&#x822C;&#x7684;&#x505A;&#x6CD5;&#x662F;&#x901A;&#x8FC7;<code>objc_setAssociatedObject</code>&#x6765;&#x4F20;&#x5165;<code>nil</code>&#xFF0C;&#x4ECE;&#x800C;&#x79FB;&#x9664;&#x67D0;&#x4E2A;&#x5DF2;&#x6709;&#x7684;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x7528;<a href="http://nshipster.com/associated-objects/" target="_blank">Associated Objects</a>&#x8FD9;&#x7BC7;&#x6587;&#x4E2D;&#x7684;&#x4F8B;&#x5B50;&#x6765;&#x4E3E;&#x4F8B;&#xFF1A;</p>
+<pre><code class="lang-c">// NSObject+AssociatedObject.h
+
+@interface NSObject (AssociatedObject)
+@property (nonatomic, strong) id associatedObject;
+@end
+</code></pre>
+<pre><code class="lang-c">// NSObject+AssociatedObject.m
+
+@implementation NSObject (AssociatedObject)
+@dynamic associatedObject;
+
+- (void)setAssociatedObject:(id)object {
+     objc_setAssociatedObject(self, @selector(associatedObject), object, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (id)associatedObject {
+    return objc_getAssociatedObject(self, @selector(associatedObject));
+}
+</code></pre>
+<p>&#x8FD9;&#x65F6;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x53D1;&#x73B0;<code>associatedObject</code>&#x8FD9;&#x4E2A;&#x5C5E;&#x6027;&#x5DF2;&#x7ECF;&#x6DFB;&#x52A0;&#x81F3;<code>NSObject</code>&#x7684;&#x5B9E;&#x4F8B;&#x4E2D;&#x4E86;&#x3002;&#x5E76;&#x4E14;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;category&#x6307;&#x5B9A;&#x7684;getter&#x548C;setter&#x65B9;&#x6CD5;&#x5BF9;&#x8FD9;&#x4E2A;&#x5C5E;&#x6027;&#x8FDB;&#x884C;&#x5B58;&#x53D6;&#x64CD;&#x4F5C;&#x3002;&#xFF08;&#x6CE8;&#xFF1A;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;<code>@dynamic</code>&#x5173;&#x952E;&#x5B57;&#x662F;&#x4E3A;&#x4E86;&#x544A;&#x77E5;&#x7F16;&#x8BD1;&#x5668;&#xFF1A;<strong>&#x5728;&#x7F16;&#x8BD1;&#x671F;&#x4E0D;&#x8981;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x5B9E;&#x73B0;&#x5C5E;&#x6027;&#x6240;&#x7528;&#x7684;&#x5B58;&#x53D6;&#x65B9;&#x6CD5;</strong>&#x3002;&#x56E0;&#x4E3A;&#x5BF9;&#x4E8E;Associated Objects&#x6211;&#x4EEC;<strong>&#x5FC5;&#x987B;&#x624B;&#x52A8;&#x6DFB;&#x52A0;</strong>&#x3002;&#x5F53;&#x7136;&#xFF0C;&#x4E0D;&#x5199;&#x8FD9;&#x4E2A;&#x5173;&#x952E;&#x5B57;&#xFF0C;&#x4F7F;&#x7528;&#x540C;&#x540D;&#x65B9;&#x6CD5;&#x8FDB;&#x884C;override&#x4E5F;&#x662F;&#x53EF;&#x4EE5;&#x8FBE;&#x5230;&#x76F8;&#x540C;&#x6548;&#x679C;&#x7684;&#x3002;&#x4F46;&#x4ECE;&#x7F16;&#x7801;&#x89C4;&#x8303;&#x548C;&#x4F18;&#x5316;&#x6548;&#x7387;&#x6765;&#x8BB2;&#xFF0C;&#x663E;&#x5F0F;&#x58F0;&#x660E;&#x662F;&#x6700;&#x597D;&#x7684;&#x3002;&#xFF09;</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/208988-10a9d08b532258d3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.jpg"></p>
+<h2 id="associationpolicy">AssociationPolicy</h2>
+<p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#xFF0C;&#x6211;&#x4EEC;&#x6CE8;&#x610F;&#x5230;&#x4E86;<code>OBJC_ASSOCIATION_RETAIN_NONATOMIC</code>&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x5B83;&#x7684;&#x679A;&#x4E3E;&#x7C7B;&#x578B;&#x5404;&#x4E2A;&#x5143;&#x7D20;&#x7684;&#x542B;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<table>
+<thead>
+<tr>
+<th>Behavior</th>
+<th>@property Equivalent</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OBJC_ASSOCIATION_ASSIGN</td>
+<td>@property (assign) &#x6216; @property (unsafe_unretained)</td>
+<td>&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x7684;&#x5F31;&#x5F15;&#x7528;&#x3002;</td>
+</tr>
+<tr>
+<td>OBJC_ASSOCIATION_RETAIN_NONATOMIC</td>
+<td>@property (nonatomic, strong)</td>
+<td>&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x7684;&#x5F3A;&#x5F15;&#x7528;&#xFF0C;&#x4E0D;&#x80FD;&#x88AB;&#x539F;&#x5B50;&#x5316;&#x4F7F;&#x7528;&#x3002;</td>
+</tr>
+<tr>
+<td>OBJC_ASSOCIATION_COPY_NONATOMIC</td>
+<td>@property (nonatomic, copy)</td>
+<td>&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x7684;copy&#x5F15;&#x7528;&#xFF0C;&#x4E0D;&#x80FD;&#x88AB;&#x539F;&#x5B50;&#x5316;&#x4F7F;&#x7528;&#x3002;</td>
+</tr>
+<tr>
+<td>OBJC_ASSOCIATION_RETAIN</td>
+<td>@property (atomic, strong)</td>
+<td>&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x7684;&#x5F3A;&#x5F15;&#x7528;&#xFF0C;&#x80FD;&#x88AB;&#x539F;&#x5B50;&#x5316;&#x4F7F;&#x7528;&#x3002;</td>
+</tr>
+<tr>
+<td>OBJC_ASSOCIATION_COPY</td>
+<td>@property (atomic, copy)</td>
+<td>&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x7684;copy&#x5F15;&#x7528;&#xFF0C;&#x80FD;&#x88AB;&#x539F;&#x5B50;&#x5316;&#x4F7F;&#x7528;&#x3002;</td>
+</tr>
+<tr>
+<td>OBJC_ASSOCIATION_GETTER_AUTORELEASE</td>
+<td></td>
+<td>&#x81EA;&#x52A8;&#x91CA;&#x653E;&#x7C7B;&#x578B; </td>
+</tr>
+</tbody>
+</table>
+<p>OBJC_ASSOCIATION_ASSIGN&#x7C7B;&#x578B;&#x7684;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x548C;<code>weak</code>&#x6709;&#x4E00;&#x5B9A;&#x5DEE;&#x522B;&#xFF0C;&#x800C;&#x66F4;&#x52A0;&#x63A5;&#x8FD1;&#x4E8E;<code>unsafe_unretained</code>&#xFF0C;&#x5373;&#x5F53;&#x76EE;&#x6807;&#x5BF9;&#x8C61;&#x906D;&#x5230;&#x6467;&#x6BC1;&#x65F6;&#xFF0C;&#x5C5E;&#x6027;&#x503C;&#x4E0D;&#x4F1A;&#x81EA;&#x52A8;&#x6E05;&#x7A7A;&#x3002;&#xFF08;&#x7FFB;&#x8BD1;&#x81EA;<a href="http://nshipster.com/associated-objects/" target="_blank">Associated Objects</a>&#xFF09;</p>
+<h2 id="usage-sample">Usage Sample</h2>
+<p>&#x540C;&#x6837;&#x662F;<a href="http://nshipster.com/associated-objects/" target="_blank">Associated Objects</a>&#x6587;&#x4E2D;&#xFF0C;&#x603B;&#x7ED3;&#x4E86;&#x4E09;&#x4E2A;&#x5173;&#x4E8E;Associated Objects&#x7528;&#x6CD5;&#xFF1A;</p>
+<ul>
+<li><strong>&#x4E3A;Class&#x6DFB;&#x52A0;&#x79C1;&#x6709;&#x6210;&#x5458;</strong>&#xFF1A;&#x4F8B;&#x5982;&#x5728;AFNetworking&#x4E2D;&#xFF0C;<a href="https://github.com/AFNetworking/AFNetworking/blob/2.1.0/UIKit%2BAFNetworking/UIImageView%2BAFNetworking.m#L57-L63" target="_blank">&#x5728;UIImageView&#x91CC;&#x6DFB;&#x52A0;&#x4E86;<strong>imageRequestOperation</strong>&#x5BF9;&#x8C61;</a>&#xFF0C;&#x4ECE;&#x800C;&#x4FDD;&#x8BC1;&#x4E86;&#x5F02;&#x6B65;&#x52A0;&#x8F7D;&#x56FE;&#x7247;&#x3002;</li>
+<li><strong>&#x4E3A;Class&#x6DFB;&#x52A0;&#x5171;&#x6709;&#x6210;&#x5458;</strong>&#xFF1A;&#x4F8B;&#x5982;&#x5728;FDTemplateLayoutCell&#x4E2D;&#xFF0C;&#x4F7F;&#x7528;Associated Objects&#x6765;&#x7F13;&#x5B58;&#x6BCF;&#x4E2A;cell&#x7684;&#x9AD8;&#x5EA6;&#xFF08;<a href="https://github.com/mconintet/UITableView-FDTemplateLayoutCell/blob/master/Classes/UITableView+FDIndexPathHeightCache.m#L124" target="_blank">&#x4EE3;&#x7801;&#x7247;&#x6BB5;1</a>&#x3001;<a href="https://github.com/mconintet/UITableView-FDTemplateLayoutCell/blob/master/Classes/UITableView+FDKeyedHeightCache.m#L81" target="_blank">&#x4EE3;&#x7801;&#x7247;&#x6BB5;2</a>&#xFF09;&#x3002;&#x901A;&#x8FC7;&#x5206;&#x914D;&#x4E0D;&#x540C;&#x7684;key&#xFF0C;&#x5728;&#x590D;&#x7528;cell&#x7684;&#x65F6;&#x5019;&#x5373;&#x65F6;&#x53D6;&#x51FA;&#xFF0C;&#x589E;&#x52A0;&#x6548;&#x7387;&#x3002;</li>
+<li><strong>&#x521B;&#x5EFA;KVO&#x5BF9;&#x8C61;</strong>&#xFF1A;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528;category&#x6765;&#x521B;&#x5EFA;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x4F5C;&#x4E3A;&#x89C2;&#x5BDF;&#x8005;&#x3002;&#x53EF;&#x4EE5;&#x53C2;&#x8003;<a href="http://kingscocoa.com/tutorials/associated-objects/" target="_blank"><em>Objective-C Associated Objects</em></a>&#x8FD9;&#x7BC7;&#x6587;&#x7684;&#x4F8B;&#x5B50;&#x3002;</li>
+</ul>
+<h2 id="analysis-source-code">Analysis Source Code</h2>
+<p>&#x5728;<a href="http://blog.leichunfeng.com/blog/2015/06/26/objective-c-associated-objects-implementation-principle/" target="_blank"><em>Objective-C Associated Objects &#x7684;&#x5B9E;&#x73B0;&#x539F;&#x7406;</em></a>&#x8FD9;&#x7BC7;&#x6587;&#x4E2D;&#xFF0C;&#x4F5C;&#x8005;&#x6709;&#x4E00;&#x4E2A;<a href="https://github.com/leichunfeng/AssociatedObjects" target="_blank">&#x4F8B;&#x5B50;</a>&#xFF0C;&#x4F5C;&#x8005;&#x5206;&#x6790;&#x4E86;&#x5728;Associated Objects&#x4E2D;&#x5F31;&#x5F15;&#x7528;&#x7684;&#x533A;&#x522B;&#x3002;&#x5176;&#x4EE3;&#x7801;&#x7247;&#x6BB5;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#import <span class="hljs-string">&quot;ViewController.h&quot;</span></span>
+<span class="hljs-meta">#import <span class="hljs-string">&quot;ViewController+AssociatedObjects.h&quot;</span></span>
+
+__weak NSString *string_weak_assign = nil;
+__weak NSString *string_weak_retain = nil;
+__weak NSString *string_weak_copy   = nil;
+
+@implementation ViewController
+
+- (<span class="hljs-keyword">void</span>)viewDidLoad {
+    [super viewDidLoad];
+    <span class="hljs-comment">// &#x901A;&#x8FC7;[NSString stringWithFormat:]&#x6765;&#x6301;&#x6709;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x5BF9;&#x8C61;</span>
+    self.associatedObject_assign = [NSString stringWithFormat:@<span class="hljs-string">&quot;associatedObject_assign&quot;</span>];
+    self.associatedObject_retain = [NSString stringWithFormat:@<span class="hljs-string">&quot;associatedObject_retain&quot;</span>];
+    self.associatedObject_copy   = [NSString stringWithFormat:@<span class="hljs-string">&quot;associatedObject_copy&quot;</span>];
+
+    <span class="hljs-comment">// &#x5F3A;&#x8C03;&#x6307;&#x5411;&#x5404;&#x4E2A;&#x5C5E;&#x6027;&#x7684;&#x6307;&#x9488;&#x5747;&#x4E3A;&#x5F31;&#x7C7B;&#x578B;&#x6307;&#x9488;</span>
+    <span class="hljs-comment">// &#x4EE5;&#x4FDD;&#x8BC1;weak&#x3001;assign&#x7C7B;&#x578B;&#x5C5E;&#x6027;&#x4F1A;&#x88AB;&#x91CA;&#x653E;</span>
+    string_weak_assign = self.associatedObject_assign;
+    string_weak_retain = self.associatedObject_retain;
+    string_weak_copy   = self.associatedObject_copy;
+}
+
+- (<span class="hljs-keyword">void</span>)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@<span class="hljs-string">&quot;self.associatedObject_assign: %@&quot;</span>, self.associatedObject_assign); <span class="hljs-comment">// Will Crash</span>
+    NSLog(@<span class="hljs-string">&quot;self.associatedObject_retain: %@&quot;</span>, self.associatedObject_retain);
+    NSLog(@<span class="hljs-string">&quot;self.associatedObject_copy:   %@&quot;</span>, self.associatedObject_copy);
+}
+
+@end
+</code></pre>
+<p>&#x5728;&#x6D4B;&#x8BD5;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x53D1;&#x73B0;&#x6709;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#x4E0D;&#x81F3;&#x4E8E;&#x5BFC;&#x81F4;crash&#x3002;&#x6211;&#x731C;&#x60F3;&#x53EF;&#x80FD;&#x662F;&#x56E0;&#x4E3A;<code>[NSString stringWithFormat:]</code>&#x65B9;&#x6CD5;&#x7684;&#x6301;&#x6709;&#x5B57;&#x7B26;&#x4E32;&#x53EF;&#x80FD;&#x4F1A;&#x88AB;&#x7F16;&#x8BD1;&#x5668;&#x4F18;&#x5316;&#x6210;<em>compile-time constant</em>&#x3002;&#x4F60;&#x53EF;&#x4EE5;&#x5C1D;&#x8BD5;&#x7740;&#x505A;&#x5982;&#x4E0B;&#x4FEE;&#x6539;&#xFF1A;</p>
+<pre><code class="lang-c">self.associatedObject_assign = @<span class="hljs-string">&quot;associatedObject_assign&quot;</span>;
+self.associatedObject_retain = @<span class="hljs-string">&quot;associatedObject_retain&quot;</span>;
+self.associatedObject_copy   = @<span class="hljs-string">&quot;associatedObject_copy&quot;</span>;
+</code></pre>
+<p>&#x4F60;&#x4F1A;&#x53D1;&#x73B0;&#x5168;&#x90E8;&#x6B63;&#x5E38;&#x8F93;&#x51FA;&#x3002;&#x56E0;&#x4E3A;&#x6240;&#x6709;&#x5B57;&#x7B26;&#x4E32;&#x90FD;&#x53D8;&#x6210;&#x4E86;&#x7F16;&#x8BD1;&#x671F;&#x5E38;&#x91CF;&#x800C;&#x5B58;&#x50A8;&#x8D77;&#x6765;&#x3002;&#x6240;&#x4EE5;&#x63A2;&#x7A76;&#x65B9;&#x6CD5;&#xFF0C;&#x5E94;&#x8BE5;&#x662F;&#x8BB2;&#x7C7B;&#x578B;&#x66F4;&#x6539;&#x6210;NSObject&#x8FDB;&#x884C;&#x8BD5;&#x9A8C;&#x3002;</p>
+<h3 id="setter-source-code">Setter Source Code</h3>
+<p>&#x6211;&#x4EEC;&#x4E00;&#x76F4;&#x6709;&#x4E2A;&#x7591;&#x95EE;&#xFF0C;&#x5C31;&#x662F;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x662F;&#x5982;&#x4F55;&#x5B58;&#x50A8;&#x7684;&#x3002;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x770B;&#x4E0B;<em>Runtime</em>&#x7684;&#x6E90;&#x7801;&#x3002;</p>
+<p>&#x4EE5;&#x4E0B;&#x6E90;&#x7801;&#x6765;&#x81EA;&#x4E8E;<a href="http://opensource.apple.com/tarballs/objc4/" target="_blank">opensource.apple.com</a>&#x7684;<em>objc4-680.tar.gz</em>&#x3002;</p>
+<pre><code class="lang-c">class ObjcAssociation {
+   uintptr_t _policy;
+   id _value;
+public:
+   ObjcAssociation(uintptr_t policy, id value) : _policy(policy), _value(value) {}
+   ObjcAssociation() : _policy(0), _value(nil) {}
+
+   uintptr_t policy() const { return _policy; }
+   id value() const { return _value; }
+
+   bool hasValue() { return _value != nil; }
+};
+
+class AssociationsHashMap : public unordered_map&lt;disguised_ptr_t, ObjectAssociationMap *, DisguisedPointerHash, DisguisedPointerEqual, AssociationsHashMapAllocator&gt; {
+public:
+   void *operator new(size_t n) { return ::malloc(n); }
+   void operator delete(void *ptr) { ::free(ptr); }
+};
+
+class AssociationsManager {
+    static spinlock_t _lock;
+    static AssociationsHashMap *_map;               // associative references:  object pointer -&gt; PtrPtrHashMap.
+public:
+    AssociationsManager()   { _lock.lock(); }
+    ~AssociationsManager()  { _lock.unlock(); }
+
+    AssociationsHashMap &amp;associations() {
+        if (_map == NULL)
+            _map = new AssociationsHashMap();
+        return *_map;
+    }
+};
+
+static id acquireValue(id value, uintptr_t policy) {
+    // &#x9047;&#x89C1;&#x4E0D;&#x5408;&#x6CD5;policy&#x6216;&#x8005;assign&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x5C06;&#x5176;&#x4ED6;&#x65E0;&#x6548;policy&#x5F53;&#x505A;assign&#x5904;&#x7406;
+    switch (policy &amp; 0xFF) {
+    case OBJC_ASSOCIATION_SETTER_RETAIN:
+        return ((id(*)(id, SEL))objc_msgSend)(value, SEL_retain);
+    case OBJC_ASSOCIATION_SETTER_COPY:
+        return ((id(*)(id, SEL))objc_msgSend)(value, SEL_copy);
+    }
+    return value;
+}
+
+inline disguised_ptr_t DISGUISE(id value) { return ~uintptr_t(value); }
+
+void _object_set_associative_reference(id object, void *key, id value, uintptr_t policy) {
+    // retain the new value (if any) outside the lock.
+    // &#x521B;&#x5EFA;&#x4E00;&#x4E2A;ObjcAssociation&#x5BF9;&#x8C61;
+    ObjcAssociation old_association(0, nil);
+
+    // &#x901A;&#x8FC7;policy&#x4E3A;value&#x521B;&#x5EFA;&#x5BF9;&#x5E94;&#x5C5E;&#x6027;&#xFF0C;&#x5982;&#x679C;policy&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x4E3A;assign
+    id new_value = value ? acquireValue(value, policy) : nil;
+    {
+        // &#x521B;&#x5EFA;AssociationsManager&#x5BF9;&#x8C61;
+        AssociationsManager manager;
+
+        // &#x5728;manager&#x53D6;_map&#x6210;&#x5458;&#xFF0C;&#x5176;&#x5B9E;&#x662F;&#x4E00;&#x4E2A;map&#x7C7B;&#x578B;&#x7684;&#x6620;&#x5C04;
+        AssociationsHashMap &amp;associations(manager.associations());
+
+        // &#x521B;&#x5EFA;&#x6307;&#x9488;&#x6307;&#x5411;&#x5373;&#x5C06;&#x62E5;&#x6709;&#x6210;&#x5458;&#x7684;Class
+        // &#x81F3;&#x6B64;&#x8BE5;&#x7C7B;&#x5DF2;&#x7ECF;&#x5305;&#x542B;&#x8FD9;&#x4E2A;&#x5173;&#x8054;&#x5BF9;&#x8C61;
+        disguised_ptr_t disguised_object = DISGUISE(object);
+
+         // &#x4EE5;&#x4E0B;&#x662F;&#x8BB0;&#x5F55;&#x5F3A;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#x6210;&#x5458;&#x7684;&#x8FC7;&#x7A0B;
+        if (new_value) {
+            // break any existing association.
+            // &#x5728;&#x5373;&#x5C06;&#x62E5;&#x6709;&#x6210;&#x5458;&#x7684;Class&#x4E2D;&#x67E5;&#x627E;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x6539;&#x5173;&#x8054;&#x5C5E;&#x6027;
+            AssociationsHashMap::iterator i = associations.find(disguised_object);
+            if (i != associations.end()) {
+                // secondary table exists
+                // &#x5F53;&#x5B58;&#x5728;&#x65F6;&#x5019;&#xFF0C;&#x8BBF;&#x95EE;&#x8FD9;&#x4E2A;&#x7A7A;&#x95F4;&#x7684;map
+                ObjectAssociationMap *refs = i-&gt;second;
+                // &#x904D;&#x5386;&#x5176;&#x6210;&#x5458;&#x5BF9;&#x5E94;&#x7684;key
+                ObjectAssociationMap::iterator j = refs-&gt;find(key);
+                if (j != refs-&gt;end()) {
+                    // &#x5982;&#x679C;&#x5B58;&#x5728;key&#xFF0C;&#x91CD;&#x65B0;&#x66F4;&#x6539;Key&#x7684;&#x6307;&#x5411;&#x5230;&#x65B0;&#x5173;&#x8054;&#x5C5E;&#x6027;
+                    old_association = j-&gt;second;
+                    j-&gt;second = ObjcAssociation(policy, new_value);
+                } else {
+                    // &#x5426;&#x5219;&#x4EE5;&#x65B0;&#x7684;key&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5173;&#x8054;
+                    (*refs)[key] = ObjcAssociation(policy, new_value);
+                }
+            } else {
+                // create the new association (first time).
+                // key&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x76F4;&#x63A5;&#x521B;&#x5EFA;&#x5173;&#x8054;
+                ObjectAssociationMap *refs = new ObjectAssociationMap;
+                associations[disguised_object] = refs;
+                (*refs)[key] = ObjcAssociation(policy, new_value);
+                object-&gt;setHasAssociatedObjects();
+            }
+        } else {
+            // setting the association to nil breaks the association.
+            // &#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x662F;policy&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x8005;&#x4E3A;assign&#x7684;&#x65F6;&#x5019;
+            // &#x5728;&#x5373;&#x5C06;&#x62E5;&#x6709;&#x7684;Class&#x4E2D;&#x67E5;&#x627E;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;Class
+            // &#x5176;&#x5B9E;&#x8FD9;&#x91CC;&#x7684;&#x610F;&#x601D;&#x5C31;&#x662F;&#x5982;&#x679C;&#x4E4B;&#x524D;&#x6709;&#x8FD9;&#x4E2A;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#xFF0C;&#x5E76;&#x4E14;&#x662F;&#x975E;assign&#x5F62;&#x7684;&#xFF0C;&#x76F4;&#x63A5;erase
+            AssociationsHashMap::iterator i = associations.find(disguised_object);
+            if (i != associations.end()) {
+                // &#x5982;&#x679C;&#x6709;&#x8BE5;&#x7C7B;&#x578B;&#x6210;&#x5458;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x6709;key
+                ObjectAssociationMap *refs = i-&gt;second;
+                ObjectAssociationMap::iterator j = refs-&gt;find(key);
+                if (j != refs-&gt;end()) {
+                    // &#x5982;&#x679C;&#x6709;key&#xFF0C;&#x8BB0;&#x5F55;&#x65E7;&#x5BF9;&#x8C61;&#xFF0C;&#x91CA;&#x653E;
+                    old_association = j-&gt;second;
+                    refs-&gt;erase(j);
+                }
+            }
+        }
+    }
+    // release the old value (outside of the lock).
+    // &#x5982;&#x679C;&#x5B58;&#x5728;&#x65E7;&#x5BF9;&#x8C61;&#xFF0C;&#x5219;&#x5C06;&#x5176;&#x91CA;&#x653E;
+    if (old_association.hasValue()) ReleaseValue()(old_association);
+}
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x8BFB;&#x8FC7;&#x4EE3;&#x7801;&#x540E;&#x53D1;&#x73B0;&#x662F;&#x5176;&#x50A8;&#x5B58;&#x7ED3;&#x6784;&#x662F;&#x8FD9;&#x6837;&#x7684;&#x4E00;&#x4E2A;&#x903B;&#x8F91;&#xFF1A;</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/208988-67f51f426f98ce53.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"></p>
+<ul>
+<li>&#x6A59;&#x8272;&#x7684;&#x662F;<code>AssociationsManager</code>&#x662F;&#x9876;&#x7EA7;&#x7ED3;&#x6784;&#x4F53;&#xFF0C;&#x7EF4;&#x62A4;&#x4E86;&#x4E00;&#x4E2A;<code>spinlock_t</code>&#x9501;&#x548C;&#x4E00;&#x4E2A;<code>_map</code>&#x7684;&#x54C8;&#x5E0C;&#x8868;&#x3002;&#x8FD9;&#x4E2A;&#x54C8;&#x5E0C;&#x8868;&#x4E2D;&#x7684;&#x952E;&#x4E3A;<code>disguised_ptr_t</code>&#xFF0C;&#x5728;&#x5F97;&#x5230;&#x8FD9;&#x4E2A;&#x6307;&#x9488;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6E90;&#x7801;&#x4E2D;&#x6267;&#x884C;&#x4E86;<code>DISGUISE</code>&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x7684;&#x529F;&#x80FD;&#x662F;&#x83B7;&#x5F97;&#x6307;&#x5411;<strong>self</strong>&#x5730;&#x5740;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x5373;&#x4E3A;&#x6307;&#x5411;<strong>&#x5BF9;&#x8C61;&#x5730;&#x5740;</strong>&#x7684;&#x6307;&#x9488;&#x3002;&#x901A;&#x8FC7;&#x5730;&#x5740;&#x8FD9;&#x4E2A;&#x552F;&#x4E00;&#x6807;&#x8BC6;&#xFF0C;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684;value&#xFF0C;&#x5373;&#x4E00;&#x4E2A;&#x5B50;&#x54C8;&#x5E0C;&#x8868;&#x3002;&#xFF08;@&#x9976;&#x5FD7;&#x81FB; &#x52D8;&#x8BEF;&#xFF09;</li>
+<li>&#x5B50;&#x54C8;&#x5E0C;&#x8868;&#x662F;<code>ObjectAssociationMap</code>&#xFF0C;&#x952E;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x4F20;&#x5165;&#x7684;<code>Key</code>&#xFF0C;&#x800C;&#x503C;&#x662F;<code>ObjcAssociation</code>&#xFF0C;&#x5373;&#x8FD9;&#x4E2A;&#x6210;&#x5458;&#x5BF9;&#x8C61;&#x3002;&#x4ECE;&#x800C;&#x7EF4;&#x62A4;&#x4E00;&#x4E2A;&#x6210;&#x5458;&#x7684;&#x6240;&#x6709;&#x5C5E;&#x6027;&#x3002;</li>
+</ul>
+<p>&#x5728;&#x6BCF;&#x6B21;&#x6267;&#x884C;setter&#x65B9;&#x6CD5;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x4F1A;&#x9010;&#x5C42;&#x904D;&#x5386;Key&#xFF0C;&#x9010;&#x5C42;&#x5224;&#x65AD;&#x3002;&#x5E76;&#x4E14;&#x5F53;&#x6301;&#x6709;Class&#x6709;&#x4E86;&#x5173;&#x8054;&#x5C5E;&#x6027;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5728;&#x6267;&#x884C;&#x6210;&#x5458;&#x7684;Getter&#x65B9;&#x6CD5;&#x65F6;&#xFF0C;&#x4F1A;&#x4F18;&#x5148;&#x67E5;&#x627E;Category&#x4E2D;&#x7684;&#x5173;&#x8054;&#x6210;&#x5458;&#x3002;</p>
+<p>&#x8FD9;&#x6837;&#x4F1A;&#x5E26;&#x6765;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#xFF1A;<strong>&#x5982;&#x679C;category&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x4E0E;Class&#x4E2D;&#x7684;&#x67D0;&#x4E2A;&#x6210;&#x5458;&#x540C;&#x540D;&#xFF0C;&#x867D;&#x7136;key&#x503C;&#x4E0D;&#x4E00;&#x5B9A;&#x76F8;&#x540C;&#xFF0C;&#x81EA;&#x8EAB;&#x7684;Class&#x4E0D;&#x4E00;&#x5B9A;&#x76F8;&#x540C;&#xFF0C;policy&#x4E5F;&#x4E0D;&#x4E00;&#x5B9A;&#x76F8;&#x540C;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x8FD9;&#x6837;&#x505A;&#x4F1A;&#x76F4;&#x63A5;&#x8986;&#x76D6;&#x4E4B;&#x524D;&#x7684;&#x6210;&#x5458;&#xFF0C;&#x9020;&#x6210;&#x65E0;&#x6CD5;&#x8BBF;&#x95EE;&#xFF0C;&#x4F46;&#x662F;&#x5176;&#x5185;&#x90E8;&#x6240;&#x6709;&#x4FE1;&#x606F;&#x53CA;&#x6570;&#x636E;&#x5168;&#x90E8;&#x5B58;&#x5728;&#x3002;</strong>&#x4F8B;&#x5982;&#x6211;&#x4EEC;&#x5BF9;<code>ViewController</code>&#x505A;&#x4E00;&#x4E2A;Category&#xFF0C;&#x6765;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x53EB;&#x505A;view&#x7684;&#x6210;&#x5458;&#xFF0C;&#x6211;&#x4EEC;&#x4F1A;&#x53D1;&#x73B0;&#x5728;&#x8FD0;&#x884C;&#x5DE5;&#x7A0B;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6A21;&#x62DF;&#x5668;&#x76F4;&#x63A5;&#x9ED1;&#x5C4F;&#x3002;</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/208988-97d8f5bde8f5de41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3.jpg"></p>
+<p>&#x6211;&#x4EEC;&#x5728;viewDidLoad&#x4E2D;&#x4E0B;&#x65AD;&#x70B9;&#xFF0C;&#x751A;&#x81F3;&#x65E0;&#x6CD5;&#x8FDB;&#x5165;debug&#x6A21;&#x5F0F;&#x3002;&#x56E0;&#x4E3A;view&#x5C5E;&#x6027;&#x5DF2;&#x7ECF;&#x88AB;&#x8986;&#x76D6;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x4F1A;&#x7EE7;&#x7EED;&#x8FDB;&#x884C;viewController&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x3002;</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/208988-12aa766163679316.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="4.jpg"></p>
+<p>&#x8FD9;&#x4E00;&#x70B9;&#x5F88;&#x5371;&#x9669;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x8981;&#x675C;&#x7EDD;&#x8986;&#x76D6;Class&#x539F;&#x6765;&#x7684;&#x5C5E;&#x6027;&#xFF0C;&#x8FD9;&#x4F1A;&#x7834;&#x574F;Class&#x539F;&#x6709;&#x7684;&#x529F;&#x80FD;&#x3002;&#xFF08;&#x5F53;&#x7136;&#xFF0C;&#x6211;&#x662F;&#x5341;&#x5206;&#x4E0D;&#x63A8;&#x8350;&#x5728;&#x4E1A;&#x52A1;&#x9879;&#x76EE;&#x4E2D;&#x4F7F;&#x7528;Runtime&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x6837;&#x7684;&#x4EE3;&#x7801;&#x53EF;&#x8BFB;&#x6027;&#x548C;&#x7EF4;&#x62A4;&#x6027;&#x592A;&#x4F4E;&#x3002;&#xFF09;</p>
+<h3 id="getter-source-code--remove">Getter Source Code &amp; Remove</h3>
+<p>&#x8FD9;&#x4E24;&#x79CD;&#x65B9;&#x6CD5;&#x6211;&#x4EEC;&#x76F4;&#x63A5;&#x770B;&#x6E90;&#x7801;&#xFF0C;&#x5728;&#x770B;&#x8FC7;Setter&#x4E2D;&#x7684;&#x904D;&#x5386;&#x5D4C;&#x5957;map&#x7ED3;&#x6784;&#x7684;&#x4EE3;&#x7801;&#x7247;&#x6BB5;&#x540E;&#xFF0C;&#x4F60;&#x4F1A;&#x5F88;&#x5BB9;&#x6613;&#x7406;&#x89E3;&#x8FD9;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#x3002;</p>
+<pre><code class="lang-c">id _object_get_associative_reference(id object, void *key) {
+    id value = nil;
+    uintptr_t policy = OBJC_ASSOCIATION_ASSIGN;
+    {
+        AssociationsManager manager;
+        AssociationsHashMap &amp;associations(manager.associations());
+        disguised_ptr_t disguised_object = DISGUISE(object);
+        AssociationsHashMap::iterator i = associations.find(disguised_object);
+        if (i != associations.end()) {
+            ObjectAssociationMap *refs = i-&gt;second;
+            ObjectAssociationMap::iterator j = refs-&gt;find(key);
+            if (j != refs-&gt;end()) {
+                ObjcAssociation &amp;entry = j-&gt;second;
+                value = entry.value();
+                policy = entry.policy();
+                if (policy &amp; OBJC_ASSOCIATION_GETTER_RETAIN) ((id(*)(id, SEL))objc_msgSend)(value, SEL_retain);
+            }
+        }
+    }
+    if (value &amp;&amp; (policy &amp; OBJC_ASSOCIATION_GETTER_AUTORELEASE)) {
+        ((id(*)(id, SEL))objc_msgSend)(value, SEL_autorelease);
+    }
+    return value;
+}
+
+void _object_remove_assocations(id object) {
+    vector&lt; ObjcAssociation,ObjcAllocator&lt;ObjcAssociation&gt; &gt; elements;
+    {
+        AssociationsManager manager;
+        AssociationsHashMap &amp;associations(manager.associations());
+        if (associations.size() == 0) return;
+        disguised_ptr_t disguised_object = DISGUISE(object);
+        AssociationsHashMap::iterator i = associations.find(disguised_object);
+        if (i != associations.end()) {
+            // copy all of the associations that need to be removed.
+            ObjectAssociationMap *refs = i-&gt;second;
+
+            // &#x5C06;&#x6240;&#x6709;&#x7684;&#x5173;&#x8054;&#x6210;&#x5458;&#x653E;&#x5230;&#x4E00;&#x4E2A;vector&#xFF0C;&#x7136;&#x540E;&#x7EDF;&#x4E00;&#x6E05;&#x7406;
+            for (ObjectAssociationMap::iterator j = refs-&gt;begin(), end = refs-&gt;end(); j != end; ++j) {
+                elements.push_back(j-&gt;second);
+            }
+            // remove the secondary table.
+            delete refs;
+            associations.erase(i);
+        }
+    }
+    // the calls to releaseValue() happen outside of the lock.
+    for_each(elements.begin(), elements.end(), ReleaseValue());
+}
+</code></pre>
+<p>&#x53E6;&#x5916;&#xFF0C;&#x5BF9;&#x4E8E;remove&#x6709;&#x4E00;&#x70B9;&#x8865;&#x5145;&#x3002;&#x5728;Runtime&#x7684;&#x9500;&#x6BC1;&#x5BF9;&#x8C61;&#x51FD;&#x6570;objc_destructInstance&#x91CC;&#x9762;&#x4F1A;&#x5224;&#x65AD;&#x8FD9;&#x4E2A;&#x5BF9;&#x8C61;&#x6709;&#x6CA1;&#x6709;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#xFF0C;&#x5982;&#x679C;&#x6709;&#xFF0C;&#x4F1A;&#x8C03;&#x7528;<code>_object_remove_assocations</code>&#x505A;&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x7684;&#x6E05;&#x7406;&#x5DE5;&#x4F5C;&#x3002;</p>
+<h2 id="thinking-about-hash-table">Thinking About Hash Table</h2>
+<p>&#x4E0D;&#x5149;&#x662F;&#x672C;&#x6587;&#x8BB2;&#x8FF0;&#x7684;&#x5173;&#x4E8E;Class&#x5173;&#x8054;&#x5BF9;&#x8C61;&#x7684;&#x5B58;&#x50A8;&#x65B9;&#x5F0F;&#xFF0C;&#x8FD8;&#x662F;Apple&#x4E2D;&#x5176;&#x4ED6;&#x7684;Souce Code&#xFF08;&#x4F8B;&#x5982;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x7BA1;&#x7406;&#xFF09;&#xFF0C;&#x6211;&#x4EEC;&#x80FD;&#x611F;&#x53D7;&#x5230;Apple&#x5BF9;Hash Table&#xFF08;&#x672C;&#x6587;&#x4E2D;&#x7684;map&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF09;&#x8FD9;&#x79CD;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x60C5;&#x6709;&#x72EC;&#x949F;&#x3002;&#x5728;&#x5927;&#x91CF;&#x7684;&#x5B9E;&#x8DF5;&#x4E2D;&#x53EF;&#x4EE5;&#x8BF4;&#x660E;&#xFF0C;Hash Table&#x5BF9;&#x4E8E;&#x4F18;&#x5316;&#x6548;&#x7387;&#x7684;&#x63D0;&#x5347;&#xFF0C;&#x8FD9;&#x662F;&#x6BCB;&#x5EB8;&#x7F6E;&#x7591;&#x7684;&#x3002;</p>
+<p>&#x7EC6;&#x7A76;&#x4F7F;&#x7528;&#x8FD9;&#x79CD;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x7684;&#x539F;&#x56E0;&#xFF0C;&#x552F;&#x4E00;&#x7684;Key&#x53EF;&#x5BF9;&#x5E94;&#x6307;&#x5B9A;&#x7684;Value&#x3002;&#x6211;&#x4EEC;&#x4ECE;&#x8BA1;&#x7B97;&#x673A;&#x5B58;&#x50A8;&#x7684;&#x89D2;&#x5EA6;&#x8003;&#x8651;&#xFF0C;&#x56E0;&#x4E3A;&#x6BCF;&#x4E2A;&#x5185;&#x5B58;&#x5730;&#x5740;&#x662F;&#x552F;&#x4E00;&#x7684;&#xFF0C;&#x4E5F;&#x5C31;&#x53EF;&#x4EE5;&#x5047;&#x8C61;&#x6210;Key&#xFF0C;&#x901A;&#x8FC7;&#x552F;&#x4E00;&#x7684;Key&#x6765;&#x8BFB;&#x5199;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x662F;&#x6548;&#x7387;&#x6700;&#x9AD8;&#x7684;&#x65B9;&#x5F0F;&#x3002;</p>
+<h2 id="the-end">The End</h2>
+<p>&#x901A;&#x8FC7;&#x9605;&#x8BFB;&#x6B64;&#x6587;&#xFF0C;&#x60F3;&#x5FC5;&#x4F60;&#x5DF2;&#x7ECF;&#x77E5;&#x9053;&#x90A3;&#x4E09;&#x4E2A;&#x95EE;&#x9898;&#x7684;&#x7B54;&#x6848;&#x3002;&#x7B14;&#x8005;&#x539F;&#x672C;&#x60F3;&#x5BF9;<strong>UITableView-FDTemplateLayoutCell</strong>&#x8FDB;&#x884C;&#x6E90;&#x7801;&#x5206;&#x6790;&#x6765;&#x64B0;&#x5199;&#x4E00;&#x7BC7;&#x6587;&#xFF0C;&#x4F46;&#x662F;&#x53D1;&#x73B0;&#x91CC;&#x9762;&#x5B58;&#x50A8;cell&#x7684;Key&#x503C;&#x4F7F;&#x7528;&#x5230;&#x4E86;Associated Objects&#x8BE5;&#x6280;&#x672F;&#xFF0C;&#x6240;&#x4EE5;&#x5BF9;&#x6B64;&#x8FDB;&#x884C;&#x4E86;&#x5B66;&#x4E60;&#x63A2;&#x7A76;&#x3002;&#x540E;&#x9762;&#xFF0C;&#x6211;&#x4F1A;&#x5206;&#x6790;&#x4E00;&#x4E0B;<strong>UITableView-FDTemplateLayoutCell</strong>&#x7684;&#x6E90;&#x7801;&#xFF0C;&#x8FD9;&#x4E9B;&#x5C06;&#x6536;&#x5F55;&#x5728;&#x6211;&#x7684;&#x8FD9;&#x4E2A;<a href="https://github.com/Desgard/iOS-Source-Probe" target="_blank">Github&#x4ED3;&#x5E93;&#x4E2D;</a>&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+                <a href="objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html" class="navigation navigation-next navigation-unique" aria-label="Next page: 对象方法消息传递流程">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"浅谈Associated Objects","level":"2.1.1","depth":2,"next":{"title":"对象方法消息传递流程","level":"2.1.2","depth":2,"path":"Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.md","ref":"Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.md","articles":[]},"previous":{"title":"objc/runtime.h 708","level":"2.1","depth":1,"ref":"","articles":[{"title":"浅谈Associated Objects","level":"2.1.1","depth":2,"path":"Objective-C/Runtime/浅谈Associated Objects.md","ref":"Objective-C/Runtime/浅谈Associated Objects.md","articles":[]},{"title":"对象方法消息传递流程","level":"2.1.2","depth":2,"path":"Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.md","ref":"Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.md","articles":[]},{"title":"消息转发过程分析","level":"2.1.3","depth":2,"path":"Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 消息转发.md","ref":"Objective-C/Runtime/objc_msgSend消息传递学习笔记 - 消息转发.md","articles":[]},{"title":"用 isa 承载对象的类信息","level":"2.1.4","depth":2,"path":"Objective-C/Runtime/用 isa 承载对象的类信息.md","ref":"Objective-C/Runtime/用 isa 承载对象的类信息.md","articles":[]},{"title":"weak 弱引用的实现方式","level":"2.1.5","depth":2,"path":"Objective-C/Runtime/weak 弱引用的实现方式.md","ref":"Objective-C/Runtime/weak 弱引用的实现方式.md","articles":[]},{"title":"load 方法全程跟踪","level":"2.1.6","depth":2,"path":"Objective-C/Runtime/load 方法全程跟踪.md","ref":"Objective-C/Runtime/load 方法全程跟踪.md","articles":[]},{"title":"浅谈 block - clang 改写后的 block 结构","level":"2.1.7","depth":2,"path":"Objective-C/Runtime/浅谈 block（1） - clang 改写后的 block 结构.md","ref":"Objective-C/Runtime/浅谈 block（1） - clang 改写后的 block 结构.md","articles":[]},{"title":"浅谈 block - 截获变量方式","level":"2.1.8","depth":2,"path":"Objective-C/Runtime/浅谈 block（2） - 截获变量方式.md","ref":"Objective-C/Runtime/浅谈 block（2） - 截获变量方式.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["splitter","github","multipart","mathjax"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/Desgard"},"splitter":{},"search":{},"multipart":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"cn","gitbook":"*"},"file":{"path":"Objective-C/Runtime/浅谈Associated Objects.md","mtime":"2018-07-09T00:41:04.821Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-09T00:56:45.312Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

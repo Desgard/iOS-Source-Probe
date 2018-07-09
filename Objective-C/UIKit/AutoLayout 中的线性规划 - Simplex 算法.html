@@ -1,0 +1,1212 @@
+
+<!DOCTYPE HTML>
+<html lang="cn" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>AutoLayout 中的线性规划 - Simplex 算法 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-multipart/multipart.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="../Foundation/复用的精妙 - UITableView 复用技术原理分析.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 1 - iOS Runtime 源码解析</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" >
+            
+                <span>
+            
+                    
+                    objc/runtime.h 708
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="../Runtime/浅谈Associated Objects.html">
+            
+                <a href="../Runtime/浅谈Associated Objects.html">
+            
+                    
+                    浅谈Associated Objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="../Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                <a href="../Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                    
+                    对象方法消息传递流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.3" data-path="../Runtime/objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                <a href="../Runtime/objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                    
+                    消息转发过程分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.4" data-path="../Runtime/用 isa 承载对象的类信息.html">
+            
+                <a href="../Runtime/用 isa 承载对象的类信息.html">
+            
+                    
+                    用 isa 承载对象的类信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.5" data-path="../Runtime/weak 弱引用的实现方式.html">
+            
+                <a href="../Runtime/weak 弱引用的实现方式.html">
+            
+                    
+                    weak 弱引用的实现方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.6" data-path="../Runtime/load 方法全程跟踪.html">
+            
+                <a href="../Runtime/load 方法全程跟踪.html">
+            
+                    
+                    load 方法全程跟踪
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.7" data-path="../Runtime/浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                <a href="../Runtime/浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                    
+                    浅谈 block - clang 改写后的 block 结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.8" data-path="../Runtime/浅谈 block（2） - 截获变量方式.html">
+            
+                <a href="../Runtime/浅谈 block（2） - 截获变量方式.html">
+            
+                    
+                    浅谈 block - 截获变量方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 2 - macOS & iOS 系统源码及相关开源库</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <span>
+            
+                    
+                    cctools/include/mach-o 895
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                <a href="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                    
+                    Mach-O 文件格式探索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" >
+            
+                <span>
+            
+                    
+                    Fishhook
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                <a href="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                    
+                    巧用符号表 - 探求 fishhook 原理（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                <a href="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                    
+                    验证试验 - 探求 fishhook 原理（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 3 - Foundation 框架源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" >
+            
+                <span>
+            
+                    
+                    Foundation
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="../Foundation/从经典问题来看 Copy 方法.html">
+            
+                <a href="../Foundation/从经典问题来看 Copy 方法.html">
+            
+                    
+                    从经典问题来看 Copy 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="../Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                <a href="../Foundation/CFArray 的历史渊源及实现原理.html">
+            
+                    
+                    CFArray 的历史渊源及实现原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="../Foundation/Run Loop 记录与源码注释.html">
+            
+                <a href="../Foundation/Run Loop 记录与源码注释.html">
+            
+                    
+                    Run Loop 记录与源码注释(作者Kylin)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 4 - UIKit 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" >
+            
+                <span>
+            
+                    
+                    UIKit
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.1.1" data-path="../Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                <a href="../Foundation/复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                    
+                    复用的精妙 - UITableView 复用技术原理分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="5.1.2" data-path="AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                <a href="AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                    
+                    AutoLayout 中的线性规划 - Simplex 算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 5 - SDWebImage 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" >
+            
+                <span>
+            
+                    
+                    SDWebImage v3.8.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1.1" data-path="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                    
+                    SDWebImage Source Probe: WebCache
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.2" data-path="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                    
+                    SDWebImage Source Probe: Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.3" data-path="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                    
+                    SDWebImage Source Probe: Downloader
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.4" data-path="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                    
+                    SDWebImage Source Probe: Operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 6 - Swift 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" >
+            
+                <span>
+            
+                    
+                    Swift v4.0
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.1.1" data-path="../../Swift/Swift Probe - Optional.html">
+            
+                <a href="../../Swift/Swift Probe - Optional.html">
+            
+                    
+                    Swift Probe - Optional
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 7 - Shadowsocks 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" >
+            
+                <span>
+            
+                    
+                    Shadowsocks v2.9.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="8.1.1" data-path="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                    
+                    Shadowsocks Probe I - Socks5 与 EventLoop 事件分发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.1.2" data-path="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                    
+                    Shadowsocks Probe II - TCP 代理过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >AutoLayout 中的线性规划 - Simplex 算法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>&#x4F5C;&#x8005;&#xFF1A;&#x51AC;&#x74DC;</p>
+<p>&#x539F;&#x6587;&#x94FE;&#x63A5;&#xFF1A;<a href="https://www.desgard.com/autolayout-simplex/" target="_blank">Guardia &#xB7; &#x74DC;&#x5730;</a></p>
+<p>&#x4EE3;&#x7801;&#x53C2;&#x8003;&#xFF1A;<a href="https://github.com/Desgard/iOS-Source-Probe/tree/linear_arithmetic_constraints" target="_blank">iOS-Source-Probe</a></p>
+</blockquote>
+<h1 id="autolayout-&#x4E2D;&#x7684;&#x7EBF;&#x6027;&#x89C4;&#x5212;---simplex-&#x7B97;&#x6CD5;">AutoLayout &#x4E2D;&#x7684;&#x7EBF;&#x6027;&#x89C4;&#x5212; - Simplex &#x7B97;&#x6CD5;</h1>
+<p>&#x524D;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x7531;&#x4E8E;&#x8DF3;&#x69FD;&#xFF0C;&#x535A;&#x5BA2;&#x505C;&#x66F4;&#x4E86;&#x5927;&#x6982;&#x6709; 150 &#x5929;&#x5DE6;&#x53F3;&#x7684;&#x6837;&#x5B50;&#x3002;&#x5728;&#x6240;&#x6709;&#x4E8B;&#x60C5;&#x90FD;&#x5B89;&#x7F6E;&#x597D;&#x540E;&#xFF0C;&#x51B3;&#x5B9A;&#x63A8;&#x6389;&#x4E4B;&#x524D;&#x5199;&#x8FC7;&#x7684;&#x534A;&#x622A;&#x6587;&#x7AE0;&#xFF0C;&#x5F00;&#x59CB;&#x66F4;&#x8FD9;&#x4E48;&#x4E00;&#x4E2A;&#x4E13;&#x9898;&#x3002;&#x518D;&#x8FD9;&#x4E4B;&#x524D;&#xFF0C;&#x81EA;&#x5DF1;&#x6CA1;&#x6709;&#x9605;&#x8BFB; paper &#x7684;&#x4E60;&#x60EF;&#xFF0C;&#x8FD9;&#x4E5F;&#x662F;&#x4E00;&#x6B21;&#x5BF9;&#x81EA;&#x5DF1;&#x7684;&#x6311;&#x6218;&#x3002;</p>
+<p>&#x672C;&#x6587;&#x4E0E; iOS &#x5173;&#x7CFB;&#x4E0D;&#x5927;&#xFF0C;&#x591A;&#x534A;&#x504F;&#x5411; paper &#x7684;&#x5B66;&#x4E60;&#x548C;&#x7B97;&#x6CD5;&#x4ECB;&#x7ECD;&#xFF0C;&#x8BF7;&#x8BFB;&#x8005;&#x6839;&#x636E;&#x5174;&#x8DA3;&#x81EA;&#x884C;&#x9605;&#x8BFB;&#x3002;</p>
+<h2 id="&#x6E29;&#x4E60;&#x7EBF;&#x6027;&#x89C4;&#x5212;">&#x6E29;&#x4E60;&#x7EBF;&#x6027;&#x89C4;&#x5212;</h2>
+<p>&#x5F53;&#x6211;&#x4EEC;&#x5728; Storyboard &#x4E0A;&#x5EFA;&#x7ACB;&#x5B8C;&#x4E00;&#x5806;&#x7EA6;&#x675F;&#x540E;&#xFF0C;&#x53D1;&#x73B0;&#x5176;&#x5B9E;&#x6240;&#x6709;&#x7684;&#x7EA6;&#x675F;&#x90FD;&#x53EF;&#x4EE5;&#x7528;&#x591A;&#x4E2A;&#x7EA6;&#x675F;&#x95F4;&#x7684;&#x4E0D;&#x7B49;&#x5F0F;&#x5173;&#x7CFB;&#x6765;&#x63CF;&#x8FF0;&#x3002;&#x4E8E;&#x662F;&#x4E4E;&#x5C06; UI &#x7684;&#x5E03;&#x5C40;&#x95EE;&#x9898;&#xFF0C;&#x5C31;&#x8F6C;&#x5316;&#x6210;&#x4E86;&#x4E00;&#x4E2A;<strong>&#x7EBF;&#x6027;&#x89C4;&#x5212;&#x95EE;&#x9898;</strong>&#x3002;</p>
+<p><img src="../../image/15272074383889/15297228541122.jpg" alt=""></p>
+<p>&#x5982;&#x4F55;&#x6C42;&#x89E3;&#x8FD9;&#x4E2A;&#x7EBF;&#x6027;&#x89C4;&#x5212;&#x95EE;&#x9898;&#x5462;&#xFF1F;&#x6211;&#x4EEC;&#x5F15;&#x5165;&#x4E00;&#x4E2A;&#x6C42;&#x89E3;&#x7EBF;&#x6027;&#x89C4;&#x5212;&#x7684;&#x7ECF;&#x5178;&#x65B9;&#x6CD5; - <strong>Simplex &#x7B97;&#x6CD5;</strong>&#x3002;&#x867D;&#x7136;&#x8BE5;&#x7B97;&#x6CD5;&#x5177;&#x6709;&#x6307;&#x6570;&#x65F6;&#x95F4;&#x7684;&#x590D;&#x6742;&#x5EA6;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x7EDD;&#x5927;&#x591A;&#x6570;&#x60C5;&#x51B5;&#x4E0B;&#x4ECD;&#x65E7;&#x4F1A;&#x4FDD;&#x6301;&#x7740;&#x591A;&#x9879;&#x5F0F;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#xFF0C;&#x5173;&#x4E8E;&#x590D;&#x6742;&#x5EA6;&#x5206;&#x6790;&#x6211;&#x4EEC;&#x5728;&#x540E;&#x6587;&#x5177;&#x4F53;&#x5206;&#x6790;&#x3002;</p>
+<h2 id="simplex-&#x7B97;&#x6CD5;">Simplex &#x7B97;&#x6CD5;</h2>
+<p>Simplex &#x7B97;&#x6CD5;&#x4E3B;&#x8981;&#x6709;&#x4E09;&#x4E2A;&#x6B65;&#x9AA4;&#xFF1A;</p>
+<ol>
+<li>&#x627E;&#x5230;&#x4E00;&#x4E2A;&#x521D;&#x59CB;&#x7684;&#x57FA;&#x672C;&#x53EF;&#x884C;&#x89E3;&#xFF1B;</li>
+<li>&#x6301;&#x7EED;&#x8FDB;&#x884C;<em>&#x65CB;&#x8F6C;&#xFF08;Pivot&#xFF09;</em>&#x64CD;&#x4F5C;&#xFF1B;</li>
+<li>&#x91CD;&#x590D;&#x64CD;&#x4F5C; 2&#xFF0C;&#x76F4;&#x5230;&#x627E;&#x5230;&#x6700;&#x4F18;&#x89E3;&#xFF1B;</li>
+</ol>
+<p>Simplex &#x7B97;&#x6CD5;&#x6211;&#x4EE5;&#x4E0B;&#x9762;&#x4E00;&#x4E2A;&#x7EBF;&#x6027;&#x89C4;&#x5212;&#x65B9;&#x7A0B;&#x4E3A;&#x4F8B;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+\begin{cases}
+	\ -x_1-14x_2-6x_3 \quad min\\
+	\ x_1+x_2+x_3+x_4=4&\\
+	\ x_1\leq2\\
+	\ x_3\leq3\\
+	\ 3x_2+x_3\leq6\\
+	\ x_1,x_2,x_3\geq0
+\end{cases}
+</script></p>
+<p>&#x6539;&#x5199;&#x6210;<strong>&#x677E;&#x5F1B;&#x5F62;&#x5F0F;</strong>&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+\begin{cases}
+	\ -x_1-14x_2-6x_3 \quad min\\
+	\ x_1+x_2+x_3+x_4=4 \\
+	\ x_1+x_5=2 \\
+	\ x_3+x_6=3 \\
+	\ 3x_2+x_3+x_7=6 \\
+	\ x_1, x_2, x_3, x_4, x_5, x_6, x_7 \geq 0
+\end{cases}
+</script></p>
+<p>&#x5C06;&#x589E;&#x52A0;&#x7684;&#x677E;&#x5F1B;&#x91CF;&#x653E;&#x5230;&#x7B49;&#x53F7;&#x5DE6;&#x8FB9;&#xFF0C;&#x5F97;&#x5230;<strong>&#x57FA;&#x672C;&#x53D8;&#x91CF;</strong>&#x548C;<strong>&#x975E;&#x57FA;&#x672C;&#x53D8;&#x91CF;</strong>&#x5173;&#x7CFB;&#x5F0F;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+\begin{cases}
+	\ \beta=-x_1-14x_2-6x_3 \\
+	\ x_4=4-x_1-x_2-x_3 \\
+	\ x_5=2-x_1 \\
+	\ x_6=3-x_3 \\
+	\ x_7=6-3x_2-x_3
+\end{cases}
+</script></p>
+<p>&#x5C06;&#x53F3;&#x8FB9;&#x6240;&#x6709;&#x975E;&#x5E38;&#x91CF;&#x90FD;&#x8BBE;&#x4E3A; 0&#xFF0C;&#x7136;&#x540E;&#x5DE6;&#x8FB9;&#x57FA;&#x672C;&#x53D8;&#x91CF;&#x7684;&#x503C;&#x6C42;&#x5F97;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+(x_1,x_2,...,x_7)=(0,0,0,4,2,3,6)
+</script></p>
+<p>&#x6B64;&#x65F6;&#x76EE;&#x6807;&#x503C; $\beta=0$&#x3002;&#x6C42;&#x51FA;&#x57FA;&#x672C;&#x53EF;&#x884C;&#x89E3;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x5F00;&#x59CB;&#x5BF9;&#x5176;&#x505A;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;&#x3002;&#x6BCF;&#x6B21;&#x65CB;&#x8F6C;&#xFF0C;&#x6211;&#x4EEC;&#x9009;&#x62E9;&#x76EE;&#x6807;&#x51FD;&#x6570;&#x4E2D;&#x5E26;&#x6709;&#x8D1F;&#x5E38;&#x6570;&#x9879;&#x8FDB;&#x884C;&#x653E;&#x5927;&#x64CD;&#x4F5C;&#xFF0C;&#x6B64;&#x65F6;&#x9009;&#x5B9A; $x_1$&#x3002;&#x5C06; $x_1=2-x_5$ &#x5E26;&#x5165;&#x975E;&#x57FA;&#x672C;&#x53D8;&#x91CF;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+\begin{cases}
+	\ \beta=-2-14x_2-6x_3+x_5 \\
+	\ x_4=2-x_2-x_3+x_5 \\
+	\ x_5 = 2-x_1 \\
+	\ x_6 = 3-x_3 \\
+	\ x_7 = 6-3x_2-x_3
+\end{cases}
+</script></p>
+<p>&#x6BCF;&#x6B21;&#x65CB;&#x8F6C;&#x8FC7;&#x7A0B;&#xFF0C;&#x4E00;&#x6B21;&#x65CB;&#x8F6C;&#x9009;&#x53D6;&#x4E00;&#x4E2A;&#x975E;&#x57FA;&#x672C;&#x53D8;&#x91CF;&#xFF0C;&#x8FD9;&#x91CC;&#x79F0;&#x4F5C;<strong>&#x66FF;&#x5165;&#x53D8;&#x91CF;</strong> $x_e$ &#x548C;&#x4E00;&#x4E2A;<strong>&#x66FF;&#x51FA;&#x53D8;&#x91CF;</strong> $x_i$&#xFF0C;&#x7136;&#x540E;&#x5E26;&#x5165;&#x53D8;&#x91CF;&#x3002;&#x6B64;&#x65F6;&#x7EE7;&#x7EED;&#x5C06;&#x6240;&#x6709;&#x975E;&#x5E38;&#x91CF;&#x4E3A;&#x8BBE;&#x4E3A; 0&#xFF0C;&#x5F97;&#x5230;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+(x_1,x_2,...,x_7)=(2,0,0,2,0,3,6) \\
+\beta = -2
+</script></p>
+<p>&#x6B64;&#x65F6;&#x6211;&#x4EEC;&#x53D1;&#x73B0;&#x76EE;&#x6807;&#x503C;&#x51CF;&#x5C11;&#x4E86; <code>-2</code>&#x3002;&#x7EE7;&#x7EED;&#x65CB;&#x8F6C;&#xFF0C;&#x8FD9;&#x6B21;&#x6211;&#x4EEC;&#x9009;&#x62E9; $x_2$&#xFF0C;&#x901A;&#x8FC7;&#x5F0F; &#x2461; &#x5F97;&#x5230; $x_2=2-x_3-x_4+x_5$ &#x5E26;&#x5165;&#x5F97;&#x5230;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+\begin{cases}
+	\ \beta = -30-\frac{2}{3}x_3+x_4+\frac{13}{3}x_7 \\
+	\ x_2=2-\frac{1}{3}x_3-\frac{1}{3}x_7 \\
+	\ x_1=2-\frac{2}{3}x_3-x_4+\frac{1}{3}x_7 \\
+	\ x_6=3-x_3 \\
+	\ x_5=\frac{2}{3}x_3+x_4-\frac{1}{3}x_7
+\end{cases}
+</script></p>
+<p>&#x6C42;&#x51FA;&#x89E3;&#x548C;&#x76EE;&#x6807;&#x503C;&#x4E3A;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+(x_1,x_2,...,x_7)=(2,2,0,0,0,3,0) \\
+\beta=-2
+</script></p>
+<p>&#x53D1;&#x73B0;&#x5176;&#x76EE;&#x6807;&#x503C;&#x5E76;&#x6CA1;&#x6709;&#x63D0;&#x5347;&#xFF0C;&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x505A;&#x6700;&#x540E;&#x4E00;&#x6B21;&#x65CB;&#x8F6C;&#xFF0C;&#x9009;&#x62E9; $x_3$&#xFF0C;&#x901A;&#x8FC7;&#x5F0F; &#x2461; &#x5F97;&#x5230; $x_3=3-\frac{3}{2}x_1-\frac{3}{2}x_4-\frac{1}{2}x_7$&#xFF0C;&#x7136;&#x540E;&#x5206;&#x522B;&#x5E26;&#x5165;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+\begin{cases}
+	\ \beta = -32+x_1+2x_4+4x_7 \\
+	\ x_2=1+\frac{1}{2}x_1+\frac{1}{2}x_4-\frac{1}{2}x_7 \\
+	\ x_3=3-\frac{3}{2}x_1-\frac{3}{2}x_4+\frac{1}{2}x_7 \\
+	\ x_6=\frac{3}{2}x_1+\frac{3}{2}x_4-\frac{1}{2}x_7 \\
+	\ x_5=2-x_1
+\end{cases}
+</script></p>
+<p>&#x73B0;&#x5728;&#x76EE;&#x6807;&#x51FD;&#x6570;&#x4E2D;&#x6CA1;&#x6709;&#x53EF;&#x4EE5;&#x589E;&#x5927;&#x7684;&#x9879;&#x4E86;&#xFF0C;&#x505C;&#x6B62;&#x9009;&#x88C5;&#x3002;&#x6240;&#x4EE5; $\beta=-32$ &#x662F;&#x6211;&#x4EEC;&#x6700;&#x7EC8;&#x7684;&#x76EE;&#x6807;&#x89E3;&#x3002;&#x6B64;&#x65F6;&#x57FA;&#x672C;&#x89E3;&#x4E3A; $(x_1,x_2,...,x_7)=(0,1,3,0,2,0,0)$&#x3002;</p>
+<p>&#x53EF;&#x662F;&#x5F80;&#x5F80;&#x4E8B;&#x60C5;&#x5E76;&#x4E0D;&#x60F3;&#x8FD9;&#x6B21;&#x7684;&#x8BA1;&#x7B97;&#x90A3;&#x4E48;&#x987A;&#x5229;&#xFF0C;&#x6709;&#x7684;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x53D1;&#x73B0;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;&#x4E00;&#x76F4;&#x65E0;&#x6CD5;&#x5C06;&#x76EE;&#x6807;&#x503C;&#x7EE7;&#x7EED;&#x6269;&#x5927;&#x6216;&#x7F29;&#x5C0F;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x4E4B;&#x524D;&#x8BA1;&#x7B97;&#x4E2D;&#x7684;&#x5012;&#x6570;&#x7B2C;&#x4E8C;&#x6B21;&#x9009;&#x88C5;&#x64CD;&#x4F5C;&#x3002;&#x8FD9;&#x79CD;&#x73B0;&#x8C61;&#x53EB;&#x505A;<strong>&#x9000;&#x5316;&#xFF08;Degeneracy&#xFF09;</strong>&#x3002;&#x6709;&#x7684;&#x65F6;&#x5019;&#x9000;&#x5316;&#x73B0;&#x8C61;&#x8FD8;&#x4F1A;&#x4EA7;&#x751F;&#x65CB;&#x8F6C;<strong>&#x5FAA;&#x73AF;&#xFF08;cycling&#xFF09;</strong>&#xFF0C;&#x4ECE;&#x800C;&#x4E00;&#x76F4;&#x65E0;&#x6CD5;&#x5230;&#x6700;&#x7EC8;&#x7684;&#x65CB;&#x8F6C;&#x72B6;&#x6001;&#x3002;&#x4EA7;&#x751F;&#x5FAA;&#x73AF;&#x7684;&#x539F;&#x56E0;&#x5728;&#x300A;&#x7B97;&#x6CD5;&#x5BFC;&#x8BBA;&#x300B;&#x4E2D;&#x6709;&#x89E3;&#x91CA;&#xFF1A;</p>
+<blockquote>
+<p>Degeneracy can prevent the simplex algorithm from terminating, because it can lead to a phenomenon known as cycling: the slack forms at two different iterations of SIMPLEX are identical. Because of degeneracy, SIMPLEX could choose a sequence of pivot operations that leave the objective value unchanged but repeat a slack form within the sequence. Since SIMPLEX is a deterministic algorithm, if it cycles, then it will cycle through the same series of slack forms forever, never terminating.</p>
+</blockquote>
+<p>&#x7B80;&#x5355;&#x7684;&#x6765;&#x8868;&#x8FF0;&#xFF0C;&#x5176;&#x5B9E;&#x662F;&#x56E0;&#x4E3A; Simplex &#x7B97;&#x6CD5;&#x81EA;&#x8EAB;&#x7684;&#x539F;&#x56E0;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x4EA7;&#x751F;&#x4E0D;&#x540C;&#x7684;&#x65CB;&#x8F6C;&#x8FED;&#x4EE3;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x677E;&#x5F1B;&#x5F62;&#x5F0F;&#x76F8;&#x540C;&#xFF0C;&#x4ECE;&#x800C;&#x65E0;&#x6CD5;&#x7F29;&#x51CF;&#x76EE;&#x6807;&#x503C;&#xFF0C;&#x5E76;&#x6784;&#x6210;&#x5FAA;&#x73AF;&#x6761;&#x4EF6;&#x3002;</p>
+<p>&#x907F;&#x514D;&#x9000;&#x5316;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#x4F7F;&#x7528; <strong>Bland &#x89C4;&#x5219;</strong>&#xFF1A;&#x5728;&#x9009;&#x62E9;&#x5E26;&#x5165;&#x53D8;&#x91CF;&#x548C;&#x66FF;&#x51FA;&#x53D8;&#x8138;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x9009;&#x62E9;&#x6EE1;&#x8DB3;&#x4E0B;&#x5217;&#x6761;&#x4EF6;&#x7684;&#x6700;&#x5C0F;&#x503C;&#xFF1A;</p>
+<ol>
+<li>&#x5E26;&#x5165;&#x53D8;&#x91CF; $x_e$&#xFF1A;&#x76EE;&#x6807;&#x6761;&#x4EF6;&#x4E2D;&#xFF0C;&#x7CFB;&#x6570;&#x4E3A;&#x8D1F;&#x6570;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x4F5C;&#x4E3A;&#x5E26;&#x5165;&#x53D8;&#x91CF;&#xFF1B;</li>
+<li>&#x66FF;&#x51FA;&#x53D8;&#x91CF; $x_i$&#xFF1A;&#x5BF9;&#x6240;&#x6709;&#x7EA6;&#x675F;&#x6761;&#x4EF6;&#x4E2D;&#xFF0C;&#x9009;&#x62E9;&#x5BF9; $x_e$ &#x7EA6;&#x675F;&#x5F3A;&#x5EA6;&#x6700;&#x5927;&#x7684;&#x4E00;&#x5F0F;&#xFF1B;</li>
+</ol>
+<h2 id="simplex-&#x7B97;&#x6CD5;-coding-&#x53CA;&#x6539;&#x5584;">Simplex &#x7B97;&#x6CD5; Coding &#x53CA;&#x6539;&#x5584;</h2>
+<p>&#x62FF;&#x51FA;&#x6700;&#x5F00;&#x59CB;&#x7684;&#x7EBF;&#x6027;&#x89C4;&#x5212;&#x65B9;&#x7A0B;&#x7EC4;&#xFF08;&#x677E;&#x5F1B;&#x5F62;&#x5F0F;&#xFF09;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+\begin{cases}
+	\ -x_1-14x_2-6x_3 \quad min\\
+	\ x_1+x_2+x_3+x_4=4 \\
+	\ x_1+x_5=2 \\
+	\ x_3+x_6=3 \\
+	\ 3x_2+x_3+x_7=6 \\
+	\ x_1, x_2, x_3, x_4, x_5, x_6, x_7 \geq 0
+\end{cases}
+</script></p>
+<p>&#x7528;&#x4E09;&#x4E2A;&#x77E9;&#x9635;&#x6765;&#x8868;&#x8FBE;&#x8FD9;&#x4E2A;&#x677E;&#x5F1B;&#x5F62;&#x5F0F;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+C =
+\left\{
+	\begin{matrix}
+		-1 & -14 & -6 & 0 & 0 & 0 & 0 \\
+	\end{matrix}
+\right\}
+</script></p>
+<p><script type="math/tex; mode=display">
+B = 
+\left\{
+	\begin{matrix}
+		4 \\
+		2 \\
+		3 \\
+		6 
+	\end{matrix}
+\right\}
+</script></p>
+<p><script type="math/tex; mode=display">
+A = 
+\left\{
+	\begin{matrix}
+		1 & 1 & 1 & 1 & 0 & 0 & 0 \\
+		1 & 0 & 0 & 0 & 1 & 0 & 0 \\
+		0 & 0 & 1 & 0 & 0 & 1 & 0 \\
+		0 & 3 & 1 & 0 & 0 & 0 & 1  
+	\end{matrix}
+\right\}
+</script></p>
+<ul>
+<li>&#x77E9;&#x9635; A&#xFF1A;&#x7EA6;&#x675F;&#x6761;&#x4EF6;&#x7684;&#x7CFB;&#x6570;&#x77E9;&#x9635;&#xFF1B;</li>
+<li>&#x77E9;&#x9635; B&#xFF1A;&#x7EA6;&#x675F;&#x6761;&#x4EF6;&#x503C;&#x77E9;&#x9635;&#xFF1B;</li>
+<li>&#x77E9;&#x9635; C&#xFF1A;&#x76EE;&#x6807;&#x51FD;&#x6570;&#x7CFB;&#x6570;&#x77E9;&#x9635;&#xFF1B;</li>
+</ul>
+<p>&#x628A;&#x8FD9;&#x4E09;&#x4E2A;&#x77E9;&#x9635;&#x62FC;&#x63A5;&#x8D77;&#x6765;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+S_1 = 
+\left\{
+\begin{matrix}
+	0 & -1 & -14 & -6 & 0 & 0 & 0 & 0 \\
+	4 & 1 & 1 & 1 & 1 & 0 & 0 & 0 \\
+	2 & 1 & 0 & 0 & 0 & 1 & 0 & 0 \\
+	3 & 0 & 0 & 1 & 0 & 0 & 1 & 0 \\
+	6 & 0 & 3 & 1 & 0 & 0 & 0 & 1  
+\end{matrix}
+\right\}
+</script></p>
+<p>&#x7136;&#x540E;&#x6211;&#x4EEC;&#x62FF;&#x51FA;&#x7B2C;&#x4E00;&#x6B21;&#x65CB;&#x8F6C;&#x540E;&#x7684;&#x7EA6;&#x675F;&#x65B9;&#x7A0B;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+\begin{cases}
+	\ \beta=-2-14x_2-6x_3+x_5 \\
+	\ x_4=2-x_2-x_3+x_5 \\
+	\ x_5 = 2-x_1 \\
+	\ x_6 = 3-x_3 \\
+	\ x_7 = 6-3x_2-x_3
+\end{cases}
+</script></p>
+<p>&#x6574;&#x7406;&#x540E;&#x83B7;&#x5F97;&#x77E9;&#x9635;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+S_2 =
+\left\{
+\begin{matrix}
+	2 & 0 & -14 & -6 & 0 & 1 & 0 & 0 \\
+	2 & 0 &  1  & 1 & 1 & -1 & 0 & 0 \\
+	2 & 1 & 0 & 0 & 0 & 1 & 0 & 0 \\
+	3 & 0 & 0 & 1 & 0 & 0& 1 & 0 \\
+	6 & 0 & 3 & 1 & 0 & 0 & 0 & 1 \\
+\end{matrix}
+\right\}
+</script></p>
+<p>&#x5728;&#x8FD9;&#x4E00;&#x6B65;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x9009;&#x62E9;&#x4E86;&#x5C06; $x_1$ &#x7528; $x_5$ &#x8868;&#x793A;&#x3002;&#x77E9;&#x9635;&#x53D8;&#x6362;&#x7531;&#x4E8E; $x_1$ &#x662F;&#x88AB;&#x66FF;&#x6362;&#x91CF;&#x3002;</p>
+<p>&#x7B2C;&#x4E09;&#x884C;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x7684;&#x662F;&#x5C06;&#x9009;&#x7528;&#x91CF;&#x7684;&#x7CFB;&#x6570;&#x5F52;&#x4E00;&#x3002;&#x6240;&#x4EE5;&#x8BE5;&#x884C;&#x53EA;&#x8981;&#x8FDB;&#x884C; <code>matrix[2] /= matrix[2][1]</code> &#x5373;&#x53EF;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x63A8;&#x5BFC;&#x4E00;&#x4E0B;&#x975E;&#x7B2C;&#x4E09;&#x884C;&#x7684;&#x53D8;&#x6362;&#x89C4;&#x5F8B;&#x3002;$x_1=2-x_5$&#xFF0C;&#x5F97;&#x5230;&#x7B2C; i &#x884C;&#x7684;&#x7CFB;&#x6570; <code>matrix[i - 1] = matrix[i - 1] - matrix[2] * matrix[i - 1][1]</code>&#x3002;&#x6211;&#x4EEC;&#x53D1;&#x73B0;&#x8FD8;&#x539F;&#x64CD;&#x4F5C;&#x6700;&#x540E;&#x53D8;&#x6210;&#x4E86;&#x4E24;&#x884C;&#x76F8;&#x51CF;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x76EE;&#x6807;&#x51FD;&#x6570;&#xFF0C;&#x4E0E;&#x975E;&#x7B2C;&#x4E09;&#x884C;&#x8FDB;&#x884C;&#x540C;&#x6837;&#x7684;&#x64CD;&#x4F5C;&#x5373;&#x53EF;&#x3002;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x601D;&#x8DEF;&#x5199;&#x51FA;&#x4EE3;&#x7801;&#xFF1A;</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Simplex</span><span class="hljs-params">(object)</span>:</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, obj, max_mode=False)</span>:</span>
+        <span class="hljs-comment"># &#x9ED8;&#x8BA4;&#x662F;&#x89E3;&#x51B3; min LP &#x95EE;&#x9898;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x6700;&#x5927;&#x503C;&#x7528; True&#xFF0C;&#x8981; mut -1</span>
+        self.max_mode = max_mode
+        self.mat = np.array([[<span class="hljs-number">0</span>] + obj]) * (<span class="hljs-number">-1</span> <span class="hljs-keyword">if</span> max_mode <span class="hljs-keyword">else</span> <span class="hljs-number">1</span>)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_constraint</span><span class="hljs-params">(self, a, b)</span>:</span>
+        <span class="hljs-comment"># &#x589E;&#x52A0;&#x7EA6;&#x675F;&#xFF0C;&#x5373;&#x5728;&#x77E9;&#x9635;&#x6700;&#x540E;&#x4E00;&#x884C;&#x589E;&#x52A0;</span>
+        self.mat = np.vstack([self.mat, [b] + a])
+
+<span class="hljs-meta">    @property</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">solve</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-comment"># &#x83B7;&#x5F97;&#x77E9;&#x9635;&#x7684;&#x7EAC;&#x5EA6;</span>
+        m, n = self.mat.shape
+        <span class="hljs-comment"># &#x96F6;&#x77E9;&#x9635;&#x548C;&#x5BF9;&#x89D2;&#x77E9;&#x9635;&#x4E0A;&#x4E0B;&#x6392;&#x5217;</span>
+        temp, B = np.vstack([np.zeros((<span class="hljs-number">1</span>, m - <span class="hljs-number">1</span>)), np.eye(m - <span class="hljs-number">1</span>)]), list(range(n - <span class="hljs-number">1</span>, n + m - <span class="hljs-number">1</span>))
+        <span class="hljs-comment"># &#x7EC4;&#x5408;&#x7CFB;&#x6570;&#x77E9;&#x9635;</span>
+        mat = self.mat = np.hstack([self.mat, temp])
+        <span class="hljs-comment"># &#x5FAA;&#x73AF;&#x6240;&#x6709;&#x76EE;&#x6807;&#x51FD;&#x6570;&#x7684;&#x7CFB;&#x6570;,&#x76F4;&#x5230;&#x5168;&#x90E8;&#x6CA1;&#x6709;&#x8D1F;&#x6570;&#x4E3A;&#x6B62;</span>
+        <span class="hljs-keyword">while</span> mat[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>:].min() &lt; <span class="hljs-number">0</span>:
+            <span class="hljs-comment"># 1. &#x9009;&#x62E9;&#x5408;&#x9002;&#x7684;&#x66FF;&#x5165;&#x548C;&#x66FF;&#x51FA;&#x53D8;&#x91CF;</span>
+            <span class="hljs-comment"># Bland &#x89C4;&#x5219;&#x5BF9;&#x77E9;&#x9635;&#x505A;&#x9000;&#x5316;&#x64CD;</span>
+            col = np.where(mat[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>:] &lt; <span class="hljs-number">0</span>)[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] + <span class="hljs-number">1</span>
+            row = np.array([mat[i][<span class="hljs-number">0</span>] / mat[i][col] <span class="hljs-keyword">if</span> mat[i][col] &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0x7fffffff</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span>
+                            range(<span class="hljs-number">1</span>, mat.shape[<span class="hljs-number">0</span>])]).argmin() + <span class="hljs-number">1</span>  <span class="hljs-comment"># find the theta index</span>
+            <span class="hljs-comment"># &#x5982;&#x679C;&#x6CA1;&#x6709;&#x66FF;&#x51FA;&#x53D8;&#x91CF;,&#x5219;&#x8BF4;&#x660E;&#x539F;&#x95EE;&#x9898;&#x65E0;&#x754C;</span>
+            <span class="hljs-keyword">if</span> mat[row][col] &lt;= <span class="hljs-number">0</span>: <span class="hljs-keyword">return</span> <span class="hljs-keyword">None</span>
+
+            <span class="hljs-comment"># 2. &#x65CB;&#x8F6C;&#x8FC7;&#x7A0B;</span>
+            <span class="hljs-comment"># &#x7CFB;&#x6570;&#x5F52;&#x4E00;,&#x6574;&#x884C;&#x76F8;&#x9664;</span>
+            mat[row] /= mat[row][col]
+            <span class="hljs-comment"># &#x5BF9;&#x6240;&#x6709; i!= row &#x8FDB;&#x884C; mat[i]= mat[i] - mat[row] * mat[i][col] &#x64CD;&#x4F5C;</span>
+            ids = np.arange(mat.shape[<span class="hljs-number">0</span>]) != row
+            mat[ids] -= mat[row] * mat[ids, col:col + <span class="hljs-number">1</span>]
+            B[row] = col
+        <span class="hljs-comment"># &#x8FD4;&#x56DE;&#x76EE;&#x6807;&#x503C;,&#x82E5;&#x4E3A;&#x6700;&#x5C0F;&#x503C;,&#x5219;&#x8981; * -1,&#x6700;&#x5927;&#x503C;&#x5219;&#x4E0D;&#x7528;&#x3002;</span>
+        <span class="hljs-comment"># &#x540E;&#x9762;&#x7684;&#x77E9;&#x9635;&#x662F;&#x5404;&#x4E2A;&#x89E3;&#x7684;&#x7CFB;&#x6570;&#x77E9;&#x9635;,&#x57FA;&#x672C;&#x53D8;&#x91CF;&#x5BF9;&#x5E94; bi,&#x975E;&#x57FA;&#x672C;&#x53D8;&#x91CF;&#x4E3A;0</span>
+        <span class="hljs-comment"># B[i] &lt; n &#x5224;&#x65AD;&#x5373;&#x4E3A;&#x5220;&#x9664;&#x677E;&#x5F1B;&#x589E;&#x52A0;&#x7684;&#x53D8;&#x91CF;</span>
+        <span class="hljs-keyword">return</span> mat[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] * (<span class="hljs-number">1</span> <span class="hljs-keyword">if</span> self.max_mode <span class="hljs-keyword">else</span> <span class="hljs-number">-1</span>), {B[i]: mat[i, <span class="hljs-number">0</span>] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, m) <span class="hljs-keyword">if</span> B[i] &lt; n}
+
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&apos;__main__&apos;</span>:
+    t = Simplex([<span class="hljs-number">-1</span>, <span class="hljs-number">-14</span>, <span class="hljs-number">-6</span>])
+    t.add_constraint([<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>], <span class="hljs-number">4</span>)
+    t.add_constraint([<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>], <span class="hljs-number">2</span>)
+    t.add_constraint([<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>], <span class="hljs-number">3</span>)
+    t.add_constraint([<span class="hljs-number">0</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>], <span class="hljs-number">6</span>)
+    print(t.solve)
+    print(t.mat)
+
+<span class="hljs-string">&apos;&apos;&apos;
+(-32.0, {2: 1.0, 3: 3.0})
+[[32.   1.   0.   0.   2.   0.   0.   4. ]
+ [ 1.  -0.5  1.   0.  -0.5  0.   0.   0.5]
+ [ 3.   1.5  0.   1.   1.5  0.   0.  -0.5]
+ [ 0.  -1.5  0.   0.  -1.5  0.   1.   0.5]
+ [ 2.   1.   0.   0.   0.   1.   0.   0. ]]
+&apos;&apos;&apos;</span>
+</code></pre>
+<h2 id="&#x7B97;&#x6CD5;&#x518D;&#x4FEE;&#x6B63;">&#x7B97;&#x6CD5;&#x518D;&#x4FEE;&#x6B63;</h2>
+<p>&#x7ED9;&#x51FA;&#x8FD9;&#x4E48;&#x4E00;&#x4E2A;&#x6D4B;&#x8BD5;&#x7528;&#x4F8B;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+\begin{cases}
+	\ x_1+2x_2 \quad min\\
+	\ x_1+x_2\leq2\\
+	\ x_1+x_2\geq1\\
+	\ x_1,x_2\geq0
+\end{cases}
+</script></p>
+<p>&#x4F7F;&#x7528;&#x4E0A;&#x8FF0;&#x7B97;&#x6CD5;&#x5E26;&#x5165;&#xFF1A;</p>
+<pre><code class="lang-python"><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&apos;__main__&apos;</span>:
+    t = Simplex([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>])
+    t.add_constraint([<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], <span class="hljs-number">2</span>)
+    t.add_constraint([<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], <span class="hljs-number">1</span>)
+    print(t.solve)
+    print(t.mat)
+
+<span class="hljs-string">&apos;&apos;&apos;
+(-0.0, {})
+[[0. 1. 2. 0. 0.]
+ [2. 1. 1. 1. 0.]
+ [1. 1. 1. 0. 1.]]
+&apos;&apos;&apos;</span>
+</code></pre>
+<p>&#x7531;&#x4E8E; <code>c &gt;= 0</code> &#x9020;&#x6210; <code>solve</code> &#x65B9;&#x6CD5;&#x76F4;&#x63A5;&#x4E0D;&#x8FED;&#x4EE3;&#x3002;&#x6211;&#x4EEC;&#x7528; GLPK &#x6765;&#x6C42;&#x89E3;&#x4E00;&#x4E0B;&#x8BE5;&#x95EE;&#x9898;&#xFF1A;</p>
+<pre><code class="lang-glpsol">var x1 &gt;= 0;
+var x2 &gt;= 0;
+
+minimize obj: x1 + 2 * x2;
+
+c1: x1 + x2 &lt;= 2;
+c2: x1 + x2 &gt;= 1;
+
+solve;
+display x1;
+display x2;
+end;
+</code></pre>
+<pre><code class="lang-bash">A: min|aij| =  1.000e+00  max|aij| =  1.000e+00  ratio =  1.000e+00
+Problem data seem to be well scaled
+Constructing initial basis...
+Size of triangular part is 2
+      0: obj =   0.000000000e+00 inf =   1.000e+00 (1)
+      1: obj =   1.000000000e+00 inf =   0.000e+00 (0)
+OPTIMAL LP SOLUTION FOUND
+Time used:   0.0 secs
+Memory used: 0.1 Mb (102205 bytes)
+Display statement at line 10
+x1.val = 1
+Display statement at line 11
+x2.val = 0
+Model has been successfully processed
+</code></pre>
+<p>&#x5F97;&#x51FA;&#x76EE;&#x6807;&#x503C;&#x4E3A; <code>1</code>&#xFF0C;&#x89E3;&#x96C6; $(x_1, x_2)=(1, 0)$&#x3002;&#x7B54;&#x6848;&#x662F;&#x660E;&#x663E;&#x4E0D;&#x4E00;&#x81F4;&#x7684;&#x3002;</p>
+<p>&#x8FFD;&#x6EAF;&#x4E00;&#x4E0B;&#x539F;&#x56E0;&#x3002;&#x5728;&#x4E4B;&#x524D;&#x7684;&#x505A;&#x6CD5;&#x4E2D;&#xFF0C;&#x5728;&#x7B2C;&#x4E00;&#x6B65;&#x6211;&#x4EEC;&#x5C06;&#x6240;&#x6709;&#x7684;&#x5F85;&#x6C42;&#x91CF;&#x8BBE;&#x4E3A; 0 &#x4ECE;&#x800C;&#x83B7;&#x5F97;&#x4E86;&#x521D;&#x59CB;&#x89E3;&#x4F5C;&#x4E3A;&#x7B2C;&#x4E00;&#x6B21;&#x65CB;&#x8F6C;&#x7684;&#x57FA;&#x672C;&#x53EF;&#x884C;&#x89E3;&#x3002;&#x8FD9;&#x4E2A;&#x6B65;&#x9AA4;&#x662F;&#x5426;&#x53EF;&#x884C;&#x80FD;&#xFF1F;&#x540C;&#x6837;&#x7684;&#x6211;&#x4EEC;&#x5E26;&#x5165;&#x5230;&#x5176;&#x677E;&#x5F1B;&#x5F62;&#x5F0F;&#xFF0C;&#x53D1;&#x73B0; $x_3=-2$ &#x662F;&#x4E0D;&#x6EE1;&#x8DB3;&#x6761;&#x4EF6;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x521D;&#x59CB;&#x89E3;&#x662F;&#x4E0D;&#x80FD;&#x4F5C;&#x4E3A;&#x7B2C;&#x4E00;&#x7EC4;&#x57FA;&#x672C;&#x53EF;&#x884C;&#x89E3;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x5982;&#x679C;&#x5B58;&#x5728; $b_i&lt;0$ &#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x91CD;&#x65B0;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#x64CD;&#x4F5C;&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x53EF;&#x884C;&#x89E3;&#x3002;&#x6211;&#x4EEC;&#x5F15;&#x5165;&#x6784;&#x9020;<strong>&#x8F85;&#x52A9;&#x7EBF;&#x6027;&#x89C4;&#x5212;&#xFF08;Auxiliary Linary program&#xFF09;</strong>&#x3002;&#x5177;&#x4F53;&#x7684;&#x8F85;&#x52A9;&#x7EBF;&#x6027;&#x89C4;&#x5212;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x5F15;&#x5165;&#x4E00;&#x4E2A;$x_0$&#xFF0C;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x6700;&#x5927;&#x5316;&#x64CD;&#x4F5C;&#x4EE5;&#x6D4B;&#x8BD5;&#x7528;&#x4F8B;&#x4E3A;&#x4F8B;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+\begin{cases}
+	\ x_0 \quad min\\
+	\ x_1+x_2-x_0 &\leq2\\
+	\ -x_1-x_2-x_0 &\leq-1\\
+	\ x_1,x_2,x_0 &\geq0
+\end{cases}
+</script></p>
+<p>&#x8F6C;&#x6362;&#x6210;&#x677E;&#x5F1B;&#x5F62;&#x5F0F;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+\begin{cases}
+	& z = x_0 \\ 
+	&x_3 = 2 – x_1 – x_2 + x_0 \\ 
+	&x_4 = -1 + x_1 + x_2 + x_0\\ 
+	&x_1, \quad x_2,\quad x_3,\quad x_4,\quad x_0 &\geq{0} &\\ 
+\end{cases}
+</script></p>
+<p>&#x8FD9;&#x65F6;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5C06;&#x5F15;&#x5165;&#x7684; $x_0$ &#x5F53;&#x505A;&#x66FF;&#x5165;&#x53D8;&#x91CF;&#x505A;&#x4E00;&#x6B21;&#x65CB;&#x8F6C;&#xFF0C;&#x5F97;&#x5230;&#x65B0;&#x5F0F;&#x3002;&#x8FDB;&#x800C;&#x901A;&#x8FC7;&#x518D;&#x6B21;&#x65CB;&#x8F6C;&#x5206;&#x522B;&#x6C42;&#x51FA;&#x6700;&#x7EC8;&#x89E3;&#x3002;</p>
+<p><script type="math/tex; mode=display">
+\begin{alignat}{2} 
+&z = 1 – x_1 – x_2 + x_4\\ 
+&x_3 = 2 – x_1 – x_2 + x_0 \\ 
+&x_0 = 1 – x_1 – x_2 + x_4\\ 
+\end{alignat}
+</script></p>
+<p>&#x6211;&#x4EEC;&#x603B;&#x7ED3;&#x4E00;&#x4E0B;&#x8FD9;&#x4E2A;&#x6D41;&#x7A0B;&#xFF1A;</p>
+<ol>
+<li>&#x82E5; $b_i$ &#x90FD;&#x4E3A;&#x975E;&#x8D1F;&#x6570;&#x3002;&#x5219;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x539F;&#x6765;&#x7684; <em>Simplex</em> &#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x6C42;&#x89E3;&#xFF1B;</li>
+<li>&#x5426;&#x5219;&#x5F15;&#x5165; $x_0$&#xFF0C;&#x521B;&#x5EFA;&#x8F85;&#x52A9;&#x7EBF;&#x6027;&#x89C4;&#x5212; $L_aux$&#xFF1B;</li>
+<li>&#x677E;&#x5F1B;&#x5F62;&#x5F0F;&#xFF0C;&#x9009;&#x62E9; $b_i$ &#x6700;&#x5C0F;&#x9879;&#x7684;&#x90A3;&#x884C;&#x5E26;&#x5165;&#xFF0C;$x_0$ &#x4F5C;&#x4E3A;&#x66FF;&#x5165;&#x53D8;&#x91CF;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x65CB;&#x8F6C;&#xFF1B;</li>
+<li>&#x6C42;&#x89E3; $L_aux$&#xFF0C;&#x82E5;&#x6700;&#x4F18;&#x89E3;&#x4E3A; 0&#xFF0C;&#x8BF4;&#x660E;&#x6709;&#x89E3;&#x3002;&#x5426;&#x5219;&#x76F4;&#x63A5;&#x9000;&#x51FA;&#xFF1B;</li>
+<li>$x_0$ &#x4E3A;&#x57FA;&#x672C;&#x89E3;&#xFF0C;&#x7EE7;&#x7EED;&#x65CB;&#x8F6C;&#xFF0C;&#x4F7F;&#x5176;&#x6210;&#x4E3A;&#x975E;&#x57FA;&#x672C;&#x53D8;&#x91CF;&#xFF1B;</li>
+<li>&#x6062;&#x590D;&#x539F;&#x59CB;&#x76EE;&#x6807;&#x51FD;&#x6570;&#xFF0C;&#x66FF;&#x6362;&#x53D8;&#x91CF;&#xFF1B;</li>
+<li>&#x4F7F;&#x7528;&#x539F;&#x6765;&#x7684; <em>Simplex</em> &#x6C42;&#x89E3;&#xFF1B;</li>
+</ol>
+<pre><code class="lang-python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Simplex</span><span class="hljs-params">(object)</span>:</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, obj, max_mode=False)</span>:</span>
+        <span class="hljs-comment"># &#x9ED8;&#x8BA4;&#x662F;&#x89E3;&#x51B3; min LP &#x95EE;&#x9898;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x6700;&#x5927;&#x503C;&#x7528; True&#xFF0C;&#x8981; mut -1</span>
+        self.mat, self.max_mode = np.array([[<span class="hljs-number">0</span>] + obj]) * (<span class="hljs-number">-1</span> <span class="hljs-keyword">if</span> max_mode <span class="hljs-keyword">else</span> <span class="hljs-number">1</span>), max_mode
+
+    <span class="hljs-comment"># &#x589E;&#x52A0;&#x7EA6;&#x675F;</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_constraint</span><span class="hljs-params">(self, a, b)</span>:</span>
+        <span class="hljs-comment"># &#x589E;&#x52A0;&#x7EA6;&#x675F;&#xFF0C;&#x5373;&#x5728;&#x77E9;&#x9635;&#x6700;&#x540E;&#x4E00;&#x884C;&#x589E;&#x52A0;</span>
+        self.mat = np.vstack([self.mat, [b] + a])
+
+    <span class="hljs-comment"># Simplex &#x7B97;&#x6CD5;&#x8FC7;&#x7A0B;</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_simplex</span><span class="hljs-params">(self, mat, B, m, n)</span>:</span>
+        <span class="hljs-keyword">while</span> mat[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>:].min() &lt; <span class="hljs-number">0</span>:
+            <span class="hljs-comment"># Bland &#x89C4;&#x5219;&#x5BF9;&#x77E9;&#x9635;&#x505A;&#x9000;&#x5316;&#x64CD;</span>
+            col = np.where(mat[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>:] &lt; <span class="hljs-number">0</span>)[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] + <span class="hljs-number">1</span>
+            row = np.array([mat[i][<span class="hljs-number">0</span>] / mat[i][col] <span class="hljs-keyword">if</span> mat[i][col] &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0x7fffffff</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span>
+                            range(<span class="hljs-number">1</span>, mat.shape[<span class="hljs-number">0</span>])]).argmin() + <span class="hljs-number">1</span>
+            <span class="hljs-comment"># &#x5982;&#x679C;&#x6CA1;&#x6709;&#x66FF;&#x51FA;&#x53D8;&#x91CF;,&#x5219;&#x8BF4;&#x660E;&#x539F;&#x95EE;&#x9898;&#x65E0;&#x754C;</span>
+            <span class="hljs-keyword">if</span> mat[row][col] &lt;= <span class="hljs-number">0</span>: <span class="hljs-keyword">return</span> <span class="hljs-keyword">None</span>  <span class="hljs-comment"># the theta is &#x221E;, the problem is unbounded</span>
+            self._pivot(mat, B, row, col)
+        <span class="hljs-comment"># &#x8FD4;&#x56DE;&#x76EE;&#x6807;&#x503C;,&#x82E5;&#x4E3A;&#x6700;&#x5C0F;&#x503C;,&#x5219;&#x8981; * -1,&#x6700;&#x5927;&#x503C;&#x5219;&#x4E0D;&#x7528;&#x3002;</span>
+        <span class="hljs-comment"># &#x540E;&#x9762;&#x7684;&#x77E9;&#x9635;&#x662F;&#x5404;&#x4E2A;&#x89E3;&#x7684;&#x7CFB;&#x6570;&#x77E9;&#x9635;,&#x57FA;&#x672C;&#x53D8;&#x91CF;&#x5BF9;&#x5E94; bi,&#x975E;&#x57FA;&#x672C;&#x53D8;&#x91CF;&#x4E3A;0</span>
+        <span class="hljs-comment"># B[i] &lt; n &#x5224;&#x65AD;&#x5373;&#x4E3A;&#x5220;&#x9664;&#x677E;&#x5F1B;&#x589E;&#x52A0;&#x7684;&#x53D8;&#x91CF;</span>
+        <span class="hljs-keyword">return</span> mat[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] * (<span class="hljs-number">1</span> <span class="hljs-keyword">if</span> self.max_mode <span class="hljs-keyword">else</span> <span class="hljs-number">-1</span>), {B[i]: mat[i, <span class="hljs-number">0</span>] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, m) <span class="hljs-keyword">if</span> B[i] &lt; n}
+
+    <span class="hljs-comment"># &#x65CB;&#x8F6C;&#x8FC7;&#x7A0B;</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_pivot</span><span class="hljs-params">(self, mat, B, row, col)</span>:</span>
+        <span class="hljs-comment"># &#x5BF9;&#x6240;&#x6709; i!= row &#x8FDB;&#x884C; mat[i]= mat[i] - mat[row] * mat[i][col] &#x64CD;&#x4F5C;</span>
+        mat[row] /= mat[row][col]
+        ids = np.arange(mat.shape[<span class="hljs-number">0</span>]) != row
+        mat[ids] -= mat[row] * mat[ids, col:col + <span class="hljs-number">1</span>]
+        B[row] = col
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">solve</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-comment"># &#x83B7;&#x5F97;&#x77E9;&#x9635;&#x7684;&#x7EAC;&#x5EA6;</span>
+        m, n = self.mat.shape
+        <span class="hljs-comment"># &#x7EC4;&#x5408;&#x7CFB;&#x6570;&#x77E9;&#x9635;</span>
+        temp, B = np.vstack([np.zeros((<span class="hljs-number">1</span>, m - <span class="hljs-number">1</span>)), np.eye(m - <span class="hljs-number">1</span>)]), list(range(n - <span class="hljs-number">1</span>, n + m - <span class="hljs-number">1</span>))
+        <span class="hljs-comment"># &#x5FAA;&#x73AF;&#x6240;&#x6709;&#x76EE;&#x6807;&#x51FD;&#x6570;&#x7684;&#x7CFB;&#x6570;,&#x76F4;&#x5230;&#x5168;&#x90E8;&#x6CA1;&#x6709;&#x8D1F;&#x6570;&#x4E3A;&#x6B62;</span>
+        mat = self.mat = np.hstack([self.mat, temp])  <span class="hljs-comment"># combine them!</span>
+        <span class="hljs-comment"># &#x5224;&#x65AD;&#x6700;&#x5C0F;&#x7684;&#x5E38;&#x6570; b &#x662F;&#x5426;&#x5B58;&#x5728;&#x5C0F;&#x4E8E; 0 &#x7684;&#x60C5;&#x51B5;,&#x6709;&#x7684;&#x8BDD;&#x5219;&#x521D;&#x59CB;&#x89E3;&#x4E0D;&#x53EF;&#x884C;</span>
+        <span class="hljs-keyword">if</span> mat[<span class="hljs-number">1</span>:, <span class="hljs-number">0</span>].min() &lt; <span class="hljs-number">0</span>:
+            <span class="hljs-comment"># &#x627E;&#x5230;&#x6700;&#x5C0F; b &#x7684;&#x90A3;&#x4E00;&#x5217;</span>
+            row = mat[<span class="hljs-number">1</span>:, <span class="hljs-number">0</span>].argmin() + <span class="hljs-number">1</span>
+            <span class="hljs-comment"># temp &#x4FDD;&#x5B58;&#x539F;&#x5148;&#x7684;&#x76EE;&#x6807;&#x51FD;&#x6570;, &#x7B2C;0&#x884C;&#x8BBE;&#x7F6E;&#x4E3A;0</span>
+            temp, mat[<span class="hljs-number">0</span>] = np.copy(mat[<span class="hljs-number">0</span>]), <span class="hljs-number">0</span>
+            <span class="hljs-comment"># &#x6DFB;&#x52A0; x0 &#x9700;&#x8981;&#x62FC;&#x63A5;&#x7684;&#x77E9;&#x9635;,&#x6784;&#x9020;&#x8F85;&#x52A9;&#x7EBF;&#x6027;&#x89C4;&#x5212;</span>
+            mat = np.hstack([mat, np.array([<span class="hljs-number">1</span>] + [<span class="hljs-number">-1</span>] * (m - <span class="hljs-number">1</span>)).reshape((<span class="hljs-number">-1</span>, <span class="hljs-number">1</span>))])
+            <span class="hljs-comment"># &#x6267;&#x884C;&#x4E00;&#x6B21;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;,&#x5C06;&#x7CFB;&#x6570;b&#x6700;&#x5C0F;&#x7684;&#x90A3;&#x4E00;&#x9879;&#x66FF;&#x51FA;</span>
+            self._pivot(mat, B, row, mat.shape[<span class="hljs-number">1</span>] - <span class="hljs-number">1</span>)
+            <span class="hljs-comment"># &#x6C42;&#x89E3;&#x8F85;&#x52A9;&#x7EBF;&#x6027;&#x89C4;&#x5212;,&#x5982;&#x679C;&#x6700;&#x4F18;&#x503C;&#x4E3A;0,&#x5219;&#x6709;&#x89E3;,&#x5426;&#x5219;&#x65E0;&#x89E3;</span>
+            <span class="hljs-keyword">if</span> self._simplex(mat, B, m, n)[<span class="hljs-number">0</span>] != <span class="hljs-number">0</span>: <span class="hljs-keyword">return</span> <span class="hljs-keyword">None</span>
+
+            <span class="hljs-comment"># &#x82E5;x0&#x662F;&#x57FA;&#x672C;&#x89E3;,&#x9700;&#x8981;&#x5C06; x0 &#x66FF;&#x51FA;</span>
+            <span class="hljs-keyword">if</span> mat.shape[<span class="hljs-number">1</span>] - <span class="hljs-number">1</span> <span class="hljs-keyword">in</span> B:
+                <span class="hljs-comment"># &#x589E;&#x52A0;&#x4E00;&#x6B21;&#x65CB;&#x8F6C;&#x6765;&#x66FF;&#x51FA; x0</span>
+                self._pivot(mat, B, B.index(mat.shape[<span class="hljs-number">1</span>] - <span class="hljs-number">1</span>), np.where(mat[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>:] != <span class="hljs-number">0</span>)[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] + <span class="hljs-number">1</span>)
+
+            <span class="hljs-comment"># &#x6062;&#x590D;&#x76EE;&#x6807;&#x51FD;&#x6570;</span>
+            self.mat = np.vstack([temp, mat[<span class="hljs-number">1</span>:, :<span class="hljs-number">-1</span>]]) 
+            <span class="hljs-keyword">for</span> i, x <span class="hljs-keyword">in</span> enumerate(B[<span class="hljs-number">1</span>:]):
+                self.mat[<span class="hljs-number">0</span>] -= self.mat[<span class="hljs-number">0</span>, x] * self.mat[i + <span class="hljs-number">1</span>]
+        <span class="hljs-keyword">return</span> self._simplex(self.mat, B, m, n)
+</code></pre>
+<h2 id="&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x573A;&#x666F;">&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x573A;&#x666F;</h2>
+<p><img src="../../image/15272074383889/15305805997704.jpg" alt=""></p>
+<p>&#x56FE;&#x4E2D;&#x662F;&#x4E24;&#x4E2A; <code>UIView</code> &#x7EA2;&#x8272;&#x548C;&#x7EFF;&#x8272;&#x662F;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x8BBE;&#x7F6E;&#x597D;&#x7684; AutoLayout &#x7EA6;&#x675F;&#x3002;&#x6211;&#x4EEC;&#x6839;&#x636E;&#x7EA6;&#x675F;&#x6761;&#x4EF6;&#xFF0C;&#x5F97;&#x5230;&#x4E0B;&#x5217;&#x7EBF;&#x6027;&#x89C4;&#x5212;&#x65B9;&#x7A0B;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+\begin{cases}
+	\ 50+x_1+25+x_2+50\leq375 \\
+	\ x_1\geq50
+\end{cases}
+</script></p>
+<p>&#x6839;&#x636E;&#x7EBF;&#x6027;&#x89C4;&#x5212;&#x6574;&#x7406;&#x4E00;&#x4E0B;&#x65B9;&#x7A0B;&#xFF1A;</p>
+<p><script type="math/tex; mode=display">
+\begin{cases}
+    \ x_2 \quad max \\
+    \ x_1+x_2&\leq250 \\
+    \ -x_1&\leq-50
+\end{cases}
+</script></p>
+<p>&#x4F7F;&#x7528;&#x6211;&#x4EEC;&#x7684; Simplex &#x7B97;&#x6CD5;&#x6309;&#x7167;&#x8981;&#x6C42;&#x5E26;&#x5165;&#x6C42;&#x5F97; $x=200$:</p>
+<pre><code class="lang-python">t = Simplex([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], max_mode=<span class="hljs-keyword">True</span>)
+t.add_constraint([<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], <span class="hljs-number">250</span>)
+t.add_constraint([<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>], <span class="hljs-number">-50</span>)
+print(t.solve())
+print(t.mat)
+
+<span class="hljs-string">&apos;&apos;&apos;
+(200.0, {2: 200.0, 1: 50.0})
+[[200.   0.   0.   1.   1.]
+ [200.   0.   1.   1.   1.]
+ [ 50.   1.   0.   0.  -1.]]
+&apos;&apos;&apos;</span>
+</code></pre>
+<h2 id="&#x590D;&#x6742;&#x5EA6;&#x5206;&#x6790;">&#x590D;&#x6742;&#x5EA6;&#x5206;&#x6790;</h2>
+<p>Simplex &#x7B97;&#x6CD5;&#x518D;&#x5355;&#x6B21;&#x7EA6;&#x675F;&#x8BA1;&#x7B97;&#x4E2D;&#x662F;&#x5426;&#x5341;&#x5206;&#x9AD8;&#x6548;&#x5462;&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x8BA8;&#x8BBA;&#x4E00;&#x4E0B;&#x5176;&#x590D;&#x6742;&#x5EA6;&#x3002;</p>
+<p>&#x82E5;&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A; $m\times n$ &#x7684;&#x77E9;&#x9635;&#x6765;&#x8BF4;&#xFF0C;&#x6211;&#x4EEC;&#x6240;&#x6709;&#x7684;&#x65F6;&#x95F4;&#x5F00;&#x9500;&#x5747;&#x518D;&#x4EE5;&#x4E0B;&#x4E09;&#x4E2A;&#x70B9;:</p>
+<ol>
+<li>&#x6BCF;&#x6B21;&#x9700;&#x8981;&#x67E5;&#x627E;&#x5728;&#x76EE;&#x6807;&#x65B9;&#x7A0B;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x8D1F;&#x6570; <code>O(n)</code>&#xFF1B;</li>
+<li>&#x6BCF;&#x6B21;&#x9700;&#x8981;&#x67E5;&#x627E;&#x5BF9;&#x5E94;&#x9879;&#x65B9;&#x7A0B; <code>O(m)</code>&#xFF1B;</li>
+<li>&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;&#x4E2D;&#xFF0C;&#x6BCF;&#x6B21;&#x9700;&#x8981;&#x6267;&#x884C; <code>mat[i] = mat[i] - mat[row] * mat[i][col]</code>&#x3002;&#x8FD9;&#x4E2A;&#x64CD;&#x4F5C;&#x662F;&#x5BF9;&#x6574;&#x4E2A;&#x884C;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x5E76;&#x4E14;&#x662F;&#x6309;&#x5217;&#x4E0B;&#x6807;&#x904D;&#x5386;&#x3002;<code>np.arrange</code> &#x64CD;&#x4F5C;&#x6BCF;&#x6B21;&#x4F1A;&#x5C06;&#x884C;&#x5217;&#x6269;&#x5C55;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x884C;&#x5B9A;&#x4E49;&#x4E3A;&#x6700;&#x5927;&#x9608;&#x503C; <code>m+n</code>&#xFF0C;&#x6240;&#x4EE5;&#x65CB;&#x8F6C;&#x5F00;&#x9500; <code>O(m*(m+n)) = O(mN)</code>&#xFF1B;</li>
+</ol>
+<p>&#x5F53;&#x7136;&#x8FD9;&#x53EA;&#x662F;&#x4E00;&#x6B21; <em>Simplex</em> &#x7B97;&#x6CD5;&#x7D22;&#x8981;&#x6267;&#x884C;&#x7684;&#x65F6;&#x95F4;&#x5F00;&#x9500;&#x3002;&#x5047;&#x8BBE;&#x9700;&#x8981;&#x8FD0;&#x884C; <code>k</code> &#x6B21;&#xFF0C;&#x5219;&#x4E00;&#x6B21; <em>Simplex</em> &#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A; <code>O(kmN)</code>&#x3002;</p>
+<h2 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h2>
+<p>&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x4E0D;&#x5F97;&#x4E0D;&#x8BF4; WWDC 2018 - 202 &#x4E2D;&#x5BF9;&#x4E8E; AutoLayout &#x590D;&#x6742;&#x5EA6;&#x7684;&#x56FE;&#x793A;&#xFF1A;</p>
+<p><img src="../../image/15272074383889/15306636723931.jpg" alt=""></p>
+<p>&#x867D;&#x7136; <em>Simplex</em> &#x65E0;&#x8BBA;&#x4ECE;&#x6211;&#x4EEC;&#x4E0A;&#x65B9;&#x7684;&#x63A8;&#x5BFC; <code>O(kmN)</code> &#x8FD8;&#x662F;&#x8BBA;&#x6587; <em><a href="http://www.di.ens.fr/~vergnaud/algo0910/Simplex.pdf" target="_blank">Smoothed Analysis of Algorithms: Why the Simplex Algorithm Usually Takes Polynomial Time</a></em> &#x91CC;&#x7684;&#x8BBA;&#x8BC1;&#xFF0C;&#x5173;&#x4E8E;&#x7EBF;&#x6027;&#x89C4;&#x5212;&#x95EE;&#x9898;&#x90FD;&#x4F1A;&#x662F;&#x4E00;&#x4E2A;<strong>&#x591A;&#x9879;&#x5F0F;&#x65F6;&#x95F4;</strong>&#x7684;&#x590D;&#x6742;&#x5EA6;&#x3002;&#x4F46;&#x662F;&#x5230;&#x76EE;&#x524D;&#x4E3A;&#x6B62;&#xFF0C;&#x6211;&#x4EEC;&#x6CA1;&#x6709;&#x8BA8;&#x8BBA;&#x4EFB;&#x4F55;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x7EA6;&#x675F;&#x4E4B;&#x540E;&#x4E0E;&#x4E4B;&#x524D;&#x7EBF;&#x6027;&#x590D;&#x6742;&#x5EA6;&#x7684;&#x5F00;&#x9500;&#x5BF9;&#x6BD4;&#x3002;&#x4F46;&#x662F;&#x4ECE;&#x76F4;&#x89C2;&#x8BA1;&#x7B97;&#x4E0A;&#x6765;&#x8BB2;&#xFF0C;&#x591A;&#x4E86;&#x4E00;&#x4E2A;&#x7EA6;&#x675F;&#x610F;&#x5473;&#x7740;&#x7EAC;&#x5EA6; <code>m</code> &#x548C; <code>n</code> &#x5747;&#x53EF;&#x80FD;&#x589E;&#x5927;&#x3002;&#x90A3;&#x4E48;&#x8BF4;&#x660E;&#x5F53;&#x524D;&#x573A;&#x666F;&#x4E0B;&#x771F;&#x5B9E;&#x7684;<strong>&#x591A;&#x9879;&#x5F0F;&#x590D;&#x6742;&#x5EA6;&#x589E;&#x91CF;&#x6B21;&#x5E42;&#x5E76;&#x4E0D;&#x4E3A; 1</strong>&#x3002;&#x90A3;&#x4E48;&#xFF0C;Apple &#x6B64;&#x6B21;&#x7684;&#x4F18;&#x5316;&#x662F;&#x5426;&#x662F;&#x4E00;&#x6B21;&#x7A81;&#x7834;&#x6027;&#x7684;&#x63D0;&#x5347;&#xFF0C;&#x8FD8;&#x662F;&#x4FEE;&#x590D;&#x4E86;&#x963F;&#x4E09;&#x4E4B;&#x524D;&#x7684; Bug&#xFF0C;&#x8FD8;&#x4E0D;&#x80FD;&#x7ED9;&#x51FA;&#x786E;&#x5B9A;&#x7684;&#x7ED3;&#x8BBA;&#x3002;</p>
+<p>&#x8FD9;&#x6B21;&#x7684; <em>Simplex</em> &#x7B97;&#x6CD5;&#x5BF9;&#x4E8E;&#x7EBF;&#x6027;&#x89C4;&#x5212;&#x95EE;&#x9898;&#x7684; AutoLayout &#x95EE;&#x9898;&#x53EA;&#x662F;&#x6700;&#x539F;&#x59CB;&#x7684;&#x7B97;&#x6CD5;&#x57FA;&#x7840;&#x3002;&#x7EBF;&#x6027;&#x7EA6;&#x675F;&#x7B97;&#x6CD5;&#x8FD8;&#x6709;&#x5F88;&#x591A;&#x503C;&#x5F97;&#x63A2;&#x7A76;&#x7684;&#x7B97;&#x6CD5;&#xFF0C;&#x4F8B;&#x5982; <em>Cassowary</em>&#x3001;<em>QOCA</em> &#x7B49;&#x7B49;&#x3002;&#x540E;&#x7EED;&#x5C06;&#x4F1A;&#x505A;&#x8FDB;&#x4E00;&#x6B65;&#x7684;&#x5206;&#x6790;&#x548C;&#x5B66;&#x4E60;&#x3002;</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="http://www.di.ens.fr/~vergnaud/algo0910/Simplex.pdf" target="_blank">Smoothed Analysis of Algorithms: Why the Simplex Algorithm Usually Takes Polynomial Time</a></li>
+<li><a href="http://bioinfo.ict.ac.cn/~dbu/AlgorithmCourses/Lectures/Lec8.pdf" target="_blank">CS711008Z Algorithm Design and Analysis Lecture 8. Algorithm design technique: Linear programming</a></li>
+<li><a href="Solving%20Linear%20Arithmetic%20Constraints%20for%20User%20Interface%20Applications">https://constraints.cs.washington.edu/solvers/uist97.pdf</a></li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../Foundation/复用的精妙 - UITableView 复用技术原理分析.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 复用的精妙 - UITableView 复用技术原理分析">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"AutoLayout 中的线性规划 - Simplex 算法","level":"5.1.2","depth":2,"next":{"title":"SDWebImage v3.8.1","level":"6.1","depth":1,"ref":"","articles":[{"title":"SDWebImage Source Probe: WebCache","level":"6.1.1","depth":2,"path":"Objective-C/SDWebImage/SDWebImage Source Probe - WebCache.md","ref":"Objective-C/SDWebImage/SDWebImage Source Probe - WebCache.md","articles":[]},{"title":"SDWebImage Source Probe: Manager","level":"6.1.2","depth":2,"path":"Objective-C/SDWebImage/SDWebImage Source Probe - Manager.md","ref":"Objective-C/SDWebImage/SDWebImage Source Probe - Manager.md","articles":[]},{"title":"SDWebImage Source Probe: Downloader","level":"6.1.3","depth":2,"path":"Objective-C/SDWebImage/SDWebImage Source Probe - Downloader.md","ref":"Objective-C/SDWebImage/SDWebImage Source Probe - Downloader.md","articles":[]},{"title":"SDWebImage Source Probe: Operation","level":"6.1.4","depth":2,"path":"Objective-C/SDWebImage/SDWebImage Source Probe - Operation.md","ref":"Objective-C/SDWebImage/SDWebImage Source Probe - Operation.md","articles":[]}]},"previous":{"title":"复用的精妙 - UITableView 复用技术原理分析","level":"5.1.1","depth":2,"path":"Objective-C/Foundation/复用的精妙 - UITableView 复用技术原理分析.md","ref":"Objective-C/Foundation/复用的精妙 - UITableView 复用技术原理分析.md","articles":[]},"dir":"ltr"},"config":{"plugins":["splitter","github","multipart","mathjax"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/Desgard"},"splitter":{},"search":{},"multipart":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"cn","gitbook":"*"},"file":{"path":"Objective-C/UIKit/AutoLayout 中的线性规划 - Simplex 算法.md","mtime":"2018-07-09T00:51:18.663Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-09T00:56:45.312Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

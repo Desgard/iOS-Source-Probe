@@ -1,0 +1,1071 @@
+
+<!DOCTYPE HTML>
+<html lang="cn" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>复用的精妙 - UITableView 复用技术原理分析 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-multipart/multipart.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html" />
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 1 - iOS Runtime 源码解析</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" >
+            
+                <span>
+            
+                    
+                    objc/runtime.h 708
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="../Runtime/浅谈Associated Objects.html">
+            
+                <a href="../Runtime/浅谈Associated Objects.html">
+            
+                    
+                    浅谈Associated Objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="../Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                <a href="../Runtime/objc_msgSend消息传递学习笔记 - 对象方法消息传递流程.html">
+            
+                    
+                    对象方法消息传递流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.3" data-path="../Runtime/objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                <a href="../Runtime/objc_msgSend消息传递学习笔记 - 消息转发.html">
+            
+                    
+                    消息转发过程分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.4" data-path="../Runtime/用 isa 承载对象的类信息.html">
+            
+                <a href="../Runtime/用 isa 承载对象的类信息.html">
+            
+                    
+                    用 isa 承载对象的类信息
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.5" data-path="../Runtime/weak 弱引用的实现方式.html">
+            
+                <a href="../Runtime/weak 弱引用的实现方式.html">
+            
+                    
+                    weak 弱引用的实现方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.6" data-path="../Runtime/load 方法全程跟踪.html">
+            
+                <a href="../Runtime/load 方法全程跟踪.html">
+            
+                    
+                    load 方法全程跟踪
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.7" data-path="../Runtime/浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                <a href="../Runtime/浅谈 block（1） - clang 改写后的 block 结构.html">
+            
+                    
+                    浅谈 block - clang 改写后的 block 结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.8" data-path="../Runtime/浅谈 block（2） - 截获变量方式.html">
+            
+                <a href="../Runtime/浅谈 block（2） - 截获变量方式.html">
+            
+                    
+                    浅谈 block - 截获变量方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 2 - macOS & iOS 系统源码及相关开源库</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <span>
+            
+                    
+                    cctools/include/mach-o 895
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                <a href="../../C/mach-o/Mach-O 文件格式探索.html">
+            
+                    
+                    Mach-O 文件格式探索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" >
+            
+                <span>
+            
+                    
+                    Fishhook
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                <a href="../../C/fishhook/巧用符号表 - 探求 fishhook 原理（一）.html">
+            
+                    
+                    巧用符号表 - 探求 fishhook 原理（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                <a href="../../C/fishhook/验证试验 - 探求 fishhook 原理（二）.html">
+            
+                    
+                    验证试验 - 探求 fishhook 原理（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 3 - Foundation 框架源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" >
+            
+                <span>
+            
+                    
+                    Foundation
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="从经典问题来看 Copy 方法.html">
+            
+                <a href="从经典问题来看 Copy 方法.html">
+            
+                    
+                    从经典问题来看 Copy 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="CFArray 的历史渊源及实现原理.html">
+            
+                <a href="CFArray 的历史渊源及实现原理.html">
+            
+                    
+                    CFArray 的历史渊源及实现原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="Run Loop 记录与源码注释.html">
+            
+                <a href="Run Loop 记录与源码注释.html">
+            
+                    
+                    Run Loop 记录与源码注释(作者Kylin)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 4 - UIKit 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" >
+            
+                <span>
+            
+                    
+                    UIKit
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="5.1.1" data-path="复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                <a href="复用的精妙 - UITableView 复用技术原理分析.html">
+            
+                    
+                    复用的精妙 - UITableView 复用技术原理分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.1.2" data-path="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                <a href="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html">
+            
+                    
+                    AutoLayout 中的线性规划 - Simplex 算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 5 - SDWebImage 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" >
+            
+                <span>
+            
+                    
+                    SDWebImage v3.8.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1.1" data-path="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - WebCache.html">
+            
+                    
+                    SDWebImage Source Probe: WebCache
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.2" data-path="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Manager.html">
+            
+                    
+                    SDWebImage Source Probe: Manager
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.3" data-path="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Downloader.html">
+            
+                    
+                    SDWebImage Source Probe: Downloader
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.1.4" data-path="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                <a href="../SDWebImage/SDWebImage Source Probe - Operation.html">
+            
+                    
+                    SDWebImage Source Probe: Operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 6 - Swift 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" >
+            
+                <span>
+            
+                    
+                    Swift v4.0
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.1.1" data-path="../../Swift/Swift Probe - Optional.html">
+            
+                <a href="../../Swift/Swift Probe - Optional.html">
+            
+                    
+                    Swift Probe - Optional
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Part 7 - Shadowsocks 源码分析</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" >
+            
+                <span>
+            
+                    
+                    Shadowsocks v2.9.1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="8.1.1" data-path="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe I - Socks5 与 EventLoop 事件分发.html">
+            
+                    
+                    Shadowsocks Probe I - Socks5 与 EventLoop 事件分发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.1.2" data-path="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                <a href="../../Python/Shadowsocks/Shadowsocks Probe II - TCP 代理过程.html">
+            
+                    
+                    Shadowsocks Probe II - TCP 代理过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >复用的精妙 - UITableView 复用技术原理分析</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>&#x4F5C;&#x8005;&#xFF1A;&#x51AC;&#x74DC;</p>
+<p>&#x539F;&#x6587;&#x94FE;&#x63A5;&#xFF1A;<a href="http://www.desgard.com/TableView-Reuse/" target="_blank">Guardia &#xB7; &#x74DC;&#x5730;</a></p>
+</blockquote>
+<h1 id="&#x590D;&#x7528;&#x7684;&#x7CBE;&#x5999;---uitableview-&#x590D;&#x7528;&#x6280;&#x672F;&#x539F;&#x7406;&#x5206;&#x6790;">&#x590D;&#x7528;&#x7684;&#x7CBE;&#x5999; - UITableView &#x590D;&#x7528;&#x6280;&#x672F;&#x539F;&#x7406;&#x5206;&#x6790;</h1>
+<p>&#x5728;&#x73B0;&#x5728;&#x5F88;&#x591A;&#x516C;&#x53F8;&#x7684; app &#x4E2D;&#xFF0C;&#x8BB8;&#x591A;&#x5C55;&#x793A;&#x9875;&#x9762;&#x4E3A;&#x4E86;&#x591A;&#x6761;&#x6570;&#x636E;&#x5185;&#x5BB9;&#xFF0C;&#x800C;&#x91C7;&#x7528; <code>UITableView</code> &#x6765;&#x8BBE;&#x8BA1;&#x9875;&#x9762;&#x3002;&#x5728;&#x6ED1;&#x52A8; <code>UITableView</code> &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5E76;&#x4E0D;&#x4F1A;&#x56E0;&#x4E3A;&#x6570;&#x636E;&#x91CF;&#x5927;&#x800C;&#x4EA7;&#x751F;&#x5361;&#x987F;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x8FD9;&#x6B63;&#x662F;&#x56E0;&#x4E3A;&#x5176;<strong>&#x590D;&#x7528;&#x673A;&#x5236;</strong>&#x7684;&#x7279;&#x70B9;&#x3002;&#x4F46;&#x662F;&#x5176;&#x590D;&#x7528;&#x673A;&#x5236;&#x662F;&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x7684;&#xFF1F;&#x6211;&#x51B3;&#x5B9A;&#x6765;&#x63A2;&#x7D22;&#x4E00;&#x756A;&#x3002;</p>
+<h2 id="chameleon-project">Chameleon PROJECT</h2>
+<p><a href="https://github.com/BigZaphod/Chameleon" target="_blank"><em>Chameleon</em></a> &#x662F;&#x6211;&#x957F;&#x671F;&#x4EE5;&#x6765;&#x4E00;&#x76F4;&#x5173;&#x6CE8;&#x7684;&#x4E00;&#x4E2A;&#x9879;&#x76EE;&#x3002;&#x63A5;&#x89E6;&#x8FC7; macOS &#x5F00;&#x53D1;&#x7684;&#x4EBA;&#x80AF;&#x5B9A;&#x591A;&#x5C11;&#x6709;&#x5199;&#x4E86;&#x89E3;&#x3002;&#xFF08;&#x867D;&#x7136;&#x8FD9;&#x4E2A;&#x9879;&#x76EE;&#x5728;&#x4E09;&#x5E74;&#x4EE5;&#x524D;&#x5C31;&#x5DF2;&#x7ECF;&#x505C;&#x66F4;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x539F;&#x7406;&#x4E0A;&#x8FD8;&#x662F;&#x6709;&#x5F88;&#x9AD8;&#x7684;&#x53C2;&#x8003;&#x4EF7;&#x503C;&#x3002;&#xFF09;<em>Chameleon</em> &#x7528;&#x4E8E;&#x5C06; iOS &#x7684;&#x529F;&#x80FD;&#x8FC1;&#x79FB;&#x5230; macOS &#x4E0A;&#xFF0C;&#x5E76;&#x4E14;&#x5728;&#x5176;&#x4E2D;&#x4E3A; macOS &#x5B9E;&#x73B0;&#x4E86;&#x4E00;&#x5957;&#x4E0E; iOS UIKit &#x540C;&#x540D;&#x7684;&#x6846;&#x67B6;&#xFF0C;&#x5E76;&#x4E14;&#x5176;&#x4EE3;&#x7801;&#x90FD;&#x4E3A;&#x5F00;&#x6E90;&#x3002;&#x7531;&#x4E8E; <em>Chameleon</em> &#x5C5E;&#x4E8E;&#x5BF9;&#x82F9;&#x679C;&#x65E9;&#x671F;&#x6E90;&#x7801;&#x7684;&#x9006;&#x5411;&#x5DE5;&#x7A0B;&#x9879;&#x76EE;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x636E;&#x6B64;&#x6765;&#x5BF9; iOS &#x4E00;&#x4E9B;&#x95ED;&#x6E90;&#x5E93;&#x5C55;&#x5F00;&#x5B66;&#x4E60;&#x548C;&#x601D;&#x8DEF;&#x7684;&#x501F;&#x9274;&#x3002;</p>
+<blockquote>
+<p><em>Chameleon</em> &#x6240;&#x8FC1;&#x79FB;&#x7684; iOS &#x7248;&#x672C;&#x4E3A; <code>3.2</code> &#xFF0C;&#x5982;&#x4ECA;&#x5DF2;&#x7ECF;&#x6CA1;&#x6709;&#x4EBA;&#x4F7F;&#x7528;&#xFF0C;&#x6240;&#x4EE5;&#x5176;&#x4EE3;&#x7801;&#x548C;&#x601D;&#x8DEF;&#x6211;&#x4EEC;&#x53EA;&#x80FD;&#x7528;&#x6765;&#x4E86;&#x89E3;&#x3002;&#x4F8B;&#x5982;&#x5728; iOS 8 &#x4E4B;&#x540E;&#x63A8;&#x51FA;&#x7684;&#x6839;&#x636E; <code>autoLayout</code> &#x81EA;&#x52A8;&#x8BA1;&#x7B97; <code>cell</code> &#x9AD8;&#x5EA6;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x5728;&#x5176;&#x4E2D;&#x65E0;&#x6CD5;&#x4F53;&#x73B0;&#x3002;</p>
+</blockquote>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/14921391544358.jpg" alt="&#x5DE5;&#x7A0B;&#x7ED3;&#x6784;&#x622A;&#x56FE;"></p>
+<h2 id="uitableview-&#x7684;&#x521D;&#x59CB;&#x5316;&#x65B9;&#x6CD5;">UITableView &#x7684;&#x521D;&#x59CB;&#x5316;&#x65B9;&#x6CD5;</h2>
+<p>&#x5F53;&#x6211;&#x4EEC;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A; <code>UITableView</code> &#x5BF9;&#x8C61;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x9700;&#x8981;&#x5BF9;&#x8FD9;&#x4E2A;&#x5BF9;&#x8C61;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#x3002;&#x6700;&#x5E38;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x83AB;&#x8FC7;&#x4E8E; <code>- (id)initWithFrame:(CGRect)frame style:(UITableViewStyle)theStyle</code>&#x3002;&#x4E0B;&#x9762;&#x8DDF;&#x7740;&#x8FD9;&#x4E2A;&#x521D;&#x59CB;&#x5316;&#x5165;&#x53E3;&#xFF0C;&#x9010;&#x6E10;&#x6765;&#x5206;&#x6790;&#x4EE3;&#x7801;&#xFF1A;</p>
+<pre><code class="lang-ObjC">- (<span class="hljs-keyword">id</span>)initWithFrame:(<span class="hljs-built_in">CGRect</span>)frame style:(<span class="hljs-built_in">UITableViewStyle</span>)theStyle {
+    <span class="hljs-keyword">if</span> ((<span class="hljs-keyword">self</span>=[<span class="hljs-keyword">super</span> initWithFrame:frame])) {
+        <span class="hljs-comment">// &#x786E;&#x5B9A; TableView &#x7684; Style</span>
+        _style = theStyle;
+        <span class="hljs-comment">// &#x8981;&#x70B9;&#x4E00;&#xFF1A;Cell &#x7F13;&#x5B58;&#x5B57;&#x5178;</span>
+        _cachedCells = [[<span class="hljs-built_in">NSMutableDictionary</span> alloc] init];
+        <span class="hljs-comment">// &#x8981;&#x70B9;&#x4E8C;&#xFF1A;Section &#x7F13;&#x5B58; Mutable Array</span>
+        _sections = [[<span class="hljs-built_in">NSMutableArray</span> alloc] init];
+        <span class="hljs-comment">// &#x8981;&#x70B9;&#x4E09;&#xFF1A;&#x590D;&#x7528; Cell Mutable Set</span>
+        _reusableCells = [[<span class="hljs-built_in">NSMutableSet</span> alloc] init];
+
+        <span class="hljs-comment">// &#x4E00;&#x4E9B;&#x5173;&#x4E8E; Table View &#x7684;&#x5C5E;&#x6027;&#x8BBE;&#x7F6E;</span>
+        <span class="hljs-keyword">self</span>.separatorColor = [<span class="hljs-built_in">UIColor</span> colorWithRed:<span class="hljs-number">.88</span>f green:<span class="hljs-number">.88</span>f blue:<span class="hljs-number">.88</span>f alpha:<span class="hljs-number">1</span>];
+        <span class="hljs-keyword">self</span>.separatorStyle = <span class="hljs-built_in">UITableViewCellSeparatorStyleSingleLine</span>;
+        <span class="hljs-keyword">self</span>.showsHorizontalScrollIndicator = <span class="hljs-literal">NO</span>;
+        <span class="hljs-keyword">self</span>.allowsSelection = <span class="hljs-literal">YES</span>;
+        <span class="hljs-keyword">self</span>.allowsSelectionDuringEditing = <span class="hljs-literal">NO</span>;
+        <span class="hljs-keyword">self</span>.sectionHeaderHeight = <span class="hljs-keyword">self</span>.sectionFooterHeight = <span class="hljs-number">22</span>;
+        <span class="hljs-keyword">self</span>.alwaysBounceVertical = <span class="hljs-literal">YES</span>;
+
+        <span class="hljs-keyword">if</span> (_style == <span class="hljs-built_in">UITableViewStylePlain</span>) {
+            <span class="hljs-keyword">self</span>.backgroundColor = [<span class="hljs-built_in">UIColor</span> whiteColor];
+        }
+        <span class="hljs-comment">// &#x52A0;&#x5165; Layout &#x6807;&#x8BB0;&#xFF0C;&#x8FDB;&#x884C;&#x624B;&#x52A8;&#x89E6;&#x53D1;&#x5E03;&#x5C40;&#x8BBE;&#x7F6E;</span>
+        [<span class="hljs-keyword">self</span> _setNeedsReload];
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>;
+}
+</code></pre>
+<p>&#x5728;&#x521D;&#x59CB;&#x5316;&#x4EE3;&#x7801;&#x4E2D;&#x5C31;&#x770B;&#x5230;&#x4E86;&#x91CD;&#x70B9;&#xFF0C;<code>_cachedCells</code>&#x3001;<code>_sections</code> &#x548C; <code>_reusableCells</code> &#x65E0;&#x7591;&#x662F;&#x590D;&#x7528;&#x7684;&#x6838;&#x5FC3;&#x6210;&#x5458;&#x3002;</p>
+<h2 id="&#x4EE3;&#x7801;&#x8DDF;&#x8E2A;">&#x4EE3;&#x7801;&#x8DDF;&#x8E2A;</h2>
+<p>&#x6211;&#x4EEC;&#x5148;&#x6765;&#x67E5;&#x770B;&#x4E00;&#x4E0B; <code>_setNeedsReload</code> &#x65B9;&#x6CD5;&#x4E2D;&#x505A;&#x4E86;&#x4EC0;&#x4E48;&#xFF1A;</p>
+<pre><code class="lang-ObjC">- (<span class="hljs-keyword">void</span>)_setNeedsReload {
+    _needsReload = <span class="hljs-literal">YES</span>;
+    [<span class="hljs-keyword">self</span> setNeedsLayout];
+}
+</code></pre>
+<p>&#x9996;&#x5148;&#x5148;&#x5BF9; <code>_needsReload</code> &#x8FDB;&#x884C;&#x6807;&#x8BB0;&#xFF0C;&#x4E4B;&#x540E;&#x8C03;&#x7528;&#x4E86; <code>setNeedsLayout</code> &#x65B9;&#x6CD5;&#x3002;&#x5BF9;&#x4E8E; <code>UIView</code> &#x7684; <code>setNeedsLayout</code> &#x65B9;&#x6CD5;&#xFF0C;&#x5728;&#x8C03;&#x7528;&#x540E; <em>Runloop</em> &#x4F1A;&#x5728;&#x5373;&#x5C06;&#x5230;&#x6765;&#x7684;&#x5468;&#x671F;&#x4E2D;&#x6765;&#x68C0;&#x6D4B; <code>displayIfNeeded</code> &#x6807;&#x8BB0;&#xFF0C;&#x5982;&#x679C;&#x4E3A; <code>YES</code> &#x5219;&#x4F1A;&#x8FDB;&#x884C; <code>drawRect</code> &#x89C6;&#x56FE;&#x91CD;&#x7ED8;&#x3002;&#x4F5C;&#x4E3A; Apple <em>UIKit</em> &#x5C42;&#x4E2D;&#x7684;&#x57FA;&#x7840; Class&#xFF0C;&#x5728;&#x5C5E;&#x6027;&#x53D8;&#x5316;&#x540E;&#x90FD;&#x4F1A;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x89C6;&#x56FE;&#x91CD;&#x7ED8;&#x7684;&#x8FC7;&#x7A0B;&#x3002;&#x8FD9;&#x4E2A;&#x5C5E;&#x6027;&#x8FC7;&#x7A0B;&#x7684;&#x53D8;&#x5316;&#x5373;&#x4E3A;&#x5BF9;&#x8C61;&#x7684;&#x521D;&#x59CB;&#x5316;&#x52A0;&#x8F7D;&#x4EE5;&#x53CA;&#x624B;&#x52BF;&#x4EA4;&#x4E92;&#x8FC7;&#x7A0B;&#x3002;&#x8FD9;&#x4E5F;&#x5C31;&#x662F;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x4E2D;&#x7684; <a href="https://developer.apple.com/library/content/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/WindowsandViews/WindowsandViews.html#//apple_ref/doc/uid/TP40009503-CH2-SW42" target="_blank"><em>The Runtime Interaction Model</em></a>&#x3002;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/11222.png" alt="&#x5E03;&#x5C40;&#x65B9;&#x6CD5;&#x8F7D;&#x5165;&#x6D41;&#x7A0B;"></p>
+<p>&#x5F53; <em>Runloop</em> &#x5230;&#x6765;&#x65F6;&#xFF0C;&#x5F00;&#x59CB;&#x91CD;&#x7ED8;&#x8FC7;&#x7A0B;&#x5373;&#x8C03;&#x7528; <code>layoutSubViews</code> &#x65B9;&#x6CD5;&#x3002;&#x5728; <code>UITableView</code> &#x4E2D;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x5DF2;&#x7ECF;&#x88AB;&#x91CD;&#x5199;&#x8FC7;&#xFF1A;</p>
+<pre><code class="lang-ObjC">- (<span class="hljs-keyword">void</span>)layoutSubviews {
+    <span class="hljs-comment">// &#x4F1A;&#x5728;&#x521D;&#x59CB;&#x5316;&#x7684;&#x672B;&#x5C3E;&#x624B;&#x52A8;&#x8C03;&#x7528;&#x91CD;&#x7ED8;&#x8FC7;&#x7A0B;</span>
+    <span class="hljs-comment">// &#x5E76;&#x4E14; UITableView &#x662F; UIScrollView &#x7684;&#x7EE7;&#x627F;&#xFF0C;&#x4F1A;&#x63A5;&#x53D7;&#x624B;&#x52BF;</span>
+    <span class="hljs-comment">// &#x6240;&#x4EE5;&#x5728;&#x6ED1;&#x52A8; UITableView &#x7684;&#x65F6;&#x5019;&#x4E5F;&#x4F1A;&#x8C03;&#x7528;</span>
+    _backgroundView.frame = <span class="hljs-keyword">self</span>.bounds;
+    <span class="hljs-comment">// &#x6839;&#x636E;&#x6807;&#x8BB0;&#x786E;&#x5B9A;&#x662F;&#x5426;&#x6267;&#x884C;&#x6570;&#x636E;&#x66F4;&#x65B0;&#x64CD;&#x4F5C;</span>
+    [<span class="hljs-keyword">self</span> _reloadDataIfNeeded];
+    <span class="hljs-comment">// &#x5E03;&#x5C40;&#x5165;&#x53E3;</span>
+    [<span class="hljs-keyword">self</span> _layoutTableView];
+    [<span class="hljs-keyword">super</span> layoutSubviews];
+}
+</code></pre>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x6211;&#x4EEC;&#x5F00;&#x59CB;&#x67E5;&#x770B; <code>_reloadDataIfNeeded</code> &#x4EE5;&#x53CA; <code>reloadData</code> &#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code class="lang-ObjC">- (<span class="hljs-keyword">void</span>)_reloadDataIfNeeded {
+    <span class="hljs-comment">// &#x67E5;&#x8BE2; _needsReload &#x6807;&#x8BB0;</span>
+    <span class="hljs-keyword">if</span> (_needsReload) {
+        [<span class="hljs-keyword">self</span> reloadData];
+    }
+}
+
+- (<span class="hljs-keyword">void</span>)reloadData {
+    <span class="hljs-comment">// &#x6E05;&#x9664;&#x4E4B;&#x524D;&#x7684;&#x7F13;&#x5B58;&#x5E76;&#x5220;&#x9664; Cell</span>
+    <span class="hljs-comment">// makeObjectsPerformSelector &#x65B9;&#x6CD5;&#x503C;&#x90FD;&#x8FDB;&#x884C;&#x8C03;&#x7528;&#x67D0;&#x4E2A;&#x65B9;&#x6CD5;</span>
+    [[_cachedCells allValues] makeObjectsPerformSelector:<span class="hljs-keyword">@selector</span>(removeFromSuperview)];
+    <span class="hljs-comment">// &#x590D;&#x7528; Cell Set &#x4E5F;&#x8FDB;&#x884C;&#x5220;&#x9664;&#x64CD;&#x4F5C;</span>
+    [_reusableCells makeObjectsPerformSelector:<span class="hljs-keyword">@selector</span>(removeFromSuperview)];
+    [_reusableCells removeAllObjects];
+    [_cachedCells removeAllObjects];
+
+    <span class="hljs-comment">// &#x5220;&#x9664;&#x9009;&#x62E9;&#x7684; Cell</span>
+    _selectedRow = <span class="hljs-literal">nil</span>;
+    <span class="hljs-comment">// &#x5220;&#x9664;&#x88AB;&#x9AD8;&#x4EAE;&#x7684; Cell</span>
+    _highlightedRow = <span class="hljs-literal">nil</span>;
+
+    <span class="hljs-comment">// &#x66F4;&#x65B0;&#x7F13;&#x5B58;&#x4E2D;&#x72B6;&#x6001;</span>
+    [<span class="hljs-keyword">self</span> _updateSectionsCache];
+    <span class="hljs-comment">// &#x8BBE;&#x7F6E; Size</span>
+    [<span class="hljs-keyword">self</span> _setContentSize];
+
+    _needsReload = <span class="hljs-literal">NO</span>;
+}
+</code></pre>
+<p>&#x5F53; <code>reloadData</code> &#x65B9;&#x6CD5;&#x88AB;&#x89E6;&#x53D1;&#x65F6;&#xFF0C;<code>UITableView</code> &#x9ED8;&#x8BA4;&#x4E3A;&#x5728;&#x8FD9;&#x4E2A; <code>UITableView</code> &#x4E2D;&#x7684;&#x6570;&#x636E;&#x5C06;&#x4F1A;&#x5168;&#x90E8;&#x53D1;&#x751F;&#x53D8;&#x5316;&#x3002;&#x6D4B;&#x8BD5;&#x4E4B;&#x524D;&#x9057;&#x7559;&#x4E0B;&#x7684;&#x7F13;&#x5B58;&#x5217;&#x8868;&#x4EE5;&#x53CA;&#x590D;&#x7528;&#x5217;&#x8868;&#x5168;&#x90E8;&#x90FD;&#x4E27;&#x5931;&#x4E86;&#x5229;&#x7528;&#x6027;&#x3002;&#x4E3A;&#x4E86;&#x907F;&#x514D;&#x51FA;&#x73B0;<strong>&#x60AC;&#x6302;&#x6307;&#x9488;</strong>&#x7684;&#x60C5;&#x51B5;&#xFF08;&#x6709;&#x53EF;&#x80FD;&#x67D0;&#x4E2A; cell &#x88AB;&#x5176;&#x4ED6;&#x7684;&#x89C6;&#x56FE;&#x8FDB;&#x884C;&#x4E86;&#x5F15;&#x7528;&#xFF09;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5BF9;&#x6BCF;&#x4E2A; cell &#x8FDB;&#x884C; <code>removeFromSuperview</code> &#x5904;&#x7406;&#xFF0C;&#x8FD9;&#x4E2A;&#x5904;&#x7406;&#x5373;&#x9488;&#x5BF9;&#x4E8E;&#x5BB9;&#x5668; <code>UITableView</code>&#xFF0C;&#x53C8;&#x5BF9;&#x5176;&#x4ED6;&#x7684;&#x5F15;&#x7528;&#x505A;&#x51FA;&#x4FDD;&#x969C;&#x3002;&#x7136;&#x540E;&#x6211;&#x4EEC;&#x66F4;&#x65B0;&#x5F53;&#x524D; tableView &#x4E2D;&#x7684;&#x4E24;&#x4E2A;&#x7F13;&#x5B58;&#x5BB9;&#x5668;&#xFF0C;<code>_reusableCells</code> &#x548C; <code>_cachedCells</code>&#xFF0C;&#x4EE5;&#x53CA;&#x5176;&#x4ED6;&#x9700;&#x8981;&#x91CD;&#x7F6E;&#x7684;&#x6210;&#x5458;&#x5C5E;&#x6027;&#x3002;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/Mobile%20Portrait.png" alt="Mobile Portrait"></p>
+<p>&#x6700;&#x5173;&#x952E;&#x7684;&#x5730;&#x65B9;&#x5230;&#x4E86;&#xFF0C;&#x7F13;&#x5B58;&#x72B6;&#x6001;&#x7684;&#x66F4;&#x65B0;&#x65B9;&#x6CD5; <code>_updateSectionsCache</code>&#xFF0C;&#x5176;&#x4E2D;&#x6D89;&#x53CA;&#x5230;&#x6570;&#x636E;&#x5982;&#x4F55;&#x5B58;&#x50A8;&#x3001;&#x5982;&#x4F55;&#x590D;&#x7528;&#x7684;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<pre><code class="lang-ObjC">- (<span class="hljs-keyword">void</span>)_updateSectionsCache {
+    <span class="hljs-comment">// &#x4F7F;&#x7528; dataSource &#x6765;&#x521B;&#x5EFA;&#x7F13;&#x5B58;&#x5BB9;&#x5668;</span>
+    <span class="hljs-comment">// &#x5982;&#x679C;&#x6CA1;&#x6709; dataSource &#x5219;&#x653E;&#x5F03;&#x91CD;&#x7528;&#x64CD;&#x4F5C;</span>
+    <span class="hljs-comment">// &#x5728;&#x8FD9;&#x4E2A;&#x9006;&#x5411;&#x5DE5;&#x7A0B;&#x4E2D;&#x5E76;&#x6CA1;&#x6709;&#x5BF9; header &#x8FDB;&#x884C;&#x7F13;&#x5B58;&#x64CD;&#x4F5C;&#xFF0C;&#x4F46;&#x662F; Apple &#x7684; UIKit &#x4E2D;&#x4E00;&#x5B9A;&#x4E5F;&#x505A;&#x5230;&#x4E86;</span>
+    <span class="hljs-comment">// &#x771F;&#x6B63;&#x7684; UIKit &#x4E2D;&#x5E94;&#x8BE5;&#x4F1A;&#x83B7;&#x53D6;&#x66F4;&#x591A;&#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x5B58;&#x50A8;&#xFF0C;&#x5E76;&#x5B9E;&#x73B0;&#x4E86; TableView &#x4E2D;&#x6240;&#x6709;&#x89C6;&#x56FE;&#x7684;&#x590D;&#x7528;</span>
+
+    <span class="hljs-comment">// &#x5148;&#x79FB;&#x9664;&#x6BCF;&#x4E2A; Section &#x7684; Header &#x548C; Footer &#x89C6;&#x56FE;</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">UITableViewSection</span> *previousSectionRecord <span class="hljs-keyword">in</span> _sections) {
+        [previousSectionRecord.headerView removeFromSuperview];
+        [previousSectionRecord.footerView removeFromSuperview];
+    }
+
+    <span class="hljs-comment">// &#x6E05;&#x9664;&#x65E7;&#x7F13;&#x5B58;&#xFF0C;&#x5BF9;&#x5BB9;&#x5668;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#x64CD;&#x4F5C;</span>
+    [_sections removeAllObjects];
+
+    <span class="hljs-keyword">if</span> (_dataSource) {
+        <span class="hljs-comment">// &#x6839;&#x636E; dataSource &#x8BA1;&#x7B97;&#x9AD8;&#x5EA6;&#x548C;&#x504F;&#x79FB;&#x91CF;</span>
+        <span class="hljs-keyword">const</span> <span class="hljs-built_in">CGFloat</span> defaultRowHeight = _rowHeight ?: _<span class="hljs-built_in">UITableViewDefaultRowHeight</span>;
+        <span class="hljs-comment">// &#x83B7;&#x53D6; Section &#x6570;&#x76EE;</span>
+        <span class="hljs-keyword">const</span> <span class="hljs-built_in">NSInteger</span> numberOfSections = [<span class="hljs-keyword">self</span> numberOfSections];
+        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">NSInteger</span> section=<span class="hljs-number">0</span>; section&lt;numberOfSections; section++) {
+            <span class="hljs-keyword">const</span> <span class="hljs-built_in">NSInteger</span> numberOfRowsInSection = [<span class="hljs-keyword">self</span> numberOfRowsInSection:section];
+
+            <span class="hljs-built_in">UITableViewSection</span> *sectionRecord = [[<span class="hljs-built_in">UITableViewSection</span> alloc] init];
+            sectionRecord.headerTitle = _dataSourceHas.titleForHeaderInSection? [<span class="hljs-keyword">self</span>.dataSource tableView:<span class="hljs-keyword">self</span> titleForHeaderInSection:section] : <span class="hljs-literal">nil</span>;
+            sectionRecord.footerTitle = _dataSourceHas.titleForFooterInSection? [<span class="hljs-keyword">self</span>.dataSource tableView:<span class="hljs-keyword">self</span> titleForFooterInSection:section] : <span class="hljs-literal">nil</span>;
+
+            sectionRecord.headerHeight = _delegateHas.heightForHeaderInSection? [<span class="hljs-keyword">self</span>.delegate tableView:<span class="hljs-keyword">self</span> heightForHeaderInSection:section] : _sectionHeaderHeight;
+            sectionRecord.footerHeight = _delegateHas.heightForFooterInSection ? [<span class="hljs-keyword">self</span>.delegate tableView:<span class="hljs-keyword">self</span> heightForFooterInSection:section] : _sectionFooterHeight;
+
+            sectionRecord.headerView = (sectionRecord.headerHeight &gt; <span class="hljs-number">0</span> &amp;&amp; _delegateHas.viewForHeaderInSection)? [<span class="hljs-keyword">self</span>.delegate tableView:<span class="hljs-keyword">self</span> viewForHeaderInSection:section] : <span class="hljs-literal">nil</span>;
+            sectionRecord.footerView = (sectionRecord.footerHeight &gt; <span class="hljs-number">0</span> &amp;&amp; _delegateHas.viewForFooterInSection)? [<span class="hljs-keyword">self</span>.delegate tableView:<span class="hljs-keyword">self</span> viewForFooterInSection:section] : <span class="hljs-literal">nil</span>;
+
+            <span class="hljs-comment">// &#x5148;&#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x7684; headerView &#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x76F4;&#x63A5;&#x8BBE;&#x7F6E; headerView &#x5C31;&#x76F4;&#x63A5;&#x66F4;&#x6362;&#x6807;&#x9898;</span>
+            <span class="hljs-keyword">if</span> (!sectionRecord.headerView &amp;&amp; sectionRecord.headerHeight &gt; <span class="hljs-number">0</span> &amp;&amp; sectionRecord.headerTitle) {
+                sectionRecord.headerView = [<span class="hljs-built_in">UITableViewSectionLabel</span> sectionLabelWithTitle:sectionRecord.headerTitle];
+            }
+
+            <span class="hljs-comment">// Footer &#x4E5F;&#x505A;&#x76F8;&#x540C;&#x7684;&#x5904;&#x7406;</span>
+            <span class="hljs-keyword">if</span> (!sectionRecord.footerView &amp;&amp; sectionRecord.footerHeight &gt; <span class="hljs-number">0</span> &amp;&amp; sectionRecord.footerTitle) {
+                sectionRecord.footerView = [<span class="hljs-built_in">UITableViewSectionLabel</span> sectionLabelWithTitle:sectionRecord.footerTitle];
+            }
+
+            <span class="hljs-keyword">if</span> (sectionRecord.headerView) {
+                [<span class="hljs-keyword">self</span> addSubview:sectionRecord.headerView];
+            } <span class="hljs-keyword">else</span> {
+                sectionRecord.headerHeight = <span class="hljs-number">0</span>;
+            }
+
+            <span class="hljs-keyword">if</span> (sectionRecord.footerView) {
+                [<span class="hljs-keyword">self</span> addSubview:sectionRecord.footerView];
+            } <span class="hljs-keyword">else</span> {
+                sectionRecord.footerHeight = <span class="hljs-number">0</span>;
+            }
+
+            <span class="hljs-comment">// &#x4E3A;&#x9AD8;&#x5EA6;&#x6570;&#x7EC4;&#x52A8;&#x6001;&#x5F00;&#x8F9F;&#x7A7A;&#x95F4;</span>
+            <span class="hljs-built_in">CGFloat</span> *rowHeights = malloc(numberOfRowsInSection * <span class="hljs-keyword">sizeof</span>(<span class="hljs-built_in">CGFloat</span>));
+            <span class="hljs-comment">// &#x521D;&#x59CB;&#x5316;&#x603B;&#x9AD8;&#x5EA6;</span>
+            <span class="hljs-built_in">CGFloat</span> totalRowsHeight = <span class="hljs-number">0</span>;
+
+            <span class="hljs-keyword">for</span> (<span class="hljs-built_in">NSInteger</span> row=<span class="hljs-number">0</span>; row&lt;numberOfRowsInSection; row++) {
+                <span class="hljs-comment">// &#x83B7;&#x53D6; Cell &#x9AD8;&#x5EA6;&#xFF0C;&#x672A;&#x8BBE;&#x7F6E;&#x5219;&#x4F7F;&#x7528;&#x9ED8;&#x8BA4;&#x9AD8;&#x5EA6;</span>
+                <span class="hljs-keyword">const</span> <span class="hljs-built_in">CGFloat</span> rowHeight = _delegateHas.heightForRowAtIndexPath? [<span class="hljs-keyword">self</span>.delegate tableView:<span class="hljs-keyword">self</span> heightForRowAtIndexPath:[<span class="hljs-built_in">NSIndexPath</span> indexPathForRow:row inSection:section]] : defaultRowHeight;
+                <span class="hljs-comment">// &#x8BB0;&#x5F55;&#x9AD8;&#x5EA6;</span>
+                rowHeights[row] = rowHeight;
+                <span class="hljs-comment">// &#x603B;&#x9AD8;&#x5EA6;&#x7EDF;&#x8BA1;</span>
+                totalRowsHeight += rowHeight;
+            }
+
+            sectionRecord.rowsHeight = totalRowsHeight;
+            [sectionRecord setNumberOfRows:numberOfRowsInSection withHeights:rowHeights];
+            free(rowHeights);
+
+            <span class="hljs-comment">// &#x7F13;&#x5B58;&#x9AD8;&#x5EA6;&#x8BB0;&#x5F55;</span>
+            [_sections addObject:sectionRecord];
+        }
+    }
+}
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x53D1;&#x73B0;&#x5728; <code>_updateSectionsCache</code> &#x66F4;&#x65B0;&#x7F13;&#x5B58;&#x72B6;&#x6001;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x5BF9; <code>_sections</code> &#x4E2D;&#x7684;&#x6570;&#x636E;&#x5168;&#x90E8;&#x6E05;&#x9664;&#x3002;&#x4E4B;&#x540E;&#x7F13;&#x5B58;&#x4E86;&#x66F4;&#x65B0;&#x540E;&#x7684;&#x6240;&#x6709; Section &#x6570;&#x636E;&#x3002;&#x90A3;&#x4E48;&#x8FD9;&#x4E9B;&#x6570;&#x636E;&#x6709;&#x4EC0;&#x4E48;&#x5229;&#x7528;&#x4EF7;&#x503C;&#x5462;&#xFF1F;&#x7EE7;&#x7EED;&#x6765;&#x770B;<strong>&#x5E03;&#x5C40;&#x66F4;&#x65B0;</strong>&#x64CD;&#x4F5C;&#x3002;</p>
+<pre><code class="lang-ObjC">- (<span class="hljs-keyword">void</span>)_layoutTableView {
+    <span class="hljs-comment">// &#x5728;&#x9700;&#x8981;&#x6E32;&#x67D3;&#x65F6;&#x653E;&#x7F6E;&#x9700;&#x8981;&#x7684; Header &#x548C; Cell</span>
+    <span class="hljs-comment">// &#x7F13;&#x5B58;&#x6240;&#x6709;&#x51FA;&#x73B0;&#x7684;&#x5355;&#x5143;&#x683C;&#xFF0C;&#x5E76;&#x6DFB;&#x52A0;&#x81F3;&#x590D;&#x7528;&#x5BB9;&#x5668;</span>
+    <span class="hljs-comment">// &#x4E4B;&#x540E;&#x90A3;&#x4E9B;&#x4E0D;&#x663E;&#x793A;&#x4F46;&#x662F;&#x5DF2;&#x7ECF;&#x51FA;&#x73B0;&#x7684; Cell &#x5C06;&#x4F1A;&#x88AB;&#x590D;&#x7528;</span>
+
+    <span class="hljs-comment">// &#x83B7;&#x53D6;&#x5BB9;&#x5668;&#x89C6;&#x56FE;&#x76F8;&#x5BF9;&#x4E8E;&#x7236;&#x7C7B;&#x89C6;&#x56FE;&#x7684;&#x5C3A;&#x5BF8;&#x53CA;&#x5750;&#x6807;</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-built_in">CGSize</span> boundsSize = <span class="hljs-keyword">self</span>.bounds.size;
+    <span class="hljs-comment">// &#x83B7;&#x53D6;&#x5411;&#x4E0B;&#x6ED1;&#x52A8;&#x504F;&#x79FB;&#x91CF;</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-built_in">CGFloat</span> contentOffset = <span class="hljs-keyword">self</span>.contentOffset.y;
+    <span class="hljs-comment">// &#x83B7;&#x53D6;&#x53EF;&#x89C6;&#x77E9;&#x5F62;&#x6846;&#x7684;&#x5C3A;&#x5BF8;</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-built_in">CGRect</span> visibleBounds = <span class="hljs-built_in">CGRectMake</span>(<span class="hljs-number">0</span>,contentOffset,boundsSize.width,boundsSize.height);
+    <span class="hljs-comment">// &#x8868;&#x9AD8;&#x7EAA;&#x5F55;&#x503C;</span>
+    <span class="hljs-built_in">CGFloat</span> tableHeight = <span class="hljs-number">0</span>;
+    <span class="hljs-comment">// &#x5982;&#x679C;&#x6709; header &#x5219;&#x9700;&#x8981;&#x989D;&#x5916;&#x8BA1;&#x7B97;</span>
+    <span class="hljs-keyword">if</span> (_tableHeaderView) {
+        <span class="hljs-built_in">CGRect</span> tableHeaderFrame = _tableHeaderView.frame;
+        tableHeaderFrame.origin = <span class="hljs-built_in">CGPointZero</span>;
+        tableHeaderFrame.size.width = boundsSize.width;
+        _tableHeaderView.frame = tableHeaderFrame;
+        tableHeight += tableHeaderFrame.size.height;
+    }
+
+    <span class="hljs-comment">// availableCell &#x8BB0;&#x5F55;&#x5F53;&#x524D;&#x6B63;&#x5728;&#x663E;&#x793A;&#x7684; Cell</span>
+    <span class="hljs-comment">// &#x5728;&#x6ED1;&#x51FA;&#x663E;&#x793A;&#x533A;&#x4E4B;&#x540E;&#x5C06;&#x6DFB;&#x52A0;&#x81F3; _reusableCells</span>
+    <span class="hljs-built_in">NSMutableDictionary</span> *availableCells = [_cachedCells mutableCopy];
+    <span class="hljs-keyword">const</span> <span class="hljs-built_in">NSInteger</span> numberOfSections = [_sections count];
+    [_cachedCells removeAllObjects];
+
+    <span class="hljs-comment">// &#x6ED1;&#x52A8;&#x5217;&#x8868;&#xFF0C;&#x66F4;&#x65B0;&#x5F53;&#x524D;&#x663E;&#x793A;&#x5BB9;&#x5668;</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">NSInteger</span> section=<span class="hljs-number">0</span>; section&lt;numberOfSections; section++) {
+        <span class="hljs-built_in">CGRect</span> sectionRect = [<span class="hljs-keyword">self</span> rectForSection:section];
+        tableHeight += sectionRect.size.height;
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">CGRectIntersectsRect</span>(sectionRect, visibleBounds)) {
+            <span class="hljs-keyword">const</span> <span class="hljs-built_in">CGRect</span> headerRect = [<span class="hljs-keyword">self</span> rectForHeaderInSection:section];
+            <span class="hljs-keyword">const</span> <span class="hljs-built_in">CGRect</span> footerRect = [<span class="hljs-keyword">self</span> rectForFooterInSection:section];
+            <span class="hljs-built_in">UITableViewSection</span> *sectionRecord = [_sections objectAtIndex:section];
+            <span class="hljs-keyword">const</span> <span class="hljs-built_in">NSInteger</span> numberOfRows = sectionRecord.numberOfRows;
+
+            <span class="hljs-keyword">if</span> (sectionRecord.headerView) {
+                sectionRecord.headerView.frame = headerRect;
+            }
+
+            <span class="hljs-keyword">if</span> (sectionRecord.footerView) {
+                sectionRecord.footerView.frame = footerRect;
+            }
+
+            <span class="hljs-keyword">for</span> (<span class="hljs-built_in">NSInteger</span> row=<span class="hljs-number">0</span>; row&lt;numberOfRows; row++) {
+                <span class="hljs-comment">// &#x6784;&#x9020; indexPath &#x4E3A;&#x4EE3;&#x7406;&#x65B9;&#x6CD5;&#x51C6;&#x5907;</span>
+                <span class="hljs-built_in">NSIndexPath</span> *indexPath = [<span class="hljs-built_in">NSIndexPath</span> indexPathForRow:row inSection:section];
+                <span class="hljs-comment">// &#x83B7;&#x53D6;&#x7B2C; row &#x4E2A;&#x5750;&#x6807;&#x4F4D;&#x7F6E;</span>
+                <span class="hljs-built_in">CGRect</span> rowRect = [<span class="hljs-keyword">self</span> rectForRowAtIndexPath:indexPath];
+                <span class="hljs-comment">// &#x5224;&#x65AD;&#x5F53;&#x524D; Cell &#x662F;&#x5426;&#x4E0E;&#x663E;&#x793A;&#x533A;&#x57DF;&#x76F8;&#x4EA4;</span>
+                <span class="hljs-keyword">if</span> (<span class="hljs-built_in">CGRectIntersectsRect</span>(rowRect,visibleBounds) &amp;&amp; rowRect.size.height &gt; <span class="hljs-number">0</span>) {
+                    <span class="hljs-comment">// &#x9996;&#x5148;&#x67E5;&#x770B; availableCells &#x4E2D;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x6709;&#x4E86;&#x5F53;&#x524D; Cell &#x7684;&#x5B58;&#x50A8;</span>
+                    <span class="hljs-comment">// &#x5982;&#x679C;&#x6CA1;&#x6709;&#xFF0C;&#x5219;&#x8BF7;&#x6C42; tableView &#x7684;&#x4EE3;&#x7406;&#x65B9;&#x6CD5;&#x83B7;&#x53D6; Cell</span>
+                    <span class="hljs-built_in">UITableViewCell</span> *cell = [availableCells objectForKey:indexPath] ?: [<span class="hljs-keyword">self</span>.dataSource tableView:<span class="hljs-keyword">self</span> cellForRowAtIndexPath:indexPath];
+                    <span class="hljs-comment">// &#x7531;&#x4E8E;&#x78B0;&#x649E;&#x68C0;&#x6D4B;&#x751F;&#x6548;&#xFF0C;&#x5219;&#x6309;&#x7167;&#x903B;&#x8F91;&#x9700;&#x8981;&#x66F4;&#x65B0; availableCells &#x5B57;&#x5178;</span>
+                    <span class="hljs-keyword">if</span> (cell) {
+                        <span class="hljs-comment">// &#x83B7;&#x53D6;&#x5230; Cell &#x540E;&#xFF0C;&#x5C06;&#x5176;&#x8FDB;&#x884C;&#x7F13;&#x5B58;&#x64CD;&#x4F5C;</span>
+                        [_cachedCells setObject:cell forKey:indexPath];
+                        [availableCells removeObjectForKey:indexPath];
+                        cell.highlighted = [_highlightedRow isEqual:indexPath];
+                        cell.selected = [_selectedRow isEqual:indexPath];
+                        cell.frame = rowRect;
+                        cell.backgroundColor = <span class="hljs-keyword">self</span>.backgroundColor;
+                        [cell _setSeparatorStyle:_separatorStyle color:_separatorColor];
+                        [<span class="hljs-keyword">self</span> addSubview:cell];
+                    }
+                }
+            }
+        }
+    }
+
+    <span class="hljs-comment">// &#x5C06;&#x5DF2;&#x7ECF;&#x9000;&#x51FA;&#x5C4F;&#x5E55;&#x4E14;&#x5B9A;&#x4E49; reuseIdentifier &#x7684; Cell &#x52A0;&#x5165;&#x53EF;&#x590D;&#x7528; Cell &#x5BB9;&#x5668;&#x4E2D;</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">UITableViewCell</span> *cell <span class="hljs-keyword">in</span> [availableCells allValues]) {
+        <span class="hljs-keyword">if</span> (cell.reuseIdentifier) {
+            [_reusableCells addObject:cell];
+        } <span class="hljs-keyword">else</span> {
+            [cell removeFromSuperview];
+        }
+    }
+
+    <span class="hljs-comment">// &#x4E0D;&#x80FD;&#x590D;&#x7528;&#x7684; Cell &#x4F1A;&#x76F4;&#x63A5;&#x9500;&#x6BC1;&#xFF0C;&#x53EF;&#x590D;&#x7528;&#x7684; Cell &#x4F1A;&#x5B58;&#x50A8;&#x5728; _reusableCells</span>
+
+    <span class="hljs-comment">// &#x786E;&#x4FDD;&#x6240;&#x6709;&#x7684;&#x53EF;&#x7528;&#xFF08;&#x672A;&#x51FA;&#x73B0;&#x5728;&#x5C4F;&#x5E55;&#x4E0A;&#xFF09;&#x7684;&#x590D;&#x7528;&#x5355;&#x5143;&#x683C;&#x5728; availableCells &#x4E2D;</span>
+    <span class="hljs-comment">// &#x8FD9;&#x6837;&#x7F13;&#x5B58;&#x7684;&#x76EE;&#x7684;&#x4E4B;&#x4E00;&#x662F;&#x786E;&#x4FDD;&#x52A8;&#x753B;&#x7684;&#x6D41;&#x7545;&#x6027;&#x3002;&#x5728;&#x52A8;&#x753B;&#x7684;&#x5E27;&#x4E0A;&#x90FD;&#x4F1A;&#x5BF9;&#x663E;&#x793A;&#x90E8;&#x5206;&#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF0C;&#x91CD;&#x65B0;&#x8BA1;&#x7B97;&#x53EF;&#x89C1; Cell&#x3002;</span>
+    <span class="hljs-comment">// &#x5982;&#x679C;&#x76F4;&#x63A5;&#x5220;&#x9664;&#x6389;&#x6240;&#x6709;&#x672A;&#x51FA;&#x73B0;&#x5728;&#x5C4F;&#x5E55;&#x4E0A;&#x7684;&#x5355;&#x5143;&#x683C;&#xFF0C;&#x5728;&#x89C6;&#x89C9;&#x4E0A;&#x4F1A;&#x89C2;&#x5BDF;&#x5230;&#x7A81;&#x7136;&#x6D88;&#x5931;&#x7684;&#x52A8;&#x4F5C;</span>
+    <span class="hljs-comment">// &#x6574;&#x4F53;&#x52A8;&#x753B;&#x5177;&#x6709;&#x8DF3;&#x8DC3;&#x6027;&#x800C;&#x663E;&#x5F97;&#x4E0D;&#x6D41;&#x7545;</span>
+
+    <span class="hljs-comment">// &#x628A;&#x5728;&#x53EF;&#x89C6;&#x533A;&#x7684; Cell&#xFF08;&#x4F46;&#x4E0D;&#x5728;&#x5C4F;&#x5E55;&#x4E0A;&#xFF09;&#x5DF2;&#x7ECF;&#x88AB;&#x56DE;&#x6536;&#x4E3A;&#x53EF;&#x590D;&#x7528;&#x7684; Cell &#x4ECE;&#x89C6;&#x56FE;&#x4E2D;&#x79FB;&#x9664;</span>
+    <span class="hljs-built_in">NSArray</span>* allCachedCells = [_cachedCells allValues];
+    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">UITableViewCell</span> *cell <span class="hljs-keyword">in</span> _reusableCells) {
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">CGRectIntersectsRect</span>(cell.frame,visibleBounds) &amp;&amp; ![allCachedCells containsObject: cell]) {
+            [cell removeFromSuperview];
+        }
+    }
+
+    <span class="hljs-keyword">if</span> (_tableFooterView) {
+        <span class="hljs-built_in">CGRect</span> tableFooterFrame = _tableFooterView.frame;
+        tableFooterFrame.origin = <span class="hljs-built_in">CGPointMake</span>(<span class="hljs-number">0</span>,tableHeight);
+        tableFooterFrame.size.width = boundsSize.width;
+        _tableFooterView.frame = tableFooterFrame;
+    }
+}
+</code></pre>
+<p><code>CGRectIntersectsRect</code> &#x65B9;&#x6CD5;&#x7528;&#x4E8E;&#x68C0;&#x6D4B;&#x4E24;&#x4E2A; Rect &#x7684;&#x78B0;&#x649E;&#x60C5;&#x51B5;&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/Mobile%20Portrait%20Copy.png" alt="Mobile Portrait Copy"></p>
+<p>&#x5982;&#x679C;&#x4F60;&#x5DF2;&#x7ECF;&#x5BF9; <code>UITableView</code> &#x7684;&#x7F13;&#x5B58;&#x673A;&#x5236;&#x6709;&#x6240;&#x4E86;&#x89E3;&#xFF0C;&#x90A3;&#x4E48;&#x4F60;&#x5728;&#x9605;&#x8BFB;&#x5B8C;&#x4EE3;&#x7801;&#x4E4B;&#x540E;&#x4F1A;&#x5BF9;&#x5176;&#x6709;&#x66F4;&#x6DF1;&#x523B;&#x7684;&#x8BA4;&#x8BC6;&#x3002;&#x5982;&#x679C;&#x770B;&#x5B8C;&#x4EE3;&#x7801;&#x8FD8;&#x662F;&#x4E00;&#x5934;&#x96FE;&#x6C34;&#xFF0C;&#x90A3;&#x4E48;&#x8BF7;&#x7EE7;&#x7EED;&#x770B;&#x4E0B;&#x9762;&#x7684;&#x5206;&#x6790;&#x3002;</p>
+<h2 id="cell-&#x590D;&#x7528;&#x573A;&#x666F;&#x4E09;&#x4E2A;&#x9636;&#x6BB5;">Cell &#x590D;&#x7528;&#x573A;&#x666F;&#x4E09;&#x4E2A;&#x9636;&#x6BB5;</h2>
+<h3 id="&#x5E03;&#x5C40;&#x65B9;&#x6CD5;&#x89E6;&#x53D1;&#x9636;&#x6BB5;">&#x5E03;&#x5C40;&#x65B9;&#x6CD5;&#x89E6;&#x53D1;&#x9636;&#x6BB5;</h3>
+<p>&#x5728;&#x7528;&#x6237;&#x89E6;&#x6478;&#x5C4F;&#x5E55;&#x540E;&#xFF0C;&#x786C;&#x4EF6;&#x62A5;&#x544A;&#x89E6;&#x6478;&#x65F6;&#x95F4;&#x4F20;&#x9012;&#x81F3; <code>UIKit</code> &#x6846;&#x67B6;&#xFF0C;&#x4E4B;&#x540E; <code>UIKit</code> &#x5C06;&#x89E6;&#x6478;&#x4E8B;&#x4EF6;&#x6253;&#x5305;&#x6210; <code>UIEvent</code> &#x5BF9;&#x8C61;&#xFF0C;&#x5206;&#x53D1;&#x81F3;&#x6307;&#x5B9A;&#x89C6;&#x56FE;&#x3002;&#x8FD9;&#x65F6;&#x5019;&#x5176;&#x89C6;&#x56FE;&#x5C31;&#x4F1A;&#x505A;&#x51FA;&#x76F8;&#x5E94;&#xFF0C;&#x5E76;&#x8C03;&#x7528; <code>setNeedsLayout</code> &#x65B9;&#x6CD5;&#x544A;&#x8BC9;&#x89C6;&#x56FE;&#x53CA;&#x5176;&#x5B50;&#x89C6;&#x56FE;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x5E03;&#x5C40;&#x66F4;&#x65B0;&#x3002;&#x6B64;&#x65F6;&#xFF0C;<code>setNeedsLayout</code> &#x88AB;&#x8C03;&#x7528;&#xFF0C;&#x4E5F;&#x5C31;&#x53D8;&#x4E3A; Cell &#x590D;&#x7528;&#x573A;&#x666F;&#x7684;&#x5165;&#x53E3;&#x3002;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/Mobile%20Landscape%20Copy.png" alt="&#x5E03;&#x5C40;&#x65B9;&#x6CD5;&#x8C03;&#x7528;&#x6808;"></p>
+<h3 id="&#x7F13;&#x5B58;-cell-&#x9AD8;&#x5EA6;&#x4FE1;&#x606F;&#x9636;&#x6BB5;">&#x7F13;&#x5B58; Cell &#x9AD8;&#x5EA6;&#x4FE1;&#x606F;&#x9636;&#x6BB5;</h3>
+<p>&#x5F53;&#x89C6;&#x56FE;&#x52A0;&#x8F7D;&#x540E;&#xFF0C;&#x7531; <code>UIKit</code> &#x8C03;&#x7528;&#x5E03;&#x5C40;&#x65B9;&#x6CD5; <code>layoutSubviews</code> &#x4ECE;&#x800C;&#x8FDB;&#x5165;<strong>&#x7F13;&#x5B58; Cell &#x9AD8;&#x5EA6;&#x9636;&#x6BB5;</strong> <code>_updateSectionsCache</code>&#x3002;&#x5728;&#x8FD9;&#x4E2A;&#x9636;&#x6BB5;&#xFF0C;&#x901A;&#x8FC7;&#x4EE3;&#x7406;&#x65B9;&#x6CD5; <code>heightForRowAtIndexPath:</code> &#x83B7;&#x53D6;&#x6BCF;&#x4E00;&#x4E2A; Cell &#x7684;&#x9AD8;&#x5EA6;&#xFF0C;&#x5E76;&#x5C06;&#x9AD8;&#x5EA6;&#x4FE1;&#x606F;&#x7F13;&#x5B58;&#x8D77;&#x6765;&#x3002;&#x8FD9;&#x5176;&#x4E2D;&#x7684;&#x9AD8;&#x5EA6;&#x4FE1;&#x606F;&#x7531; <code>UITableViewSection</code> &#x7684;&#x4E00;&#x4E2A;&#x5B9E;&#x4F8B; <code>sectionRecord</code> &#x8FDB;&#x884C;&#x5B58;&#x50A8;&#xFF0C;&#x5176;&#x4E2D;&#x4EE5; section &#x4E3A;&#x5355;&#x4F4D;&#xFF0C;&#x5B58;&#x50A8;&#x6BCF;&#x4E2A; section &#x4E2D;&#x5404;&#x4E2A; Cell &#x7684;&#x9AD8;&#x5EA6;&#x3001;Cell &#x7684;&#x6570;&#x91CF;&#x3001;&#x4EE5;&#x53CA; section &#x7684;&#x603B;&#x9AD8;&#x5EA6;&#x3001;footer &#x548C; header &#x9AD8;&#x5EA6;&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;&#x3002;&#x8FD9;&#x4E00;&#x90E8;&#x5206;&#x7684;&#x4FE1;&#x606F;&#x91C7;&#x96C6;&#x662F;&#x4E3A;&#x4E86;&#x5728; Cell &#x590D;&#x7528;&#x7684;&#x6838;&#x5FC3;&#x90E8;&#x5206;&#xFF0C;Cell &#x7684; Rect &#x5C3A;&#x5BF8;&#x4E0E; tableView &#x5C3A;&#x5BF8;&#x8BA1;&#x7B97;&#x8FB9;&#x754C;&#x60C5;&#x51B5;&#x5EFA;&#x7ACB;&#x6570;&#x636E;&#x57FA;&#x7840;&#x3002;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/Mobile%20Landscape%20Copy%202.png" alt="_sections &#x7ED3;&#x6784;&#x793A;&#x610F;&#x56FE;"></p>
+<h3 id="&#x590D;&#x7528;-cell-&#x7684;&#x6838;&#x5FC3;&#x5904;&#x7406;&#x9636;&#x6BB5;">&#x590D;&#x7528; Cell &#x7684;&#x6838;&#x5FC3;&#x5904;&#x7406;&#x9636;&#x6BB5;</h3>
+<p>&#x6211;&#x4EEC;&#x8981;&#x5173;&#x6CE8;&#x4E09;&#x4E2A;&#x5B58;&#x50A8;&#x5BB9;&#x5668;&#x7684;&#x53D8;&#x5316;&#x60C5;&#x51B5;&#xFF1A;</p>
+<ul>
+<li><code>NSMutableDictionary</code> &#x7C7B;&#x578B; <strong>_cachedCells</strong>&#xFF1A;&#x7528;&#x6765;&#x5B58;&#x50A8;&#x5F53;&#x524D;&#x5C4F;&#x5E55;&#x4E0A;&#x6240;&#x6709; Cell &#x4E0E;&#x5176;&#x5BF9;&#x5E94;&#x7684; indexPath&#x3002;&#x4EE5;&#x952E;&#x503C;&#x5BF9;&#x7684;&#x5173;&#x7CFB;&#x8FDB;&#x884C;&#x5B58;&#x50A8;&#x3002;</li>
+<li><code>NSMutableDictionary</code> &#x7C7B;&#x578B; <strong>availableCells</strong>&#xFF1A;&#x5F53;&#x5217;&#x8868;&#x53D1;&#x751F;&#x6ED1;&#x52A8;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x90E8;&#x5206; Cell &#x4ECE;&#x5C4F;&#x5E55;&#x79FB;&#x51FA;&#xFF0C;&#x8FD9;&#x4E2A;&#x5BB9;&#x5668;&#x4F1A;&#x5BF9; <code>_cachedCells</code> &#x8FDB;&#x884C;&#x62F7;&#x8D1D;&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x5C4F;&#x5E55;&#x4E0A;&#x6B64;&#x65F6;&#x7684; Cell &#x5168;&#x90E8;&#x53BB;&#x9664;&#x3002;&#x5373;&#x6700;&#x7EC8;&#x53D6;&#x51FA;&#x6240;&#x6709;&#x9000;&#x51FA;&#x5C4F;&#x5E55;&#x7684; Cell&#x3002;</li>
+<li><code>NSMutableSet</code> &#x7C7B;&#x578B; <strong>_reusableCells</strong>&#xFF1A;&#x7528;&#x6765;&#x6536;&#x96C6;&#x66FE;&#x7ECF;&#x51FA;&#x73B0;&#x8FC7;&#x6B64;&#x65F6;&#x672A;&#x51FA;&#x73B0;&#x5728;&#x5C4F;&#x5E55;&#x4E0A;&#x7684; Cell&#x3002;&#x5F53;&#x518D;&#x51FA;&#x6ED1;&#x5165;&#x4E3B;&#x5C4F;&#x5E55;&#x65F6;&#xFF0C;&#x5219;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x5176;&#x4E2D;&#x7684;&#x5BF9;&#x8C61;&#x6839;&#x636E; <code>CGRectIntersectsRect</code> Rect &#x78B0;&#x649E;&#x8BD5;&#x9A8C;&#x8FDB;&#x884C;&#x590D;&#x7528;&#x3002;</li>
+</ul>
+<p>&#x5728;&#x6574;&#x4E2A;&#x6838;&#x5FC3;&#x590D;&#x7528;&#x9636;&#x6BB5;&#xFF0C;&#x8FD9;&#x4E09;&#x4E2A;&#x5BB9;&#x5668;&#x90FD;&#x5145;&#x5F53;&#x7740;&#x5F88;&#x91CD;&#x8981;&#x7684;&#x89D2;&#x8272;&#x3002;&#x6211;&#x4EEC;&#x7ED9;&#x51FA;&#x4EE5;&#x4E0B;&#x7684;&#x573A;&#x666F;&#x5B9E;&#x4F8B;&#xFF0C;&#x4F8B;&#x5982;&#x4E0B;&#x56FE;&#x7684;&#x4E00;&#x4E2A;&#x573A;&#x666F;&#xFF0C;&#x56FE; &#x2460; &#x4E3A;&#x9875;&#x9762;&#x521A;&#x521A;&#x8F7D;&#x5165;&#x7684;&#x9636;&#x6BB5;&#xFF0C;&#x56FE; &#x2461; &#x4E3A;&#x7528;&#x6237;&#x5411;&#x4E0B;&#x6ED1;&#x52A8;&#x4E00;&#x4E2A;&#x5355;&#x5143;&#x683C;&#x65F6;&#x7684;&#x72B6;&#x6001;&#xFF1A;</p>
+<p><img src="http://7xwh85.com1.z0.glb.clouddn.com/Tablet%209%E2%80%B3%20Landscape.png" alt="&#x6838;&#x5FC3;&#x5904;&#x7406;&#x9636;&#x6BB5;&#x5BB9;&#x5668;&#x53D8;&#x5316;"></p>
+<p>&#x5F53;&#x5230;&#x72B6;&#x6001; &#x2461; &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x53D1;&#x73B0; <code>_reusableCells</code> &#x5BB9;&#x5668;&#x4E2D;&#xFF0C;&#x5DF2;&#x7ECF;&#x51FA;&#x73B0;&#x4E86;&#x72B6;&#x6001; &#x2460; &#x4E2D;&#x5DF2;&#x7ECF;&#x9000;&#x51FA;&#x5C4F;&#x5E55;&#x7684; Cell 0&#x3002;&#x800C;&#x5F53;&#x6211;&#x4EEC;&#x91CD;&#x65B0;&#x5C06; Cell 0 &#x6ED1;&#x5165;&#x754C;&#x9762;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5728;&#x7CFB;&#x7EDF; <code>addView</code> &#x6E32;&#x67D3;&#x9636;&#x6BB5;&#xFF0C;&#x4F1A;&#x76F4;&#x63A5;&#x5C06; <code>_reusableCells</code> &#x4E2D;&#x7684; Cell 0 &#x7ACB;&#x5373;&#x53D6;&#x51FA;&#x8FDB;&#x884C;&#x6E32;&#x67D3;&#xFF0C;&#x4ECE;&#x800C;&#x4EE3;&#x66FF;&#x521B;&#x5EFA;&#x65B0;&#x7684;&#x5B9E;&#x4F8B;&#x518D;&#x8FDB;&#x884C;&#x6E32;&#x67D3;&#xFF0C;&#x7B80;&#x5316;&#x4E86;&#x65F6;&#x95F4;&#x4E0E;&#x6027;&#x80FD;&#x4E0A;&#x7684;&#x5F00;&#x9500;&#x3002;</p>
+<h2 id="uitableview-&#x7684;&#x5176;&#x4ED6;&#x7EC6;&#x8282;&#x4F18;&#x5316;">UITableView &#x7684;&#x5176;&#x4ED6;&#x7EC6;&#x8282;&#x4F18;&#x5316;</h2>
+<h3 id="&#x590D;&#x7528;&#x5BB9;&#x5668;&#x6570;&#x636E;&#x7C7B;&#x578B;-nsmutableset">&#x590D;&#x7528;&#x5BB9;&#x5668;&#x6570;&#x636E;&#x7C7B;&#x578B; <code>NSMutableSet</code></h3>
+<p>&#x5728;&#x4E09;&#x4E2A;&#x91CD;&#x8981;&#x7684;&#x5BB9;&#x5668;&#x4E2D;&#xFF0C;&#x53EA;&#x6709; <code>_reusableCells</code> &#x4F7F;&#x7528;&#x4E86; <code>NSMutableSet</code>&#x3002;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x5728;&#x6BCF;&#x4E00;&#x6B21;&#x5BF9;&#x4E8E; <code>_cachedCells</code> &#x4E2D;&#x7684; Cell &#x8FDB;&#x884C;&#x904D;&#x5386;&#x5E76;&#x5728;&#x5C4F;&#x5E55;&#x4E0A;&#x6E32;&#x67D3;&#x65F6;&#xFF0C;&#x90FD;&#x9700;&#x8981;&#x5728; <code>_reusableCells</code> &#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x626B;&#x63CF;&#x3002;&#x800C;&#x4E14;&#x5F53;&#x4E00;&#x4E2A;&#x9875;&#x9762;&#x53CD;&#x590D;&#x7684;&#x4E0A;&#x4E0B;&#x6ED1;&#x52A8;&#x65F6;&#xFF0C;<code>_reusableCells</code> &#x7684;&#x68C0;&#x7D22;&#x590D;&#x6742;&#x5EA6;&#x662F;&#x76F8;&#x5F53;&#x5E9E;&#x5927;&#x7684;&#x3002;&#x4E3A;&#x4E86;&#x786E;&#x4FDD;&#x8FD9;&#x4E00;&#x60C5;&#x51B5;&#x4E0B;&#x6ED1;&#x52A8;&#x7684;&#x6D41;&#x7545;&#x6027;&#xFF0C;Apple &#x5728;&#x8BBE;&#x8BA1;&#x65F6;&#x4E0D;&#x5F97;&#x4E0D;&#x5C06;&#x68C0;&#x7D22;&#x590D;&#x6742;&#x5EA6;&#x6700;&#x5C0F;&#x5316;&#x3002;&#x5E76;&#x4E14;&#x8FD9;&#x4E2A;&#x590D;&#x6742;&#x5EA6;&#x8981;&#x662F;&#x975E;&#x6296;&#x52A8;&#x7684;&#xFF0C;&#x4E0D;&#x80FD;&#x7ED9;&#x4F53;&#x9A8C;&#x9020;&#x6210;&#x592A;&#x5927;&#x7684;&#x4E0D;&#x7A33;&#x5B9A;&#x6027;&#x3002;</p>
+<p>&#x5728; C++ &#x7684; STL &#x6807;&#x51C6;&#x5E93;&#x4E2D;&#x4E5F;&#x6709; <code>multiset</code> &#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF0C;&#x5176;&#x4E2D;&#x5B9E;&#x73B0;&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x901A;&#x8FC7;&#x6784;&#x5EFA;<strong>&#x7EA2;&#x9ED1;&#x6811;</strong>&#x6765;&#x5B9E;&#x73B0;&#x3002;&#x56E0;&#x4E3A;&#x7EA2;&#x9ED1;&#x6811;&#x5177;&#x6709;&#x9AD8;&#x6548;&#x68C0;&#x7D22;&#x7684;&#x6027;&#x8D28;&#xFF0C;&#x8FD9;&#x4E5F;&#x662F; <code>set</code> &#x7684;&#x4E00;&#x4E2A;&#x666E;&#x904D;&#x7279;&#x70B9;&#x3002;&#x4E5F;&#x8BB8;&#x662F; <code>NSMutableSet</code> &#x662F; <em>Foundation</em> &#x6846;&#x67B6;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x6784;&#x9020;&#x5176;&#x4E3B;&#x8981;&#x76EE;&#x7684;&#x662F;&#x4E3A;&#x4E86;&#x66F4;&#x5FEB;&#x7684;&#x68C0;&#x7D22;&#x3002;&#x6240;&#x4EE5; <code>NSMutableSet</code> &#x7684;&#x5B9E;&#x73B0;&#x5E76;&#x6CA1;&#x6709;&#x4F7F;&#x7528;&#x7EA2;&#x9ED1;&#x6811;&#xFF0C;&#x800C;&#x662F;&#x66B4;&#x529B;&#x7684;&#x4F7F;&#x7528; <strong>Hash &#x8868;</strong>&#x5B9E;&#x73B0;&#x3002;&#x4ECE; <em>Core Foundation</em> &#x4E2D;&#x7684; <a href="https://opensource.apple.com/source/CF/CF-1151.16/CFSet.c.auto.html" target="_blank">CFSet.c</a> &#x53EF;&#x4EE5;&#x6E05;&#x6670;&#x7684;&#x770B;&#x89C1;&#x5176;&#x5E95;&#x5C42;&#x5B9E;&#x73B0;&#x3002;&#x5728;&#x5F88;&#x4E45;&#x4E4B;&#x524D;&#x7684; <a href="https://lists.apple.com/archives/Cocoa-dev/2004/Feb/msg01658.html" target="_blank">Cocoa Dev</a> &#x7684;&#x63D0;&#x95EE;&#x5E16;&#x4E2D;&#x4E5F;&#x80FD;&#x53D1;&#x73B0;&#x7B54;&#x6848;&#x3002;</p>
+<h3 id="&#x9AD8;&#x5EA6;&#x7F13;&#x5B58;&#x5BB9;&#x5668;-sections">&#x9AD8;&#x5EA6;&#x7F13;&#x5B58;&#x5BB9;&#x5668; _sections</h3>
+<p>&#x5728;&#x6BCF;&#x6B21;&#x5E03;&#x5C40;&#x65B9;&#x6CD5;&#x89E6;&#x53D1;&#x9636;&#x6BB5;&#xFF0C;&#x7531;&#x4E8E; Cell &#x7684;&#x72B6;&#x6001;&#x53D1;&#x751F;&#x4E86;&#x53D8;&#x5316;&#x3002;&#x5728;&#x5BF9; Cell &#x590D;&#x7528;&#x5BB9;&#x5668;&#x7684;&#x4FEE;&#x6539;&#x4E4B;&#x524D;&#xFF0C;&#x9996;&#x5148;&#x8981;&#x505A;&#x7684;&#x4E00;&#x4EF6;&#x4E8B;&#x662F;&#x4EE5; Section &#x4E3A;&#x5355;&#x4F4D;&#x5BF9;&#x6240;&#x6709;&#x7684; Cell &#x8FDB;&#x884C;&#x7F13;&#x5B58;&#x9AD8;&#x5EA6;&#x3002;&#x4ECE;&#x8FD9;&#x91CC;&#x53EF;&#x4EE5;&#x770B;&#x51FA; <code>UITableView</code> &#x8BBE;&#x8BA1;&#x5E08;&#x7684;&#x7EC6;&#x8282;&#x3002; Cell &#x7684;&#x9AD8;&#x5EA6;&#x5728; <code>UITableView</code> &#x4E2D;&#x5145;&#x5F53;&#x7740;&#x5341;&#x5206;&#x91CD;&#x8981;&#x7684;&#x89D2;&#x8272;&#xFF0C;&#x4E00;&#x4E0B;&#x5217;&#x8868;&#x662F;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x9AD8;&#x5EA6;&#x7684;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<ul>
+<li><code>- (CGFloat)_offsetForSection:(NSInteger)index</code>&#xFF1A;&#x8BA1;&#x7B97;&#x6307;&#x5B9A; Cell &#x7684;&#x6ED1;&#x52A8;&#x504F;&#x79FB;&#x91CF;&#x3002;</li>
+<li><code>- (CGRect)rectForSection:(NSInteger)section</code>&#xFF1A;&#x8FD4;&#x56DE;&#x67D0;&#x4E2A; Section &#x7684;&#x6574;&#x4F53; Rect&#x3002;</li>
+<li><code>- (CGRect)rectForHeaderInSection:(NSInteger)section</code>&#xFF1A;&#x8FD4;&#x56DE;&#x67D0;&#x4E2A; Header &#x7684; Rect&#x3002;</li>
+<li><code>- (CGRect)rectForFooterInSection:(NSInteger)section</code>&#xFF1A;&#x8FD4;&#x56DE;&#x67D0;&#x4E2A; Footer &#x7684; Rect&#x3002;</li>
+<li><code>- (CGRect)rectForRowAtIndexPath:(NSIndexPath *)indexPath</code>&#xFF1A;&#x8FD4;&#x56DE;&#x67D0;&#x4E2A; Cell &#x7684; Rect&#x3002;</li>
+<li><code>- (NSArray *)indexPathsForRowsInRect:(CGRect)rect</code>&#xFF1A;&#x8FD4;&#x56DE; Rect &#x5217;&#x8868;&#x3002;</li>
+<li><code>- (void)_setContentSize</code>&#xFF1A;&#x6839;&#x636E;&#x9AD8;&#x5EA6;&#x8BA1;&#x7B97; <code>UITableView</code> &#x4E2D;&#x5B9E;&#x9645;&#x5185;&#x5BB9;&#x7684; Size&#x3002;</li>
+</ul>
+<h2 id="&#x4E00;&#x6B21;&#x6709;&#x62D3;&#x5C55;&#x6027;&#x7684;&#x6E90;&#x7801;&#x7814;&#x7A76;">&#x4E00;&#x6B21;&#x6709;&#x62D3;&#x5C55;&#x6027;&#x7684;&#x6E90;&#x7801;&#x7814;&#x7A76;</h2>
+<p>&#x5728;&#x9605;&#x8BFB;&#x5B8C; Chameleon &#x5DE5;&#x7A0B;&#x4E2D;&#x7684; <code>UITableView</code> &#x6E90;&#x7801;&#xFF0C;&#x8FDB;&#x4E00;&#x6B65;&#x53EF;&#x4EE5;&#x53BB;&#x67E5;&#x770B; <code>FDTemplateLayoutCell</code> &#x7684;&#x4F18;&#x5316;&#x65B9;&#x6848;&#x3002;Apple &#x7684;&#x5DE5;&#x7A0B;&#x5E08;&#x5BF9;&#x4E8E;&#x7EC6;&#x8282;&#x7684;&#x5904;&#x7406;&#x548C;&#x65B9;&#x6848;&#x503C;&#x5F97;&#x5404;&#x4F4D;&#x5F00;&#x53D1;&#x8005;&#x7EC6;&#x7EC6;&#x5BFB;&#x5473;&#x3002;&#x591A;&#x63A2;&#x6C42;&#x3001;&#x591A;&#x9605;&#x8BFB;&#x4EE5;&#x5199;&#x51FA;&#x66F4;&#x4F18;&#x96C5;&#x7684;&#x4EE3;&#x7801;&#x3002;&#x1F604;</p>
+<blockquote>
+<p>&#x82E5;&#x60F3;&#x67E5;&#x770B;&#x66F4;&#x591A;&#x7684;iOS Source Probe&#x6587;&#x7AE0;&#xFF0C;&#x6536;&#x5F55;&#x5728;&#x8FD9;&#x4E2A;<a href="https://github.com/Desgard/iOS-Source-Probe" target="_blank">Github&#x4ED3;&#x5E93;&#x4E2D;</a>&#x3002;</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+                <a href="../UIKit/AutoLayout 中的线性规划 - Simplex 算法.html" class="navigation navigation-next navigation-unique" aria-label="Next page: AutoLayout 中的线性规划 - Simplex 算法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"复用的精妙 - UITableView 复用技术原理分析","level":"5.1.1","depth":2,"next":{"title":"AutoLayout 中的线性规划 - Simplex 算法","level":"5.1.2","depth":2,"path":"Objective-C/UIKit/AutoLayout 中的线性规划 - Simplex 算法.md","ref":"Objective-C/UIKit/AutoLayout 中的线性规划 - Simplex 算法.md","articles":[]},"previous":{"title":"UIKit","level":"5.1","depth":1,"ref":"","articles":[{"title":"复用的精妙 - UITableView 复用技术原理分析","level":"5.1.1","depth":2,"path":"Objective-C/Foundation/复用的精妙 - UITableView 复用技术原理分析.md","ref":"Objective-C/Foundation/复用的精妙 - UITableView 复用技术原理分析.md","articles":[]},{"title":"AutoLayout 中的线性规划 - Simplex 算法","level":"5.1.2","depth":2,"path":"Objective-C/UIKit/AutoLayout 中的线性规划 - Simplex 算法.md","ref":"Objective-C/UIKit/AutoLayout 中的线性规划 - Simplex 算法.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["splitter","github","multipart","mathjax"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/Desgard"},"splitter":{},"search":{},"multipart":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"cn","gitbook":"*"},"file":{"path":"Objective-C/Foundation/复用的精妙 - UITableView 复用技术原理分析.md","mtime":"2018-07-09T00:41:04.810Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-07-09T00:56:45.312Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-mathjax/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
