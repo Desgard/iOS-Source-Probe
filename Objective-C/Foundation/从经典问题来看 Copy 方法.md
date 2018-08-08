@@ -87,7 +87,7 @@
 2016-08-12 06:03:40.227 TestCopy[64922:20479646] iOS
 ```
 
-做过如上三个实验，或许你会知道对 property 使用 copy 修饰属性的原因了。也就是在一个特定场景下：**当我们通过一个 NSMutableString 对 NSString 变量进行赋值，如果 NSString 的 property 是 strong 类型的时候，就会随着 NSMutableString 类型的变量一起变化**。
+做过如上三个实验，或许你会知道对 property 使用 copy 修饰属性的原因了。也就是在一个特定场景下：**当我们通过一个 NSMutableString 对 NSString 变量进行赋值，如果 NSString 的 property 是 strong 类型的时候，就会随着 NSMutableString 类型的变量一起变化**。并且从内存地址信息可以观察到 strong 修饰的属性并不会开辟一块儿新的内存而是直接强引用已有的内存。（这个地方没有，可以让瓜瓜跑一下，然后贴出来）
 
 这个猜测是正确的。在 [stackoverflow](http://stackoverflow.com/questions/11249656/should-an-nsstring-property-under-arc-be-strong-or-copy) 上也对这个场景进行单独的描述。可是原因是什么？继续做下面的实验：
 
