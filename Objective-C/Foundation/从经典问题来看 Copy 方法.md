@@ -117,7 +117,11 @@
 2016-08-12 06:15:45.170 TestCopy[65230:20515110] 0xa00000000534f693
 ```
 
-发现当令 NSString 对象指针指向一个 NSMutableString 类型变量通过 copy 方法返回的对象，则会对其进行**深复制**。这也就是我们一直所说的在一个 Class 的成员是 NSString 类型的时候，修饰属性应该使用 copy ，其实就是在使用 mutable 对象进行赋值的时候，防止 mutable 对象的改变从而影响成员变量。从 MRC 的角度来看待修饰属性，若一个属性的关键字为 retain （可等同于 strong ），则在进行指针的指向修改时，如上面的`self.one.name = str`，其实是执行了`self.one.name = [str retain]`，而 copy 类型的属性则会执行`self.one.name = [str copy]`。
+发现当令 NSString 对象指针指向一个 NSMutableString 类型变量通过 copy 方法返回的对象，则会对其进行**深复制** （这个深复制是针对NSMutableString 对象而言，复制好的对象最后被 NSString 指向了）。这也就是我们一直所说的在一个 Class 的成员是 NSString 类型的时候，修饰属性应该使用 copy ，其实就是在使用 mutable 对象进行赋值的时候，防止 mutable 对象的改变从而影响成员变量（使用 strong 就会因为多态而使被赋值的 NSString 类型变量受到牵连），并且需要知道的是使用 copy 属性返回的是一个不可变的的对象就像上面的 NSString，Foundation 中的的NS* 都是可以这么理解，这个下面的图片你能够看到即使是原来的 mutable 类型字符串变了，p.name 的地址以及内容并没有发生改变。
+
+![pic0](http://pb48jwobd.bkt.clouddn.com/Screen%20Shot%202018-08-09%20at%2000.50.25.png)
+
+从 MRC 的角度来看待修饰属性，若一个属性的关键字为 retain （可等同于 strong ），则在进行指针的指向修改时，如上面的`self.one.name = str`，其实是执行了`self.one.name = [str retain]`，而 copy 类型的属性则会执行`self.one.name = [str copy]`。
 
 而在 Test 2 中，我们的实验是将一个 NSString 对象指向另外一个 NSString 对象，那么如果前者是 copy 的成员，还会进行**深复制**吗？进行下面的 Test 5，我们令 c_name 的修饰变量为 copy。
 
